@@ -1,10 +1,5 @@
 == IBM Proactive Technology Online ==
-The IBM Proactive Technology Online is an open source complex event processing engine developed at IBM Research - Haifa. 
-It provides language primitives for defining, submitting, and executing event processing networks. The goal of the system 
-is to respond to raw events and identify meaningful events within contexts. The system comes with a set of built-in operators 
-(such as sequence, all, etc.) for determining CEP patterns. It also has extendable APIs for adding additional custom operators. 
-The system comes with existing source/sink adapters, allowing it to extract raw events from files or pull them from RESTful 
-services. It also provides extendable APIs for adding more adapter types. 
+The IBM Proactive Technology Online is an open source complex event processing engine developed at IBM Research - Haifa. It provides language primitives for defining, submitting, and executing event processing networks. The goal of the system is to respond to raw events and identify meaningful events within contexts. The system comes with a set of built-in operators (such as sequence, all, etc.) for determining CEP patterns. It also has extendable APIs for adding additional custom operators. The system comes with existing source/sink adapters, allowing it to extract raw events from files or pull them from RESTful services. It also provides extendable APIs for adding more adapter types. 
 
 === The repository includes ===
 
@@ -17,9 +12,7 @@ services. It also provides extendable APIs for adding more adapter types.
 - a web application used to build and verify the application's definition files.
 
 .The IBM Proactive Technology Online Web Application
-This is a version of the engine adapted to run on a web server. It allows users to push RESTful events to the engine in addition 
-to pulling RESTful events option provided by the REST adapter. This version also provides REST APIs for managing the engine's instance 
-lifecycle, and	managing the definition repository. 
+This is a version of the engine adapted to run on a web server. It allows users to push RESTful events to the engine in addition to pulling RESTful events option provided by the REST adapter. This version also provides REST APIs for managing the engine's instance lifecycle, and	managing the definition repository. 
 
 === Instructions ===
 For instructions on how to configure and install IBM Proactive Technology Online on Tomcat, see the following guide: https://forge.fi-ware.org/plugins/mediawiki/wiki/fiware/index.php/CEP_GE_-_IBM_Proactive_Technology_Online_Installation_and_Administration_Guide
