@@ -12,10 +12,7 @@ The IBM Proactive Technology Online is an open source complex event processing e
 - lib folder - contains external libraries required by Proton application
 
 === Instructions ===
-For instructions on how to configure and install IBM Proactive Technology Online on Tomcat, see the following guide: https://forge.fi-ware.org/plugins/mediawiki/wiki/fiware/index.php/CEP_GE_-_IBM_Proactive_Technology_Online_Installation_and_Administration_Guide
-
-=== Licence ===
-IBM Proactive Technology Online is licenced under the Apache Licence Version 2.0 for more information see the LICENCE.md
+For detailed instructions on how to configure and install IBM Proactive Technology Online on Tomcat, see the following guide: https://forge.fi-ware.org/plugins/mediawiki/wiki/fiware/index.php/CEP_GE_-_IBM_Proactive_Technology_Online_Installation_and_Administration_Guide
 
 .How to run the application
 To run the application on Windows with the sample definition file, simply run launchProton.bat contained in this directory.
@@ -34,4 +31,8 @@ java.util.logging.ConsoleHandler.level=INFO
 ..........................
 
 Change that according to your preferences.
+
+
+=== Licence ===
+IBM Proactive Technology Online is licenced under the Apache Licence Version 2.0 for more information see the LICENCE.md
 
