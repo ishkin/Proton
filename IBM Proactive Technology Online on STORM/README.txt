@@ -13,7 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #-----------------------------------------------------------------------
-IBM Proactive Technology Online is an open source complex event processing engine developed at IBM Research - Haifa. It provides language primitives for defining, submitting, and executing event processing networks. The goal of the system is to respond to raw events and identify meaningful events within contexts. The system comes with a set of built-in operators (such as sequence, all, etc.) for determining CEP patterns. It also has extendable APIs for adding additional custom operators. The system comes with existing source/sink adapters, allowing it to extract raw events from files or pull them from RESTful services. It also provides extendable APIs for adding more adapter types. 
+IBM Proactive Technology Online (Proton) is an open source complex event processing engine developed at IBM Research - Haifa. It provides language primitives for defining, submitting, and executing event processing networks. The goal of the system is to respond to raw events and identify meaningful events within contexts. The system comes with a set of built-in operators (such as sequence, all, etc.) for determining CEP patterns. It also has extendable APIs for adding additional custom operators. The system comes with existing source/sink adapters, allowing it to extract raw events from files or pull them from RESTful services. It also provides extendable APIs for adding more adapter types. 
 
 To allow for processing of large volumes of data in a distributed fashion, we have implemented additional version of Proton, Proton on top of STORM. Work on implementing Proton on Storm is being performed as part of the FERARI EU project (http://www.ferari-project.eu).
 
@@ -33,4 +33,4 @@ To execute the test case included with the project, please run:
  mvn -f pom.xml compile exec:java -Dstorm.topology=com.ibm.hrl.proton.test.ProtonTopology
 For farther documentation, please see : https://github.com/ishkin/Proton/blob/master/IBM%20Proactive%20Technology%20Online%20on%20STORM/Proton%20and%20Proton%20on%20top%20of%20STORM.docx
 
-For documentation on Proton please see: https://forge.fi-	ware.org/plugins/mediawiki/wiki/fiware/index.php/CEP_GE_-	_IBM_Proactive_Technology_Online_Installation_and_Administration_Guide
+For documentation on Proton please see: https://forge.fiware.org/plugins/mediawiki/wiki/fiware/index.php/CEP_GE_-_IBM_Proactive_Technology_Online_Installation_and_Administration_Guide
