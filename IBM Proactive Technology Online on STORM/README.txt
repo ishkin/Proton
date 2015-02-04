@@ -31,6 +31,6 @@ Proton on STORM uses apache maven as a build tool. The distribution includes a p
 
 To execute the test case included with the project, please run: 
  mvn -f pom.xml compile exec:java -Dstorm.topology=com.ibm.hrl.proton.test.ProtonTopology
-For farther documentation, please see <<>>
+For farther documentation, please see : https://github.com/ishkin/Proton/blob/master/IBM%20Proactive%20Technology%20Online%20on%20STORM/Proton%20and%20Proton%20on%20top%20of%20STORM.docx
 
-For documentation on Proton please see: << >>
+For documentation on Proton please see: https://forge.fi-	ware.org/plugins/mediawiki/wiki/fiware/index.php/CEP_GE_-	_IBM_Proactive_Technology_Online_Installation_and_Administration_Guide
