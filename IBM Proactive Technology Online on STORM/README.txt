@@ -15,17 +15,15 @@
 #-----------------------------------------------------------------------
 IBM Proactive Technology Online (Proton) is an open source complex event processing engine developed at IBM Research - Haifa. It provides language primitives for defining, submitting, and executing event processing networks. The goal of the system is to respond to raw events and identify meaningful events within contexts. The system comes with a set of built-in operators (such as sequence, all, etc.) for determining CEP patterns. It also has extendable APIs for adding additional custom operators. The system comes with existing source/sink adapters, allowing it to extract raw events from files or pull them from RESTful services. It also provides extendable APIs for adding more adapter types. 
 
-To allow for processing of large volumes of data in a distributed fashion, we have implemented additional version of Proton, Proton on top of STORM. Work on implementing Proton on Storm is being performed as part of the FERARI EU project (http://www.ferari-project.eu).
+To allow for processing of large volumes of data in a distributed fashion, we have implemented additional version of Proton, Proton on top of STORM. Work on implementing Proton on Storm is being performed as part of the FERARI EU project (http://www.ferari-project.eu), grant number 619491.
 
 STORM is an Apache open source distributed realtime computation system. Storm allows to reliably process unbounded streams of data. Its open programming model allows creation of distributed scalalble applications for processing of event streams.
 
 Proton on STORM implementation makes use of STORM primitives, such as spouts and bolts, to wrap around the Proton logical components. It also uses the segmentation mechanisms of STORM intra-component communication, specifically the groupings of streams, to allow segmentation of events into independent groups for processing. 
-For documentation on Proton architecture and implementation on top of STORM , please see : <<>>
-For documentation on how to use Proton on STORM version, please see: <<>>
 
 The repository includes: 
-	-An Eclipse project file for ProtonOnStorm. This can be easily imported into eclipse environment for reference and farther developement activities.
-	-A jar file with sources. 
+	-An Eclipse project file for ProtonOnStorm. This can be easily imported into eclipse environment for reference and farther development activities.
+	-The source project. 
 
 Proton on STORM uses apache maven as a build tool. The distribution includes a pom file containing all Proton's on STORM dependencies. Since the project is already built as maven archtype, and includes maven additions for eclipse, it can be just imported into eclipse, and then built using "mvn clean install" command from the project repository dir. 
 
