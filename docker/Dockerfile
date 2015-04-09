@@ -41,3 +41,6 @@ WORKDIR /root
 RUN apt-get -y install curl
 # smoketest bash script
 COPY ./docker_smoketest.sh /root/docker/
+ENV CATALINA_BASE /var/lib/tomcat7/
+ENV CATALINA_HOME /usr/share/tomcat7/
+CMD /usr/share/tomcat7/bin/catalina.sh run

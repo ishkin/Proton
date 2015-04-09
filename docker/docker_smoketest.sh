@@ -1,7 +1,16 @@
 #!/bin/sh
 
-service tomcat7 start
-at=`curl -s localhost:8080/ProtonOnWebServerAdmin/resources/instances/ProtonOnWebServer`
+HOST=$1
+PORT=$2
+
+echo $1
+echo $2
+
+[ "$HOST" ] || HOST="localhost"
+[ "$PORT" ] || PORT="8080"
+
+at=`curl "http://$HOST:$PORT/ProtonOnWebServerAdmin/resources/instances/ProtonOnWebServer"`
+echo $at
 at2='{"state":"started","definitions-url":"\/ProtonOnWebServerAdmin\/resources\/definitions\/DoSAttack2"}'
 if [ "$at" != "$at2" ];
 then
