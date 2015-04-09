@@ -25,14 +25,19 @@ RUN mkdir /usr/share/tomcat7/webapps
 RUN mkdir /usr/share/tomcat7/webapps/ProtonOnWebServer
 COPY ./Proton.properties /usr/share/tomcat7/webapps/ProtonOnWebServer/
 COPY ./DoSAttack2.json /usr/share/tomcat7/webapps/ProtonOnWebServer/
+#startup.sh and tomcat-users settings according to the Installation Guide
 COPY ./startup.sh /usr/share/tomcat7/bin/
 COPY ./tomcat-users.xml /etc/tomcat7/
+# Initial start of the tomcat server for deploying the apps
 RUN service tomcat7 start || echo OK
 RUN apt-get -y install unzip
 WORKDIR /root/Proton/IBM Proactive Technology Online
 RUN unzip -d IBMProtonOnWebServer IBMProtonOnWebServer.zip 
 WORKDIR /root/Proton/IBM Proactive Technology Online/IBMProtonOnWebServer
 RUN cp *war /var/lib/tomcat7/webapps/
+RUN mkdir /root/docker
 WORKDIR /root
+# install curl for smoketest
 RUN apt-get -y install curl
-COPY ./test.sh /root/
+# smoketest bash script
+COPY ./docker_smoketest.sh /root/docker/
