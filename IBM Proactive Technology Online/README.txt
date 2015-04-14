@@ -24,4 +24,6 @@ The repository includes:
 	RESTful events option provided by the REST adapter. This version also provides 	REST APIs for managing the engine’s instance lifecycle, and 	managing the definition repository.
 	For instructions on how to configure and install IBM Proactive Technology Online on 	Tomcat, see: https://forge.fi-	ware.org/plugins/mediawiki/wiki/fiware/index.php/CEP_GE_-	_IBM_Proactive_Technology_Online_Installation_and_Administration_Guide
 
+-The src files for Proton standalone code are located under ProtonBuild directory. You can download the src and lib folders and import them as part of you project, add dependency to the jars in the lib folder to your project setup. To run the Proton executable you will also need the config folder, where you have to update the Proton.properties file to point at Proton's JSON definition file (an example of that you can find in the sample folder). Run the com.ibm.hrl.proton.server.executor.ProtonExecutor to run Proton's engine with the specified JSON.
+
 
