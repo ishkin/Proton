@@ -1,0 +1,16 @@
+{
+    "epn": {
+        "events": [],
+        "epas": [],
+        "contexts": {
+            "temporal": [],
+            "segmentation": [],
+            "composite": []
+        },
+        "consumers": [],
+        "producers": [],
+        "actions": [],
+        "name": "empty_definition"
+    },
+    "declaredClass": "metadata.CreateJSON"
+}
