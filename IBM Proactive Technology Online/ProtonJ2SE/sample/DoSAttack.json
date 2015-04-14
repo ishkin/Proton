@@ -1,397 +1,193 @@
 {
-  "epn": {
-    "events": [
-      {
-        "name": "TrafficReport",
-        "description": "",
-        "createdDate": "",
-        "createdBy": "",
-        "attributes": [
-          {
-            "name": "volume",
-            "type": "Integer",
-            "dimension": 0,
-            "description": null
-          }
-        ]
-      },
-      {
-        "name": "PredictedCrash",
-        "description": "",
-        "createdDate": "",
-        "createdBy": "",
-        "attributes": [
-          {
-            "name": "Cost",
-            "type": "Double",
-            "dimension": 0,
-            "description": null
-          },
-          {
-            "name": "OccurenceTime",
-            "type": "Datetime",
-            "dimension": 0,
-            "description": null
-          },
-          {
-            "name": "Certainty",
-            "type": "Double",
-            "dimension": 0,
-            "description": null
-          }
-        ]
-      }
-    ],
-    "epas": [
-      {
-        "name": "IncreasingTraffic",
-        "description": "",
-        "createdDate": "",
-        "createdBy": "", 
-        "epaType": "Sequence",
-        "context": "3MinAfterStartUp",
-        "inputEvents": [
-          {
-            "name": "TrafficReport",
-            "alias": "TR1",
-            "consumptionPolicy": "Consume",
-            "instanceSelectionPolicy": "First"
-          },
-          {
-            "name": "TrafficReport",
-            "alias": "TR2",
-            "consumptionPolicy": "Consume",
-            "instanceSelectionPolicy": "First"
-          },
-          {
-            "name": "TrafficReport",
-            "alias": "TR3",
-            "consumptionPolicy": "Consume",
-            "instanceSelectionPolicy": "First"
-          }
-        ],
-        "computedVariables": [],
-        "assertion": "TR3.volume>1.50* TR2.volume AND TR2.volume>1.50 * TR1.volume",
-        "evaluationPolicy": "Immediate",
-        "cardinalityPolicy": "Single",
-        "rankingRelation": "Higest",
-        "internalSegmentation": [],
-        "derivedEvents": [
-          {
-            "name": "PredictedCrash",
-            "expressions": {
-              "Cost": "10.0",
-              "OccurenceTime": "Tri(0.0,8064000/(Min(TR3.volume/TR2.volume, TR2.volume/TR1.volume)-1),4032000/(Min(TR3.volume/TR2.volume, TR2.volume/TR1.volume)-1))",
-              "Certainty": "1-0.5*Min(1/(Min(TR3.volume/TR2.volume, TR2.volume/TR1.volume)-1) ,1 )"
-              
-              
-            }
-          }
-        ],
-        "derivedActions": []
-      },
-      {
-        "name": "HandlePredictedCrash",
-        "description": "",
-        "createdDate": "",
-        "createdBy": "",
-        "epaType": "Proactive",
-        "inputEvents": [
-          {
-            "name": "PredictedCrash",
-            "alias": "PC",
-            "consumptionPolicy": "Consume",
-            "instanceSelectionPolicy": "First"
-          }
-        ],
-        "computedVariables": [],
-        "evaluationPolicy": "Immediate",
-        "cardinalityPolicy": "Single",
-        "rankingRelation": "Higest",
-        "internalSegmentation": [],
-        "derivedEvents": [],
-        "derivedActions": [
-          {
-            "name": "Block50Ation",
-            "expressions": {
-              "EventCertainty": "0.2",
-              "EventOccurrenceTime": "PC.OccurenceTime",
-              "ExpirationTime": "'7200000'",
-              "Cost": "0.02*PC.Cost",
-              "CostUnit": "'Hours'",
-              "TimeToTakeEffect": "5*60*1000.0"
-            }
-          },
-          {
-            "name": "Block90Action",
-            "expressions": {
-              "EventCertainty": "0.03",
-              "EventOccurrenceTime": "PC.OccurenceTime",
-              "ExpirationTime": "'7200000'",
-              "Cost": "0.12*PC.Cost",
-              "CostUnit": "'Hours'",
-              "TimeToTakeEffect": "5*60*1000.0"
-            }
-          }
-        ]
-      }
-    ],
-    "contexts": {
-      "temporal": [
-        {
-          "name": "3MinAfterStartUp",
-          "description": "",
-          "createdDate": "",
-          "createdBy": "",
-          "type": "TemporalInterval",
-          "atStartup": true,
-          "neverEnding": false,
-          "initiators": [],
-          "terminators": [
+    "declaredClass": "metadata.CreateJSON",
+    "name": "DoSAttack2",
+    "epn": {
+        "events": [
             {
-              "terminatorType": "RelativeTime",
-              "terminationType": "Terminate",
-              "relativeTime": "180000"
+                "name": "TrafficReport",
+                "attributes": [
+                    {
+                        "dimension": 0,
+                        "name": "volume",
+                        "type": "Integer"
+                    }
+                ]
+            },
+            {
+                "name": "ExpectedCrash",
+                "attributes": [
+                    {
+                        "dimension": 0,
+                        "name": "Cost",
+                        "type": "Double"
+                    }
+                ]
             }
-          ]
-        }
-      ],
-      "segmentation": [],
-      "composite": []
-    },
-    "consumers": [
-      {
-        "name": "SysTemCrashConsumer",
-        "description": "",
-        "createdDate": "",
-        "createdBy": "",
-        "type": "File",
-        "properties": [
-          {
-            "name": "filename",
-            "value": ".\\sample\\DoSAttack_PredictedCrash.txt"
-          },
-          {
-            "name": "formatter",
-            "value": "tag"
-          },
-          {
-            "name": "delimiter",
-            "value": ";"
-          },
-          {
-            "name": "tagDataSeparator",
-            "value": "="
-          },
-          {
-            "name": "SendingDelay",
-            "value": "1000"
-          }
         ],
-        "events": [
-          {
-            "name": "PredictedCrash"
-          }
+        "name": "DoSAttack2",
+        "consumers": [
+            {
+                "events": [
+                    {
+                        "name": "ExpectedCrash"
+                    }
+                ],
+                "name": "SysTemCrashConsumer",
+                "properties": [
+                    {
+                        "name": "filename",
+                        "value": "./sample/DoSAttackExpectedCrash.txt"
+                    },
+                    {
+                        "name": "formatter",
+                        "value": "json"
+                    },
+                    {
+                        "name": "delimiter",
+                        "value": ";"
+                    },
+                    {
+                        "name": "tagDataSeparator",
+                        "value": "="
+                    },
+                    {
+                        "name": "SendingDelay",
+                        "value": "1000"
+                    }
+                ],
+                "type": "File",
+                "actions": []
+            },
+            {
+                "events": [
+                    {
+                        "name": "TrafficReport"
+                    }
+                ],
+                "name": "DoSAttackTRConsumer",
+                "properties": [
+                    {
+                        "name": "filename",
+                        "value": "./sample/DoSAttack_TrafficReport.txt"
+                    },
+                    {
+                        "name": "formatter",
+                        "value": "json"
+                    },
+                    {
+                        "name": "delimiter",
+                        "value": ";"
+                    },
+                    {
+                        "name": "tagDataSeparator",
+                        "value": "="
+                    },
+                    {
+                        "name": "SendingDelay",
+                        "value": "1000"
+                    }
+                ],
+                "type": "File",
+                "actions": []
+            }
+        ],
+        "epas": [
+            {
+                "derivedActions": [],
+                "inputEvents": [
+                    {
+                        "alias": "TR1",
+                        "instanceSelectionPolicy": "First",
+                        "name": "TrafficReport",
+                        "consumptionPolicy": "Consume"
+                    },
+                    {
+                        "alias": "TR2",
+                        "instanceSelectionPolicy": "First",
+                        "name": "TrafficReport",
+                        "consumptionPolicy": "Consume"
+                    },
+                    {
+                        "alias": "TR3",
+                        "instanceSelectionPolicy": "First",
+                        "name": "TrafficReport",
+                        "consumptionPolicy": "Consume"
+                    }
+                ],
+                "evaluationPolicy": "Immediate",
+                "derivedEvents": [
+                    {
+                        "name": "ExpectedCrash",
+                        "reportParticipants": false,
+                        "expressions": {
+                            "Cost": "10.0"
+                        }
+                    }
+                ],
+                "name": "IncreasingTraffic",
+                "context": "3MinAfterStartUp",
+                "internalSegmentation": [],
+                "epaType": "Sequence",
+                "cardinalityPolicy": "Single",
+                "assertion": "TR3.volume>1.50* TR2.volume AND TR2.volume>1.50 * TR1.volume",
+                "computedVariables": []
+            }
+        ],
+        "contexts": {
+            "temporal": [
+                {
+                    "neverEnding": false,
+                    "terminators": [
+                        {
+                            "terminationType": "Terminate",
+                            "relativeTime": "180000",
+                            "terminatorType": "RelativeTime"
+                        }
+                    ],
+                    "atStartup": true,
+                    "name": "3MinAfterStartUp",
+                    "type": "TemporalInterval",
+                    "initiators": []
+                }
+            ],
+            "segmentation": [],
+            "composite": []
+        },
+        "producers": 
+        [
+        	{
+                "name": "P1",
+                "createdDate": "Thu Jul 18 2013",
+                "type": "File",
+                "properties": [
+                    {
+                        "name": "filename",                        
+                        "value": "./sample/DoSAttackScenario.txt"
+                    },
+                    {
+                        "name": "pollingInterval",
+                        "value": "1000"
+                    },
+                    {
+                        "name": "sendingDelay",
+                        "value": "100"
+                    },
+                    {
+                        "name": "formatter",
+                        "value": "tag"
+                    },
+                    {
+                        "name": "delimiter",
+                        "value": ";"
+                    },
+                    {
+                        "name": "tagDataSeparator",
+                        "value": "="
+                    }
+                ],
+                "events": []
+            }
         ],
         "actions": []
-      },
-      {
-        "name": "DoSAttackTRConsumer",
-        "description": "",
-        "createdDate": "",
-        "createdBy": "",
-        "type": "File",
-        "properties": [
-          {
-            "name": "filename",
-            "value": ".\\sample\\DoSAttack_TrafficReport.txt"
-          },
-          {
-            "name": "formatter",
-            "value": "tag"
-          },
-          {
-            "name": "delimiter",
-            "value": ";"
-          },
-          {
-            "name": "tagDataSeparator",
-            "value": "="
-          },
-          {
-            "name": "SendingDelay",
-            "value": "1000"
-          }
-        ],
-        "events": [
-          {
-            "name": "TrafficReport"
-          }
-        ],
-        "actions": []
-      },
-      {
-        "name": "DoSAttackActionsConsumer",
-        "description": "",
-        "createdDate": "",
-        "createdBy": "",
-        "type": "File",
-        "properties": [
-          {
-            "name": "filename",
-            "value": ".\\sample\\DoSAttack_Actions.txt"
-          },
-          {
-            "name": "formatter",
-            "value": "tag"
-          },
-          {
-            "name": "delimiter",
-            "value": ";"
-          },
-          {
-            "name": "tagDataSeparator",
-            "value": "="
-          },
-          {
-            "name": "SendingDelay",
-            "value": "1000"
-          }
-        ],
-        "events": [],
-        "actions": [
-          {
-            "name": "Block50Ation"
-          },
-          {
-            "name": "Block90Action"
-          }
-        ]
-      }
-    ],
-    "producers": [
-      {
-        "name": "TrafficReportFileProducer",
-        "description": "",
-        "createdDate": "",
-        "createdBy": "",
-        "type": "File",
-        "properties": [
-          {
-            "name": "filename",
-            "value": ".\\sample\\DoSAttackScenario.txt"
-          },
-          {
-            "name": "pollingInterval",
-            "value": "1000"
-          },
-          {
-            "name": "sendingDelay",
-            "value": "5000"
-          },
-          {
-            "name": "formatter",
-            "value": "tag"
-          },
-          {
-            "name": "delimiter",
-            "value": ";"
-          },
-          {
-            "name": "tagDataSeparator",
-            "value": "="
-          }
-        ],
-        "events": []
-      }
-    ],
-    "actions": [
-      {
-        "name": "Block50Ation",
-        "description": "",
-        "createdDate": "",
-        "createdBy": "",
-        "userDefinedParameters": [],
-        "decisionParameters": [
-          {
-            "name": "EventCertainty",
-            "type": "Double",
-            "defaultValue": "1",
-            "description": "The certainty that the predicted event will occur after the action is activated"
-          },
-          {
-            "name": "EventOccurrenceTime",
-            "type": "Double",
-            "description": "The occurrence of the predicted event after the action is activated. Can be given with distribution function"
-          },
-          {
-            "name": "ExpirationTime",
-            "type": "String",
-            "description": "Only till this time the action activation is considered"
-          },
-          {
-            "name": "Cost",
-            "type": "Double",
-            "description": "The cost of this action activation"
-          },
-          {
-            "name": "CostUnit",
-            "type": "String",
-            "defaultValue": "'Absolute'",
-            "description": "The time unit for the cost - cost per what. Represented as a String (Second, Minute, Day, Absolute). The default value is Absolute cost"
-          },
-          {
-            "name": "TimeToTakeEffect",
-            "type": "Double",
-            "defaultValue": "0",
-            "description": "The time between when we apply the action and till when it starts being effective. Represented as double (time in millis). Default value is 0"
-          }
-        ]
-      },
-      {
-        "name": "Block90Action",
-        "description": "",
-        "createdDate": "",
-        "createdBy": "",
-        "userDefinedParameters": [],
-        "decisionParameters": [
-          {
-            "name": "EventCertainty",
-            "type": "Double",
-            "defaultValue": "1",
-            "description": "The certainty that the predicted event will occur after the action is activated"
-          },
-          {
-            "name": "EventOccurrenceTime",
-            "type": "Double",
-            "description": "The occurrence of the predicted event after the action is activated. Can be given with distribution function"
-          },
-          {
-            "name": "ExpirationTime",
-            "type": "String",
-            "description": "Only till this time the action activation is considered"
-          },
-          {
-            "name": "Cost",
-            "type": "Double",
-            "description": "The cost of this action activation"
-          },
-          {
-            "name": "CostUnit",
-            "type": "String",
-            "defaultValue": "'Absolute'",
-            "description": "The time unit for the cost - cost per what. Represented as a String (Second, Minute, Day, Absolute). The default value is Absolute cost"
-          },
-          {
-            "name": "TimeToTakeEffect",
-            "type": "Double",
-            "defaultValue": "0",
-            "description": "The time between when we apply the action and till when it starts being effective. Represented as double (time in millis). Default value is 0"
-          }
-        ]
-      }
-    ],
-    "name": "EPN"
-  },
-  "declaredClass": "metadata.CreateJSON"
+    }
 }
