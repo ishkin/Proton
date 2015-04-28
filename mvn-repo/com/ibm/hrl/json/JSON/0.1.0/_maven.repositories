@@ -1,3 +1,4 @@
 #NOTE: This is an internal implementation file, its format can be changed without prior notice.
-#Mon Jun 09 13:22:20 IDT 2014
-JSON-0.1.0.jar>=
+#Wed Jan 28 12:56:57 IST 2015
+JSON-0.1.0.pom>proton-source-mvn-repo=
+JSON-0.1.0.jar>proton-source-mvn-repo=
