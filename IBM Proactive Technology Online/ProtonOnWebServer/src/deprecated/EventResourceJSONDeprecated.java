@@ -27,11 +27,11 @@ import org.apache.wink.json4j.JSONObject;
 
 import com.ibm.hrl.proton.metadata.event.EventHeader;
 import com.ibm.hrl.proton.metadata.event.IEventType;
-import com.ibm.hrl.proton.router.EventRouter;
 import com.ibm.hrl.proton.router.IEventRouter;
 import com.ibm.hrl.proton.runtime.event.EventInstance;
 import com.ibm.hrl.proton.runtime.event.interfaces.IEventInstance;
-import com.ibm.hrl.proton.runtime.metadata.EventMetadataFacade;
+import com.ibm.hrl.proton.webapp.WebFacadesManager;
+import com.ibm.hrl.proton.webapp.WebMetadataFacade;
 import com.ibm.hrl.proton.webapp.exceptions.ResponseException;
 
 
@@ -41,7 +41,7 @@ public class EventResourceJSONDeprecated {
 	
 	
 	private static final Logger logger = Logger.getLogger(EventResourceJSONDeprecated.class.getName());
-	private static final IEventRouter eventRouter = EventRouter.getInstance();
+	private static final IEventRouter eventRouter = WebFacadesManager.getInstance().getEventRouter();
 	
 	@POST
 	@Consumes("application/json")
@@ -51,7 +51,7 @@ public class EventResourceJSONDeprecated {
 		//createAndSendEvents(eventString);
 		try {
 			String nameValue = (String)eventJson.get(EventHeader.NAME_ATTRIBUTE);
-			IEventType eventType= EventMetadataFacade.getInstance().getEventType(nameValue);
+			IEventType eventType= WebMetadataFacade.getInstance().getEventMetadataFacade().getEventType(nameValue);
 			
 			// get all pairs of attribute name and value
 			Map<String,Object> attrValues = new HashMap<String,Object>();
@@ -95,7 +95,7 @@ public class EventResourceJSONDeprecated {
 	}
 
 	private void createAndSendEvents(String flag) {
-		IEventType eventType= EventMetadataFacade.getInstance().getEventType("StockBuy");		
+		IEventType eventType= WebMetadataFacade.getInstance().getEventMetadataFacade().getEventType("StockBuy");		
 		Map<String,Object> attrValues = new HashMap<String,Object>();
 		
        	attrValues.put("id","111");
@@ -105,7 +105,7 @@ public class EventResourceJSONDeprecated {
        	IEventInstance event = new EventInstance(eventType,attrValues);
        	event.setDetectionTime(System.currentTimeMillis());
        	
-		IEventRouter eventRouter = EventRouter.getInstance();
+		IEventRouter eventRouter = WebFacadesManager.getInstance().getEventRouter();
 
 		try {
 			eventRouter.routeTimedObject(event);
@@ -119,7 +119,7 @@ public class EventResourceJSONDeprecated {
 		
 		//-------------------------------------------------------------------------------------
 		
-		eventType= EventMetadataFacade.getInstance().getEventType("StockSell");		
+		eventType= WebMetadataFacade.getInstance().getEventMetadataFacade().getEventType("StockSell");		
 		attrValues.clear();
 		
        	attrValues.put("id","111");

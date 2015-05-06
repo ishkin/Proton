@@ -41,6 +41,7 @@ import com.ibm.hrl.proton.metadata.parser.ParsingException;
 import com.ibm.hrl.proton.metadata.parser.ProtonParseException;
 import com.ibm.hrl.proton.router.EventRouter;
 import com.ibm.hrl.proton.router.IEventRouter;
+import com.ibm.hrl.proton.runtime.metadata.IMetadataFacade;
 import com.ibm.hrl.proton.server.adapter.InputServer;
 import com.ibm.hrl.proton.server.adapter.OutputServer;
 import com.ibm.hrl.proton.server.adapter.ProtonServerException;
@@ -49,6 +50,7 @@ import com.ibm.hrl.proton.server.executor.PropertiesParser;
 import com.ibm.hrl.proton.server.executorServices.ExecutorUtils;
 import com.ibm.hrl.proton.server.timerService.TimerServiceFacade;
 import com.ibm.hrl.proton.server.workManager.WorkManagerFacade;
+import com.ibm.hrl.proton.utilities.facadesManager.IFacadesManager;
 
 @WebListener
 public class ProtonServletContextListener implements ServletContextListener {
@@ -63,6 +65,7 @@ public class ProtonServletContextListener implements ServletContextListener {
 	
 	private OutputServer outputServer;
 	private InputServer inputServer;
+	IFacadesManager facadesManager;
 		
 	/**
 	 * @see ServletContextListener#contextDestroyed(ServletContextEvent)
@@ -77,7 +80,7 @@ public class ProtonServletContextListener implements ServletContextListener {
 			// they are related to the threads closing exceptions that are thrown at Proton shutdown
 		    inputServer.stopServer();
 		    outputServer.stopServer();
-		    TimerServiceFacade.getInstance().destroyTimers();
+		    facadesManager.getTimerServiceFacade().destroyTimers();
 		    ExecutorUtils.shutdownNow();
 		    logger.info("finished stopping servers successfully");
 		} catch (Exception e) {
@@ -121,10 +124,15 @@ public class ProtonServletContextListener implements ServletContextListener {
 			String propertiesFileRelativePath = "/Proton.properties";
 			InputStream fileInpStream = ctx.getResourceAsStream(propertiesFileRelativePath);	
 			String rootPath = ctx.getRealPath("/");
+			facadesManager =  WebFacadesManager.getInstance();
+	    	IMetadataFacade metadataFacade = WebMetadataFacade.getInstance();
 			logger.info("context real path = " +rootPath);
+			EepFacade eepFacade;
 			
 			try
-			{			
+			{	
+				eepFacade = new EepFacade();
+				((WebFacadesManager)facadesManager).setEepFacade(eepFacade);
 				//check for input parameter - the properties file name.    		
 				if (arguments.length != 0) {
 					String propertiesFileAbsolutePath = arguments[0];
@@ -132,21 +140,23 @@ public class ProtonServletContextListener implements ServletContextListener {
 				}
 
 				prop = 	new PropertiesParser(fileInpStream);            
-			    inputServer = 	new InputServer(prop.inputPortNumber,BACKLOG_SIZE);
-			    outputServer = 	new OutputServer(prop.outputPortNumber,BACKLOG_SIZE);			   
+			    inputServer = 	new InputServer(prop.inputPortNumber,BACKLOG_SIZE,facadesManager,metadataFacade,eepFacade);
+			    outputServer = 	new OutputServer(prop.outputPortNumber,BACKLOG_SIZE,facadesManager,metadataFacade,eepFacade);			   
 			    logger.info("init: initializing metadata and all the system singletons");			    
 			}
 			catch (Exception e)
 			{
 			    String msg = "Could not configure application ,reason : " + e +
 			    	" message: " + e.getMessage();
-			    logger.severe(msg);			    
+			    logger.severe(msg);		
+			    throw new RuntimeException("Could not configure application ,reason : " + e +
+				    	" message: " + e.getMessage());
 			}
 
 			try
 			{		   
 				String defsFileAbsolutePath = null;
-				EepFacade eep = EepFacade.getInstance();
+				
 				if (prop.metadataFilePathType.equals("relative")) {
 					defsFileAbsolutePath = ctx.getRealPath(prop.metadataFileName);
 				} else { // the path to the definitions file is absolute
@@ -157,22 +167,28 @@ public class ProtonServletContextListener implements ServletContextListener {
 				//logger.info("my current context location: " + ctx.getRealPath("/"));
 				//logger.info("defsFileAbsolutePath: " + defsFileAbsolutePath);
 				
-				Collection<ProtonParseException> exceptions = initializeMetadata(defsFileAbsolutePath,eep);
+				Collection<ProtonParseException> exceptions = initializeMetadata(defsFileAbsolutePath,eepFacade,metadataFacade);
 				logger.info("init: done initializing metadata, returned the following exceptions: ");
 				for (ProtonParseException protonParseException : exceptions) {
 					logger.info(protonParseException.toString());
 				}
 				
-			    TimerServiceFacade timerServiceFacade = TimerServiceFacade.getInstance();
-			    IEventHandler eventHandler = EventHandler.getInstance();
-			    StandaloneDataSender.initializeInstance();
-			    
-			    IEventRouter eventRouter = EventRouter.initializeInstance(StandaloneDataSender.getInstance());           
-			    EPAManagerFacade.initializeInstance(WorkManagerFacade.getInstance(), eventRouter, null);
-			    AgentQueuesManager.initializeInstance(timerServiceFacade, eventHandler,
-			    		WorkManagerFacade.getInstance());
-			    ContextServiceFacade.initializeInstance(timerServiceFacade, eventHandler);                    
-			    EepFacade.getInstance();   
+				TimerServiceFacade timerServiceFacade = new TimerServiceFacade();
+				((WebFacadesManager)facadesManager).setTimerServiceFacade(timerServiceFacade);
+	            IEventHandler eventHandler = new EventHandler(facadesManager,metadataFacade);
+	            ((WebFacadesManager)facadesManager).setEventHandler(eventHandler);
+	            StandaloneDataSender dataSender = new StandaloneDataSender();
+	            ((WebFacadesManager)facadesManager).setDataSender(dataSender);
+	            IEventRouter eventRouter = new EventRouter(dataSender,facadesManager,metadataFacade);
+	            ((WebFacadesManager)facadesManager).setEventRouter(eventRouter);
+	            WorkManagerFacade workManagerFacade = new WorkManagerFacade();
+	            ((WebFacadesManager)facadesManager).setWorkManager(workManagerFacade);
+	            EPAManagerFacade epaManagerFacade = new EPAManagerFacade(workManagerFacade, eventRouter, null,metadataFacade);
+	            ((WebFacadesManager)facadesManager).setEpaManager(epaManagerFacade);
+	            AgentQueuesManager agentQueuesManager = new AgentQueuesManager(timerServiceFacade, eventHandler, workManagerFacade,metadataFacade);
+	            ((WebFacadesManager)facadesManager).setAgentQueuesManager(agentQueuesManager);
+	            ContextServiceFacade contextService = new ContextServiceFacade(timerServiceFacade, eventHandler,metadataFacade.getContextMetadataFacade());
+	            ((WebFacadesManager)facadesManager).setContextServiceFacade(contextService);                    
 			    		    
 			    logger.info("init: done initializing singletons , starting the servers...");
 			    outputServer.startServer();
@@ -205,9 +221,16 @@ public class ProtonServletContextListener implements ServletContextListener {
 			    try {
 				    inputServer.stopServer();
 				    outputServer.stopServer();
+				    facadesManager.getTimerServiceFacade().destroyTimers();
+				    ExecutorUtils.shutdownNow();				    
 			    } catch (Exception e1) {
 			    	logger.severe(e1.getMessage());
 			    }
+			    finally {
+					executor.shutdownNow();
+					ExecutorUtils.shutdownNow();
+				}
+			    
 			    
 			}					
 			}
@@ -215,7 +238,7 @@ public class ProtonServletContextListener implements ServletContextListener {
 	}
 	
 	private static Collection<ProtonParseException> initializeMetadata(
-			String metadataFileName, EepFacade eep) throws ParsingException {
+			String metadataFileName, EepFacade eep,IMetadataFacade metadataFacade) throws ParsingException {
 	
 		String line;
 		StringBuilder sb = new StringBuilder();
@@ -238,7 +261,7 @@ public class ProtonServletContextListener implements ServletContextListener {
 			}
 		 }		 
 		 String jsonTxt  = sb.toString();		 
-		 MetadataParser metadataParser = new MetadataParser(eep); 
+		 MetadataParser metadataParser = new MetadataParser(eep,metadataFacade); 
 		 Collection<ProtonParseException> exceptions = metadataParser.parseEPN(jsonTxt);
 
 		 return exceptions;	     

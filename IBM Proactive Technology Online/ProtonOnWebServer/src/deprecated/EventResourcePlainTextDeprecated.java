@@ -27,11 +27,11 @@ import com.ibm.hrl.proton.metadata.event.EventHeader;
 import com.ibm.hrl.proton.metadata.event.IEventType;
 import com.ibm.hrl.proton.metadata.type.TypeAttribute;
 import com.ibm.hrl.proton.metadata.type.enums.AttributeTypesEnum;
-import com.ibm.hrl.proton.router.EventRouter;
 import com.ibm.hrl.proton.router.IEventRouter;
 import com.ibm.hrl.proton.runtime.event.EventInstance;
 import com.ibm.hrl.proton.runtime.event.interfaces.IEventInstance;
-import com.ibm.hrl.proton.runtime.metadata.EventMetadataFacade;
+import com.ibm.hrl.proton.webapp.WebFacadesManager;
+import com.ibm.hrl.proton.webapp.WebMetadataFacade;
 import com.ibm.hrl.proton.webapp.exceptions.ResponseException;
 
 @Path("/events-plain-text")
@@ -43,7 +43,7 @@ public class EventResourcePlainTextDeprecated {
 	private static final String TAG_DATA_SEPARATOR = "=";
 
 	private static final Logger logger = Logger.getLogger(EventResourcePlainTextDeprecated.class.getName());
-	private static final IEventRouter eventRouter = EventRouter.getInstance();
+	private static final IEventRouter eventRouter = WebFacadesManager.getInstance().getEventRouter();
 	
 	@POST
 	@Consumes("text/plain")
@@ -59,7 +59,7 @@ public class EventResourcePlainTextDeprecated {
 		int delimiterIndex = nameSubstring.indexOf(DELIMITER);
 		int tagDataSeparatorIndex = nameSubstring.indexOf(TAG_DATA_SEPARATOR);
 		String nameValue = nameSubstring.substring(tagDataSeparatorIndex+1,delimiterIndex);
-		IEventType eventType = EventMetadataFacade.getInstance().getEventType(nameValue);
+		IEventType eventType = WebMetadataFacade.getInstance().getEventMetadataFacade().getEventType(nameValue);
 		
 		//search for all pairs of tag-data by using delimiter
 		Map<String,Object> attrValues = new HashMap<String,Object>();
@@ -91,7 +91,7 @@ public class EventResourcePlainTextDeprecated {
 			
 			Object attrValueObject;	        	      
 	        try {
-				attrValueObject = TypeAttribute.parseConstantValue(attrStringValue,attrName,eventType,null);
+				attrValueObject = TypeAttribute.parseConstantValue(attrStringValue,attrName,eventType,null,WebFacadesManager.getInstance().getEepFacade());
 		        attrValues.put(attrName,attrValueObject);
 			} catch (Exception e) {
 			    String msg = "Could not parse the event string" + eventString +
@@ -118,7 +118,7 @@ public class EventResourcePlainTextDeprecated {
 	}
 	
 	private void createAndSendEvents(String flag) {
-		IEventType eventType= EventMetadataFacade.getInstance().getEventType("StockBuy");		
+		IEventType eventType= WebMetadataFacade.getInstance().getEventMetadataFacade().getEventType("StockBuy");		
 		Map<String,Object> attrValues = new HashMap<String,Object>();
 		
        	attrValues.put("id","111");
@@ -128,7 +128,7 @@ public class EventResourcePlainTextDeprecated {
        	IEventInstance event = new EventInstance(eventType,attrValues);
        	event.setDetectionTime(System.currentTimeMillis());
        	
-		IEventRouter eventRouter = EventRouter.getInstance();
+		IEventRouter eventRouter = WebFacadesManager.getInstance().getEventRouter();
 
 		try {
 			eventRouter.routeTimedObject(event);
@@ -142,7 +142,7 @@ public class EventResourcePlainTextDeprecated {
 		
 		//-------------------------------------------------------------------------------------
 		
-		eventType= EventMetadataFacade.getInstance().getEventType("StockSell");		
+		eventType= WebMetadataFacade.getInstance().getEventMetadataFacade().getEventType("StockSell");		
 		attrValues.clear();
 		
        	attrValues.put("id","111");

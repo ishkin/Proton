@@ -39,7 +39,8 @@ import com.ibm.hrl.proton.metadata.event.IEventType;
 import com.ibm.hrl.proton.metadata.type.TypeAttribute;
 import com.ibm.hrl.proton.metadata.type.enums.AttributeTypesEnum;
 import com.ibm.hrl.proton.runtime.event.EventInstance;
-import com.ibm.hrl.proton.runtime.metadata.EventMetadataFacade;
+import com.ibm.hrl.proton.webapp.WebFacadesManager;
+import com.ibm.hrl.proton.webapp.WebMetadataFacade;
 import com.ibm.hrl.proton.webapp.exceptions.ResponseException;
 
 
@@ -77,7 +78,7 @@ public class EventJSONMessageReader implements MessageBodyReader<EventInstance> 
 					    		    
 			String nameValue = (String)eventJson.get(EventHeader.NAME_ATTRIBUTE);			
 			logger.info("name value: " + nameValue + " looking for: " + EventHeader.NAME_ATTRIBUTE);						
-			IEventType eventType= EventMetadataFacade.getInstance().getEventType(nameValue);
+			IEventType eventType= WebMetadataFacade.getInstance().getEventMetadataFacade().getEventType(nameValue);
 			
 			// get all pairs of attribute name and value
 			Map<String,Object> attrValues = new HashMap<String,Object>();	
@@ -96,7 +97,7 @@ public class EventJSONMessageReader implements MessageBodyReader<EventInstance> 
 				Object attrValueObject;	        	      
 		        try {
 		        	//logger.info("current attribute: " + attrStringValue);
-					attrValueObject = TypeAttribute.parseConstantValue(attrStringValue,attrName,eventType,null);
+					attrValueObject = TypeAttribute.parseConstantValue(attrStringValue,attrName,eventType,null,WebFacadesManager.getInstance().getEepFacade());
 			        attrValues.put(attrName,attrValueObject);
 				} catch (Exception e) {
 				    String msg = "Could not parse json event " + eventJson + ", reason: " + e.getMessage();

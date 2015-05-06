@@ -38,45 +38,33 @@ public class SampleJSONMessageClient {
 			Resource resource = client.resource("http://localhost:8080/ProtonOnWebServer/rest/events");
 			
 			System.out.println("got resource " + resource.toString());
-					
+			int i=0;
 			JSONObject eventJson = new JSONObject();
-			eventJson.put(EventHeader.NAME_ATTRIBUTE,"StockBuy");
-			eventJson.put("id","111");
-			eventJson.put("amount","100");
-			eventJson.put("price","5000");
-			
-			ClientResponse res;
-			res = resource.contentType("application/json").accept("application/json").post(eventJson);
-			System.out.println("web app response after post: " + res.getMessage() +
-					" status: " + res.getStatusCode());
-			
-			if (res.getStatusCode() == internalServerError) {
-				System.out.println("response message: " + res.getEntity(String.class));
+			while (true){				
+				i++;
+				eventJson.clear();
+				eventJson.put(EventHeader.NAME_ATTRIBUTE,"NodeContextUpdate");
+				eventJson.put("Latitud","43.4720001220703");
+				eventJson.put("entityId","OUTSMART.NODE_3507");
+				eventJson.put("entityType","Node");
+				eventJson.put("Longitud","-3.80707001686096");
+				eventJson.put("presence","1");
+				eventJson.put("illuminance","260.14");
+				eventJson.put("TimeInstant","2014-05-05T12:04:46.000000Z");
+				eventJson.put("batteryCharge","61");
+				
+				
+				ClientResponse res;
+				res = resource.contentType("application/json").accept("application/json").post(eventJson);
+				System.out.println("web app response after post: "+i+  res.getMessage() +
+						" status: " + res.getStatusCode());
+				
+				if (res.getStatusCode() == internalServerError) {
+					System.out.println("response message: " + res.getEntity(String.class));
+				}
 			}
-			
-			eventJson.remove(EventHeader.NAME_ATTRIBUTE);
-			eventJson.put(EventHeader.NAME_ATTRIBUTE,"StockSell");
-			
-			
-			res = resource.contentType("application/json").accept("application/json").post(eventJson);			
-			System.out.println("web app response after post: " + res.getMessage() +
-					" status: " + res.getStatusCode());
-			
-			if (res.getStatusCode() == internalServerError) {
-				System.out.println("response message: " + res.getEntity(String.class));
-			}
-			
-			/*JSONObject eventJson = new JSONObject();
-			eventJson.put(EventHeader.NAME_ATTRIBUTE,"e1");
-			eventJson.put("simpleValue","111");
-			eventJson.put("integerArray","[1,2,3]");
-			eventJson.put("stringArray","[1,2,3]");
-					
-			ClientResponse res = resource.contentType("application/json").accept("text/plain").post(eventJson);
-			System.out.println("web app response after post: " + res.getMessage() +
-					" status: " + res.getStatusCode());			
-			*/
-			
+						
+						
 		} catch (Exception e) {
 			System.out.println("Could not send event, reason: " + e +
 					"message: " + e.getMessage());

@@ -41,7 +41,8 @@ import com.ibm.hrl.proton.metadata.type.TypeAttribute;
 import com.ibm.hrl.proton.metadata.type.enums.AttributeTypesEnum;
 import com.ibm.hrl.proton.runtime.event.EventInstance;
 import com.ibm.hrl.proton.runtime.event.interfaces.IEventInstance;
-import com.ibm.hrl.proton.runtime.metadata.EventMetadataFacade;
+import com.ibm.hrl.proton.webapp.WebFacadesManager;
+import com.ibm.hrl.proton.webapp.WebMetadataFacade;
 import com.ibm.hrl.proton.webapp.exceptions.ResponseException;
 
 @Provider
@@ -81,8 +82,8 @@ public class EventPlainTextMessageReader implements MessageBodyReader<IEventInst
 		
 		int delimiterIndex = nameSubstring.indexOf(DELIMITER);
 		int tagDataSeparatorIndex = nameSubstring.indexOf(TAG_DATA_SEPARATOR);
-		String nameValue = nameSubstring.substring(tagDataSeparatorIndex+1,delimiterIndex);
-		IEventType eventType= EventMetadataFacade.getInstance().getEventType(nameValue);
+		String nameValue = nameSubstring.substring(tagDataSeparatorIndex+1,delimiterIndex);		
+		IEventType eventType= WebMetadataFacade.getInstance().getEventMetadataFacade().getEventType(nameValue);
 		
 		// search for all pairs of tag-data by using delimiter
 		Map<String,Object> attrValues = new HashMap<String,Object>();
@@ -114,7 +115,7 @@ public class EventPlainTextMessageReader implements MessageBodyReader<IEventInst
 			
 			Object attrValueObject;	        	      
 	        try {
-				attrValueObject = TypeAttribute.parseConstantValue(attrStringValue,attrName,eventType,null);
+				attrValueObject = TypeAttribute.parseConstantValue(attrStringValue,attrName,eventType,null,WebFacadesManager.getInstance().getEepFacade());
 		        attrValues.put(attrName,attrValueObject);
 			} catch (Exception e) {
 			    String msg = "Could not parse the event string" + eventString +

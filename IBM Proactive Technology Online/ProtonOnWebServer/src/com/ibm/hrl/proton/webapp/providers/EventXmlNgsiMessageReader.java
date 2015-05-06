@@ -44,7 +44,8 @@ import com.ibm.hrl.proton.metadata.event.IEventType;
 import com.ibm.hrl.proton.metadata.type.TypeAttribute;
 import com.ibm.hrl.proton.metadata.type.enums.AttributeTypesEnum;
 import com.ibm.hrl.proton.runtime.event.EventInstance;
-import com.ibm.hrl.proton.runtime.metadata.EventMetadataFacade;
+import com.ibm.hrl.proton.webapp.WebFacadesManager;
+import com.ibm.hrl.proton.webapp.WebMetadataFacade;
 import com.ibm.hrl.proton.webapp.exceptions.ResponseException;
 
 
@@ -94,7 +95,7 @@ public class EventXmlNgsiMessageReader implements MessageBodyReader<EventInstanc
 				//System.out.println("Entity type: " + entityType + " Entity id:"	+ entityId);
 				String eventName = entityType+EVENT_NAME_SUFFIX;
 
-				IEventType eventType= EventMetadataFacade.getInstance().getEventType(eventName);
+				IEventType eventType= WebMetadataFacade.getInstance().getEventMetadataFacade().getEventType(eventName);
 				logger.info("Event: " + eventName );
 				Map<String,Object> attrValues = new HashMap<String,Object>();
 
@@ -143,7 +144,7 @@ public class EventXmlNgsiMessageReader implements MessageBodyReader<EventInstanc
 		
 		Object attrValueObject;	     
 		try {
-	       	attrValueObject = TypeAttribute.parseConstantValue(attrStringValue,attrName,eventType,dateFormatter);
+	       	attrValueObject = TypeAttribute.parseConstantValue(attrStringValue,attrName,eventType,dateFormatter,WebFacadesManager.getInstance().getEepFacade());
 		    attrMap.put(attrName,attrValueObject);
 		} catch (Exception e) {
 			String msg = "Could not convert XML input attribute " + attrName + " to event attribute " + e + ", reason: " + e.getMessage();
