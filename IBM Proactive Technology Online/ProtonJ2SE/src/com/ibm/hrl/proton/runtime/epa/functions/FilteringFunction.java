@@ -15,6 +15,7 @@
  ******************************************************************************/
 package com.ibm.hrl.proton.runtime.epa.functions;
 
+import java.io.Serializable;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
@@ -25,7 +26,7 @@ import com.ibm.hrl.proton.metadata.epa.interfaces.IFilteringSchema;
 import com.ibm.hrl.proton.runtime.epa.interfaces.IExpression;
 import com.ibm.hrl.proton.runtime.event.interfaces.IEventInstance;
 
-public class FilteringFunction
+public class FilteringFunction implements Serializable
 {
     private static Logger logger = Logger.getLogger("FilteringFunction");
     /**

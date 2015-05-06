@@ -23,6 +23,7 @@ import json.java.JSON;
 import json.java.JSONObject;
 
 import com.ibm.hrl.proton.adapters.interfaces.AdapterException;
+import com.ibm.hrl.proton.expression.facade.EepFacade;
 import com.ibm.hrl.proton.metadata.epa.basic.IDataObject;
 import com.ibm.hrl.proton.metadata.event.EventHeader;
 import com.ibm.hrl.proton.metadata.event.IEventType;
@@ -36,9 +37,9 @@ public abstract class BaseJsonFormatter extends AbstractTextFormatter{
 
 	
 		
-	protected BaseJsonFormatter(String dateFormat) throws AdapterException 
+	protected BaseJsonFormatter(String dateFormat,EventMetadataFacade eventMetadata,EepFacade eep) throws AdapterException 
 	{
-		super(dateFormat);
+		super(dateFormat,eventMetadata,eep);
 	}
 	
 	
@@ -64,7 +65,7 @@ public abstract class BaseJsonFormatter extends AbstractTextFormatter{
 		}
 	    
 		String nameValue = (String)eventJson.get(EventHeader.NAME_ATTRIBUTE);
-		IEventType eventType= EventMetadataFacade.getInstance().getEventType(nameValue);
+		IEventType eventType= eventMetadata.getEventType(nameValue);
 		if (eventType==null){
 			throw new AdapterException("Event type ".concat(nameValue).concat(" is not defined"));
 		}
@@ -85,7 +86,7 @@ public abstract class BaseJsonFormatter extends AbstractTextFormatter{
 			
 			Object attrValueObject;	        	      
 	        try {
-				attrValueObject = TypeAttribute.parseConstantValue(attrStringValue,attrName,eventType,dateFormatter);
+				attrValueObject = TypeAttribute.parseConstantValue(attrStringValue,attrName,eventType,dateFormatter,eep);
 		        attrValues.put(attrName,attrValueObject);
 			} catch (Exception e) {
 			    throw new AdapterException("Could not convert JSON string to event object");

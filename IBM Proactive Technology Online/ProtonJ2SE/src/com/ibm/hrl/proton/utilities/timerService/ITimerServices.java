@@ -24,7 +24,7 @@ import java.io.Serializable;
 * 
 *
  */
-public interface ITimerServices
+public interface ITimerServices extends Serializable
 {
     /**
      * Create timer according to the specified details

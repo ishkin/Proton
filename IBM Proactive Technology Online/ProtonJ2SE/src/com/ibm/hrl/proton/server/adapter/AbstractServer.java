@@ -24,8 +24,9 @@ import javax.net.ServerSocketFactory;
 
 import com.ibm.hrl.proton.adapters.interfaces.AdapterException;
 import com.ibm.hrl.proton.adapters.interfaces.IAdapter;
-import com.ibm.hrl.proton.server.workManager.WorkManagerFacade;
-import com.ibm.hrl.proton.utilities.asynchronousWork.IWorkManager;
+import com.ibm.hrl.proton.expression.facade.EepFacade;
+import com.ibm.hrl.proton.runtime.metadata.IMetadataFacade;
+import com.ibm.hrl.proton.utilities.facadesManager.IFacadesManager;
 
 public abstract class AbstractServer extends Thread
 {
@@ -36,14 +37,20 @@ public abstract class AbstractServer extends Thread
 	protected ServerSocket serverSocket;
 	protected boolean running = true;
 	protected int port;
-	private int backlog;
-	private IWorkManager workManagerFacade;
+	private int backlog;	
+	protected IFacadesManager facadesManager;
+	protected IMetadataFacade metadataFacade;
+	protected EepFacade eep;
 	
-	protected AbstractServer(int port, int backlog)
+	
+	protected AbstractServer(int port, int backlog,IFacadesManager facadesManager2,IMetadataFacade metadataFacade2,EepFacade eep)
 	{
 		this.port = port;
 		this.backlog = backlog;
-		workManagerFacade = WorkManagerFacade.getInstance();
+		this.facadesManager = facadesManager2;
+		this.metadataFacade = metadataFacade2;
+		this.eep = eep;
+		
 	}
 	
 	public void startServer() throws ProtonServerException
@@ -76,8 +83,8 @@ public abstract class AbstractServer extends Thread
 			try 
 			{			
 				adapter.initializeAdapter();
-				Runnable workItem = workManagerFacade.createWork(adapter);
-				workManagerFacade.runWork(workItem);
+				Runnable workItem = facadesManager.getWorkManager().createWork(adapter);
+				facadesManager.getWorkManager().runWork(workItem);
 				//ExecutorUtils.execute(adapter);    		
 			}catch (Exception e) 
 			{

@@ -16,6 +16,8 @@
 
 package com.ibm.hrl.proton.metadata.context.interfaces;
 
+import java.io.Serializable;
+
 import com.ibm.hrl.proton.runtime.epa.interfaces.IExpression;
 
 /**
@@ -23,7 +25,7 @@ import com.ibm.hrl.proton.runtime.epa.interfaces.IExpression;
  * 
  * 
  */
-public interface IContextEventBound {
+public interface IContextEventBound extends Serializable {
 	
 	public IExpression getParsedPredicate();
 	public String getPredicate();

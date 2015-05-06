@@ -16,6 +16,7 @@
 
 package com.ibm.hrl.proton.expression.facade;
 
+import java.io.Serializable;
 import java.util.List;
 
 import com.ibm.eep.Eep;
@@ -32,12 +33,12 @@ import com.ibm.hrl.proton.runtime.epa.interfaces.IExpression;
  * 
  * 
  */
-public class EepFacade
+public class EepFacade implements Serializable
 {
     private Eep eep;
-    private static EepFacade instance;
     
-    private EepFacade() throws EEPException
+    
+    public EepFacade() throws EEPException
     {
         try
         {
@@ -51,12 +52,7 @@ public class EepFacade
         }
     }
     
-    public synchronized static EepFacade getInstance() throws EEPException
-    {
-        if (null == instance)
-            instance = new EepFacade();
-          return instance;
-    }
+  
     
     
     

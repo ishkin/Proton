@@ -29,21 +29,25 @@ import com.ibm.hrl.proton.adapters.interfaces.AdapterException;
 import com.ibm.hrl.proton.adapters.interfaces.IAdapter;
 import com.ibm.hrl.proton.adapters.interfaces.IInputAdapter;
 import com.ibm.hrl.proton.adapters.rest.client.RESTInputAdapter;
+import com.ibm.hrl.proton.expression.facade.EepFacade;
 import com.ibm.hrl.proton.metadata.inout.ConsumerProducerMetadata;
 import com.ibm.hrl.proton.metadata.inout.ProducerMetadata;
 import com.ibm.hrl.proton.metadata.inout.ProducerMetadata.ProducerType;
+import com.ibm.hrl.proton.runtime.metadata.IMetadataFacade;
 import com.ibm.hrl.proton.server.adapter.connectors.ServerInputConnector;
 import com.ibm.hrl.proton.server.adapter.eventHandlers.RequestHandler;
 import com.ibm.hrl.proton.server.executorServices.ExecutorUtils;
+import com.ibm.hrl.proton.utilities.facadesManager.IFacadesManager;
 
 public class InputServer extends AbstractServer {
 
 
 
 	private static final Logger logger = Logger.getLogger(InputServer.class.getName());
+
 	
-	public InputServer(int port, int backlog) {
-		super(port, backlog);	
+	public InputServer(int port, int backlog,IFacadesManager facadesManager,IMetadataFacade metadataFacade,EepFacade eep) {
+		super(port, backlog,facadesManager,metadataFacade,eep);			
 	}
 
 	@Override
@@ -59,16 +63,16 @@ public class InputServer extends AbstractServer {
 			case FILE:
 				//get the input file properties
 				//TODO - the parsing of the properties should be done by the specific adapter implementation in static method, return the appropriate configuration object				
-				inputAdapter = new FileInputAdapter(producerMetadata, new ServerInputConnector(this.port));
+				inputAdapter = new FileInputAdapter(producerMetadata, new ServerInputConnector(this.port),metadataFacade.getEventMetadataFacade(),eep);
 				break;
 			case TIMED:
-				inputAdapter = new FileTimedInputAdapter(producerMetadata, new ServerInputConnector(this.port));
+				inputAdapter = new FileTimedInputAdapter(producerMetadata, new ServerInputConnector(this.port),metadataFacade.getEventMetadataFacade(),eep);
 			case DB:
 				break;
 			case JMS:				
 				break;
 			case REST:
-				inputAdapter = new RESTInputAdapter(producerMetadata, new ServerInputConnector(this.port));
+				inputAdapter = new RESTInputAdapter(producerMetadata, new ServerInputConnector(this.port),metadataFacade.getEventMetadataFacade(),eep);
 				break;
 			case CUSTOM:
 				//fetch the class name and load the implementation class
@@ -101,7 +105,7 @@ public class InputServer extends AbstractServer {
                 logger.fine( "Received a new connection from (" + addr.getHostAddress() + "): " + addr.getHostName());
 
                 // Add the socket to the new RequestQueue
-                ExecutorUtils.execute(new RequestHandler(s));
+                ExecutorUtils.execute(new RequestHandler(s,facadesManager));
                 
                
                 

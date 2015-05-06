@@ -37,12 +37,13 @@ import com.ibm.hrl.proton.utilities.persistence.IPersistenceManager;
 public class EPAStateManager implements IEPAStateManager
 {
     private IPersistenceManager persistenceManager;
-    
+    private EPAManagerMetadataFacade metadataFacade;
     
 
-    public EPAStateManager(IPersistenceManager persistenceManager)
+    public EPAStateManager(IPersistenceManager persistenceManager,EPAManagerMetadataFacade metadataFacade)
     {       
         this.persistenceManager = persistenceManager;
+        this.metadataFacade = metadataFacade;
     }
 
 
@@ -53,7 +54,7 @@ public class EPAStateManager implements IEPAStateManager
     @Override
     public IOperatorData getState(String agentTypeName, String contextPartition)
     {
-       IEventProcessingAgent agentType = EPAManagerMetadataFacade.getInstance().getAgentDefinition(agentTypeName);
+       IEventProcessingAgent agentType = metadataFacade.getAgentDefinition(agentTypeName);
         if (agentType.getType().equals(EPATypeEnum.SEQUENCE))
         {            
             return new SequenceOperatorData(agentType.getNumOfOperands());

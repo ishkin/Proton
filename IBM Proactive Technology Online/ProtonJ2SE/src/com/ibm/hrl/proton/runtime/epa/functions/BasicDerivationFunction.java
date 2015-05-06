@@ -15,6 +15,7 @@
  ******************************************************************************/
 package com.ibm.hrl.proton.runtime.epa.functions;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -38,7 +39,7 @@ import com.ibm.hrl.proton.runtime.event.EventInstance;
 import com.ibm.hrl.proton.runtime.event.interfaces.IEventInstance;
 import com.ibm.hrl.proton.runtime.timedObjects.ITimedObject;
 
-public abstract class BasicDerivationFunction {
+public abstract class BasicDerivationFunction implements Serializable{
 	 private static Logger logger = Logger.getLogger("BasicDerivationFunction");
 	    
 	    public static List<ITimedObject> derive(IDataObject inputData, IDerivationSchema derivationSchema) 

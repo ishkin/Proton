@@ -20,7 +20,9 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
-import java.util.logging.Logger;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.ibm.eep.Eep;
 import com.ibm.eep.ParsedExpression;
@@ -53,7 +55,7 @@ public class EepExpression implements IExpression {
 	List<IDataObjectMeta> signature;
 	List<String> signatureNames;
 	
-	Logger logger = Logger.getLogger(getClass().getName());
+	private static Logger logger = LoggerFactory.getLogger(EepExpression.class.getName());
 	 
 	
 	public EepExpression(String expression, List<IDataObjectMeta> signature, Eep eep) throws ParseException
@@ -74,6 +76,7 @@ public class EepExpression implements IExpression {
 		// from this point it is assumed that stringExpression variable will be eventTpe.attributeName
 		this.eep = eep;
 		if (eep == null) {
+			logger.error("EepExpression: error initializing expression:Static Eep object wasn't initialized. Can't parse expressions ");
 			throw new com.ibm.eep.exceptions.ParseException(
 				"Static Eep object wasn't initialized. Can't parse expressions.");
 		}
@@ -141,6 +144,7 @@ public class EepExpression implements IExpression {
 	@Override
 	public synchronized Object evaluate(List<? extends IDataObject> dataObjects) {
 		// TODO Auto-generated method stub
+		logger.debug("evaluate: evaluating expression: "+parsedExpression+ "with data: "+dataObjects);
 		for (Entry<String, Integer> varDOIndex : variableEventIndices.entrySet())
 		{
 			IDataObject obj = dataObjects.get(varDOIndex.getValue());
@@ -148,6 +152,7 @@ public class EepExpression implements IExpression {
 			Object objFieldValue = obj.getFieldValue(variableAttribute.get(varDOIndex.getKey()));
 			String attrType = objFieldMeta.getType();
 			
+			logger.debug("evaluate: evaluating expression: after getting all the metadata...");
 			/*if (attrType.equals(AttributeTypesEnum.DATE.toString()))
 			{
 				attrType = "Date";
@@ -172,9 +177,10 @@ public class EepExpression implements IExpression {
 						parsedExpression.setVarType(varDOIndex.getKey(), attrType);
 					}
 					
-				
-					
+				logger.debug("evaluate: evaluating expression: before setting var value");
+			    logger.debug("evaluate: evaluating expression: before setting var value for key:"+varDOIndex.getKey()+", value: "+objFieldValue);	
 				parsedExpression.setVarValue(varDOIndex.getKey(), objFieldValue);
+				logger.debug("evaluate: evaluating expression: after setting var value...");
 				
 			} catch (ElementNotFoundException e) {
 				// TODO Auto-generated catch block
@@ -198,7 +204,9 @@ public class EepExpression implements IExpression {
 		try {
 			//if the returned expression is Date turn it into long , 
 			//since all Dates represented as long in the system
+			logger.debug("evaluate: evaluating expression: before getting value...");
 			Object result = parsedExpression.getValue();
+			logger.debug("evaluate: evaluating expression: after getting value, result:"+result);
 			if (result instanceof java.util.Date)
 			{
 				return ((java.util.Date) result).getTime();

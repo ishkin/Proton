@@ -18,11 +18,13 @@
  */
 package com.ibm.hrl.proton.metadata.epa.basic;
 
+import java.io.Serializable;
+
 /**
  * @author zoharf
  *
  */
-public interface IFieldMeta {
+public interface IFieldMeta extends Serializable{
 
 	public String getName();
 	public String getType();

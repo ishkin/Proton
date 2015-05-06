@@ -44,24 +44,27 @@ public class AgentQueueWorkItem implements IWorkItem
     
     /** Context event roles - determined the ordering of simultaneous events in sorted queues.  */
     private Set<EventRoleInContextEnum> eventRoles;
-    
+    private AgentQueuesManager manager;
+    private RoutingMetadataFacade metadataFacade;
     
     public AgentQueueWorkItem(String agentName, String contextName,
-            ITimedObject timedObject,Set<EventRoleInContextEnum> eventRoles)
+            ITimedObject timedObject,Set<EventRoleInContextEnum> eventRoles,AgentQueuesManager manager,RoutingMetadataFacade metadataFacade)
     {
         super();
         this.agentName = agentName;
         this.contextName = contextName;
         this.timedObject = timedObject;        
         this.eventRoles =eventRoles;
+        this.manager = manager;
+        this.metadataFacade = metadataFacade;
     }
 
 
     @Override
     public void run()
     {        
-        AgentQueueMetadata agentChannelMeta = RoutingMetadataFacade.getInstance().getAgentQueueDefinitions(agentName);
-        AgentAbstractQueue channelQueue = AgentQueuesManager.getInstance().getAgentQueue(agentName, contextName);
+        AgentQueueMetadata agentChannelMeta = metadataFacade.getAgentQueueDefinitions(agentName);
+        AgentAbstractQueue channelQueue = manager.getAgentQueue(agentName, contextName);
                        
         long eventTimestamp;
         if (agentChannelMeta.getOrderingPolicy().equals(OrderingPolicy.DETECTION_TIME)){              

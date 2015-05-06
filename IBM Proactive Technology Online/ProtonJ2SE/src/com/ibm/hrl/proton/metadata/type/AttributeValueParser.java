@@ -19,7 +19,6 @@ import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import com.ibm.eep.exceptions.ParseException;
 import com.ibm.hrl.proton.expression.facade.EEPException;
 import com.ibm.hrl.proton.expression.facade.EepFacade;
 import com.ibm.hrl.proton.metadata.epa.basic.IDataObject;
@@ -31,7 +30,7 @@ import com.ibm.hrl.proton.runtime.event.EventInstance;
 
 public class AttributeValueParser {
 	
-	public static Object parseConstantValue(String attrValue,String attrName,IDataObjectMeta objectMetadata,DateFormat dateFormatter) throws EEPException{
+	public static Object parseConstantValue(String attrValue,String attrName,IDataObjectMeta objectMetadata,DateFormat dateFormatter,EepFacade eep) throws EEPException{
 		Object value;
 		ArrayList<IDataObjectMeta> signature = new ArrayList<IDataObjectMeta>();
 		signature.add(objectMetadata);
@@ -39,7 +38,7 @@ public class AttributeValueParser {
 		
 		IExpression defaultValueExpression;
 		try {
-			defaultValueExpression = EepFacade.getInstance().createExpression(attrValue, signature);
+			defaultValueExpression = eep.createExpression(attrValue, signature);
 			value = defaultValueExpression.evaluate(instance);
 		} catch (Exception e) {
 			//TODO temporal workaround

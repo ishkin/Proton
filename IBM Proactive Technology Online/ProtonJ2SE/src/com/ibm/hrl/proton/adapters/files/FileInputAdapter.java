@@ -30,9 +30,11 @@ import com.ibm.hrl.proton.adapters.formatters.JSONFormatter;
 import com.ibm.hrl.proton.adapters.formatters.TagTextFormatter;
 import com.ibm.hrl.proton.adapters.interfaces.AbstractInputAdapter;
 import com.ibm.hrl.proton.adapters.interfaces.AdapterException;
+import com.ibm.hrl.proton.expression.facade.EepFacade;
 import com.ibm.hrl.proton.metadata.inout.ProducerMetadata;
 import com.ibm.hrl.proton.metadata.parser.MetadataParser;
 import com.ibm.hrl.proton.runtime.event.interfaces.IEventInstance;
+import com.ibm.hrl.proton.runtime.metadata.EventMetadataFacade;
 
 public class FileInputAdapter extends AbstractInputAdapter {
 
@@ -45,8 +47,8 @@ public class FileInputAdapter extends AbstractInputAdapter {
 	private ITextFormatter fileFormatter;
 	
 	
-	public FileInputAdapter(ProducerMetadata producerMetadata,IInputConnector serverConnector) throws AdapterException {
-		super(producerMetadata,serverConnector);		
+	public FileInputAdapter(ProducerMetadata producerMetadata,IInputConnector serverConnector,EventMetadataFacade eventMetadata,EepFacade eep) throws AdapterException {
+		super(producerMetadata,serverConnector,eventMetadata);		
 		this.inputFileName = ((FileInputAdapterConfiguration)configuration).getInputFileName();				
 		TextFormatterType formatterType = ((FileInputAdapterConfiguration)configuration).getFileFormatterType();
 		
@@ -57,10 +59,10 @@ public class FileInputAdapter extends AbstractInputAdapter {
 		case XML:
 			throw new UnsupportedOperationException("Currently XML formatter is not supported");
 		case JSON:
-			fileFormatter = new JSONFormatter(producerMetadata.getProducerProperties());
+			fileFormatter = new JSONFormatter(producerMetadata.getProducerProperties(),eventMetadata,eep);
 			break;
 		case TAG:
-			fileFormatter = new TagTextFormatter(producerMetadata.getProducerProperties());
+			fileFormatter = new TagTextFormatter(producerMetadata.getProducerProperties(),eventMetadata,eep);
 			break;
 		default:
 			throw new AdapterException("Could not initialize file input adapter:"+this+" unrecognised formatter type");

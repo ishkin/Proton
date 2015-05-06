@@ -24,5 +24,21 @@ enum DefinitionType {
 	SEGMENTATION_CONTEXT,
 	COMPOSITE_CONTEXT,
 	EPA,
-	PRA,
+	PRA;
+	
+	@Override
+	public String toString() {
+		switch (this) {
+			case ACTION: return "Action";
+			case EVENT: return "Event";
+			case TEMPORAL_CONTEXT: return "Temporal Context";
+			case SEGMENTATION_CONTEXT: return "Segmentation Context";
+			case COMPOSITE_CONTEXT: return "Composite Context";
+			case CONSUMER: return "Consumer";
+			case PRODUCER: return "Producer";
+			case EPA: return "EPA";
+			case PRA: return "PRA";
+			default:  throw new IllegalArgumentException();
+		}
+	}
 }

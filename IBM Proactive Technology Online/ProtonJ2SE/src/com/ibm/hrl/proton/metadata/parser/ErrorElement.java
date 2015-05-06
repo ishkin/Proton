@@ -87,5 +87,24 @@ enum ErrorElement {
 	PRODUCER_EVENT_CONDITION,
 	CONSUMER_EVENTS_ACTIONS,
 	SLIDING_WINDOW_DURATION,
-	SLIDING_WINDOW_PERIOD
+	SLIDING_WINDOW_PERIOD;
+	
+	public String toString() {
+		return capitalizeFirsts(super.toString().replace('_', ' '));
+	}
+	
+	private String capitalizeFirsts(String str) {
+		int index = str.indexOf(' ');
+		
+		if (str.length() <= 1) {
+			return str.toUpperCase();
+		}
+		
+		String tmpStr = new String(str.split(" ")[0]);
+		tmpStr = Character.toUpperCase(tmpStr.charAt(0)) + tmpStr.substring(1).toLowerCase();
+		if (index == -1) {
+			return tmpStr;
+		}
+		return tmpStr + " " + capitalizeFirsts(str.substring(index+1));
+	}
 }

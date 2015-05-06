@@ -24,6 +24,9 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.UUID;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.ibm.hrl.proton.context.metadata.ComposedSegmentation;
 import com.ibm.hrl.proton.context.metadata.EventInitiator;
 import com.ibm.hrl.proton.context.metadata.ITemporalContextBound;
@@ -56,6 +59,8 @@ public class TemporalPartition implements ISegmentationPartition {
 	public Date getInitiationTime() {
 		return initiationTime;
 	}
+	
+	private static Logger logger = LoggerFactory.getLogger(TemporalPartition.class);
 
 	public TemporalPartition(ArrayList<ITemporalContextBound> initiators,SegmentationValue globalSegmentatition) {
 		this.initiators = initiators;
@@ -123,13 +128,13 @@ public class TemporalPartition implements ISegmentationPartition {
 		// we create a new one; this methods returns a collection with single partition id
 		// in order to be compatible with SlidingTemporalPartition.findInternalPartition 
 			
-		//boolean foundPartition = false;	
-		
-		
+		//boolean foundPartition = false;			
+		logger.debug("findInternalPartition: finding internal partitions for event" + event);
 		
 		Map<String,Object> globalSegmentValue = new HashMap<String,Object>();
 		Map<UUID,String> globalValues = globalSegmentation.getValues();
 		ComposedSegmentation globalCS = globalSegmentation.getType();
+		logger.debug("findInternalPartition: globalValues"+globalValues+", global CS: "+globalCS);
 		if (globalCS != null)
 		{
 			Collection<SegmentationContextType> globalSegments = globalCS.getSegments(); 
@@ -139,20 +144,28 @@ public class TemporalPartition implements ISegmentationPartition {
 			}
 		}
 		
-	
+		
 		Collection<Pair<String,Map<String,Object>>> participating = new HashSet<Pair<String,Map<String,Object>>>();
 		SegmentationValue eSegmentation = localSegmentation.getSegmentationValue(event);
+		logger.debug("findInternalPartition: eSegmentation"+eSegmentation);
 		// go over all internal partitions and find one with relevant value
 		for (SegmentationValue segmentation: internalPartitions.keySet()) {
+			logger.debug("findInternalPartition: iterating over internal partitions" +segmentation);
 			if (segmentation.compliesWith(eSegmentation)) {
+				logger.debug("findInternalPartition: segmetnation" + segmentation+" complies with eSegmentation"+eSegmentation);
 				InternalSegmentationPartition existingPartition = internalPartitions.get(segmentation);				
+				logger.debug("findInternalPartition: existing partition"+existingPartition);
 				String currentPartition = existingPartition.getPartitionId().toString();
 				
 				Map<String,Object> segmentValue = new HashMap<String,Object>();
 				Map<UUID,String> values = internalPartitions.get(segmentation).getSegmentationValue().getValues();
 				ComposedSegmentation cs = internalPartitions.get(segmentation).getSegmentationValue().getType();
+				logger.debug("findInternalPartition: internal partition segementation values"+values);
+				logger.debug("findInternalPartition: internal partition composed segmentation"+cs);
 				Collection<SegmentationContextType> segments = cs.getSegments(); 
+				logger.debug("findInternalPartition: internal partition segments"+segments);
 				for (SegmentationContextType segment: segments) {
+					logger.debug("findInternalPartition: iterating over segments"+segment);
 					String name = segment.getName();
 					segmentValue.put(name,values.get(segment.getId()));
 				}
@@ -160,6 +173,8 @@ public class TemporalPartition implements ISegmentationPartition {
 				segmentValue.putAll(globalSegmentValue);
 				
 				participating.add(new Pair<String,Map<String,Object>>(currentPartition,segmentValue));
+				
+				logger.debug("findInternalPartition: returning participating partitions"+participating);
 				return participating;
 			}
 		}

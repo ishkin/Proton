@@ -23,10 +23,12 @@ import java.util.Map;
 import json.java.JSONObject;
 
 import com.ibm.hrl.proton.adapters.interfaces.AdapterException;
+import com.ibm.hrl.proton.expression.facade.EepFacade;
 import com.ibm.hrl.proton.metadata.epa.basic.IDataObject;
 import com.ibm.hrl.proton.metadata.event.EventHeader;
 import com.ibm.hrl.proton.metadata.parser.MetadataParser;
 import com.ibm.hrl.proton.metadata.type.enums.AttributeTypesEnum;
+import com.ibm.hrl.proton.runtime.metadata.EventMetadataFacade;
 
 /**
  * @author kofman
@@ -36,14 +38,14 @@ public class JSONFormatter extends BaseJsonFormatter {
 
 
 	
-	public JSONFormatter(Map<String,Object> properties) throws AdapterException
+	public JSONFormatter(Map<String,Object> properties,EventMetadataFacade eventMetadata,EepFacade eep) throws AdapterException
 	{
-		this((String)properties.get(MetadataParser.DATE_FORMAT));
+		this((String)properties.get(MetadataParser.DATE_FORMAT),eventMetadata,eep);
 	}
 	
-	private JSONFormatter(String dateFormat) throws AdapterException 
+	private JSONFormatter(String dateFormat,EventMetadataFacade eventMetadata,EepFacade eep) throws AdapterException 
 	{
-		super(dateFormat);
+		super(dateFormat,eventMetadata,eep);
 	}
 	
 	

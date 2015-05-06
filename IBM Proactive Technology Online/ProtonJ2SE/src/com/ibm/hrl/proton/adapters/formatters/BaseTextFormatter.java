@@ -19,11 +19,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.ibm.hrl.proton.adapters.interfaces.AdapterException;
+import com.ibm.hrl.proton.expression.facade.EepFacade;
 import com.ibm.hrl.proton.metadata.epa.basic.IDataObject;
 import com.ibm.hrl.proton.metadata.event.EventHeader;
 import com.ibm.hrl.proton.metadata.event.IEventType;
 import com.ibm.hrl.proton.metadata.type.TypeAttribute;
-import com.ibm.hrl.proton.metadata.type.enums.AttributeTypesEnum;
 import com.ibm.hrl.proton.runtime.event.EventInstance;
 import com.ibm.hrl.proton.runtime.event.interfaces.IEventInstance;
 import com.ibm.hrl.proton.runtime.metadata.EventMetadataFacade;
@@ -40,9 +40,9 @@ public abstract class BaseTextFormatter extends AbstractTextFormatter {
 	protected String delimeter;
 	protected String tagDataSeparator;
 
-	protected BaseTextFormatter(String delimeter, String tagDataSeparator,String dateFormat) throws AdapterException
+	protected BaseTextFormatter(String delimeter, String tagDataSeparator,String dateFormat,EventMetadataFacade eventMetadata,EepFacade eep) throws AdapterException
 	{
-		super(dateFormat);
+		super(dateFormat,eventMetadata,eep);
 		this.delimeter = delimeter;
 		this.tagDataSeparator = tagDataSeparator;
 	}
@@ -62,7 +62,7 @@ public abstract class BaseTextFormatter extends AbstractTextFormatter {
 		int delimiterIndex = substring.indexOf(delimeter);
 		int tagDataSeparatorIndex = substring.indexOf(tagDataSeparator);
 		String nameValue = substring.substring(tagDataSeparatorIndex+1,delimiterIndex);
-		IEventType eventType= EventMetadataFacade.getInstance().getEventType(nameValue);
+		IEventType eventType= eventMetadata.getEventType(nameValue);
 		
 		//search for all pairs of tag-data by using delimiter
 		Map<String,Object> attrValues = new HashMap<String,Object>();
@@ -107,7 +107,7 @@ public abstract class BaseTextFormatter extends AbstractTextFormatter {
 			Object attrValueObject;	        
 	      
 	        try {
-				attrValueObject = TypeAttribute.parseConstantValue(attrStringValue, attrName,eventType,dateFormatter);
+				attrValueObject = TypeAttribute.parseConstantValue(attrStringValue, attrName,eventType,dateFormatter,eep);
 			} catch (Exception e) {
 				throw new AdapterException("Could not parse the event string"+eventText+", reason: "+e.getMessage());
 			} 

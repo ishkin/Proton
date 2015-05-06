@@ -29,9 +29,11 @@ import com.ibm.hrl.proton.adapters.formatters.TagTextFormatter;
 import com.ibm.hrl.proton.adapters.formatters.XmlNgsiFormatter;
 import com.ibm.hrl.proton.adapters.interfaces.AbstractOutputAdapter;
 import com.ibm.hrl.proton.adapters.interfaces.AdapterException;
+import com.ibm.hrl.proton.expression.facade.EepFacade;
 import com.ibm.hrl.proton.metadata.epa.basic.IDataObject;
 import com.ibm.hrl.proton.metadata.inout.ConsumerMetadata;
 import com.ibm.hrl.proton.metadata.parser.MetadataParser;
+import com.ibm.hrl.proton.runtime.metadata.EventMetadataFacade;
 
 public class FileOutputAdapter extends AbstractOutputAdapter {
 
@@ -42,22 +44,22 @@ public class FileOutputAdapter extends AbstractOutputAdapter {
 	ITextFormatter fileFormatter;
 
 	
-	public FileOutputAdapter(ConsumerMetadata consumerMetadata,IOutputConnector serverConnector) throws AdapterException {
-		super(consumerMetadata, serverConnector);
+	public FileOutputAdapter(ConsumerMetadata consumerMetadata,IOutputConnector serverConnector,EventMetadataFacade eventMetadata,EepFacade eep) throws AdapterException {
+		super(consumerMetadata, serverConnector,eventMetadata);
 		this.outputFileName = ((FileOutputAdapterConfiguration)configuration).getOutputFileName();
 		TextFormatterType formatterType = ((FileOutputAdapterConfiguration)configuration).getFileFormatterType();
 		
 		switch (formatterType) {
 		case XML:
-			fileFormatter = new XmlNgsiFormatter(consumerMetadata.getConsumerProperties());
+			fileFormatter = new XmlNgsiFormatter(consumerMetadata.getConsumerProperties(),eventMetadata,eep);
 			break;
 		case JSON:
-			fileFormatter = new JSONFormatter(consumerMetadata.getConsumerProperties());
+			fileFormatter = new JSONFormatter(consumerMetadata.getConsumerProperties(),eventMetadata,eep);
 			break;
 		case CSV:			
 			 throw new UnsupportedOperationException("CSV format is not supported");
 		case TAG:
-			fileFormatter = new TagTextFormatter(consumerMetadata.getConsumerProperties());
+			fileFormatter = new TagTextFormatter(consumerMetadata.getConsumerProperties(),eventMetadata,eep);
 			break;
 		default:
 			throw new AdapterException("Could not initialize file output adapter: "+this+", unrecognised formatter type");

@@ -35,6 +35,7 @@ import com.ibm.hrl.proton.runtime.context.notifications.IContextInitiationNotifi
 import com.ibm.hrl.proton.runtime.context.notifications.IContextNotification;
 import com.ibm.hrl.proton.runtime.event.interfaces.IEventInstance;
 import com.ibm.hrl.proton.runtime.metadata.ContextMetadataFacade;
+import com.ibm.hrl.proton.runtime.metadata.IMetadataFacade;
 import com.ibm.hrl.proton.runtime.metadata.RoutingMetadataFacade;
 import com.ibm.hrl.proton.runtime.metadata.epa.AgentQueueMetadata;
 import com.ibm.hrl.proton.runtime.metadata.epa.AgentQueueMetadata.SortingPolicy;
@@ -49,15 +50,16 @@ public class AgentQueuesManager {
     
     private static final String QUEUE_NAME_DELIMETER=";";
     
-	private static AgentQueuesManager instance;
+	
 	/**The datastructure where it maps the agent name to priority queue */
 	private Map<String,AgentAbstractQueue> registeredQueues;
 	
 	ITimerServices timerServices;	
     IEventHandler eventHandler;
 	IWorkManager wm;
-	
-	Logger logger = Logger.getLogger(getClass().getName());
+	ContextMetadataFacade contextMetadata;
+	RoutingMetadataFacade routingMetadataFacade;
+	private static Logger logger = Logger.getLogger(AgentQueuesManager.class.getName());
 	
 	/**
 	 * 
@@ -65,30 +67,18 @@ public class AgentQueuesManager {
 	 * @param eventHandler
 	 * @param workManager
 	 */
-	private AgentQueuesManager(ITimerServices timerService,IEventHandler eventHandler,IWorkManager workManager){
+	public AgentQueuesManager(ITimerServices timerService,IEventHandler eventHandler,IWorkManager workManager,IMetadataFacade metadataFacade){
 		//TODO: initialize the map to the agents size, so that resizing will not be required
 	    registeredQueues = new ConcurrentHashMap<String,AgentAbstractQueue>();
 		this.timerServices = timerService;
 		this.eventHandler = eventHandler;
 		this.wm = workManager;
+		this.contextMetadata = metadataFacade.getContextMetadataFacade();
+		this.routingMetadataFacade = metadataFacade.getRoutingMetadataFacade();
 		
 	}
 	
-	/**
-	 * Return the instance  of channel queue manager
-	 */
-	public synchronized static AgentQueuesManager initializeInstance(ITimerServices timerService,IEventHandler eventHandler,IWorkManager workManager)
-	{	    
-	    if (null == instance)
-		   instance = new AgentQueuesManager(timerService,eventHandler,workManager);
-	    
-	    return instance;
-	}
 	
-	public static AgentQueuesManager getInstance()
-	{
-	    return instance;
-	}
 	
 	public ITimerServices getTimerServices()
     {
@@ -131,14 +121,14 @@ public class AgentQueuesManager {
 				if (!registeredQueues.containsKey(queueName))
 				{				   
 				    
-				    AgentQueueMetadata agentChannelMeta = RoutingMetadataFacade.getInstance().getAgentQueueDefinitions(agentName);
+				    AgentQueueMetadata agentChannelMeta = routingMetadataFacade.getAgentQueueDefinitions(agentName);
 			        long bufferingTime = agentChannelMeta.getBufferingTime();
 			        SortingPolicy sortingPolicy = agentChannelMeta.getSortingPolicy();
 			       
 			        logger.fine("getAgentQueue: Creating a queue for agent: "+agentName+", context:"+contextName+", bufferingTime: "+bufferingTime+", sortingPolicy: "+sortingPolicy);
 			        
 			        //determine the interval initiaiton and interval termination policy for this queue representing a certain context
-			        IContextType contextType = ContextMetadataFacade.getInstance().getContext(contextName);
+			        IContextType contextType = contextMetadata.getContext(contextName);
 			        ContextIntervalPolicyEnum initIntervalPolicy = null;
 			        ContextIntervalPolicyEnum terminationInterPolicy = null;
 			        logger.fine("getAgentQueue: determining if the queue has initiation/termination interval policy");
@@ -160,10 +150,10 @@ public class AgentQueuesManager {
 			        
 				    AgentAbstractQueue channelQueue;
 				    if (sortingPolicy.equals(SortingPolicy.SORTED)){
-				        channelQueue = new AgentSortedQueue(contextName,agentName,bufferingTime,initIntervalPolicy,terminationInterPolicy);
+				        channelQueue = new AgentSortedQueue(contextName,agentName,bufferingTime,initIntervalPolicy,terminationInterPolicy,this);
 				    }else
 				    {
-				        channelQueue = new AgentlNonSortedQueue(contextName,agentName,bufferingTime,initIntervalPolicy,terminationInterPolicy);   
+				        channelQueue = new AgentlNonSortedQueue(contextName,agentName,bufferingTime,initIntervalPolicy,terminationInterPolicy,this);   
 				    }			
 					registeredQueues.put(queueName, channelQueue);
 				}
@@ -208,9 +198,9 @@ public class AgentQueuesManager {
             else
             {
                 //real event
-                eventRoles = ContextMetadataFacade.getInstance().calculateEventRoles(contextName,agentName, (IEventInstance)timedObject);
+                eventRoles = contextMetadata.calculateEventRoles(contextName,agentName, (IEventInstance)timedObject);
             }
-            AgentQueueWorkItem chWorkItem = new AgentQueueWorkItem(agentName,contextName,timedObject,eventRoles);
+            AgentQueueWorkItem chWorkItem = new AgentQueueWorkItem(agentName,contextName,timedObject,eventRoles,this,routingMetadataFacade);
             try
             {
                 wm.runWork(wm.createWork(chWorkItem));
@@ -232,7 +222,7 @@ public class AgentQueuesManager {
 	 */
 	public void passEventToQueues(ITimedObject timedObject) throws AgentQueueException
 	{
-	    Set<Pair<String,String>> agentsList = RoutingMetadataFacade.getInstance().determineRouting(timedObject);
+	    Set<Pair<String,String>> agentsList = routingMetadataFacade.determineRouting(timedObject);
 	    passEventToQueues(timedObject, agentsList);
 	}
 	

@@ -51,10 +51,12 @@ public class TemporalContextWindow {
 	protected TemporalContextType temporalContextType;	
 	//protected ComposedSegmentation segmentationContextType;
 	protected Map<SegmentationValue,ActiveTemporalContextSegment> activeSegments;
+	ContextServiceFacade facade;
 	
 
-	public TemporalContextWindow(TemporalContextType temporalContextType) {
+	public TemporalContextWindow(TemporalContextType temporalContextType,ContextServiceFacade facade) {
 		this.temporalContextType = temporalContextType;
+		this.facade = facade;
 		activeSegments = new HashMap<SegmentationValue,ActiveTemporalContextSegment> ();
 	
 	}
@@ -167,7 +169,7 @@ public class TemporalContextWindow {
 		List<ContextAbsoluteTimeTerminator> aTer = temporalContextType.getAbsoluteTimeTerminators();
 		List<ContextRelativeTimeTerminator> rTer = temporalContextType.getRelativeTimeTerminators();
 		
-		ContextServiceFacade facade = ContextServiceFacade.getInstance();
+		
 		
 		try {
 			// handle absolute time terminators

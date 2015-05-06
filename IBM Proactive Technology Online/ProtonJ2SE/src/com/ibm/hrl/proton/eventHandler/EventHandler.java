@@ -24,18 +24,16 @@ import java.util.logging.Logger;
 import com.ibm.hrl.proton.agentQueues.exception.AgentQueueException;
 import com.ibm.hrl.proton.agentQueues.exception.EventHandlingException;
 import com.ibm.hrl.proton.context.exceptions.ContextServiceException;
-import com.ibm.hrl.proton.context.facade.ContextServiceFacade;
-import com.ibm.hrl.proton.epaManager.EPAManagerFacade;
 import com.ibm.hrl.proton.epaManager.exceptions.EPAManagerException;
 import com.ibm.hrl.proton.metadata.epa.Operand;
 import com.ibm.hrl.proton.metadata.epa.interfaces.IEventProcessingAgent;
-import com.ibm.hrl.proton.router.EventRouter;
 import com.ibm.hrl.proton.router.DataSenderException;
 import com.ibm.hrl.proton.runtime.context.notifications.IContextNotification;
 import com.ibm.hrl.proton.runtime.event.interfaces.IEventInstance;
-import com.ibm.hrl.proton.runtime.metadata.EPAManagerMetadataFacade;
+import com.ibm.hrl.proton.runtime.metadata.IMetadataFacade;
 import com.ibm.hrl.proton.runtime.timedObjects.ITimedObject;
 import com.ibm.hrl.proton.utilities.containers.Pair;
+import com.ibm.hrl.proton.utilities.facadesManager.IFacadesManager;
 
 /**
  * <code>EventHandler</code>.
@@ -45,22 +43,17 @@ import com.ibm.hrl.proton.utilities.containers.Pair;
 public class EventHandler
     implements IEventHandler
 {
-    private static EventHandler instance;    
-    private Logger logger = Logger.getLogger("EventHandler");
+       
+    private static Logger logger = Logger.getLogger("EventHandler");
+    private IFacadesManager facadesManager;
+    private IMetadataFacade metadataFacade;
     
-    
-    private EventHandler(){
-        
+    public EventHandler(IFacadesManager facadesManager2,IMetadataFacade metadataFacade2){
+        this.facadesManager = facadesManager2;
+        this.metadataFacade = metadataFacade2;
     }
     
-    public static synchronized IEventHandler getInstance(){
-        if (null == instance)
-        {
-            instance = new EventHandler(); 
-        }
-        
-        return instance;
-    }
+   
    
 
     /* (non-Javadoc)
@@ -76,7 +69,7 @@ public class EventHandler
         Pair<Collection<Pair<String,Map<String,Object>>>, Collection<Pair<String,Map<String,Object>>>> partitions;
         try
         {
-            partitions = ContextServiceFacade.getInstance().processEventInstance(timedObject, contextName, agentName);
+            partitions = facadesManager.getContextServiceFacade().processEventInstance(timedObject, contextName, agentName);
         }
         catch (ContextServiceException e)
         {
@@ -101,7 +94,7 @@ public class EventHandler
             {
                 try
                 {
-                    EPAManagerFacade.getInstance().processDefferedPartitions(agentName, terminatedPartitions);
+                    facadesManager.getEpaManager().processDefferedPartitions(agentName, terminatedPartitions);
                     return;
                 }
                 catch (EPAManagerException e)
@@ -113,7 +106,7 @@ public class EventHandler
         }
         
         IEventInstance event = (IEventInstance)timedObject;
-        IEventProcessingAgent agentInstanceDef = EPAManagerMetadataFacade.getInstance().getAgentDefinition(agentName);
+        IEventProcessingAgent agentInstanceDef = metadataFacade.getEpaManagerMetadataFacade().getAgentDefinition(agentName);
         List<Operand> eventOperands = agentInstanceDef.getEventInputOperands(event.getEventType());
         if (!(eventOperands == null || eventOperands.isEmpty()))
         {
@@ -123,7 +116,7 @@ public class EventHandler
                 try
                 {
                     logger.fine("handleEventInstance: passing event for handling to EPA manager");
-                    EPAManagerFacade.getInstance().processEvent(event, agentName, participatingPartitions);
+                    facadesManager.getEpaManager().processEvent(event, agentName, participatingPartitions);
                     
                     logger.fine("handleEventInstance: passed event for handling to EPA manager");
                     
@@ -139,7 +132,7 @@ public class EventHandler
         {
             try
             {
-                EPAManagerFacade.getInstance().processDefferedPartitions(agentName, terminatedPartitions);
+            	 facadesManager.getEpaManager().processDefferedPartitions(agentName, terminatedPartitions);
             }
             catch (EPAManagerException e)
             {
@@ -159,7 +152,7 @@ public class EventHandler
     {
         try
         {
-            EventRouter.getInstance().routeTimedObject(contextNotification);
+           facadesManager.getEventRouter().routeTimedObject(contextNotification);
         }
         catch (AgentQueueException e)
         {

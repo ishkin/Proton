@@ -17,19 +17,13 @@ package com.ibm.hrl.proton.metadata.type;
 
 import java.io.Serializable;
 import java.text.DateFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
 
 import com.ibm.eep.exceptions.ParseException;
 import com.ibm.hrl.proton.expression.facade.EEPException;
 import com.ibm.hrl.proton.expression.facade.EepFacade;
-import com.ibm.hrl.proton.metadata.epa.basic.IDataObject;
 import com.ibm.hrl.proton.metadata.epa.basic.IDataObjectMeta;
 import com.ibm.hrl.proton.metadata.epa.basic.IFieldMeta;
-import com.ibm.hrl.proton.metadata.event.IEventType;
 import com.ibm.hrl.proton.metadata.type.enums.AttributeTypesEnum;
-import com.ibm.hrl.proton.runtime.epa.interfaces.IExpression;
-import com.ibm.hrl.proton.runtime.event.EventInstance;
 
 public class TypeAttribute implements Serializable, IFieldMeta{
 
@@ -128,8 +122,8 @@ public class TypeAttribute implements Serializable, IFieldMeta{
 	 * @throws ParseException
 	 * @throws EEPException
 	 */
-	public static Object parseConstantValue(String attrValue,String attrName,IDataObjectMeta objectMetadata,DateFormat dateFormatter) throws EEPException{
-		return AttributeValueParser.parseConstantValue(attrValue, attrName, objectMetadata, dateFormatter);
+	public static Object parseConstantValue(String attrValue,String attrName,IDataObjectMeta objectMetadata,DateFormat dateFormatter,EepFacade eep) throws EEPException{
+		return AttributeValueParser.parseConstantValue(attrValue, attrName, objectMetadata, dateFormatter,eep);
 	}
 	
 	/**

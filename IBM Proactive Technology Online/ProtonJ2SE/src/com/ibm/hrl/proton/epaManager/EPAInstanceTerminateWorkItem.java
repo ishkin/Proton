@@ -39,11 +39,11 @@ public class EPAInstanceTerminateWorkItem implements IWorkItem
     
     
     public EPAInstanceTerminateWorkItem(
-            IEventProcessingAgentInstance eventProcessingAgentInstance)
+            IEventProcessingAgentInstance eventProcessingAgentInstance, IEventRouter eventRouter)
     {
         super();
         this.eventProcessingAgentInstance = eventProcessingAgentInstance;
-        eventRouter = EPAManagerFacade.getInstance().getEventRouter();
+        this.eventRouter = eventRouter;
     }
 
 

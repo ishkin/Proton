@@ -38,9 +38,9 @@ public class AgentSortedQueue extends AgentAbstractQueue {
     private static final long serialVersionUID = 1L;
 
 
-    public AgentSortedQueue(String contextName, String agentName,long bufferingTime,ContextIntervalPolicyEnum initiationPolicy,ContextIntervalPolicyEnum terminationPolicy)
+    public AgentSortedQueue(String contextName, String agentName,long bufferingTime,ContextIntervalPolicyEnum initiationPolicy,ContextIntervalPolicyEnum terminationPolicy,AgentQueuesManager queueManager)
 	{
-	    super(contextName,agentName,bufferingTime,initiationPolicy,terminationPolicy,new PriorityQueue<QueueElement>());
+	    super(contextName,agentName,bufferingTime,initiationPolicy,terminationPolicy,new PriorityQueue<QueueElement>(),queueManager);
 	}
 	
 
@@ -56,7 +56,7 @@ public class AgentSortedQueue extends AgentAbstractQueue {
  
     public synchronized boolean offer(Object o) 
     {
-       ITimerServices timerService = AgentQueuesManager.getInstance().getTimerServices();
+       ITimerServices timerService = queueManager.getTimerServices();
         
        logger.entering(getClass().getName(), "offer");
        //gets the head element of the queue and compares it with the current element

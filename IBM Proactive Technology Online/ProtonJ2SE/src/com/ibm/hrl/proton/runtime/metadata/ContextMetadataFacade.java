@@ -15,6 +15,7 @@
  ******************************************************************************/
 package com.ibm.hrl.proton.runtime.metadata;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -37,20 +38,20 @@ import com.ibm.hrl.proton.runtime.event.interfaces.IEventInstance;
  * 
  *
  */
-public class ContextMetadataFacade
+public class ContextMetadataFacade implements Serializable
 {
         
-    private static ContextMetadataFacade instance = null;
+   
     /** Mapping between context type name and its definition */
     private Map<String,IContextType> contexts;
     
     private Map<String,Collection<IEventProcessingAgent>> contextAgents;
     
     private Map<String,Map<String,Set<EventRoleInContextEnum>>> eventRoles;
-    Logger logger = Logger.getLogger(getClass().getName());
+    private static Logger logger = Logger.getLogger(ContextMetadataFacade.class.getName());
     
     /** Ctor - initialize the internal data structure */
-    private ContextMetadataFacade(Map<String,IContextType> contextTypes,
+    public ContextMetadataFacade(Map<String,IContextType> contextTypes,
     		Map<String,Collection<IEventProcessingAgent>> contextAgents)
     {
         this.contexts = new HashMap<String,IContextType>(contextTypes);
@@ -166,34 +167,10 @@ public class ContextMetadataFacade
         eventRole.add(contextRole);
     }
 
-    /**
-     * This method is called at system startup when parsing the definitions -
-     * to initialize this singleton with context metadata
-     * @param metadata
-     */
-    public static synchronized void initializeContext(Map<String,IContextType> contextTypes,
-    		Map<String,Collection<IEventProcessingAgent>> contextAgents) {
-        if (instance == null){
-            instance = new ContextMetadataFacade(contextTypes,contextAgents); 
-        }
-        
-    }
+       
     
-    
-    public synchronized void cleanUpState()
-    {
-    	if (instance != null){
-    		instance = null;
-    	}
-    }
-    
-    /**
-     * Get instance of this singleton
-     * @return
-     */
-    public static ContextMetadataFacade getInstance(){
-        return instance;
-    }
+   
+   
     
     /**
      * Return the context type object for the context by the specified name
@@ -253,8 +230,10 @@ public class ContextMetadataFacade
     /**
      * Clear previous contexts data (used by the parser before parsing a new project definition)
      */
-	public static synchronized void clear() {
-		instance = null;
+	public  void clear() {
+		contexts.clear();
+		contextAgents.clear();
+		eventRoles.clear();
 		
 	}
     

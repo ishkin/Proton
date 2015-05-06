@@ -28,14 +28,17 @@ import com.ibm.hrl.proton.adapters.interfaces.AdapterException;
 import com.ibm.hrl.proton.adapters.interfaces.IAdapter;
 import com.ibm.hrl.proton.adapters.interfaces.IOutputAdapter;
 import com.ibm.hrl.proton.adapters.rest.client.RESTOutputAdapter;
+import com.ibm.hrl.proton.expression.facade.EepFacade;
 import com.ibm.hrl.proton.metadata.inout.BaseConsumerMetadata.ConsumerType;
 import com.ibm.hrl.proton.metadata.inout.ConsumerMetadata;
 import com.ibm.hrl.proton.metadata.inout.ConsumerProducerMetadata;
 import com.ibm.hrl.proton.router.DataSenderException;
+import com.ibm.hrl.proton.runtime.metadata.IMetadataFacade;
 import com.ibm.hrl.proton.server.adapter.connectors.ServerOutputConnector;
 import com.ibm.hrl.proton.server.adapter.eventHandlers.DataSender;
 import com.ibm.hrl.proton.server.adapter.eventHandlers.StandaloneDataSender;
 import com.ibm.hrl.proton.server.executorServices.ExecutorUtils;
+import com.ibm.hrl.proton.utilities.facadesManager.IFacadesManager;
 
 public class OutputServer extends AbstractServer
 {
@@ -44,9 +47,10 @@ public class OutputServer extends AbstractServer
 	private static final Logger logger = Logger.getLogger(OutputServer.class.getName());	  
 	
     
-    public OutputServer(int port, int backlog) throws ProtonServerException
+    public OutputServer(int port, int backlog,IFacadesManager facadesManager,IMetadataFacade metadataFacade,EepFacade eep) throws ProtonServerException
     {
-    	super(port, backlog);    	
+    	super(port, backlog,facadesManager,metadataFacade,eep);    	
+    	
     }
     
     @Override
@@ -68,7 +72,7 @@ public class OutputServer extends AbstractServer
 
                 // Add the socket to the new RequestQueue
                 DataSender eventSender = new DataSender(s);
-                StandaloneDataSender.getInstance().addDataSender(eventSender);
+                ((StandaloneDataSender)facadesManager.getDataSender()).addDataSender(eventSender);
                 ExecutorUtils.execute(eventSender);
              
             }
@@ -102,14 +106,14 @@ public class OutputServer extends AbstractServer
 			case FILE:
 				//get the input file properties
 				//TODO - the parsing of the properties should be done by the specific adapter implementation in static method, return the appropriate configuration object				
-				outputAdapter = new FileOutputAdapter(consumerMetadata, new ServerOutputConnector(this.port));
+				outputAdapter = new FileOutputAdapter(consumerMetadata, new ServerOutputConnector(this.port),metadataFacade.getEventMetadataFacade(),eep);
 				break;
 
 			case DB:
 				break;
 			
 			case REST:
-				outputAdapter = new RESTOutputAdapter(consumerMetadata, new ServerOutputConnector(this.port));
+				outputAdapter = new RESTOutputAdapter(consumerMetadata, new ServerOutputConnector(this.port),metadataFacade.getEventMetadataFacade(),eep);
 				break;
 			case CUSTOM:
 				//fetch the class name and load the implementation class
@@ -129,7 +133,7 @@ public class OutputServer extends AbstractServer
 	{
 		super.stopServer();
 		try {
-			StandaloneDataSender.getInstance().shutdownDataSender();
+			facadesManager.getDataSender().shutdownDataSender();
 		} catch (DataSenderException e) {
 			logger.severe("Error shutting down data senders, reason: "+e.getMessage());
 			throw new ProtonServerException("Error shutting down data senders, reason: "+e.getMessage());

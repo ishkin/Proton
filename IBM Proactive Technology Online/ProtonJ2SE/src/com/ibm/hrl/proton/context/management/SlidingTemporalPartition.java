@@ -20,10 +20,16 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.UUID;
-import java.util.logging.Logger;
+
+
+
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.ibm.hrl.proton.context.exceptions.ContextServiceException;
 import com.ibm.hrl.proton.context.facade.ContextServiceFacade;
+import com.ibm.hrl.proton.context.facade.IContextService;
 import com.ibm.hrl.proton.context.management.AdditionalInformation.NotificationTypeEnum;
 import com.ibm.hrl.proton.context.metadata.ComposedSegmentation;
 import com.ibm.hrl.proton.context.metadata.ITemporalContextBound;
@@ -44,27 +50,29 @@ import com.ibm.hrl.proton.utilities.timerService.TimerServiceException;
 public class SlidingTemporalPartition extends TemporalPartition implements ITimerListener {
 	
 	private static final long serialVersionUID = 1L;
-	public static final Logger logger = Logger.getLogger(SlidingTemporalPartition.class.getName());
+	public static final Logger logger = LoggerFactory.getLogger(SlidingTemporalPartition.class);
 	protected long duration; // sliding window length	
 	protected long period;   // sliding window repeating period
 	protected ArrayList<SlidingTemporalInternalPartition> slidingInternalPartitions;
 	protected String contextName;
 	protected String agentName;
 	protected String compositeContextName;
+	private ContextServiceFacade facade;
 		
 	
 	public SlidingTemporalPartition(ArrayList<ITemporalContextBound> initiators,
-			long duration, long period, String contextName,String compositeContextName,SegmentationValue globalSegmentation,String agentName) throws ContextServiceException {
+			long duration, long period, String contextName,String compositeContextName,SegmentationValue globalSegmentation,String agentName,IContextService contextServiceFacade) throws ContextServiceException {
 		
 		
 		super(initiators,globalSegmentation);
+		this.facade = (ContextServiceFacade)contextServiceFacade;
 		this.period = period;
 		this.duration = duration;
 		this.contextName = contextName;
 		this.compositeContextName = compositeContextName;
 		this.agentName = agentName;
 		slidingInternalPartitions = new ArrayList<SlidingTemporalInternalPartition>();
-		logger.fine("Creating new SlidingTemporalPartition");
+		logger.debug("Creating new SlidingTemporalPartition");
 		
 		try {
 			// first sliding internal partition is initiated
@@ -79,7 +87,7 @@ public class SlidingTemporalPartition extends TemporalPartition implements ITime
 	
 	private void createRepeatingInitiationTimer() throws TimerServiceException {
 
-		ContextServiceFacade facade = ContextServiceFacade.getInstance();
+		
 		// add repeating timers for initiation of consequent sliding internal partitions	
 		AdditionalInformation initiationInfo = new SlidingPartitionAdditionalInformation(contextName,
 				null,null,NotificationTypeEnum.INITIATOR,getPartitionUUID(),null);
@@ -124,7 +132,7 @@ public class SlidingTemporalPartition extends TemporalPartition implements ITime
 		}
 		
 		// destroy internal partitions initiation and termination timers
-		ContextServiceFacade facade = ContextServiceFacade.getInstance();
+		
 		facade.getTimerServices().destroyTimers(this);
 		
 		return terminatedPartitions;
@@ -136,23 +144,24 @@ public class SlidingTemporalPartition extends TemporalPartition implements ITime
 		// at this point we know that event falls into this temporal partition
 		// now we lookup the internal partition this event falls into, and if it does not exist -
 		// we create a new partition(s); this methods returns a collection of partition ids
-			
+		logger.debug("findInternalPartition: for event"+event+", segmentation: "+localSegmentation);	
 		//boolean foundPartition = false;	
 		Collection<Pair<String,Map<String,Object>>> participating = new HashSet<Pair<String,Map<String,Object>>>();
 		SegmentationValue eSegmentation = localSegmentation.getSegmentationValue(event);
+		logger.debug("findInternalPartition: eSegmentation"+eSegmentation);
 		// go over all internal partitions and find partitions with relevant value
 		// basically for each existing sliding partition there should be relevant internal one
 		for (SlidingTemporalInternalPartition partition: slidingInternalPartitions) {
-			logger.fine("findInternalPartition: search for matching internal partitions for event "+event+ "inside sliding partition: "+partition.getId().toString());
+			logger.debug("findInternalPartition: search for matching internal partitions for event "+event+ "inside sliding partition: "+partition.getId().toString());
 			Collection participatingInsideSliding = partition.findInternalPartition(eSegmentation);
 			
 			//if we cannot find any - means no such internal partition for this segmentation - create one
 			if (participatingInsideSliding.isEmpty()){
-				logger.fine("findInternalPartition: didn't find matching internal parititons for event" +event+"inside sliding partition: "+partition.getId().toString()+" , adding a new internal partition...");
+				logger.debug("findInternalPartition: didn't find matching internal parititons for event" +event+"inside sliding partition: "+partition.getId().toString()+" , adding a new internal partition...");
 				participatingInsideSliding.add(partition.addInternalPartition(eSegmentation));
 			}else
 			{
-				logger.fine("findInternalPartition: found matching internal parititons for event" +event+"...");
+				logger.debug("findInternalPartition: found matching internal parititons for event" +event+"...");
 			}
 			
 			participating.addAll(participatingInsideSliding);			
@@ -185,7 +194,7 @@ public class SlidingTemporalPartition extends TemporalPartition implements ITime
 		//String contextBoundId = ((AdditionalInformation)info).getContextBoundId().toString();
 		NotificationTypeEnum notificationType = ((AdditionalInformation)info).getNotificationType();
 		
-		logger.fine("on timer - sliding temporal partition, with " +
+		logger.debug("on timer - sliding temporal partition, with " +
 				notificationType + " at " + System.currentTimeMillis());
 		
 		
@@ -200,34 +209,34 @@ public class SlidingTemporalPartition extends TemporalPartition implements ITime
 			
 			if (compositeContextName!= null)
 			{
-				logger.fine("Creating composite context termination notification");
+				logger.debug("Creating composite context termination notification");
 				notification = new SlidingWindowTerminationNotification(compositeContextName,((SlidingPartitionAdditionalInformation)info).getAgentName(),
 						System.currentTimeMillis(),System.currentTimeMillis(),contextBoundId,
 						getPartitionUUID(),internalPartitionId);
 				
 			}else
 			{
-				logger.fine("Creating sliding context termination notification");
+				logger.debug("Creating sliding context termination notification");
 				notification = new SlidingWindowTerminationNotification(contextName,((SlidingPartitionAdditionalInformation)info).getAgentName(),
 						System.currentTimeMillis(),System.currentTimeMillis(),contextBoundId,
 						getPartitionUUID(),internalPartitionId);
 				
 			}
 			
-			ContextServiceFacade.getInstance().getEventHandler().routeContextNotification(notification);
+			facade.getEventHandler().routeContextNotification(notification);
 		}				
 		return null;
 	}
 	
 	private  UUID initiateSlidingTemporalPartition() throws ContextServiceException {
 		
-		logger.fine("SlidingTemporalPartition: initiateSlidingTemporalPartition: creating new sliding partition , initiating termination timer on new sliding temporal partition");
+		logger.debug("SlidingTemporalPartition: initiateSlidingTemporalPartition: creating new sliding partition , initiating termination timer on new sliding temporal partition");
 		SlidingTemporalInternalPartition partition = new SlidingTemporalInternalPartition(this.globalSegmentation);
-		logger.fine("SlidingTemporalPartition: initiateSlidingTemporalPartition:created new sliding partition : "+partition.getId().toString());
+		logger.debug("SlidingTemporalPartition: initiateSlidingTemporalPartition:created new sliding partition : "+partition.getId().toString());
 		slidingInternalPartitions.add(partition);
 		
 		try { 	
-			ContextServiceFacade facade = ContextServiceFacade.getInstance();
+			
 			// add timer for termination of this newly created partition (triggers epa evaluation);
 			// timer trigger will be converted into notification that will processed as timer notification
 			// and will terminate this partition; the additional info type along with partition id
@@ -250,28 +259,28 @@ public class SlidingTemporalPartition extends TemporalPartition implements ITime
 	}
 
 	public  Collection<Pair<String,Map<String,Object>>> terminate(UUID internalPartition) {
-		logger.fine("SlidingTemporalPartition:: terminate - sliding temporal partition, with UUID" +
+		logger.debug("SlidingTemporalPartition:: terminate - sliding temporal partition, with UUID" +
 				internalPartition + " at " + System.currentTimeMillis());
 		Collection<Pair<String,Map<String,Object>>> terminatedPartitions = new HashSet<Pair<String,Map<String,Object>>>();
 		// terminate all sliding temporal internal partitions
 		ArrayList<SlidingTemporalInternalPartition> terminatedSlidingPartitions = new ArrayList<SlidingTemporalInternalPartition>();
 		for (SlidingTemporalInternalPartition partition: slidingInternalPartitions) {
 			if (partition.getId().toString().equals(internalPartition.toString())) {
-				logger.fine("SlidingTemporalPartition:terminate: terminating sliding partition with id: "+partition.getId().toString());
+				logger.debug("SlidingTemporalPartition:terminate: terminating sliding partition with id: "+partition.getId().toString());
 				terminatedPartitions.addAll(partition.terminate());
 				terminatedSlidingPartitions.add(partition);
 				// remove this sliding partition
 				//slidingInternalPartitions.remove(partition);
 			}else{
-				logger.fine("SlidingTemporalPartition:terminate: sliding partition with id: "+partition.getId().toString()+" doesnt match the termination id: "+internalPartition.toString()+"leaving it as is");
+				logger.debug("SlidingTemporalPartition:terminate: sliding partition with id: "+partition.getId().toString()+" doesnt match the termination id: "+internalPartition.toString()+"leaving it as is");
 			}
 			
 		}
 		slidingInternalPartitions.removeAll(terminatedSlidingPartitions);
-		logger.fine("SlidingTemporalPartition:terminate: terminate - terminated internal partitions" +
+		logger.debug("SlidingTemporalPartition:terminate: terminate - terminated internal partitions" +
 				terminatedPartitions + " at " + System.currentTimeMillis()+", left with sliding partitions: "+slidingInternalPartitions);
 		for (SlidingTemporalInternalPartition partition : slidingInternalPartitions) {
-			logger.fine("SlidingTemporalPartition:terminate: left with sliding partitions: "+partition.getId().toString());
+			logger.debug("SlidingTemporalPartition:terminate: left with sliding partitions: "+partition.getId().toString());
 		}
 		return terminatedPartitions;
 	}

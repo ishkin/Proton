@@ -29,18 +29,13 @@ import com.ibm.hrl.proton.utilities.persistence.IPersistenceManager;
  */
 public class ContextStateManager implements IContextStateManager {
 
-	private static ContextStateManager instance;
+	
     private IPersistenceManager persistenceManager;
     
     // the key is context name + agent name
     private Map<String,CompositeContextInstance> contexts;
     
-    public synchronized static ContextStateManager getInstance() {
-        if (instance == null){
-            instance = new ContextStateManager(null);            
-        }
-        return instance;
-    }
+  
 
     public IPersistenceManager getPersistenceManager() {
     	return persistenceManager;
@@ -63,5 +58,9 @@ public class ContextStateManager implements IContextStateManager {
     	String key = context.getContextName().concat(context.getAgentName());
     	assert(!contexts.containsKey(key));    	    	
     	contexts.put(key,context);    	
+    }
+    
+    public void clearState(){
+    	contexts.clear();
     }
 }

@@ -15,12 +15,13 @@
  ******************************************************************************/
 package com.ibm.hrl.proton.metadata.inout;
 
+import java.io.Serializable;
 import java.util.Map;
 
 import com.ibm.hrl.proton.metadata.event.IEventType;
 import com.ibm.hrl.proton.runtime.epa.interfaces.IExpression;
 
-public class ProducerMetadata {
+public class ProducerMetadata implements Serializable{
 	public enum ProducerType {FILE,TIMED,DB,JMS,REST,CUSTOM};
 	
 	private ProducerType producerType;

@@ -15,10 +15,12 @@
  ******************************************************************************/
 package com.ibm.hrl.proton.metadata;
 
+import java.io.Serializable;
+
 import com.ibm.hrl.proton.metadata.type.interfaces.IBasicType;
 import com.ibm.hrl.proton.runtime.epa.interfaces.IExpression;
 
-public class TypePredicatePair {
+public class TypePredicatePair implements Serializable{
 
 	protected IBasicType type;
     protected IExpression parsedCondition;

@@ -31,5 +31,28 @@ enum ParseErrorEnum {
 	ATTRIBUTE_ALREADY_EXISTS,
 	NO_DEFAULT_VALUE,
 	BAD_VALUE,
-	INPUT_EVENT_NOT_DEFINED_IN_CONTEXT_PARTICIPATING_EVENTS
+	INPUT_EVENT_NOT_DEFINED_IN_CONTEXT_PARTICIPATING_EVENTS;
+	
+	public String toString(String elementString) {
+		switch (this) {
+			case NULL_ELEMENT: return "Missing required element of " + elementString;
+			case NAME_ALREADY_EXISTS: return "Name of " + elementString + " already exists";
+			case BAD_ENUM_VALUE: return "Bad " + elementString + "'s Enum value";
+			case EEP_ERROR: return "EEP error in " + elementString;
+			case INVALID_JSON_FORMAT: return "Invalid JSON format of " + elementString;
+			case MISSING_REQUIRED_ATTRIBUTES: return "Missing required attributes of  " + elementString;
+			case EMPTY_COLLECTION: return "Empty Collection of " + elementString;
+			case INDEX_OUT_OF_RANGE: return "Index of " + elementString + " out of range";
+			case ELEMENT_NOT_DEFINED: return "Element " + elementString + " is not defined";
+			case BAD_TYPE: return "Bad type of " + elementString;
+			case MISSING_ALIAS: return "Missing alias of " + elementString;
+			case REPEATING_ALIAS: return "Repeating alias of " + elementString;
+			case ATTRIBUTE_ALREADY_EXISTS: return "Attribute of " + elementString + " already exists";
+			case NO_DEFAULT_VALUE: return "No default value for " + elementString;
+			case BAD_VALUE: return "Bad value of " + elementString;
+			case INPUT_EVENT_NOT_DEFINED_IN_CONTEXT_PARTICIPATING_EVENTS: return "Input Event not defined in Context's Participating Events";
+			default:  throw new IllegalArgumentException();
+		}
+	}
+	
 }

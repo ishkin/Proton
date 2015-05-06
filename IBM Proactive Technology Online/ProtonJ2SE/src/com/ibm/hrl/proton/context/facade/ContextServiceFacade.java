@@ -19,14 +19,19 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import java.util.logging.Logger;
+
+
+
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.ibm.hrl.proton.context.exceptions.ContextCreationException;
 import com.ibm.hrl.proton.context.exceptions.ContextServiceException;
 import com.ibm.hrl.proton.context.management.AdditionalInformation;
+import com.ibm.hrl.proton.context.management.AdditionalInformation.NotificationTypeEnum;
 import com.ibm.hrl.proton.context.management.CompositeContextInstance;
 import com.ibm.hrl.proton.context.management.ContextInitiationNotification;
-import com.ibm.hrl.proton.context.management.AdditionalInformation.NotificationTypeEnum;
 import com.ibm.hrl.proton.context.state.ContextStateManager;
 import com.ibm.hrl.proton.eventHandler.IEventHandler;
 import com.ibm.hrl.proton.metadata.context.ContextAbsoluteTimeInitiator;
@@ -51,24 +56,25 @@ import com.ibm.hrl.proton.utilities.timerService.ITimerServices;
 public class ContextServiceFacade implements IContextService
 {
     
-    private static ContextServiceFacade instance;
+   
     ITimerServices timerServices;   
     IEventHandler eventHandler;
+    ContextMetadataFacade contextMetadata;
+    ContextStateManager contextStateManager;
     
-    Logger logger = Logger.getLogger(getClass().getName());
+    private static Logger logger = LoggerFactory.getLogger(ContextServiceFacade.class);
     
-    private ContextServiceFacade(ITimerServices timerService, IEventHandler eventHandler) 
+    public ContextServiceFacade(ITimerServices timerService, IEventHandler eventHandler,ContextMetadataFacade contextMetadata) 
     	throws ContextCreationException {       
 
         this.eventHandler = eventHandler;
     	this.timerServices = timerService;
+    	this.contextMetadata = contextMetadata;
+    	this.contextStateManager = new ContextStateManager(null);
+    	initializeCompositeContextInstances();
     }
     
-    public synchronized void  cleanUpState(){
-    	if (instance != null){
-    		instance = null;
-    	}
-    }
+   
     /**
      * Initializes CompositeContextInstance for each context-agent pair.
      * For contexts with system startup creates ContextInitiationNotification which is immediately
@@ -79,20 +85,24 @@ public class ContextServiceFacade implements IContextService
     	
         // create CompositeContextInstance(s) for all context-agent pairs
  
+    	logger.debug("initializeCompositeContextInstances: getting context definitions from context metadata facade...");
     	Map<String,Collection<IEventProcessingAgent>> contexts =
-    		ContextMetadataFacade.getInstance().getContextDefinitions();
-    	ContextMetadataFacade contextMetadata = ContextMetadataFacade.getInstance();
-    	ContextStateManager stateManager = ContextStateManager.getInstance();
+    		contextMetadata.getContextDefinitions();
+    	
+    	logger.debug("initializeCompositeContextInstances:  context definitions from context metadata facade: "+contexts);
+    	ContextStateManager stateManager = this.contextStateManager;
+    	logger.debug("initializeCompositeContextInstances: the context state manager is: "+contextStateManager);
 
     	try {
 	    	for (String contextName: contexts.keySet()) {	    			    		
 	    		IContextType contextType = contextMetadata.getContext(contextName);
 	    		Collection<IEventProcessingAgent> agents = contexts.get(contextName);
 	    		for (IEventProcessingAgent agentType: agents) {
+	    			logger.debug("initializeCompositeContextInstances: creating new context instance for context"+contextName+" and agent"+agentType);
 		    		CompositeContextInstance context = new CompositeContextInstance(
-		    				contextType,agentType);	    		
+		    				contextType,agentType,this);	    		
 		    		stateManager.addContextInstance(context);
-		    		
+		    		logger.debug("initializeCompositeContextInstances: created new context instance for context"+contextName+" and agent"+agentType+" and added to state");
 		    		// make unique initiation arrangements (startup and absolute time start)
 		    		
 		    		// if starts at systems startup - create notification and call processInstance
@@ -101,12 +111,15 @@ public class ContextServiceFacade implements IContextService
 		    			IContextNotification notification = new ContextInitiationNotification(
 		    					contextType.getName(), System.currentTimeMillis(),System.currentTimeMillis(),
 		    					TemporalContextType.atStartupId,agentType.getName());
-		    			
+		    		
+		    			logger.debug("initializeCompositeContextInstances: the context"+contextType.getName()+" has system startup initiator: creating initiation notification: "+notification);
 		    			processEventInstance(notification,contextType.getName(),agentType.getName());
+		    			logger.debug("initializeCompositeContextInstances: submitted context initiation notification for context: "+contextType.getName()+", "+notification);
 		    		}
 		    		
 		    		// if there is absolute time initiator we create a timer
 		    		if (context.hasAbsoluteTimeInitiator()) {
+		    			logger.debug("initializeCompositeContextInstances: the context"+contextType.getName()+" has absolute time initiator, creating new timer");
 		    			Collection<ContextAbsoluteTimeInitiator> initiators =
 		    				context.getAbsoluteTimeInitiators();
 		
@@ -123,37 +136,21 @@ public class ContextServiceFacade implements IContextService
 		    				
 		    				timerServices.createTimer(context,info,isRepetitive,
 		    						duration,repetitionPeriod);	
+		    				logger.debug("initializeCompositeContextInstances: created new timer for absolute time initiator for context"+context);
 		    			}
 		    		}
 		    	}  
 	    	}
     	}
     	catch (Exception e) {
+    		logger.error("Error initializing Context");
     		throw (new ContextCreationException(e.getMessage(),e.getCause()));
     	}
+    	logger.debug("initializeCompositeContextInstance: exit");
     }
 
-    /**
-     * Returns the instance of context service facade
-	 * @param 	timerService
-	 * @param 	eventHandler
-     * @throws 	ContextServiceException
-     * @return 	ContextServiceFacade
-     */   
-    public synchronized static ContextServiceFacade initializeInstance(
-    		ITimerServices timerService,IEventHandler eventHandler) throws ContextServiceException {
-    	
-        if (null == instance){
-            instance = new ContextServiceFacade(timerService,eventHandler);
-            instance.initializeCompositeContextInstances();
-        }
-        return instance;
-    }
+   
     
-    public synchronized static ContextServiceFacade getInstance()
-    {
-        return instance;
-    }
     
     /**
      * The main interface of the ContextServiceFacade - processing event instance in a given
@@ -175,12 +172,12 @@ public class ContextServiceFacade implements IContextService
     public Pair<Collection<Pair<String,Map<String,Object>>>,Collection<Pair<String,Map<String,Object>>>> processEventInstance(ITimedObject timedObject,
     		String contextName, String agentName) throws ContextServiceException {
            	
-    	//logger.fine("processEventInstance: "+timedObject+" for context: "+
-    	//		contextName+" agent name: "+agentName);
+    	logger.debug("processEventInstance: "+timedObject+" for context: "+
+    			contextName+" agent name: "+agentName);
     	    	
     	Collection<Pair<String,Map<String,Object>>> terminatedPartitions = new HashSet<Pair<String,Map<String,Object>>>();
     	Collection<Pair<String,Map<String,Object>>> participatingPartitions = new HashSet<Pair<String,Map<String,Object>>>();    	
-    	ContextMetadataFacade metadata = ContextMetadataFacade.getInstance();
+    	ContextMetadataFacade metadata = this.contextMetadata;
     	
     	assert (timedObject instanceof IContextNotification ||
     			timedObject instanceof IEventInstance);
@@ -199,24 +196,31 @@ public class ContextServiceFacade implements IContextService
     	    		(IEventInstance)timedObject);
     	}    	
     	
-    	ContextStateManager stateManager = ContextStateManager.getInstance();
+    	ContextStateManager stateManager = this.contextStateManager;
+    	logger.debug("processEventInstance: getting context instnace for context: "+
+    			contextName+" agent name: "+agentName);
     	CompositeContextInstance cInstance = stateManager.getContextInstance(
     			contextName,agentName);
     	
     	// we currently enforce processing order: terminate, initiate, participate
     	if (roles.contains(EventRoleInContextEnum.TERMINATOR)) {
+    		logger.debug("processEventInstance: the role of the event is terminator, terminating partitions...");
     		terminatedPartitions = cInstance.processContextTerminator(timedObject);
+    		logger.debug("processEventInstance: terminated partitions: "+terminatedPartitions);
     	}
 
     	if (roles.contains(EventRoleInContextEnum.INITIATOR)) {
+    		logger.debug("processEventInstance: the role of the event is initiator, initiating partitions...");
     		// we only return terminated and participating partitions
     		cInstance.processContextInititiator(timedObject);    	
     	}
     	
     	if (roles.contains(EventRoleInContextEnum.PARTICIPANT)) {
+    		logger.debug("processEventInstance: the role of the event is participant");
     		assert (timedObject instanceof IEventInstance);
     		participatingPartitions = cInstance.processContextParticipant(
     				(IEventInstance)timedObject);
+    		logger.debug("processEventInstance: the object"+timedObject+" participates in partitions: "+participatingPartitions);
     	}    	
     	
     	return new Pair<Collection<Pair<String,Map<String,Object>>>,Collection<Pair<String,Map<String,Object>>>>(terminatedPartitions,
@@ -231,5 +235,9 @@ public class ContextServiceFacade implements IContextService
     public IEventHandler getEventHandler()
     {
         return eventHandler;
+    }
+    
+    public void clearState(){
+    	contextStateManager.clearState();
     }
 }

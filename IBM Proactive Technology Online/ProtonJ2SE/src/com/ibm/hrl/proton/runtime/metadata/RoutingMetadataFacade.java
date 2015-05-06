@@ -15,6 +15,7 @@
  ******************************************************************************/
 package com.ibm.hrl.proton.runtime.metadata;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -35,9 +36,9 @@ import com.ibm.hrl.proton.utilities.containers.Pair;
 * 
 *
  */
-public class RoutingMetadataFacade{
+public class RoutingMetadataFacade implements Serializable{
 
-	private static  RoutingMetadataFacade instance = null;
+	
 	/**A Map where the key is the event type name, the value is a set of objects consisting of agent name and context name */
 	/**For initiator/terminator the context name is the one they initiate/terminate, the agent name is all
 	 * the agents defined on this context
@@ -58,10 +59,10 @@ public class RoutingMetadataFacade{
 	 */
 	private Set<String> consumerEvents;
 
-	Logger logger = Logger.getLogger(getClass().getName());
+	private static Logger logger = Logger.getLogger(RoutingMetadataFacade.class.getName());
 	
 	
-	private RoutingMetadataFacade(Map<String,Set<Pair<String,String>>> channelAgentContext,
+	public RoutingMetadataFacade(Map<String,Set<Pair<String,String>>> channelAgentContext,
 	                              Map<String,AgentQueueMetadata> agentChannelInfo,
 	                              Set<String> consumerEvents,
 	                              Map<String,Collection<IEventProcessingAgent>> contextAgentMapping)
@@ -97,25 +98,8 @@ public class RoutingMetadataFacade{
         
     }
 
-    /**
-	 * This method is called at system startup when parsing the definitions  - to initialize this singleton 
-	 * with routing metadata
-	 * @param metadata
-	 */
-	public static void initializeChannels(Map<String,Set<Pair<String,String>>> channelAgentContext,
-	                                    Map<String,AgentQueueMetadata> agentChannelInfo,
-	                                    Set<String> consumerEvents,
-	                                    Map<String,Collection<IEventProcessingAgent>> contextAgentMapping){
-		instance = new RoutingMetadataFacade(channelAgentContext,agentChannelInfo,consumerEvents,contextAgentMapping);
-	}
+   
 	
-	/**
-	 * Get instance of this singleton
-	 * @return
-	 */
-	public static RoutingMetadataFacade getInstance(){
-		return instance;
-	}
 	
 
 	
@@ -154,8 +138,11 @@ public class RoutingMetadataFacade{
     /**
      * Clear previous Action data (used by the parser before parsing a new project definition)
      */
-	public static synchronized void clear() {
-		instance = null;
+	public  synchronized void clear() {
+		eventsRoutingInfo.clear();
+		agentQueueInfo.clear();
+		contextAgentMapping.clear();
+		consumerEvents.clear();
 	}
    
 	

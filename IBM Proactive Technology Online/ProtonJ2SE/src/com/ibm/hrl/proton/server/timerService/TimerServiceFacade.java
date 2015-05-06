@@ -44,27 +44,21 @@ public class TimerServiceFacade
     implements ITimerServices
 {
 
-    private static TimerServiceFacade instance;
+   
    
     private Map<String,List<ScheduledFuture>> timersMap;
     
-    private Logger logger = Logger.getLogger(getClass().getName());
+    private static Logger logger = Logger.getLogger(TimerServiceFacade.class.getName());
     
     
-    private TimerServiceFacade()
+    
+    public TimerServiceFacade()
     {
         timersMap = new ConcurrentHashMap<String,List<ScheduledFuture>>();
+        
     }
     
-    public static synchronized TimerServiceFacade getInstance()
-    {
-        if (null == instance)
-        {
-            instance = new TimerServiceFacade();
-        }
-        
-        return instance;
-    }
+  
     
     @Override
     public void createTimer(ITimerListener timerListener,
@@ -76,11 +70,11 @@ public class TimerServiceFacade
         ScheduledFuture timer; 
         if (repetitive)
         {
-            timer = ExecutorUtils.scheduleAtFixedRate(new CallbackTask(timerInfo), duration,
+            timer = ExecutorUtils.scheduleAtFixedRate(new CallbackTask(timerInfo,this), duration,
             		repetitionPeriod, TimeUnit.MILLISECONDS);
         }else
         {
-            timer = ExecutorUtils.schedule(new CallbackTask(timerInfo), duration, TimeUnit.MILLISECONDS);
+            timer = ExecutorUtils.schedule(new CallbackTask(timerInfo,this), duration, TimeUnit.MILLISECONDS);
         }
         
         if (!timersMap.containsKey((timerListener.getListenerId()))) {
@@ -162,8 +156,7 @@ public class TimerServiceFacade
 	
 	 public synchronized void cleanUp()
 	 {
-	    	if (null !=instance)
-	    	{
+	    
 	    		for (Map.Entry<String, List<ScheduledFuture>> entry : timersMap.entrySet()) 
 	        	{
 	    			for (ScheduledFuture timer : entry.getValue()) {
@@ -171,8 +164,7 @@ public class TimerServiceFacade
 	    			}
 	    		}
 	        	timersMap.clear();
-	        	instance = null;
-	    	}
+	        	
 	    	
 	 }
 

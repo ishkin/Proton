@@ -21,14 +21,18 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import com.ibm.hrl.proton.adapters.interfaces.AdapterException;
+import com.ibm.hrl.proton.expression.facade.EepFacade;
+import com.ibm.hrl.proton.runtime.metadata.EventMetadataFacade;
 
 public abstract class AbstractTextFormatter implements ITextFormatter {
 	private static final String DEFAULT_DATE_FORMAT = "dd/MM/yyyy-HH:mm:ss";
 
 	
-	protected DateFormat dateFormatter;
+	protected DateFormat dateFormatter;	
+	protected EventMetadataFacade eventMetadata;
+	protected EepFacade eep;
 	
-	AbstractTextFormatter(String dateFormat) throws AdapterException
+	AbstractTextFormatter(String dateFormat,EventMetadataFacade eventMetadata,EepFacade eep) throws AdapterException
 	{
 		try{
 			if (dateFormat == null)
@@ -39,6 +43,9 @@ public abstract class AbstractTextFormatter implements ITextFormatter {
 			{
 				dateFormatter = new SimpleDateFormat(dateFormat);
 			}
+		
+			this.eventMetadata = eventMetadata;
+			this.eep =eep;
 		}
 		catch(IllegalArgumentException e)
 		{

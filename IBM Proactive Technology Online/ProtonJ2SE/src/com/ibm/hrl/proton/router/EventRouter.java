@@ -19,10 +19,10 @@ package com.ibm.hrl.proton.router;
 import java.util.logging.Logger;
 
 import com.ibm.hrl.proton.agentQueues.exception.AgentQueueException;
-import com.ibm.hrl.proton.agentQueues.queuesManagement.AgentQueuesManager;
 import com.ibm.hrl.proton.runtime.event.interfaces.IEventInstance;
-import com.ibm.hrl.proton.runtime.metadata.RoutingMetadataFacade;
+import com.ibm.hrl.proton.runtime.metadata.IMetadataFacade;
 import com.ibm.hrl.proton.runtime.timedObjects.ITimedObject;
+import com.ibm.hrl.proton.utilities.facadesManager.IFacadesManager;
 
 /**
  * <code>EventRouter</code>.
@@ -31,30 +31,21 @@ import com.ibm.hrl.proton.runtime.timedObjects.ITimedObject;
  */
 public class EventRouter extends BaseEventRouter
 {
-    private static EventRouter instance;    
+      
     private static final Logger logger = Logger.getLogger("EventRouter");
+    private IFacadesManager facadesManager;
+    private IMetadataFacade metadataFacade;
     
     
-    private EventRouter(IDataSender eventSender)
-    {       
-       super(eventSender);
+    public EventRouter(IDataSender eventSender,IFacadesManager facadesManager2,IMetadataFacade metadataFacade2)
+    {  
+    	 super(eventSender);
+    	this.facadesManager = facadesManager2;
+    	this.metadataFacade = metadataFacade2;
+      
     }
     
-    public static synchronized IEventRouter getInstance()
-    {       
-        
-        return instance;
-    }
-    
-    public static synchronized IEventRouter initializeInstance(IDataSender eventSender)
-    {
-        if (null == instance)
-        {
-            instance = new EventRouter(eventSender);
-        }
-        
-        return instance;
-    }
+   
     /* (non-Javadoc)
      * @see com.ibm.hrl.proton.agentQueue.eventRouter.IEventRouter#routeTimedObject(com.ibm.hrl.proton.runtime.timedObjects.ITimedObject)
      */
@@ -68,7 +59,7 @@ public class EventRouter extends BaseEventRouter
         if (timedObject instanceof IEventInstance)
         {
             IEventInstance eventInstance  = (IEventInstance)timedObject;
-            if (RoutingMetadataFacade.getInstance().isConsumerEvent(eventInstance.getObjectName()))
+            if (metadataFacade.getRoutingMetadataFacade().isConsumerEvent(eventInstance.getObjectName()))
             {     
                 logger.info("routeTimedObject: forwarding event "+timedObject+" to consumer...");
                 forwardEventsToConsumer(eventInstance);
@@ -76,7 +67,7 @@ public class EventRouter extends BaseEventRouter
         }
         logger.fine("routeTimedObject: timed object "+ timedObject+" determining if to submit back to Proton...");
         //route the event back to the system
-        AgentQueuesManager.getInstance().passEventToQueues(timedObject);
+        facadesManager.getAgentQueuesManager().passEventToQueues(timedObject);
         logger.fine("routeTimedObject: routed timed object "+ timedObject);
         
     }

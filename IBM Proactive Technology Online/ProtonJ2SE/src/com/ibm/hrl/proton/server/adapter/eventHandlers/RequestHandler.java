@@ -21,31 +21,30 @@ import java.io.ObjectInputStream;
 import java.net.Socket;
 import java.util.logging.Logger;
 
-import com.ibm.hrl.proton.agentQueues.exception.AgentQueueException;
-import com.ibm.hrl.proton.router.DataSenderException;
-import com.ibm.hrl.proton.router.EventRouter;
 import com.ibm.hrl.proton.router.IEventRouter;
 import com.ibm.hrl.proton.runtime.event.interfaces.IEventInstance;
+import com.ibm.hrl.proton.utilities.facadesManager.IFacadesManager;
 
 
 public class RequestHandler implements Runnable {
 
 	public static final Logger logger = Logger.getLogger(RequestHandler.class.getName());
-	
+	private IFacadesManager facadesManager;
 
 
 	Socket socket;
 	
-	public RequestHandler(Socket socket)
+	public RequestHandler(Socket socket,IFacadesManager facadesManager2)
 	{
 		this.socket = socket;
+		this.facadesManager = facadesManager2;
 	}
 
 	@Override
 	public void run() {
 		ObjectInputStream in = null;
 		IEventInstance eventInstance = null;
-		IEventRouter eventRouter = EventRouter.getInstance();
+		IEventRouter eventRouter = facadesManager.getEventRouter();
 		//read the information from the socket , translate to 
 		//event instance form and submit to router
 		try

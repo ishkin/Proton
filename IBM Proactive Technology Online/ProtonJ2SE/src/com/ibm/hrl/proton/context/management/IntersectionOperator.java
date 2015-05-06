@@ -21,17 +21,17 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.logging.Logger;
 import java.util.Set;
+import java.util.logging.Logger;
 
 import com.ibm.hrl.proton.context.exceptions.ContextServiceException;
+import com.ibm.hrl.proton.context.facade.ContextServiceFacade;
 import com.ibm.hrl.proton.context.metadata.EventTerminator;
 import com.ibm.hrl.proton.context.metadata.ITemporalContextBound;
 import com.ibm.hrl.proton.context.metadata.RelativeTimeTerminator;
 import com.ibm.hrl.proton.context.metadata.TemporalContextInitiator;
 import com.ibm.hrl.proton.metadata.context.CompositeContextType;
 import com.ibm.hrl.proton.metadata.context.SlidingTimeWindow;
-import com.ibm.hrl.proton.metadata.context.TemporalContextType;
 import com.ibm.hrl.proton.metadata.context.enums.ContextTerminationTypeEnum;
 import com.ibm.hrl.proton.metadata.context.enums.ContextTerminatorPolicyEnum;
 import com.ibm.hrl.proton.metadata.context.interfaces.IContextType;
@@ -59,12 +59,14 @@ public class IntersectionOperator implements ITemporalWindowsOperator {
 	public static final Logger logger = Logger.getLogger(IntersectionOperator.class.getName());
 
 	private int finestSegmentation;
+	private ContextServiceFacade facade;
 
-	public IntersectionOperator(CompositeContextInstance context) {
+	public IntersectionOperator(CompositeContextInstance context,ContextServiceFacade facade) {
 		segments = new ActiveTemporalContextSegment[context.activeContextWindows.size()];
 		initiators = new TemporalContextInitiator[context.activeContextWindows.size()];
 		newPartitions = new HashSet<String>();		
 		this.context = context;
+		this.facade = facade;
 		
 		// all temporal dimensions (members) comply to a single composed segmentation
 		// some of them participate only partially (all initiators however need to participate
@@ -235,7 +237,7 @@ public class IntersectionOperator implements ITemporalWindowsOperator {
 				logger.fine("IntersectionOperator:checkAndCreateNewPartitions: creating a new partition of the composite context"+compositeContextName  );
 			}
 			temporary = new SlidingTemporalPartition(potentialInitiators,internalContext.getDuration(),
-					internalContext.getSlidingPeriod(),internalContext.getName(),compositeContextName,segments[finestSegmentation].getSegmentationValue(),context.getAgentName());
+					internalContext.getSlidingPeriod(),internalContext.getName(),compositeContextName,segments[finestSegmentation].getSegmentationValue(),context.getAgentName(),facade);
 		}
 		/*else if (context.contextType instanceof TemporalContextType) {
 			temporary = new TemporalPartition(potentialInitiators);	

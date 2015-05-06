@@ -15,13 +15,14 @@
  ******************************************************************************/
 package com.ibm.hrl.proton.metadata.event;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.ibm.hrl.proton.metadata.type.TypeAttribute;
 import com.ibm.hrl.proton.metadata.type.enums.AttributeTypesEnum;
 
-public class EventHeader {
+public class EventHeader implements Serializable{
 
 	public static final String NAME_ATTRIBUTE = "Name";
 	public static final String CHRONON_ATTRIBUTE = "Chronon";

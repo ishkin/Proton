@@ -15,6 +15,7 @@
  ******************************************************************************/
 package com.ibm.hrl.proton.runtime.metadata;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -30,28 +31,17 @@ import com.ibm.hrl.proton.metadata.epa.interfaces.IEventProcessingAgent;
 * 
 *
  */
-public class EPAManagerMetadataFacade
+public class EPAManagerMetadataFacade implements Serializable
 {
-    private static  EPAManagerMetadataFacade instance = null;
-    private Map<String,IEventProcessingAgent> agentsDefinitions;
-    private Logger logger = Logger.getLogger(getClass().getName());
     
-    private EPAManagerMetadataFacade(Map<String,IEventProcessingAgent> agentsDefinitions){
+    private Map<String,IEventProcessingAgent> agentsDefinitions;
+    private static Logger logger = Logger.getLogger(EPAManagerMetadataFacade.class.getName());
+    
+    public  EPAManagerMetadataFacade(Map<String,IEventProcessingAgent> agentsDefinitions){
         this.agentsDefinitions = new HashMap<String,IEventProcessingAgent>(agentsDefinitions);
     }
     
-    public synchronized static void initializeEPAMetadata(Map<String,IEventProcessingAgent> agentsDefinitions)
-    {
-        if (instance == null)
-        {
-            instance = new EPAManagerMetadataFacade(agentsDefinitions);
-        }
-    }
     
-    public static EPAManagerMetadataFacade getInstance()
-    {
-        return instance;
-    }
     
     
     /**
@@ -83,8 +73,8 @@ public class EPAManagerMetadataFacade
     /**
      * Clear previous EPAs data (used by the parser before parsing a new project definition)
      */
-	public static synchronized void clear() {
-		instance = null;		
+	public  synchronized void clear() {
+		agentsDefinitions.clear();	
 	}
      
 }

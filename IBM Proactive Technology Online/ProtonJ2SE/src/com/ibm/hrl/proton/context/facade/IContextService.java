@@ -15,6 +15,7 @@
  ******************************************************************************/
 package com.ibm.hrl.proton.context.facade;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Map;
 
@@ -27,7 +28,7 @@ import com.ibm.hrl.proton.utilities.containers.Pair;
  * <code>IContextService</code>.
  * 
  */
-public interface IContextService
+public interface IContextService extends Serializable
 {
     /**
      * Process the given timed object - either a real event instance, or a notification created

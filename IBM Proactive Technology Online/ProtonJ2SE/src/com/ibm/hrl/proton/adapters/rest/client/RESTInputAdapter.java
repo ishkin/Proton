@@ -33,9 +33,11 @@ import com.ibm.hrl.proton.adapters.formatters.TagTextFormatter;
 import com.ibm.hrl.proton.adapters.formatters.XmlNgsiFormatter;
 import com.ibm.hrl.proton.adapters.interfaces.AbstractInputAdapter;
 import com.ibm.hrl.proton.adapters.interfaces.AdapterException;
+import com.ibm.hrl.proton.expression.facade.EepFacade;
 import com.ibm.hrl.proton.metadata.inout.ProducerMetadata;
 import com.ibm.hrl.proton.metadata.parser.MetadataParser;
 import com.ibm.hrl.proton.runtime.event.interfaces.IEventInstance;
+import com.ibm.hrl.proton.runtime.metadata.EventMetadataFacade;
 
 public class RESTInputAdapter extends AbstractInputAdapter {
 
@@ -47,8 +49,8 @@ public class RESTInputAdapter extends AbstractInputAdapter {
 	private HttpClient httpClient;
 	private GetMethod getMethod;
 	
-	public RESTInputAdapter(ProducerMetadata producerMetadata,IInputConnector serverConnector) throws AdapterException {
-		super(producerMetadata,serverConnector);
+	public RESTInputAdapter(ProducerMetadata producerMetadata,IInputConnector serverConnector,EventMetadataFacade eventMetadata,EepFacade eep) throws AdapterException {
+		super(producerMetadata,serverConnector, eventMetadata);
 		producerURL  = ((RESTInputAdapterConfiguration)configuration).getUrl();
 		contentType = ((RESTInputAdapterConfiguration)configuration).getContentType();	
 		TextFormatterType formatterType = ((RESTInputAdapterConfiguration)configuration).getFormatterType();
@@ -56,15 +58,15 @@ public class RESTInputAdapter extends AbstractInputAdapter {
 		switch (formatterType) 
 		{
 		case XML:
-			textFormatter = new XmlNgsiFormatter(producerMetadata.getProducerProperties());
+			textFormatter = new XmlNgsiFormatter(producerMetadata.getProducerProperties(),eventMetadata,eep);
 			break;
 		case JSON:
-			textFormatter = new JSONFormatter(producerMetadata.getProducerProperties());
+			textFormatter = new JSONFormatter(producerMetadata.getProducerProperties(),eventMetadata,eep);
 			break;
 		case CSV:			
 			throw new UnsupportedOperationException("CSV format is not supported");
 		case TAG:
-			textFormatter = new TagTextFormatter(producerMetadata.getProducerProperties());
+			textFormatter = new TagTextFormatter(producerMetadata.getProducerProperties(),eventMetadata,eep);
 			break;
 		default:
 			throw new AdapterException("Could not initialize REST input adapter:"+this+" unrecognised formatter type");

@@ -28,10 +28,12 @@ public class QueueTimerListener implements ITimerListener
 {
     private static final long serialVersionUID = 1L;
     private String queueName;
+    private AgentQueuesManager queueManager;
     
-    public QueueTimerListener(String queueName)
+    public QueueTimerListener(String queueName,AgentQueuesManager queueManager)
     {
         this.queueName= queueName;
+        this.queueManager =queueManager;
     }    
     
     @Override
@@ -44,7 +46,7 @@ public class QueueTimerListener implements ITimerListener
     public Object onTimer(Object additionalInformation)
     throws Exception
     {
-        AgentAbstractQueue queue = AgentQueuesManager.getInstance().getAgentQueue(queueName);
+        AgentAbstractQueue queue = queueManager.getAgentQueue(queueName);
         return queue.onTimer(additionalInformation);
     }
         

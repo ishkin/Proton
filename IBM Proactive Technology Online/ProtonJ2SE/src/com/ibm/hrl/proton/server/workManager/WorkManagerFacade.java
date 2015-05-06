@@ -30,18 +30,13 @@ public class WorkManagerFacade implements IWorkManager
 {
 
 	
-    private static WorkManagerFacade instance;
+   
     
-    private WorkManagerFacade(){        
+    public WorkManagerFacade(){
+    	
     }
     
-    public synchronized static IWorkManager getInstance(){
-        if (null == instance){
-            instance = new WorkManagerFacade();
-        }
-        
-        return instance;
-    }
+   
     /* (non-Javadoc)
      * @see com.ibm.hrl.proton.asynchronousWork.IWorkManager#createWork(com.ibm.hrl.proton.asynchronousWork.IWorkItem)
      */
@@ -66,7 +61,7 @@ public class WorkManagerFacade implements IWorkManager
     public void runWork(Runnable work)
         throws AsynchronousExecutionException
     {
-        ExecutorUtils.execute(work);
+    	ExecutorUtils.execute(work);
 
     }
 

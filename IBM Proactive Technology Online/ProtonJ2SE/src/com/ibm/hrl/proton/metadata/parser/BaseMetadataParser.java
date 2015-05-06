@@ -15,9 +15,6 @@
  ******************************************************************************/
 package com.ibm.hrl.proton.metadata.parser;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -56,19 +53,14 @@ import com.ibm.hrl.proton.metadata.context.enums.ContextTerminationTypeEnum;
 import com.ibm.hrl.proton.metadata.context.enums.ContextTerminatorPolicyEnum;
 import com.ibm.hrl.proton.metadata.context.enums.ContextTypeEnum;
 import com.ibm.hrl.proton.metadata.context.interfaces.IContextType;
-import com.ibm.hrl.proton.metadata.context.interfaces.ISegmentationContextType;
 import com.ibm.hrl.proton.metadata.context.interfaces.ITemporalContextType;
 import com.ibm.hrl.proton.metadata.epa.Operand;
-import com.ibm.hrl.proton.metadata.epa.StatefulEventProcesingAgentType;
 import com.ibm.hrl.proton.metadata.epa.basic.IDataObjectMeta;
-import com.ibm.hrl.proton.metadata.epa.enums.CardinalityPolicyEnum;
 import com.ibm.hrl.proton.metadata.epa.enums.ConsumptionPolicyEnum;
 import com.ibm.hrl.proton.metadata.epa.enums.EPATypeEnum;
-import com.ibm.hrl.proton.metadata.epa.enums.EvaluationPolicyEnum;
 import com.ibm.hrl.proton.metadata.epa.enums.InstanceSelectionPolicyEnum;
 import com.ibm.hrl.proton.metadata.epa.enums.OrderPolicyEnum;
 import com.ibm.hrl.proton.metadata.epa.enums.TrendRelationEnum;
-import com.ibm.hrl.proton.metadata.epa.interfaces.IDerivationSchema;
 import com.ibm.hrl.proton.metadata.epa.interfaces.IEventProcessingAgent;
 import com.ibm.hrl.proton.metadata.epa.interfaces.IMatchingSchema;
 import com.ibm.hrl.proton.metadata.epa.schemas.AggregationSchema;
@@ -80,10 +72,10 @@ import com.ibm.hrl.proton.metadata.event.IEventType;
 import com.ibm.hrl.proton.metadata.type.TypeAttribute;
 import com.ibm.hrl.proton.metadata.type.TypeAttributeSet;
 import com.ibm.hrl.proton.metadata.type.enums.AttributeTypesEnum;
-import com.ibm.hrl.proton.metadata.type.interfaces.IBasicType;
 import com.ibm.hrl.proton.runtime.epa.interfaces.IExpression;
 import com.ibm.hrl.proton.runtime.metadata.ContextMetadataFacade;
 import com.ibm.hrl.proton.runtime.metadata.EventMetadataFacade;
+import com.ibm.hrl.proton.runtime.metadata.IMetadataFacade;
 import com.ibm.hrl.proton.utilities.constants.ProtonConstants;
 import com.ibm.hrl.proton.utilities.containers.Pair;
 
@@ -118,18 +110,23 @@ public abstract class BaseMetadataParser {
 	protected Map<String, Collection<IEventProcessingAgent>> contextAgents = new HashMap<String, Collection<IEventProcessingAgent>>();
 	protected Set<String> consumerEvents = new HashSet<String>();	
 
-	protected EepFacade eep;
+	
 	protected SimpleDateFormat df;
 	protected Collection<ProtonParseException> exceptions = new LinkedList<ProtonParseException>();
 	protected Map<String, Integer> attributeRowNumbers= new HashMap<String, Integer>();
+	
+	protected IMetadataFacade metadataFacade;
+	protected EepFacade eep;
 
-	public BaseMetadataParser(EepFacade eep) {
-		this.eep = eep;
+	public BaseMetadataParser(EepFacade eep,IMetadataFacade metadataFacade2) {
+		
 		df = new SimpleDateFormat("dd/MM/yyyy-HH:mm:ss");
 		dateParser = new DateParser(df);
+		this.metadataFacade = metadataFacade2;
+		this.eep = eep;
 	}
 
-	public static void main(String[] args) throws Exception {
+	/*public static void main(String[] args) throws Exception {
 		String line;
 		StringBuilder sb = new StringBuilder();
 		BufferedReader in = null;
@@ -152,7 +149,7 @@ public abstract class BaseMetadataParser {
 		MetadataParser metadataParser = new MetadataParser(eep);
 		metadataParser.parseEPN(jsonTxt);
 
-	}
+	}*/
 
 	public abstract Collection<ProtonParseException> parseEPN(String jsonTxt)
 			throws ParsingException ;	
@@ -190,7 +187,8 @@ public abstract class BaseMetadataParser {
 			}
 		}
 
-		EventMetadataFacade.initializeEvents(eventsMap);
+		EventMetadataFacade eventMetadataFacade = new EventMetadataFacade(eventsMap);
+		metadataFacade.setEventMetadataFacade(eventMetadataFacade);
 
 		// parse consumer events and add them to the relevant structure
 
@@ -251,7 +249,7 @@ public abstract class BaseMetadataParser {
 					{
 						//IExpression defaultValueExpression = eep.createExpression(defaultValue, signature);						
 						//value = defaultValueExpression.evaluate(instance);
-						value = TypeAttribute.parseConstantValue(defaultValue,attrName, object,null);						
+						value = TypeAttribute.parseConstantValue(defaultValue,attrName, object,null,eep);						
 						
 						
 					}
@@ -470,7 +468,7 @@ public abstract class BaseMetadataParser {
 
 	protected void addInitiatorsTerminatorsRoutingInfo(String contextName, String name,
 			Map<String, Set<Pair<String, String>>> eventsRoutingInfo) {
-		IContextType contextType = ContextMetadataFacade.getInstance().getContext(contextName);
+		IContextType contextType = metadataFacade.getContextMetadataFacade().getContext(contextName);
 		
 			
 		if (contextType instanceof TemporalContextType) {
@@ -600,7 +598,7 @@ public abstract class BaseMetadataParser {
 			signatureAliases.add(aliasName);
 			// must be parsed by eep
 			try {
-				IExpression parsedExpression = eep.createExpression(expression, trendSignature,
+				IExpression parsedExpression =  eep.createExpression(expression, trendSignature,
 						signatureAliases);
 				((TrendMatchingSchema)matchingSchema).addParsedExpression(operand, parsedExpression);
 			}catch (Exception e) {
@@ -728,7 +726,10 @@ public abstract class BaseMetadataParser {
 	{
 		List<String> aliasAttributes = new ArrayList<String>();
 		String attributeName = null;
-		EepExpression parsedExpression = (EepExpression) eep.createExpression(expression, (List<IDataObjectMeta>)(List<?>)inputEventsList, aliases);		
+		EepExpression parsedExpression;
+		
+		parsedExpression = (EepExpression)  eep.createExpression(expression, (List<IDataObjectMeta>)(List<?>)inputEventsList, aliases);
+			
 		for (Iterator iterator = parsedExpression.getExpressionVariables(); iterator.hasNext();) {
 			String variableName = (String) iterator.next();
 			if (variableName.indexOf(name) != -1)
@@ -813,7 +814,8 @@ public abstract class BaseMetadataParser {
 					finalCompositeContexts);
 			finalCompositeContexts.putAll(compositeContextsMap);
 
-			ContextMetadataFacade.initializeContext(finalCompositeContexts, contextAgents);
+			ContextMetadataFacade contextMetadataFacade= new ContextMetadataFacade(finalCompositeContexts, contextAgents);
+			metadataFacade.setContextMetadataFacade(contextMetadataFacade);
 		} catch (Exception e) {
 			throw new ParsingException("Could not parse contexts , reason: " + e.getMessage());
 		}
@@ -847,7 +849,7 @@ public abstract class BaseMetadataParser {
 							contextName, DefinitionType.SEGMENTATION_CONTEXT, ErrorElement.EVENT_NAME,
 							stringParser, rowNumber));
 
-					IEventType eventType = EventMetadataFacade.getInstance().getEventType(eventName);
+					IEventType eventType = metadataFacade.getEventMetadataFacade().getEventType(eventName);
 					checkElementDefined(eventType, contextName, DefinitionType.SEGMENTATION_CONTEXT,
 							ErrorElement.EVENT_NAME, rowNumber, eventName);
 					
@@ -1013,7 +1015,7 @@ public abstract class BaseMetadataParser {
 									DefinitionType.TEMPORAL_CONTEXT, ErrorElement.INITIATOR_NAME, stringParser,
 									rowNumber));
 							
-							IEventType initiatorEventType = EventMetadataFacade.getInstance().getEventType(
+							IEventType initiatorEventType = metadataFacade.getEventMetadataFacade().getEventType(
 									eventName);
 							checkElementDefined(initiatorEventType, name, DefinitionType.TEMPORAL_CONTEXT,
 									ErrorElement.INITIATOR_NAME, rowNumber, eventName);
@@ -1028,7 +1030,7 @@ public abstract class BaseMetadataParser {
 								List<IDataObjectMeta> signature = new ArrayList<IDataObjectMeta>();
 								signature.add(initiatorEventType);
 								try {
-									parsedCondition = eep.createExpression(condition, signature);
+									parsedCondition =  eep.createExpression(condition, signature);
 								} catch (Exception e) {
 									// this is caught here in order to add to exception
 									handleEEPException(name, DefinitionType.TEMPORAL_CONTEXT, ErrorElement.INITIATOR_CONDITION,
@@ -1095,7 +1097,7 @@ public abstract class BaseMetadataParser {
 									DefinitionType.TEMPORAL_CONTEXT, ErrorElement.TERMINATOR_NAME, stringParser,
 									rowNumber));
 
-							IEventType terminatorEventType = EventMetadataFacade.getInstance().getEventType(
+							IEventType terminatorEventType = metadataFacade.getEventMetadataFacade().getEventType(
 									eventName);
 
 							// error on non-existent
@@ -1124,7 +1126,7 @@ public abstract class BaseMetadataParser {
 									signature.add(((ContextEventInitiator)contextInitiators.get(0)).getInitiatorType());
 								}
 								try {
-									parsedCondition = eep.createExpression(condition, signature);
+									parsedCondition =  eep.createExpression(condition, signature);
 								} catch (Exception e) {
 									// this is caught here in order to add to exception
 									handleEEPException(name, DefinitionType.TEMPORAL_CONTEXT,

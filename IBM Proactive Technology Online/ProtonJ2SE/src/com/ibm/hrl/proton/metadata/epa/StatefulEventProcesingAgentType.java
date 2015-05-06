@@ -41,7 +41,7 @@ public class StatefulEventProcesingAgentType extends EventProcessingAgentType {
 	
 	public IMatchingSchema matchingSchema;
 	protected EvaluationPolicyEnum evaluation;
-	protected CardinalityPolicyEnum cardinality;
+	protected CardinalityPolicyEnum cardinality = CardinalityPolicyEnum.SINGLE;
 	protected IExpression parsedAssertion;
 	protected String assertion;	
 	protected Collection<ISegmentationContextType> epaSegmentation;

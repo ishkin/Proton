@@ -17,7 +17,12 @@ package com.ibm.hrl.proton.context.metadata;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.logging.Logger;
+
+
+
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.ibm.hrl.proton.context.management.SegmentationValue;
 import com.ibm.hrl.proton.metadata.context.SegmentationContextType;
@@ -37,7 +42,7 @@ public class ComposedSegmentation {
 	
 	protected Collection<SegmentationContextType> segments;	
 
-	Logger logger = Logger.getLogger(getClass().getName());
+	private static Logger logger = LoggerFactory.getLogger(ComposedSegmentation.class.getName());
 
 	public ComposedSegmentation() {
 		segments = new ArrayList<SegmentationContextType>();
@@ -69,18 +74,22 @@ public class ComposedSegmentation {
 		// evaluate value of this segment for the given event
 		// if event does not contain attributes complying with the composite context
 		// return an empty SegmentationValue
-		
+		logger.debug("getSegmentationValue: for event"+event);
 		// we assume that event attributes comply with given segment (defs parsing check)
 		SegmentationValue value = new SegmentationValue(this);
 		for (SegmentationContextType segment: segments) {
+			logger.debug("getSegmentationValue: iterating over segments"+segment);
+			logger.debug("getSegmentationValue: getting parsed expression for event type"+ event.getEventType());
 			IExpression expression = segment.getParsedSegmentationExpression(event.getEventType());
-			
+			logger.debug("getSegmentationValue: the parsed expression for event type"+ event.getEventType()+", the expression: "+expression);
 			if (expression != null) { // event can either participate in this segment or not
 				// invoke eep to evaluate expression for the given event instance
-			    //logger.fine("getSegmentationValue: event "+event+", expression: "+expression+", segValue: "+expression.evaluate(event));
+			    logger.debug("getSegmentationValue: evaluating expression: event "+event+", expression: "+expression);
 				String expressionValue = expression.evaluate(event).toString();
+				logger.debug("getSegmentationValue: evaluated expression:" +expression+", value: "+value);
 				value.addValue(segment.getId(),expressionValue);
 			}
+			logger.debug("getSegmentationValue: returning value: "+value);
 		}				
 		return value;
 	}

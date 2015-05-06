@@ -18,11 +18,13 @@
  */
 package com.ibm.hrl.proton.metadata.epa.basic;
 
+import java.io.Serializable;
+
 /**
  * @author zoharf
  *
  */
-public class DataObjectField {
+public class DataObjectField implements Serializable{
 
 	protected DataObjectMetaData object;
 	protected FieldMetaData field;

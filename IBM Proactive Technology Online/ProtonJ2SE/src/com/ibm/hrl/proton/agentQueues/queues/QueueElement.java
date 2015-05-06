@@ -54,7 +54,7 @@ public class QueueElement implements Comparable {
 	 */
 	private Set<EventRoleInContextEnum> eventRoles;
 	
-	private  Logger logger = Logger.getLogger(getClass().getName());
+	private  static Logger logger = Logger.getLogger(QueueElement.class.getName());
 	
 
     public QueueElement(ITimedObject timedObject, long timestamp,ContextIntervalPolicyEnum initiationInterPolicy,ContextIntervalPolicyEnum termIntervalPolicy,Set<EventRoleInContextEnum> eventRoles)

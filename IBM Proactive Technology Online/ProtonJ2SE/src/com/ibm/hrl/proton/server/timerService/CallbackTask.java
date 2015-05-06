@@ -30,10 +30,12 @@ public class CallbackTask implements Runnable
 
 	
 	private TimerInfo timerObject;
+	private TimerServiceFacade timerServiceFacade;
     
-    public CallbackTask(TimerInfo timerObject)
+    public CallbackTask(TimerInfo timerObject,TimerServiceFacade timerServiceFacade)
     {
         this.timerObject = timerObject;
+        this.timerServiceFacade = timerServiceFacade;
     }
     /* (non-Javadoc)
      * @see java.lang.Runnable#run()
@@ -43,7 +45,7 @@ public class CallbackTask implements Runnable
     {
         try
         {
-            TimerServiceFacade.getInstance().notifyListener(timerObject);
+           timerServiceFacade.notifyListener(timerObject);
         }
         catch (TimerServiceException e)
         {

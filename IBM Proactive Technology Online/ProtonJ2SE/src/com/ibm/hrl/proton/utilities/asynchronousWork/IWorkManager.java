@@ -15,13 +15,15 @@
  ******************************************************************************/
 package com.ibm.hrl.proton.utilities.asynchronousWork;
 
+import java.io.Serializable;
+
 /**
  * Interface for work manager - utility for creating and running asynchronous tasks
 * <code>IWorkManager</code>.
 * 
 *
  */
-public interface IWorkManager
+public interface IWorkManager extends Serializable
 {
     /**
      * Create async task from the given work item

@@ -100,8 +100,14 @@ public class ProtonParseException extends Exception {
 
 	@Override
 	public String toString() {
-		return _errorEnum + "@" + _definitionInstance
-				+ (_rowNumber != DEFAULT_INDEX ? ". at row: " + _rowNumber : "");
+		String error = new String(_errorType.toString());
+		error += ": " + _definitionType.toString();
+		error += " " + _definitionInstance;
+		error += ": " + _errorEnum.toString(_elementEnum.toString());
+		error += (_rowNumber != DEFAULT_INDEX) ? ", at Item number " + _rowNumber : "";
+		System.out.println(error);
+		
+		return error;
 	}
 
 	public String toJsonString() {
@@ -123,4 +129,5 @@ public class ProtonParseException extends Exception {
 
 		return result.toString();
 	}
+
 }

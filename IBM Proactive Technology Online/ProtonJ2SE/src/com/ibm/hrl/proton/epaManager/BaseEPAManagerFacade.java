@@ -21,18 +21,14 @@ import java.util.Map;
 import java.util.logging.Logger;
 
 import com.ibm.hrl.proton.epa.state.IEPAStateManager;
-import com.ibm.hrl.proton.epaManager.agentInstances.EventProcessingAgentInstance;
-import com.ibm.hrl.proton.epaManager.agentInstances.StatefulProcessingAgentInstance;
 import com.ibm.hrl.proton.epaManager.exceptions.EPAManagerException;
-import com.ibm.hrl.proton.epaManager.exceptions.EPAManagerLogicExecutionException;
 import com.ibm.hrl.proton.epaManager.exceptions.EPAManagerSubmitException;
 import com.ibm.hrl.proton.epaManager.state.EPAStateManager;
-import com.ibm.hrl.proton.metadata.epa.enums.EPATypeEnum;
-import com.ibm.hrl.proton.metadata.epa.interfaces.IEventProcessingAgent;
 import com.ibm.hrl.proton.router.IEventRouter;
 import com.ibm.hrl.proton.runtime.epa.interfaces.IEventProcessingAgentInstance;
 import com.ibm.hrl.proton.runtime.event.interfaces.IEventInstance;
 import com.ibm.hrl.proton.runtime.metadata.EPAManagerMetadataFacade;
+import com.ibm.hrl.proton.runtime.metadata.IMetadataFacade;
 import com.ibm.hrl.proton.utilities.asynchronousWork.AsynchronousExecutionException;
 import com.ibm.hrl.proton.utilities.asynchronousWork.IWorkManager;
 import com.ibm.hrl.proton.utilities.containers.Pair;
@@ -56,13 +52,13 @@ public abstract class BaseEPAManagerFacade implements IEPAManager{
     private IEPAStateManager stateManager;
     private IPersistenceManager persistenceManager;
     
-    private Logger logger = Logger.getLogger(getClass().getName());
+    private static Logger logger = Logger.getLogger(BaseEPAManagerFacade.class.getName());
     protected EPAManagerMetadataFacade metadataFacade;
   
    
-    protected BaseEPAManagerFacade(IWorkManager wm, IEventRouter eventRouter,IPersistenceManager persistenceManager)
+    protected BaseEPAManagerFacade(IWorkManager wm, IEventRouter eventRouter,IPersistenceManager persistenceManager,IMetadataFacade metadataFacade2)
     {        
-        metadataFacade = EPAManagerMetadataFacade.getInstance();
+        this.metadataFacade = metadataFacade2.getEpaManagerMetadataFacade();
         Collection<String> agentNames = metadataFacade.getAgentNames();
         
         logger.fine("EPAManagerFacade: creating the internal agent list from agent definitions");
@@ -77,7 +73,7 @@ public abstract class BaseEPAManagerFacade implements IEPAManager{
         
         this.wm = wm;
         this.eventRouter = eventRouter;      
-        this.stateManager = new EPAStateManager(persistenceManager);
+        this.stateManager = new EPAStateManager(persistenceManager,metadataFacade);
         this.persistenceManager = persistenceManager;
     }
     
@@ -138,7 +134,7 @@ public abstract class BaseEPAManagerFacade implements IEPAManager{
         logger.fine("submitEventInstance: submitting event instance "+eventInstance+ " asynchronousyly for processing by "+eventProcessingAgentInstance);
         try
         {
-            EPAInstanceWorkItem epaInstanceWork = new EPAInstanceWorkItem(eventProcessingAgentInstance, eventInstance);        
+            EPAInstanceWorkItem epaInstanceWork = new EPAInstanceWorkItem(eventProcessingAgentInstance, eventInstance,this.eventRouter);        
             wm.runWork(wm.createWork(epaInstanceWork));
         }
         catch (AsynchronousExecutionException e)

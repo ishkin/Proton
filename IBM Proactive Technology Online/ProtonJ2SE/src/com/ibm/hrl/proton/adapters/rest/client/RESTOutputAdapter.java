@@ -24,9 +24,11 @@ import com.ibm.hrl.proton.adapters.formatters.TagTextFormatter;
 import com.ibm.hrl.proton.adapters.formatters.XmlNgsiFormatter;
 import com.ibm.hrl.proton.adapters.interfaces.AbstractOutputAdapter;
 import com.ibm.hrl.proton.adapters.interfaces.AdapterException;
+import com.ibm.hrl.proton.expression.facade.EepFacade;
 import com.ibm.hrl.proton.metadata.epa.basic.IDataObject;
 import com.ibm.hrl.proton.metadata.inout.ConsumerMetadata;
 import com.ibm.hrl.proton.metadata.parser.MetadataParser;
+import com.ibm.hrl.proton.runtime.metadata.EventMetadataFacade;
 
 public class RESTOutputAdapter extends AbstractOutputAdapter {
 
@@ -41,8 +43,8 @@ public class RESTOutputAdapter extends AbstractOutputAdapter {
 	private String authToken;
 
 	public RESTOutputAdapter(ConsumerMetadata consumerMetadata,
-			IOutputConnector serverConnector) throws AdapterException {	
-		super(consumerMetadata, serverConnector);
+			IOutputConnector serverConnector,EventMetadataFacade eventMetadata,EepFacade eep) throws AdapterException {	
+		super(consumerMetadata, serverConnector,eventMetadata);
 		this.url = ((RESTOutputAdapterConfiguration)configuration).getUrl();
 		this.contentType = ((RESTOutputAdapterConfiguration)configuration).getContentType();
 		this.authToken = ((RESTOutputAdapterConfiguration)configuration).getAuthToken();
@@ -50,15 +52,15 @@ public class RESTOutputAdapter extends AbstractOutputAdapter {
 		
 		switch (formatterType) {
 		case XML:
-			textFormatter = new XmlNgsiFormatter(consumerMetadata.getConsumerProperties());
+			textFormatter = new XmlNgsiFormatter(consumerMetadata.getConsumerProperties(),eventMetadata,eep);
 			break;
 		case CSV:			
 			 throw new UnsupportedOperationException("CSV format is not supported");
 		case JSON:
-			textFormatter = new JSONFormatter(consumerMetadata.getConsumerProperties());
+			textFormatter = new JSONFormatter(consumerMetadata.getConsumerProperties(),eventMetadata,eep);
 			break;
 		case TAG:
-			textFormatter = new TagTextFormatter(consumerMetadata.getConsumerProperties());
+			textFormatter = new TagTextFormatter(consumerMetadata.getConsumerProperties(),eventMetadata,eep);
 			break;
 		default:
 			throw new AdapterException("Could not initialize REST output adapter: "+this+", unrecognised formatter type");

@@ -31,6 +31,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import com.ibm.hrl.proton.adapters.interfaces.AdapterException;
+import com.ibm.hrl.proton.expression.facade.EepFacade;
 import com.ibm.hrl.proton.metadata.epa.basic.IDataObject;
 import com.ibm.hrl.proton.metadata.event.IEventType;
 import com.ibm.hrl.proton.metadata.parser.MetadataParser;
@@ -53,14 +54,14 @@ public class XmlNgsiFormatter extends AbstractTextFormatter {
 
 
 	
-	public XmlNgsiFormatter(Map<String,Object> properties) throws AdapterException
+	public XmlNgsiFormatter(Map<String,Object> properties,EventMetadataFacade eventMetadata,EepFacade eep) throws AdapterException
 	{
-		this((String)properties.get(MetadataParser.DATE_FORMAT));
+		this((String)properties.get(MetadataParser.DATE_FORMAT),eventMetadata,eep);
 	}
 	
-	private XmlNgsiFormatter(String dateFormat) throws AdapterException 
+	private XmlNgsiFormatter(String dateFormat,EventMetadataFacade eventMetadata,EepFacade eep) throws AdapterException 
 	{
-		super(dateFormat);
+		super(dateFormat,eventMetadata,eep);
 	}
 	
 	
@@ -152,7 +153,7 @@ public class XmlNgsiFormatter extends AbstractTextFormatter {
 			System.out.println("Entity type: " + entityType + " Entity id:"	+ entityId);
 			String eventName = entityType+EVENT_NAME_SUFFIX;
 
-			IEventType eventType= EventMetadataFacade.getInstance().getEventType(eventName);
+			IEventType eventType= eventMetadata.getEventType(eventName);
 			Map<String,Object> attrValues = new HashMap<String,Object>();
 			
 			addAttribute(ENTITY_TYPE_ATTRIBUTE, entityType, eventType, attrValues);
@@ -194,7 +195,7 @@ public class XmlNgsiFormatter extends AbstractTextFormatter {
 		
 		Object attrValueObject;	     
 		try {
-	       	attrValueObject = TypeAttribute.parseConstantValue(attrStringValue,attrName,eventType,dateFormatter);
+	       	attrValueObject = TypeAttribute.parseConstantValue(attrStringValue,attrName,eventType,dateFormatter,eep);
 		    attrMap.put(attrName,attrValueObject);
 		} catch (Exception e) {
 		    throw new AdapterException("Could not convert XML input attribute " + attrName + " to event attribute");

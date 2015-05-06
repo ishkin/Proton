@@ -26,6 +26,7 @@ import com.ibm.hrl.proton.metadata.event.IEventType;
 import com.ibm.hrl.proton.metadata.inout.ProducerMetadata;
 import com.ibm.hrl.proton.runtime.epa.interfaces.IExpression;
 import com.ibm.hrl.proton.runtime.event.interfaces.IEventInstance;
+import com.ibm.hrl.proton.runtime.metadata.EventMetadataFacade;
 
 public abstract class AbstractInputAdapter implements IInputAdapter{
 
@@ -37,13 +38,17 @@ public abstract class AbstractInputAdapter implements IInputAdapter{
 	protected IInputAdapterConfiguration configuration;	
 	protected IInputConnector serverConnector;
 	protected Map<IEventType,IExpression> eventsFilter = null;
+	protected EventMetadataFacade eventMetadata;
 	
 	
-	public AbstractInputAdapter(ProducerMetadata producerMetadata,IInputConnector serverConnector) throws AdapterException {
+	public AbstractInputAdapter(ProducerMetadata producerMetadata,IInputConnector serverConnector,EventMetadataFacade eventMetadata) throws AdapterException {
+		this.eventMetadata = eventMetadata;
 		this.configuration = createConfiguration(producerMetadata);		
 		this.serverConnector = serverConnector;
 		eventsFilter = producerMetadata.getEventsFilter();
 		producerName = producerMetadata.getProducerName();
+	
+		
 		
 	}
 	

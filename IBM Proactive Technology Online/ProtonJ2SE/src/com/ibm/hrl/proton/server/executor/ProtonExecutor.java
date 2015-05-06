@@ -35,6 +35,8 @@ import com.ibm.hrl.proton.metadata.parser.ParsingException;
 import com.ibm.hrl.proton.metadata.parser.ProtonParseException;
 import com.ibm.hrl.proton.router.EventRouter;
 import com.ibm.hrl.proton.router.IEventRouter;
+import com.ibm.hrl.proton.runtime.metadata.IMetadataFacade;
+import com.ibm.hrl.proton.runtime.metadata.MetadataFacade;
 import com.ibm.hrl.proton.server.adapter.InputServer;
 import com.ibm.hrl.proton.server.adapter.OutputServer;
 import com.ibm.hrl.proton.server.adapter.ProtonServerException;
@@ -42,6 +44,8 @@ import com.ibm.hrl.proton.server.adapter.eventHandlers.StandaloneDataSender;
 import com.ibm.hrl.proton.server.executorServices.ExecutorUtils;
 import com.ibm.hrl.proton.server.timerService.TimerServiceFacade;
 import com.ibm.hrl.proton.server.workManager.WorkManagerFacade;
+import com.ibm.hrl.proton.utilities.facadesManager.FacadesManager;
+import com.ibm.hrl.proton.utilities.facadesManager.IFacadesManager;
 
 
 
@@ -63,17 +67,24 @@ public class ProtonExecutor
     	PropertiesParser prop = null;
     	InputServer inputServer=null;
     	OutputServer outputServer=null ;
-    	String propertiesFileNamePath = "./config/Proton.properties";
+    	IFacadesManager facadesManager = new FacadesManager();
+    	IMetadataFacade metadataFacade = new MetadataFacade();
+    	EepFacade eepFacade = null;
     	try
     	{
+    		eepFacade = new EepFacade();    		
+    		((FacadesManager)facadesManager).setEepFacade(eepFacade);
+    	
+    		String propertiesFileNamePath = "./config/Proton.properties";
+    	
     		
 			//check for input parameter - the properties file name.    		
     		if (args.length != 0)
     			propertiesFileNamePath=args[0];
     	
     		prop = new PropertiesParser(propertiesFileNamePath);            
-            inputServer = new InputServer(prop.inputPortNumber,BACKLOG_SIZE);
-            outputServer = new OutputServer(prop.outputPortNumber,BACKLOG_SIZE);
+            inputServer = new InputServer(prop.inputPortNumber,BACKLOG_SIZE,facadesManager,metadataFacade,eepFacade);
+            outputServer = new OutputServer(prop.outputPortNumber,BACKLOG_SIZE,facadesManager,metadataFacade,eepFacade);
            
             logger.info("init: initializing metadata and all the system singletons");
             
@@ -91,22 +102,33 @@ public class ProtonExecutor
         
         try
         {
-           
-        	EepFacade eep = EepFacade.getInstance();  
-        	Collection<ProtonParseException> exceptions = initializeMetadata(prop.metadataFileName,eep);
+            
+        	
+        	
+        	
+        	Collection<ProtonParseException> exceptions = initializeMetadata(prop.metadataFileName,eepFacade,metadataFacade);
         	logger.info("init: done initializing metadata, returned the following exceptions: ");
         	for (ProtonParseException protonParseException : exceptions) {
 				logger.info(protonParseException.toString());
 			}
         	
-            TimerServiceFacade timerServiceFacade = TimerServiceFacade.getInstance();
-            IEventHandler eventHandler = EventHandler.getInstance();
-            StandaloneDataSender.initializeInstance();
-            IEventRouter eventRouter = EventRouter.initializeInstance(StandaloneDataSender.getInstance());           
-            EPAManagerFacade.initializeInstance(WorkManagerFacade.getInstance(), eventRouter, null);
-            AgentQueuesManager.initializeInstance(timerServiceFacade, eventHandler, WorkManagerFacade.getInstance());
-            ContextServiceFacade.initializeInstance(timerServiceFacade, eventHandler);                    
-            EepFacade.getInstance();   
+            TimerServiceFacade timerServiceFacade = new TimerServiceFacade();
+            ((FacadesManager)facadesManager).setTimerServiceFacade(timerServiceFacade);
+            IEventHandler eventHandler = new EventHandler(facadesManager,metadataFacade);
+            ((FacadesManager)facadesManager).setEventHandler(eventHandler);
+            StandaloneDataSender dataSender = new StandaloneDataSender();
+            ((FacadesManager)facadesManager).setDataSender(dataSender);
+            IEventRouter eventRouter = new EventRouter(dataSender,facadesManager,metadataFacade);
+            ((FacadesManager)facadesManager).setEventRouter(eventRouter);
+            WorkManagerFacade workManagerFacade = new WorkManagerFacade();
+            ((FacadesManager)facadesManager).setWorkManager(workManagerFacade);
+            EPAManagerFacade epaManagerFacade = new EPAManagerFacade(workManagerFacade, eventRouter, null,metadataFacade);
+            ((FacadesManager)facadesManager).setEpaManager(epaManagerFacade);
+            AgentQueuesManager agentQueuesManager = new AgentQueuesManager(timerServiceFacade, eventHandler, workManagerFacade,metadataFacade);
+            ((FacadesManager)facadesManager).setAgentQueuesManager(agentQueuesManager);
+            ContextServiceFacade contextService = new ContextServiceFacade(timerServiceFacade, eventHandler,metadataFacade.getContextMetadataFacade());
+            ((FacadesManager)facadesManager).setContextServiceFacade(contextService);                    
+               
             
             
             logger.info("init: done initializing singletons , starting the servers...");
@@ -131,7 +153,7 @@ public class ProtonExecutor
 
             inputServer.stopServer();
             outputServer.stopServer();
-            TimerServiceFacade.getInstance().destroyTimers();
+            timerServiceFacade.destroyTimers();
             ExecutorUtils.shutdownNow();
 
                         
@@ -149,7 +171,7 @@ public class ProtonExecutor
     }
 
        	
-    private static Collection<ProtonParseException> initializeMetadata(String metadataFileName, EepFacade eep) throws ParsingException{
+    private static Collection<ProtonParseException> initializeMetadata(String metadataFileName, EepFacade eep,IMetadataFacade metadataFacade) throws ParsingException{
         
    	 String line;
 		 StringBuilder sb = new StringBuilder();
@@ -179,7 +201,7 @@ public class ProtonExecutor
 	     String jsonTxt  = sb.toString();
 
 	    	   
-       MetadataParser metadataParser  = new MetadataParser(eep);        
+       MetadataParser metadataParser  = new MetadataParser(eep,metadataFacade);        
        Collection<ProtonParseException> exceptions = metadataParser.parseEPN(jsonTxt);
        return exceptions;
              

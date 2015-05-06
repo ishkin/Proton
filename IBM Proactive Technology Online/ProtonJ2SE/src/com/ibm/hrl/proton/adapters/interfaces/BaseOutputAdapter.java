@@ -26,6 +26,7 @@ import com.ibm.hrl.proton.metadata.epa.basic.IDataObject;
 import com.ibm.hrl.proton.metadata.event.IEventType;
 import com.ibm.hrl.proton.metadata.inout.ConsumerMetadata;
 import com.ibm.hrl.proton.runtime.epa.interfaces.IExpression;
+import com.ibm.hrl.proton.runtime.metadata.EventMetadataFacade;
 
 public abstract class BaseOutputAdapter implements IOutputAdapter {
 	public static final Logger logger = Logger.getLogger(BaseOutputAdapter.class.getName());
@@ -37,9 +38,11 @@ public abstract class BaseOutputAdapter implements IOutputAdapter {
 	private String consumerName;	
 	protected IOutputAdapterConfiguration configuration;	
 	protected IOutputConnector serverConnector;
-	protected Map<IEventType,IExpression> eventsFilter = null;
+	protected Map<IEventType,IExpression> eventsFilter = null;	
+	protected EventMetadataFacade eventMetadata;
 	
-	protected BaseOutputAdapter(ConsumerMetadata consumerMetadata,IOutputConnector serverConnector) throws AdapterException {
+	protected BaseOutputAdapter(ConsumerMetadata consumerMetadata,IOutputConnector serverConnector,EventMetadataFacade eventMetadata) throws AdapterException {		
+		this.eventMetadata = eventMetadata;
 		this.configuration = createConfiguration(consumerMetadata);		
 		this.serverConnector = serverConnector;
 		eventsFilter = consumerMetadata.getConsumerEvents();		

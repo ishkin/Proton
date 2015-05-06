@@ -16,6 +16,7 @@
 
 package com.ibm.hrl.proton.runtime.metadata;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
@@ -27,44 +28,27 @@ import com.ibm.hrl.proton.metadata.event.IEventType;
  * 
  * 
  */
-public class EventMetadataFacade
+public class EventMetadataFacade implements Serializable
 {
     Map<String,IEventType> eventTypes;
-    private static  EventMetadataFacade instance = null;    
+   
     private static final Logger logger = Logger.getLogger("EventMetadataFacade");
     
     /**Ctor - Initialize the internal data structure*/
-    private EventMetadataFacade(Map<String,IEventType> eventTypes)
+    public EventMetadataFacade(Map<String,IEventType> eventTypes)
     {
         this.eventTypes= new HashMap<String,IEventType>(eventTypes);
     }
     
-    /**
-     * This method is called at system startup when parsing the definitions  - to initialize this singleton 
-     * with context metadata
-     * @param metaData
-     */
-    public static synchronized void initializeEvents(Map<String,IEventType> eventTypes){
-        if (instance == null){
-            instance = new EventMetadataFacade(eventTypes); 
-        }
-        
-    }
+   
     
-    /**
-     * Get instance of this singleton
-     * @return
-     */
-    public static EventMetadataFacade getInstance(){
-        return instance;
-    }
-    
+   
     public IEventType getEventType(String eventTypeName)
     {       
         return eventTypes.get(eventTypeName);
     }
     
-    public static synchronized void clear() {
-    	instance = null;
+    public synchronized void clear() {
+    	eventTypes.clear();
     }
 }

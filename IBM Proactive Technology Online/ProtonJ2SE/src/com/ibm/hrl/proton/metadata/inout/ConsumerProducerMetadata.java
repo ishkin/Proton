@@ -15,11 +15,12 @@
  ******************************************************************************/
 package com.ibm.hrl.proton.metadata.inout;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ConsumerProducerMetadata {
+public class ConsumerProducerMetadata implements Serializable{
 
 	private static ConsumerProducerMetadata instance;
 	private Map<String,ConsumerMetadata> consumers;

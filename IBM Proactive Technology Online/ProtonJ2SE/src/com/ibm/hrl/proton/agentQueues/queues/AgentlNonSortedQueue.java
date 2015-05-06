@@ -40,10 +40,10 @@ public class AgentlNonSortedQueue extends AgentAbstractQueue
 
 
 
-    public AgentlNonSortedQueue(String contextName, String agentName, long bufferingTime,ContextIntervalPolicyEnum initiationPolicy,ContextIntervalPolicyEnum terminationPolicy)
+    public AgentlNonSortedQueue(String contextName, String agentName, long bufferingTime,ContextIntervalPolicyEnum initiationPolicy,ContextIntervalPolicyEnum terminationPolicy,AgentQueuesManager queueManager)
     {
         super( contextName, agentName, bufferingTime,initiationPolicy,terminationPolicy,
-                new ConcurrentLinkedQueue<QueueElement>());        
+                new ConcurrentLinkedQueue<QueueElement>(),queueManager);        
     }
 
    
@@ -52,7 +52,7 @@ public class AgentlNonSortedQueue extends AgentAbstractQueue
     public synchronized boolean offer(Object o)
     {       
         
-        ITimerServices timerService = AgentQueuesManager.getInstance().getTimerServices();
+        ITimerServices timerService = queueManager.getTimerServices();
         
       //gets the head element of the queue and compares it with the current element
         logger.entering(getClass().getName(), "offer");

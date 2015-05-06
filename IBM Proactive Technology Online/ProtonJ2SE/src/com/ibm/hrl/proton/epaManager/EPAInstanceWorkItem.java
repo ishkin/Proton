@@ -45,14 +45,14 @@ public class EPAInstanceWorkItem implements IWorkItem
     IEventInstance eventInstance;
     /**Event router for routing derived events back to the system or to the external consumers */
     IEventRouter eventRouter;
-    Logger logger = Logger.getLogger(getClass().getName());
+    private static Logger logger = Logger.getLogger(EPAInstanceWorkItem.class.getName());
     
-    public EPAInstanceWorkItem(IEventProcessingAgentInstance eventProcessingAgentInstance, IEventInstance eventInstance)
+    public EPAInstanceWorkItem(IEventProcessingAgentInstance eventProcessingAgentInstance, IEventInstance eventInstance,IEventRouter eventRouter)
     {
         super();
         this.eventProcessingAgentInstance = eventProcessingAgentInstance;
         this.eventInstance = eventInstance;
-        eventRouter = EPAManagerFacade.getInstance().getEventRouter();
+        this.eventRouter = eventRouter;
         
         
     }

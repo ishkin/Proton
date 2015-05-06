@@ -15,9 +15,11 @@
  ******************************************************************************/
 package com.ibm.hrl.proton.metadata.epa;
 
+import java.io.Serializable;
+
 import com.ibm.hrl.proton.metadata.event.IEventType;
 
-public class Operand implements Comparable {
+public class Operand implements Comparable,Serializable {
 
 	private int operandIndex; // Operand index
 	private IEventType eventType; // Event Type

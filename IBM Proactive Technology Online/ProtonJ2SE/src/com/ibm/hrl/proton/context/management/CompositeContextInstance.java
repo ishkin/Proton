@@ -23,6 +23,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.ibm.hrl.proton.context.exceptions.ContextServiceException;
 import com.ibm.hrl.proton.context.facade.ContextServiceFacade;
 import com.ibm.hrl.proton.context.management.AdditionalInformation.NotificationTypeEnum;
@@ -89,11 +92,16 @@ public class CompositeContextInstance implements ITimerListener {
 	protected List<TemporalContextWindow> activeContextWindows;	
 	// active partitions in this context, each partition consists of a list of initiators
 	// and (not necessarily) unique segmentation value
-	protected List<TemporalPartition> activePartitions;		
+	protected List<TemporalPartition> activePartitions;
 	
-	public CompositeContextInstance(IContextType contextType, IEventProcessingAgent agentType) {
+	private ContextServiceFacade facade;
+	
+	 private static Logger logger = LoggerFactory.getLogger(CompositeContextInstance.class);
+	
+	public CompositeContextInstance(IContextType contextType, IEventProcessingAgent agentType,ContextServiceFacade facade) {
 			
 		this.agentType = agentType;
+		this.facade = facade;
 		this.contextType = contextType;
 		this.id = UUID.randomUUID();
 		activePartitions = new ArrayList<TemporalPartition>();
@@ -107,7 +115,7 @@ public class CompositeContextInstance implements ITimerListener {
 			for (IContextType context: members) {
 				if (context instanceof TemporalContextType) {
 					activeContextWindows.add(new TemporalContextWindow(
-							(TemporalContextType)context));
+							(TemporalContextType)context,facade));
 				}
 				else { // context instanceof SegmentationContextType
 					globalSegmentation.add((SegmentationContextType)context);
@@ -118,7 +126,7 @@ public class CompositeContextInstance implements ITimerListener {
 		if (!(contextType instanceof CompositeContextType)) { // temporal or segmentation
 			if (contextType instanceof TemporalContextType) {
 				activeContextWindows.add(new TemporalContextWindow(
-						(TemporalContextType)contextType));
+						(TemporalContextType)contextType,facade));
 			}
 			else { // context instanceof SegmentationContextType
 				globalSegmentation.add((SegmentationContextType)contextType);
@@ -312,7 +320,7 @@ public class CompositeContextInstance implements ITimerListener {
 		if (!globalEventAdded) return new HashSet<String>();
 
 		// event was added at least once
-		IntersectionOperator intersection = new IntersectionOperator(this);
+		IntersectionOperator intersection = new IntersectionOperator(this,facade);
 		return intersection.initiate();		
 	}	
 	
@@ -326,7 +334,7 @@ public class CompositeContextInstance implements ITimerListener {
 	 * @param 	event
      * @return 	Collection<String> - internal partitions this event falls into
      */  
-	public Collection<Pair<String,Map<String,Object>>> processContextParticipant(IEventInstance event) {
+	public Collection<Pair<String,Map<String,Object>>> processContextParticipant(IEventInstance event) throws ContextServiceException {
 		
 		// if all participants must agree on internal segmentation -
 		// check if there are ActiveContextSegment(s) this event falls into
@@ -343,23 +351,37 @@ public class CompositeContextInstance implements ITimerListener {
 		// end for
 		
 		Collection<Pair<String,Map<String,Object>>> internalPartitions = new HashSet<Pair<String,Map<String,Object>>>();
-		
+		logger.debug("processContextParticipant: processing context participant: "+event);
 		// check what temporal partitions this instance falls into
 		for (TemporalPartition partition: activePartitions) {
+			logger.debug("processContextParticipant: iterating over active partitions" +partition);
 			SegmentationValue pSegmentation = partition.getContextSegmentationValue();
 			SegmentationValue eSegmentation = new SegmentationValue(pSegmentation.getType());
+			logger.debug("processContextParticipant: pSegmentation"+pSegmentation+", eSegmentation: "+eSegmentation);
 			
 			if (!pSegmentation.isEmpty()) {
 				eSegmentation = pSegmentation.getType().getSegmentationValue(event);
+				logger.debug("processContextParticipant: pSegmentation not empty, assigning value to eSegmentation"+eSegmentation);
+				
 			}
 			
 			// check if event falls into this temporal partition
 			if (pSegmentation.compliesWith(eSegmentation)) {
+				logger.debug("processContextParticipant: pSegmentation complies with eSegmentation, adding internal partition:"+partition);
 				// we don't add an event to internal partition, just return partition id
 				// partition.findInternalPartition has different implementation in TemporalPartition
 				// and in SlidingTemporalPartition, since in the latter there is additional level
 				// of hierarchy (SlidingTemporalInternalPartition) 
-				internalPartitions.addAll(partition.findInternalPartition(event,localSegmentation));
+				try{
+					logger.debug("processContextParticipant: before finding internal partition, event:"+event);
+					logger.debug("processContextParticipant: before finding internal partition,localSegmentation:"+localSegmentation);
+					internalPartitions.addAll(partition.findInternalPartition(event, localSegmentation));
+				}catch(Exception e)
+				{
+					logger.error("processContextParticipant: finding internal partitions failed "+ e.getMessage());
+					throw new ContextServiceException(e.getMessage());
+				}
+				logger.debug("processContextParticipant: finished adding internal partitions to the list,returning: "+internalPartitions);
 			}			
 		}
 		
@@ -466,7 +488,7 @@ public class CompositeContextInstance implements ITimerListener {
 		
 		if (!eventAdded) return new HashSet<Pair<String,Map<String,Object>>>();
 		
-		IntersectionOperator intersection = new IntersectionOperator(this);
+		IntersectionOperator intersection = new IntersectionOperator(this,facade);
 		return intersection.terminate(object);				
 	}		
 
@@ -525,7 +547,7 @@ public class CompositeContextInstance implements ITimerListener {
 					contextBoundId,agentType.getName());			
 		}
 	
-		ContextServiceFacade.getInstance().getEventHandler(
+		facade.getEventHandler(
 				).routeContextNotification(notification);
 		
 		return null;

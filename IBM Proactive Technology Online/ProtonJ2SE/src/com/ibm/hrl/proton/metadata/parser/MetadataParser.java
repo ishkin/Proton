@@ -68,9 +68,9 @@ import com.ibm.hrl.proton.metadata.type.TypeAttribute;
 import com.ibm.hrl.proton.metadata.type.enums.AttributeTypesEnum;
 import com.ibm.hrl.proton.metadata.type.interfaces.IBasicType;
 import com.ibm.hrl.proton.runtime.epa.interfaces.IExpression;
-import com.ibm.hrl.proton.runtime.metadata.ContextMetadataFacade;
 import com.ibm.hrl.proton.runtime.metadata.EPAManagerMetadataFacade;
 import com.ibm.hrl.proton.runtime.metadata.EventMetadataFacade;
+import com.ibm.hrl.proton.runtime.metadata.IMetadataFacade;
 import com.ibm.hrl.proton.runtime.metadata.RoutingMetadataFacade;
 import com.ibm.hrl.proton.runtime.metadata.epa.AgentQueueMetadata;
 import com.ibm.hrl.proton.runtime.metadata.epa.AgentQueueMetadata.OrderingPolicy;
@@ -78,9 +78,11 @@ import com.ibm.hrl.proton.runtime.metadata.epa.AgentQueueMetadata.SortingPolicy;
 import com.ibm.hrl.proton.utilities.containers.Pair;
 
 public class MetadataParser extends BaseMetadataParser{
+	
 
-	public MetadataParser(EepFacade eep) {
-		super(eep);
+	public MetadataParser(EepFacade eep,IMetadataFacade metadataFacade) {
+		super(eep,metadataFacade);
+		
 	}
 
 	
@@ -113,7 +115,7 @@ public class MetadataParser extends BaseMetadataParser{
 
 			
 
-			ContextMetadataFacade.getInstance().setContextAgents(contextAgents);
+			metadataFacade.getContextMetadataFacade().setContextAgents(contextAgents);
 
 			return exceptions;
 		} catch (IOException e) {
@@ -153,7 +155,7 @@ public class MetadataParser extends BaseMetadataParser{
 				
 				
 				// get the context
-				IContextType contextType = ContextMetadataFacade.getInstance().getContext(contextName);
+				IContextType contextType = metadataFacade.getContextMetadataFacade().getContext(contextName);
 				// must be defined
 				checkElementDefined(contextType, epaName, DefinitionType.EPA, ErrorElement.CONTEXT_NAME,
 						ProtonParseException.DEFAULT_INDEX, contextName);
@@ -206,7 +208,7 @@ public class MetadataParser extends BaseMetadataParser{
 						// must be defined
 						String inputEventName = tryException(new NullChecker<String>("name", inputEvent, epaName,
 								DefinitionType.EPA, ErrorElement.INPUT_EVENT_NAME, stringParser, rowNumber));
-						IEventType inputEventType = EventMetadataFacade.getInstance().getEventType(
+						IEventType inputEventType = metadataFacade.getEventMetadataFacade().getEventType(
 								inputEventName);
 						// must be defined
 						checkElementDefined(inputEventType, epaName, DefinitionType.EPA,
@@ -254,7 +256,7 @@ public class MetadataParser extends BaseMetadataParser{
 								ArrayList<String> signatureAliases = new ArrayList<String>();
 								signatureAliases.add(aliasName);
 								// must be parsed by eep
-								filterParsedExpression = eep.createExpression(filterExpression, signature,
+								filterParsedExpression =  eep.createExpression(filterExpression, signature,
 										signatureAliases);
 							}
 
@@ -346,10 +348,12 @@ public class MetadataParser extends BaseMetadataParser{
 
 		// TODO need to add to eventsRoutingInfo also the context
 		// terminators and context initiator events
-
-		EPAManagerMetadataFacade.initializeEPAMetadata(agentDefs);
-		RoutingMetadataFacade.initializeChannels(eventsRoutingInfo, agentChannelInfo, consumerEvents,
+		EPAManagerMetadataFacade epaManagerMetadataFacade = new EPAManagerMetadataFacade(agentDefs);
+		metadataFacade.setEpaManagerMetadataFacade(epaManagerMetadataFacade);
+		RoutingMetadataFacade routingMetadataFacade = new RoutingMetadataFacade(eventsRoutingInfo, agentChannelInfo, consumerEvents,
 				contextAgents);
+		metadataFacade.setRoutingMetadataFacade(routingMetadataFacade);
+		
 	}
 
 	
@@ -408,10 +412,10 @@ public class MetadataParser extends BaseMetadataParser{
 						IComputedVariableType computedVariableType = aggrMatchingSchema.getComputedVariableType();
 						inputList.add(computedVariableType);
 						assertion = findAndReplace(assertion,computedVariableType);
-						parsedExpression = eep.createExpression(assertion, inputList);
+						parsedExpression =  eep.createExpression(assertion, inputList);
 					}else
 					{
-						parsedExpression = eep.createExpression(assertion,
+						parsedExpression =  eep.createExpression(assertion,
 								(List<IDataObjectMeta>)(List<?>)inputEventsList, inputEventsAliases);
 					}
 					
@@ -431,7 +435,7 @@ public class MetadataParser extends BaseMetadataParser{
 				
 				String internalSegmentationContextName = tryException(new NullChecker<String>("name", internalSegmentationContext,
 						epaName, DefinitionType.EPA, ErrorElement.INTERNAL_SEGMENTATION_CONTEXT_NAME, stringParser));
-				IContextType segmentationContext = ContextMetadataFacade.getInstance().getContext(
+				IContextType segmentationContext =metadataFacade.getContextMetadataFacade().getContext(
 						internalSegmentationContextName);
 				checkElementDefined(segmentationContext, epaName, DefinitionType.EPA,
 						ErrorElement.INTERNAL_SEGMENTATION_CONTEXT_NAME, rowNumber,
@@ -513,7 +517,7 @@ public class MetadataParser extends BaseMetadataParser{
 			if (composedDerivationPolicy != null && composedDerivationPolicy.equals(true)) {
 				compositionPolicy = MultiDerivationPolicyEnum.COMPOSITION;
 			}
-			composedEventType = EventMetadataFacade.getInstance().getEventType(
+			composedEventType = metadataFacade.getEventMetadataFacade().getEventType(
 					(String)compositedDerivation.get("composedEvent"));
 		}
 
@@ -524,7 +528,7 @@ public class MetadataParser extends BaseMetadataParser{
 						DefinitionType.EPA, ErrorElement.DERIVATION_NAME, stringParser,
 						ProtonParseException.DEFAULT_INDEX, tableNumber));
 				// get the definition for the action/event type
-				IBasicType derivationDef = EventMetadataFacade.getInstance().getEventType(derivationName);
+				IBasicType derivationDef = metadataFacade.getEventMetadataFacade().getEventType(derivationName);
 				
 
 				checkElementDefined(derivationDef, epaName, DefinitionType.EPA, ErrorElement.DERIVATION_NAME,
@@ -554,12 +558,12 @@ public class MetadataParser extends BaseMetadataParser{
 							String aggregationDerivationCondition = findAndReplace(derivationCondition,
 									computedVariableType);
 							inputList.add(agentContextSegmentation);
-							parsedCondition = eep.createExpression(aggregationDerivationCondition, inputList);
+							parsedCondition =  eep.createExpression(aggregationDerivationCondition, inputList);
 						} else if (epaType.equals(EPATypeEnum.TREND)){
 							List<IDataObjectMeta> inputList = new ArrayList<IDataObjectMeta>();
 							inputList.add(computedVariableType);
 							inputList.add(agentContextSegmentation);
-							parsedCondition = eep.createExpression(derivationCondition, inputList);
+							parsedCondition =  eep.createExpression(derivationCondition, inputList);
 						}
 						else
 						{
@@ -573,7 +577,7 @@ public class MetadataParser extends BaseMetadataParser{
 								segmentationNamesSig.add(agentContextSegmentation.getName());
 							}
 							// must be parsed successfuly
-							parsedCondition = eep.createExpression(derivationCondition,
+							parsedCondition =  eep.createExpression(derivationCondition,
 									inputList, segmentationNamesSig);
 						}
 
@@ -638,7 +642,7 @@ public class MetadataParser extends BaseMetadataParser{
 								List<IDataObjectMeta> inputList = new ArrayList<IDataObjectMeta>();
 								inputList.add(computedVariableType);
 								inputList.add(agentContextSegmentation);
-								parsedAttributeExpression = eep.createExpression(attributeExpression, inputList);
+								parsedAttributeExpression =  eep.createExpression(attributeExpression, inputList);
 							} else {
 								List<IDataObjectMeta> inputList = new ArrayList<IDataObjectMeta>();							
 								inputList.addAll((List<IDataObjectMeta>)(List<?>)inputEventsList);
@@ -682,7 +686,7 @@ public class MetadataParser extends BaseMetadataParser{
 	 * @throws ParseException 
 	 */
 	protected void parseConsumerProducer(JSONArray consumers, JSONArray producers) throws ParseException {
-		EventMetadataFacade instance = EventMetadataFacade.getInstance();
+		EventMetadataFacade instance = metadataFacade.getEventMetadataFacade();
 		ConsumerProducerMetadata consumerProducerMetadata = ConsumerProducerMetadata.initializeInstance();
 
 		// parsing consumer definitions
@@ -758,7 +762,7 @@ public class MetadataParser extends BaseMetadataParser{
 							try {
 								ArrayList<IDataObjectMeta> signature = new ArrayList<IDataObjectMeta>();
 								signature.add(eventType);						
-								expression = eep.createExpression(condition, signature);
+								expression =  eep.createExpression(condition, signature);
 							} catch (Exception e) {
 								handleEEPException(consumerName, DefinitionType.CONSUMER, ErrorElement.CONSUMER_EVENT_CONDITION,
 										rowNumber, ProtonParseException.DEFAULT_INDEX, e);
@@ -856,7 +860,7 @@ public class MetadataParser extends BaseMetadataParser{
 						String eventName = tryException(new NullCheckerAndWarningRepeats<String>(eventNames, "name",
 								event, producerName, DefinitionType.PRODUCER, ErrorElement.PRODUCER_EVENT_NAME,
 								stringParser, rowNumber));
-						IEventType eventType = EventMetadataFacade.getInstance().getEventType(eventName);
+						IEventType eventType = metadataFacade.getEventMetadataFacade().getEventType(eventName);
 						checkElementDefined(eventType, producerName, DefinitionType.PRODUCER,
 								ErrorElement.PRODUCER_EVENT_NAME, rowNumber, eventName);
 						String condition = (String)event.get("condition");
@@ -866,7 +870,7 @@ public class MetadataParser extends BaseMetadataParser{
 							try {
 								ArrayList<IDataObjectMeta> signature = new ArrayList<IDataObjectMeta>();
 								signature.add(eventType);						
-								expression = eep.createExpression(condition, signature);
+								expression =  eep.createExpression(condition, signature);
 							} catch (Exception e) {
 								handleEEPException(producerName, DefinitionType.PRODUCER, ErrorElement.PRODUCER_EVENT_CONDITION,
 										rowNumber, ProtonParseException.DEFAULT_INDEX, e);
@@ -892,10 +896,7 @@ public class MetadataParser extends BaseMetadataParser{
 			
 	
 	public void clear() {
-		EventMetadataFacade.clear();
-		EPAManagerMetadataFacade.clear();
-		ContextMetadataFacade.clear();		
-		RoutingMetadataFacade.clear();
+		metadataFacade.clear();		
 		
 	}
 

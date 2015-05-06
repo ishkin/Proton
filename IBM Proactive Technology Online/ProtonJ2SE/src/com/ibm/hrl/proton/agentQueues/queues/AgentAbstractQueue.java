@@ -53,21 +53,23 @@ public abstract class AgentAbstractQueue  implements ITimerListener,Queue
     protected QueueTimerListener timerListener;
     private ContextIntervalPolicyEnum initiationInterPolicy;
     private ContextIntervalPolicyEnum terminationInterPolicy;
-   
+    protected AgentQueuesManager queueManager;
     protected static Logger logger = Logger.getLogger(AgentAbstractQueue.class.getName());
     
     public AgentAbstractQueue(  String contextName, String agentName,long bufferingTime,
-            ContextIntervalPolicyEnum initiationInterPolicy, ContextIntervalPolicyEnum terminationInterPolicy,AbstractQueue<QueueElement> underLyingQueue)
+            ContextIntervalPolicyEnum initiationInterPolicy, ContextIntervalPolicyEnum terminationInterPolicy,AbstractQueue<QueueElement> underLyingQueue,AgentQueuesManager manager)
     {
         
         this.contextName = contextName;
+        this.queueManager = manager;
         this.agentName = agentName;      
         this.bufferingTime = bufferingTime;
         this.underlyingQueue = underLyingQueue;
         String queueName = AgentQueuesManager.getQueueName(agentName, contextName);
-        timerListener = new QueueTimerListener(queueName);
+        timerListener = new QueueTimerListener(queueName,this.queueManager);
         this.initiationInterPolicy = initiationInterPolicy;
         this.terminationInterPolicy = terminationInterPolicy;
+       
         
     }
   
@@ -131,7 +133,7 @@ public abstract class AgentAbstractQueue  implements ITimerListener,Queue
     @Override
     public synchronized Object onTimer(Object additionalInformation) throws Exception
     {
-        AgentQueuesManager queueManager = AgentQueuesManager.getInstance();
+        
         IEventHandler eventHandler = queueManager.getEventHandler();
         ITimerServices timerService = queueManager.getTimerServices();
         

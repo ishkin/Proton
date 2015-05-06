@@ -15,6 +15,8 @@
  ******************************************************************************/
 package com.ibm.hrl.proton.runtime.metadata.epa;
 
+import java.io.Serializable;
+
 
 /**
  * Metadata for agent queues. 
@@ -24,7 +26,7 @@ package com.ibm.hrl.proton.runtime.metadata.epa;
 * 
 *
  */
-public class AgentQueueMetadata
+public class AgentQueueMetadata implements Serializable
 {
     /**
      TODO: determine how to set those policies based on metadata

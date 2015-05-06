@@ -15,13 +15,14 @@
  ******************************************************************************/
 package com.ibm.hrl.proton.metadata.inout;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
 import com.ibm.hrl.proton.metadata.event.IEventType;
 import com.ibm.hrl.proton.runtime.epa.interfaces.IExpression;
 
-public abstract class BaseConsumerMetadata {
+public abstract class BaseConsumerMetadata implements Serializable{
 	public enum ConsumerType {FILE,DB,JMS,REST, CUSTOM};
 	
 	private String consumerName;

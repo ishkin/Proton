@@ -16,23 +16,20 @@
 package com.ibm.hrl.proton.epaManager;
 
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
 
-import com.ibm.hrl.proton.epa.state.IEPAStateManager;
 import com.ibm.hrl.proton.epaManager.agentInstances.EventProcessingAgentInstance;
 import com.ibm.hrl.proton.epaManager.agentInstances.StatefulProcessingAgentInstance;
 import com.ibm.hrl.proton.epaManager.exceptions.EPAManagerException;
 import com.ibm.hrl.proton.epaManager.exceptions.EPAManagerLogicExecutionException;
 import com.ibm.hrl.proton.epaManager.exceptions.EPAManagerSubmitException;
-import com.ibm.hrl.proton.epaManager.state.EPAStateManager;
 import com.ibm.hrl.proton.metadata.epa.enums.EPATypeEnum;
 import com.ibm.hrl.proton.metadata.epa.interfaces.IEventProcessingAgent;
 import com.ibm.hrl.proton.router.IEventRouter;
 import com.ibm.hrl.proton.runtime.epa.interfaces.IEventProcessingAgentInstance;
 import com.ibm.hrl.proton.runtime.event.interfaces.IEventInstance;
-import com.ibm.hrl.proton.runtime.metadata.EPAManagerMetadataFacade;
+import com.ibm.hrl.proton.runtime.metadata.IMetadataFacade;
 import com.ibm.hrl.proton.utilities.asynchronousWork.AsynchronousExecutionException;
 import com.ibm.hrl.proton.utilities.asynchronousWork.IWorkManager;
 import com.ibm.hrl.proton.utilities.containers.Pair;
@@ -47,39 +44,24 @@ import com.ibm.hrl.proton.utilities.persistence.IPersistenceManager;
  */
 public class EPAManagerFacade extends BaseEPAManagerFacade
 {
-	private static EPAManagerFacade instance;
-	private Logger logger = Logger.getLogger(getClass().getName());
 	
-    private EPAManagerFacade(IWorkManager wm, IEventRouter eventRouter,IPersistenceManager persistenceManager)
+	private static Logger  logger = Logger.getLogger(EPAManagerFacade.class.getName());
+	
+    public EPAManagerFacade(IWorkManager wm, IEventRouter eventRouter,IPersistenceManager persistenceManager,IMetadataFacade metadataFacade)
     {        
-        super(wm, eventRouter, persistenceManager);
+        super(wm, eventRouter, persistenceManager,metadataFacade);
     }
     
 
     /**
      * Return the instance  of channel queue manager
      */
-    public synchronized static EPAManagerFacade initializeInstance(IWorkManager wm,IEventRouter eventRouter,IPersistenceManager persistenceManager)
-    {
-        if (null == instance)
-        {
-            instance = new EPAManagerFacade(wm,eventRouter,persistenceManager);  
-        }
-                   
-        return instance;
-    }
-    
-    public static EPAManagerFacade getInstance()
-    {
-        return instance;
-    }
+   
     
     
     public synchronized void clear(){
     	super.clear();
-    	if (instance != null){
-    		instance = null;
-    	}    	
+    		
     }
    
     
@@ -121,7 +103,7 @@ public class EPAManagerFacade extends BaseEPAManagerFacade
         }
         
        if (eventProcessingAgentInstance != null){
-    	   EPAInstanceTerminateWorkItem terminatorWorkItem = new EPAInstanceTerminateWorkItem(eventProcessingAgentInstance);
+    	   EPAInstanceTerminateWorkItem terminatorWorkItem = new EPAInstanceTerminateWorkItem(eventProcessingAgentInstance,this.getEventRouter());
            try
            {        	       
         	   synchronized (agentInstance) 

@@ -18,25 +18,27 @@ package com.ibm.hrl.proton.adapters.formatters;
 import java.util.Map;
 
 import com.ibm.hrl.proton.adapters.interfaces.AdapterException;
+import com.ibm.hrl.proton.expression.facade.EepFacade;
 import com.ibm.hrl.proton.metadata.epa.basic.IDataObject;
 import com.ibm.hrl.proton.metadata.event.EventHeader;
 import com.ibm.hrl.proton.metadata.parser.MetadataParser;
 import com.ibm.hrl.proton.metadata.type.TypeAttribute;
 import com.ibm.hrl.proton.metadata.type.enums.AttributeTypesEnum;
+import com.ibm.hrl.proton.runtime.metadata.EventMetadataFacade;
 
 public class TagTextFormatter extends BaseTextFormatter {
 
 
 	
 	
-	public TagTextFormatter(Map<String,Object> properties) throws AdapterException
+	public TagTextFormatter(Map<String,Object> properties,EventMetadataFacade eventMetadata,EepFacade eep) throws AdapterException
 	{
-		this((String)properties.get(DELIMITER),(String)properties.get(TAG_DATA_SEPARATOR),(String)properties.get(MetadataParser.DATE_FORMAT));
+		this((String)properties.get(DELIMITER),(String)properties.get(TAG_DATA_SEPARATOR),(String)properties.get(MetadataParser.DATE_FORMAT),eventMetadata,eep);
 	}
 	
-	private TagTextFormatter(String delimeter, String tagDataSeparator,String dateFormat) throws AdapterException
+	private TagTextFormatter(String delimeter, String tagDataSeparator,String dateFormat,EventMetadataFacade eventMetadata,EepFacade eep) throws AdapterException
 	{
-		super(delimeter,tagDataSeparator,dateFormat);
+		super(delimeter,tagDataSeparator,dateFormat,eventMetadata,eep);
 		
 	}
 

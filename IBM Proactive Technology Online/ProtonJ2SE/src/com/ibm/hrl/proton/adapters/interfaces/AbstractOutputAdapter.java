@@ -24,6 +24,7 @@ import com.ibm.hrl.proton.metadata.event.IEventType;
 import com.ibm.hrl.proton.metadata.inout.ConsumerMetadata;
 import com.ibm.hrl.proton.runtime.epa.interfaces.IExpression;
 import com.ibm.hrl.proton.runtime.event.interfaces.IEventInstance;
+import com.ibm.hrl.proton.runtime.metadata.EventMetadataFacade;
 
 public abstract class AbstractOutputAdapter extends BaseOutputAdapter {
 
@@ -31,8 +32,8 @@ public abstract class AbstractOutputAdapter extends BaseOutputAdapter {
 	
 			
 
-	public AbstractOutputAdapter(ConsumerMetadata consumerMetadata,IOutputConnector serverConnector) throws AdapterException {
-		super(consumerMetadata,serverConnector);
+	public AbstractOutputAdapter(ConsumerMetadata consumerMetadata,IOutputConnector serverConnector,EventMetadataFacade eventMetadata) throws AdapterException {
+		super(consumerMetadata,serverConnector,eventMetadata);
 
 	}
 

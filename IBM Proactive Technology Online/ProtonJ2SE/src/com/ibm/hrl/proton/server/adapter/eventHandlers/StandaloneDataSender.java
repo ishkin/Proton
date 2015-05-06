@@ -32,26 +32,17 @@ public class StandaloneDataSender implements IDataSender
 {
 
 	
-    private static StandaloneDataSender instance;
+   
     private List<IDataSender> dataSendersList;
    
-    private StandaloneDataSender() throws DataSenderException
+    public StandaloneDataSender() throws DataSenderException
     {       
 
     	dataSendersList = new ArrayList<IDataSender>();
         
     }
     
-    public static synchronized void initializeInstance() throws DataSenderException
-    {
-        
-        instance = new StandaloneDataSender();
-    }
     
-    public static StandaloneDataSender getInstance()
-    {
-        return instance;
-    }
     
     
     
