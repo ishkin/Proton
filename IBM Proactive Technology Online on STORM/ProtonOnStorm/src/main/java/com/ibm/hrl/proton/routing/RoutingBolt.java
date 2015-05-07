@@ -21,7 +21,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.logging.Logger;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import backtype.storm.task.OutputCollector;
 import backtype.storm.task.TopologyContext;
@@ -34,30 +36,28 @@ import com.ibm.hrl.proton.metadata.event.EventHeader;
 import com.ibm.hrl.proton.metadata.event.IEventType;
 import com.ibm.hrl.proton.runtime.event.EventInstance;
 import com.ibm.hrl.proton.runtime.event.interfaces.IEventInstance;
-import com.ibm.hrl.proton.runtime.metadata.EventMetadataFacade;
-import com.ibm.hrl.proton.runtime.metadata.RoutingMetadataFacade;
 import com.ibm.hrl.proton.utilities.containers.Pair;
+import com.ibm.hrl.proton.utilities.facadesManager.FacadesManager;
 
 public class RoutingBolt extends BaseRichBolt {
 	
-	OutputCollector _collector;	
-	String jsonTxt;
-	private static final Logger logger = Logger.getLogger(RoutingBolt.class.getName());	 
+	OutputCollector _collector;		
+	private static final Logger logger = LoggerFactory.getLogger(RoutingBolt.class.getName());	 
+	FacadesManager facadesManager;
+	STORMMetadataFacade metadataFacade;
 	
 		
-	public RoutingBolt(String jsonTxt) {
+	public RoutingBolt(FacadesManager facadesManager,STORMMetadataFacade metadataFacade) {
 		super();
-		this.jsonTxt = jsonTxt;
+		this.facadesManager = facadesManager;
+		this.metadataFacade = metadataFacade;
 	}
 
 	@Override
 	public void prepare(Map stormConf, TopologyContext context,
 			OutputCollector collector) {
-			_collector = collector;
-			logger.fine("prepare: initializing RoutingBolt with task id..."+context.getThisTaskId());
-			// make sure the metadata is parsed, only once per JVM and all singeltones initiated
-			MetadataFacade.initializeMetadataFacade(this.jsonTxt);
-			logger.fine("prepare: done initializing RoutingBolt with task id..."+context.getThisTaskId());
+			_collector = collector;							
+			logger.debug("prepare: done initializing RoutingBolt with task id..."+context.getThisTaskId());
 	}
 
 	@Override
@@ -68,7 +68,7 @@ public class RoutingBolt extends BaseRichBolt {
 	     
 		      //for each agent/context pair, add this information to the tuple and emit the tuple
 		      String eventTypeName = (String)input.getValueByField(EventHeader.NAME_ATTRIBUTE);
-		      Map<String,Object> attributes = (Map<String,Object>)input.getValueByField(MetadataFacade.ATTRIBUTES_FIELD);
+		      Map<String,Object> attributes = (Map<String,Object>)input.getValueByField(STORMMetadataFacade.ATTRIBUTES_FIELD);
 		    
 			  List<Object> tuple = new ArrayList<Object>();	   			 
 		      tuple.add(eventTypeName);
@@ -76,7 +76,7 @@ public class RoutingBolt extends BaseRichBolt {
 		      
 		      if (isConsumerEvent(eventTypeName))
 		      {
-		    	  _collector.emit(MetadataFacade.CONSUMER_EVENTS_STREAM,tuple);
+		    	  _collector.emit(STORMMetadataFacade.CONSUMER_EVENTS_STREAM,tuple);
 		      }
 		      
 		      if (routingInfo != null)
@@ -89,8 +89,8 @@ public class RoutingBolt extends BaseRichBolt {
 					Pair<String,String> routingEntry = (Pair<String,String>) iterator.next();			
 					eventTuple.add(routingEntry.getFirstValue());
 					eventTuple.add(routingEntry.getSecondValue());
-					logger.fine("RoutingBolt: execute : emitting tuple on stream: "+eventTypeName+" with values: "+tuple);
-					_collector.emit(MetadataFacade.EVENT_STREAM,eventTuple);
+					logger.debug("RoutingBolt: execute : emitting tuple on stream: "+eventTypeName+" with values: "+tuple);
+					_collector.emit(STORMMetadataFacade.EVENT_STREAM,eventTuple);
 				
 			      }
 		      }
@@ -100,24 +100,24 @@ public class RoutingBolt extends BaseRichBolt {
 	}
 
 	private boolean isConsumerEvent(String eventTypeName) {
-		 return RoutingMetadataFacade.getInstance().isConsumerEvent(eventTypeName);
+		 return metadataFacade.getMetadataFacade().getRoutingMetadataFacade().isConsumerEvent(eventTypeName);
 	}
 
 	@Override
 	public void declareOutputFields(OutputFieldsDeclarer declarer) {		
 		List<String> fieldNames = new ArrayList<String>();
 		fieldNames.add(EventHeader.NAME_ATTRIBUTE);
-		fieldNames.add(MetadataFacade.ATTRIBUTES_FIELD);
-		declarer.declareStream(MetadataFacade.CONSUMER_EVENTS_STREAM, new Fields(fieldNames));
+		fieldNames.add(STORMMetadataFacade.ATTRIBUTES_FIELD);
+		declarer.declareStream(STORMMetadataFacade.CONSUMER_EVENTS_STREAM, new Fields(fieldNames));
 		
 		//add the agentName and contextName fields
 		List<String> eventFieldNames = new ArrayList<String>();
 		eventFieldNames.addAll(fieldNames);
-		eventFieldNames.add(MetadataFacade.AGENT_NAME_FIELD);
-		eventFieldNames.add(MetadataFacade.CONTEXT_NAME_FIELD);
+		eventFieldNames.add(STORMMetadataFacade.AGENT_NAME_FIELD);
+		eventFieldNames.add(STORMMetadataFacade.CONTEXT_NAME_FIELD);
 
-		logger.fine("RoutingBolt: declareOutputFields:declaring stream for RoutingBolt: stream name: " +MetadataFacade.EVENT_STREAM+ "with fields "+fieldNames);
-		declarer.declareStream(MetadataFacade.EVENT_STREAM, new Fields(eventFieldNames));
+		logger.debug("RoutingBolt: declareOutputFields:declaring stream for RoutingBolt: stream name: " +STORMMetadataFacade.EVENT_STREAM+ "with fields "+fieldNames);
+		declarer.declareStream(STORMMetadataFacade.EVENT_STREAM, new Fields(eventFieldNames));
 		
 		
 	}
@@ -132,7 +132,7 @@ public class RoutingBolt extends BaseRichBolt {
 	 */
 	public Set<Pair<String,String>> getRoutingInfo(Tuple input)
 	{
-		logger.fine("RoutingBolt: getRoutingInfo: getting routing info for tuple: "+input);
+		logger.debug("RoutingBolt: getRoutingInfo: getting routing info for tuple: "+input);
 		Set<Pair<String,String>> routingInfo = null;		
 		List<String> tupleFields = input.getFields().toList();
 		
@@ -140,7 +140,7 @@ public class RoutingBolt extends BaseRichBolt {
 		String eventTypeName = (String)input.getValueByField(EventHeader.NAME_ATTRIBUTE);
 		if (null != eventTypeName)
 		{			
-			IEventType eventType = EventMetadataFacade.getInstance().getEventType(eventTypeName);
+			IEventType eventType = metadataFacade.getMetadataFacade().getEventMetadataFacade().getEventType(eventTypeName);
 			Map<String,Object> attributes = new HashMap<String,Object>();		
 			
 			if (null != eventType)
@@ -149,11 +149,11 @@ public class RoutingBolt extends BaseRichBolt {
 				//name				
 				IEventInstance eventInstance = new EventInstance(eventType, attributes);						
 				//determine routing 
-				routingInfo= RoutingMetadataFacade.getInstance().determineRouting(eventInstance);
+				routingInfo= metadataFacade.getMetadataFacade().getRoutingMetadataFacade().determineRouting(eventInstance);
 			}
 			
 		}
-		logger.fine("RoutingBolt: getRoutingInfo: got routing info for tuple: "+input+", routing info: "+routingInfo);
+		logger.debug("RoutingBolt: getRoutingInfo: got routing info for tuple: "+input+", routing info: "+routingInfo);
 		return routingInfo;
 	}
 	

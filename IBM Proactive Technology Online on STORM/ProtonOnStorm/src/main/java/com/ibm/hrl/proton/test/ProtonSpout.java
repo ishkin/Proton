@@ -32,7 +32,7 @@ import backtype.storm.tuple.Fields;
 import backtype.storm.tuple.Values;
 import backtype.storm.utils.Utils;
 
-import com.ibm.hrl.proton.routing.MetadataFacade;
+import com.ibm.hrl.proton.routing.STORMMetadataFacade;
 
 
 
@@ -70,16 +70,19 @@ public class ProtonSpout extends BaseRichSpout {
 		 Map<String,Object> attributes1 = new HashMap<String,Object>();
 		 //attributes1.put("Name", "AggregatedSensorRead");
 		 attributes1.put("phoneNumber", "9");
+		 attributes1.put("nodeID", "10");
 		 attributes1.put("callDuration", "1");		
 		 eventList.add(attributes1);
 		 Map<String,Object> attributes2 = new HashMap<String,Object>();
 		 //attributes2.put("Name", "AggregatedSensorRead");
 		 attributes2.put("phoneNumber", "9");
+		 attributes2.put("nodeID", "10");
 		 attributes2.put("callDuration", "1");
 		 eventList.add(attributes2);
 		 Map<String,Object> attributes3 = new HashMap<String,Object>();
 		 //attributes3.put("Name", "AggregatedSensorRead");
 		 attributes3.put("phoneNumber", "3");
+		 attributes3.put("nodeID", "10");
 		 attributes3.put("callDuration", "1");			
 		 eventList.add(attributes3);
 		
@@ -89,16 +92,15 @@ public class ProtonSpout extends BaseRichSpout {
 			  _collector.emit(new Values("CallData",event));
 		}
 
-
-		 
-		 
-	   
+		
 		
 	}
 
+	
+	 
 	@Override
 	public void declareOutputFields(OutputFieldsDeclarer declarer) {
-		 declarer.declare(new Fields("Name",MetadataFacade.ATTRIBUTES_FIELD));
+		 declarer.declare(new Fields("Name",STORMMetadataFacade.ATTRIBUTES_FIELD));
 		
 	}
 	

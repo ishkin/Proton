@@ -30,8 +30,14 @@ import backtype.storm.tuple.Fields;
 
 import com.ibm.hrl.proton.agents.EPAManagerBolt;
 import com.ibm.hrl.proton.context.ContextBolt;
-import com.ibm.hrl.proton.routing.MetadataFacade;
+import com.ibm.hrl.proton.expression.facade.EEPException;
+import com.ibm.hrl.proton.expression.facade.EepFacade;
+import com.ibm.hrl.proton.metadata.parser.ParsingException;
 import com.ibm.hrl.proton.routing.RoutingBolt;
+import com.ibm.hrl.proton.routing.STORMMetadataFacade;
+import com.ibm.hrl.proton.server.timerService.TimerServiceFacade;
+import com.ibm.hrl.proton.server.workManager.WorkManagerFacade;
+import com.ibm.hrl.proton.utilities.facadesManager.FacadesManager;
 
 public class ProtonTopologyBuilder {
 	private static final String INPUT_NAME="input";
@@ -42,24 +48,42 @@ public class ProtonTopologyBuilder {
 	private static Logger logger = LoggerFactory.getLogger(ProtonTopologyBuilder.class);
 
 	//TODO: add here properties: parallelism for each bolt (routing, context, EPA manager)
-	public void buildProtonTopology(TopologyBuilder topologyBuilder,BaseRichSpout inputSpout, BaseRichBolt outputBolt, String outputBoltName,String jsonFileName){
+	public void buildProtonTopology(TopologyBuilder topologyBuilder,BaseRichSpout inputSpout, BaseRichBolt outputBolt, String outputBoltName,String jsonFileName) throws ParsingException{
 		logger.info("Building topology with EPN from " + jsonFileName);
 		
 		String jsonTxt = buildJSON(jsonFileName);
 		
 		logger.debug("\nEPN JSON:\n" + jsonTxt + "\n");
-
-		MetadataFacade.initializeMetadataFacade(jsonTxt);
 		
-		logger.info("Proton metadata initialized successfully");
+		try {
+			EepFacade eep = new EepFacade();
+			STORMMetadataFacade facade;
+			facade = new STORMMetadataFacade(jsonTxt,eep);
+			FacadesManager facadesManager = new FacadesManager();
+			facadesManager.setEepFacade(eep);
+			
+			logger.info("Proton metadata initialized successfully");
+			
+	    		
+	    	TimerServiceFacade timerServiceFacade = new TimerServiceFacade();
+	        facadesManager.setTimerServiceFacade(timerServiceFacade);
+	        WorkManagerFacade workManagerFacade = new WorkManagerFacade();
+	        facadesManager.setWorkManager(workManagerFacade);
+			
+	        
+			topologyBuilder.setSpout(ProtonTopologyBuilder.INPUT_NAME, inputSpout);		   
+			topologyBuilder.setBolt(ProtonTopologyBuilder.ROUTING_BOLT_NAME, new RoutingBolt(facadesManager,facade)).shuffleGrouping(ProtonTopologyBuilder.INPUT_NAME).shuffleGrouping(ProtonTopologyBuilder.EPA_MANAGER_BOLT_NAME, STORMMetadataFacade.EVENT_STREAM);
+			topologyBuilder.setBolt(ProtonTopologyBuilder.CONTEXT_BOLT_NAME, new ContextBolt(facadesManager,facade)).fieldsGrouping(ProtonTopologyBuilder.ROUTING_BOLT_NAME, STORMMetadataFacade.EVENT_STREAM,new Fields(STORMMetadataFacade.AGENT_NAME_FIELD,STORMMetadataFacade.CONTEXT_NAME_FIELD));
+			topologyBuilder.setBolt(ProtonTopologyBuilder.EPA_MANAGER_BOLT_NAME, new EPAManagerBolt(facadesManager,facade)).fieldsGrouping(ProtonTopologyBuilder.CONTEXT_BOLT_NAME, STORMMetadataFacade.EVENT_STREAM, new Fields(STORMMetadataFacade.AGENT_NAME_FIELD,STORMMetadataFacade.CONTEXT_PARTITION_FIELD));
+			topologyBuilder.setBolt(outputBoltName, outputBolt).shuffleGrouping(ProtonTopologyBuilder.ROUTING_BOLT_NAME,STORMMetadataFacade.CONSUMER_EVENTS_STREAM);
+			
+			logger.info("Building topology completed.");
+		} catch (EEPException e) {
+			throw new ParsingException(e.getMessage());
+		}
 		
-		topologyBuilder.setSpout(ProtonTopologyBuilder.INPUT_NAME, inputSpout);		   
-		topologyBuilder.setBolt(ProtonTopologyBuilder.ROUTING_BOLT_NAME, new RoutingBolt(jsonTxt)).shuffleGrouping(ProtonTopologyBuilder.INPUT_NAME).shuffleGrouping(ProtonTopologyBuilder.EPA_MANAGER_BOLT_NAME, MetadataFacade.EVENT_STREAM);
-		topologyBuilder.setBolt(ProtonTopologyBuilder.CONTEXT_BOLT_NAME, new ContextBolt(jsonTxt)).fieldsGrouping(ProtonTopologyBuilder.ROUTING_BOLT_NAME, MetadataFacade.EVENT_STREAM,new Fields(MetadataFacade.AGENT_NAME_FIELD,MetadataFacade.CONTEXT_NAME_FIELD));
-		topologyBuilder.setBolt(ProtonTopologyBuilder.EPA_MANAGER_BOLT_NAME, new EPAManagerBolt(jsonTxt)).fieldsGrouping(ProtonTopologyBuilder.CONTEXT_BOLT_NAME, MetadataFacade.EVENT_STREAM, new Fields(MetadataFacade.AGENT_NAME_FIELD,MetadataFacade.CONTEXT_PARTITION_FIELD));
-		topologyBuilder.setBolt(outputBoltName, outputBolt).shuffleGrouping(ProtonTopologyBuilder.ROUTING_BOLT_NAME,MetadataFacade.CONSUMER_EVENTS_STREAM);
 		
-		logger.info("Building topology completed.");
+		
 	}
 	
 	private String buildJSON(String metadataFileName)

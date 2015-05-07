@@ -17,10 +17,11 @@ package com.ibm.hrl.proton.routing;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.logging.Logger;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import backtype.storm.task.OutputCollector;
-import backtype.storm.tuple.Fields;
 
 import com.ibm.hrl.proton.agentQueues.exception.AgentQueueException;
 import com.ibm.hrl.proton.router.DataSenderException;
@@ -30,21 +31,22 @@ import com.ibm.hrl.proton.runtime.timedObjects.ITimedObject;
 
 public class StormEventRouter implements IEventRouter {
 	OutputCollector outputCollector;
-	private static final Logger logger = Logger.getLogger("StormEventRouter");
+	private static final Logger logger = LoggerFactory.getLogger("StormEventRouter");
+	private STORMMetadataFacade metadataFacade;
 	
-	
-	public StormEventRouter(OutputCollector _collector) {
+	public StormEventRouter(OutputCollector _collector,STORMMetadataFacade metadataFacade) {
 		this.outputCollector = _collector;
+		this.metadataFacade = metadataFacade;
 	}
 
 	@Override
 	public void routeTimedObject(ITimedObject timedObject)
 			throws AgentQueueException, DataSenderException {
-		logger.fine("routeTimedObject: routing "+timedObject+" to outside of EPAManagerBolt");
+		logger.debug("routeTimedObject: routing "+timedObject+" to outside of EPAManagerBolt");
 		//create tuple from event instance
 		IEventInstance eventInstance = (IEventInstance)timedObject;
-		List<Object> tupleFields = MetadataFacade.getInstance().createOutputTuple(eventInstance);
-		this.outputCollector.emit(MetadataFacade.EVENT_STREAM, tupleFields);
+		List<Object> tupleFields = metadataFacade.createOutputTuple(eventInstance);
+		this.outputCollector.emit(STORMMetadataFacade.EVENT_STREAM, tupleFields);
 
 	}
 

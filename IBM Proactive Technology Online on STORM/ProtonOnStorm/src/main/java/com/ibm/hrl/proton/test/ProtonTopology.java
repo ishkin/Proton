@@ -26,7 +26,7 @@ import com.ibm.hrl.proton.ProtonTopologyBuilder;
 
 public class ProtonTopology {
 	 public static void main(String[] args) throws Exception {
-		 	String jsonFileName = "D:\\EP\\Projects\\Proton\\OpenSourceWorkspace\\ProtonStandalone\\sample\\DistributedCounterVariation.json"; 
+		 	String jsonFileName = "D:\\EP\\Projects\\Proton\\OpenSourceWorkspace\\ProtonStandalone\\sample\\DistributedCounter.json"; 
 		    TopologyBuilder builder = new TopologyBuilder();
 
 		    new ProtonTopologyBuilder().buildProtonTopology(builder,new ProtonSpout(),new OutputBolt(),"outputBolt",jsonFileName);
