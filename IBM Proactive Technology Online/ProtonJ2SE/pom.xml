@@ -6,6 +6,13 @@
   <packaging>jar</packaging>
   <name>Proton</name>
   
+   <parent>
+  	<groupId>com.ibm.hrl.proton</groupId>
+  	<artifactId>ProtonModule</artifactId>
+  	<version>0.0.1-SNAPSHOT</version>
+  	<relativePath>../../ProtonModule</relativePath>
+   </parent>
+  
   <repositories>	
   		<repository>
 			<id>github-releases</id>
