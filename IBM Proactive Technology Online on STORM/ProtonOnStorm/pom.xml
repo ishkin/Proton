@@ -115,7 +115,7 @@
 		</dependency>
 		<dependency>
 			<groupId>com.ibm.hrl.proton</groupId>
-			<artifactId>Proton</artifactId>
+			<artifactId>ProtonJ2SE</artifactId>
 			<version>0.1.0</version>
 		</dependency>
 		<dependency>
