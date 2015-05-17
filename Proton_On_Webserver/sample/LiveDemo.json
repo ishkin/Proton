@@ -1,0 +1,917 @@
+{
+    "epn": {
+	"name": "LiveDemo",
+        "events": [
+            {
+                "name": "LowBatteryAlert",
+                "attributes": [
+                    {
+                        "dimension": 0,
+                        "description": "The certainty that this event happen (value between 0 to 1)",
+                        "name": "Certainty",
+                        "type": "Double",
+                        "defaultValue": "1"
+                    },
+                    {
+                        "dimension": 0,
+                        "description": "No value means it equals the event detection time, other option is to use one of the defined distribution functions with parameters",
+                        "name": "OccurrenceTime",
+                        "type": "Date"
+                    },
+                    {
+                        "dimension": 0,
+                        "description": "Only till this time the cost and certainty parameters of the event are valid, and only till this time a proactive action is considered",
+                        "name": "ExpirationTime",
+                        "type": "Date"
+                    },
+                    {
+                        "dimension": 0,
+                        "description": "The cost of this event occurrence. Negative if this is an opportunity",
+                        "name": "Cost",
+                        "type": "Double"
+                    },
+                    {
+                        "dimension": 0,
+                        "description": "Used in case the this event occur within an interval",
+                        "name": "Duration",
+                        "type": "Double",
+                        "defaultValue": "0"
+                    },
+                    {
+                        "dimension": 0,
+                        "name": "entityId",
+                        "type": "String"
+                    },
+                    {
+                        "dimension": 0,
+                        "name": "entityType",
+                        "type": "String"
+                    },
+                    {
+                        "dimension": 0,
+                        "name": "TimeInstant",
+                        "type": "Date"
+                    },
+                    {
+                        "dimension": 0,
+                        "name": "AffectedEntity",
+                        "type": "String"
+                    },
+                    {
+                        "dimension": 0,
+                        "name": "AffectedEntityType",
+                        "type": "String"
+                    },
+                    {
+                        "dimension": 0,
+                        "name": "EventType",
+                        "type": "String"
+                    },
+                    {
+                        "dimension": 0,
+                        "name": "EventSeverity",
+                        "type": "String"
+                    }
+                ],
+                "createdDate": "Thu May 23 2013"
+            },
+            {
+                "name": "NodeContextUpdate",
+                "attributes": [
+                    {
+                        "dimension": 0,
+                        "description": "The certainty that this event happen (value between 0 to 1)",
+                        "name": "Certainty",
+                        "type": "Double",
+                        "defaultValue": "1"
+                    },
+                    {
+                        "dimension": 0,
+                        "description": "No value means it equals the event detection time, other option is to use one of the defined distribution functions with parameters",
+                        "name": "OccurrenceTime",
+                        "type": "Date"
+                    },
+                    {
+                        "dimension": 0,
+                        "description": "Only till this time the cost and certainty parameters of the event are valid, and only till this time a proactive action is considered",
+                        "name": "ExpirationTime",
+                        "type": "Date"
+                    },
+                    {
+                        "dimension": 0,
+                        "description": "The cost of this event occurrence. Negative if this is an opportunity",
+                        "name": "Cost",
+                        "type": "Double"
+                    },
+                    {
+                        "dimension": 0,
+                        "description": "Used in case the this event occur within an interval",
+                        "name": "Duration",
+                        "type": "Double",
+                        "defaultValue": "0"
+                    },
+                    {
+                        "dimension": 0,
+                        "name": "entityId",
+                        "type": "String"
+                    },
+                    {
+                        "dimension": 0,
+                        "name": "TimeInstant",
+                        "type": "String"
+                    },
+                    {
+                        "dimension": 0,
+                        "name": "Latitud",
+                        "type": "Double"
+                    },
+                    {
+                        "dimension": 0,
+                        "name": "Longitud",
+                        "type": "Double"
+                    },
+                    {
+                        "dimension": 0,
+                        "name": "presence",
+                        "type": "Integer"
+                    },
+                    {
+                        "dimension": 0,
+                        "name": "batteryCharge",
+                        "type": "Integer"
+                    },
+                    {
+                        "dimension": 0,
+                        "name": "illuminance",
+                        "type": "Double"
+                    },
+                    {
+                        "dimension": 0,
+                        "name": "entityType",
+                        "type": "String"
+                    }
+                ],
+                "createdDate": "Thu May 23 2013"
+            },
+            {
+                "name": "AMMSContextUpdate",
+                "attributes": [
+                    {
+                        "dimension": 0,
+                        "description": "The certainty that this event happen (value between 0 to 1)",
+                        "name": "Certainty",
+                        "type": "Double",
+                        "defaultValue": "1"
+                    },
+                    {
+                        "dimension": 0,
+                        "description": "No value means it equals the event detection time, other option is to use one of the defined distribution functions with parameters",
+                        "name": "OccurrenceTime",
+                        "type": "Date"
+                    },
+                    {
+                        "dimension": 0,
+                        "description": "Only till this time the cost and certainty parameters of the event are valid, and only till this time a proactive action is considered",
+                        "name": "ExpirationTime",
+                        "type": "Date"
+                    },
+                    {
+                        "dimension": 0,
+                        "description": "The cost of this event occurrence. Negative if this is an opportunity",
+                        "name": "Cost",
+                        "type": "Double"
+                    },
+                    {
+                        "dimension": 0,
+                        "description": "Used in case the this event occur within an interval",
+                        "name": "Duration",
+                        "type": "Double",
+                        "defaultValue": "0"
+                    },
+                    {
+                        "dimension": 0,
+                        "name": "entityId",
+                        "type": "String"
+                    },
+                    {
+                        "dimension": 0,
+                        "name": "TimeInstant",
+                        "type": "String"
+                    },
+                    {
+                        "dimension": 0,
+                        "name": "Latitud",
+                        "type": "Double"
+                    },
+                    {
+                        "dimension": 0,
+                        "name": "Longitud",
+                        "type": "Double"
+                    },
+                    {
+                        "dimension": 0,
+                        "name": "entityType",
+                        "type": "String"
+                    },
+                    {
+                        "dimension": 0,
+                        "name": "ActivePower",
+                        "type": "Integer"
+                    },
+                    {
+                        "dimension": 0,
+                        "name": "ReactivePower",
+                        "type": "Integer"
+                    }
+                ],
+                "createdDate": "Thu May 23 2013"
+            },
+            {
+                "name": "RegulatorContextUpdate",
+                "attributes": [
+                    {
+                        "dimension": 0,
+                        "description": "The certainty that this event happen (value between 0 to 1)",
+                        "name": "Certainty",
+                        "type": "Double",
+                        "defaultValue": "1"
+                    },
+                    {
+                        "dimension": 0,
+                        "description": "No value means it equals the event detection time, other option is to use one of the defined distribution functions with parameters",
+                        "name": "OccurrenceTime",
+                        "type": "Date"
+                    },
+                    {
+                        "dimension": 0,
+                        "description": "Only till this time the cost and certainty parameters of the event are valid, and only till this time a proactive action is considered",
+                        "name": "ExpirationTime",
+                        "type": "Date"
+                    },
+                    {
+                        "dimension": 0,
+                        "description": "The cost of this event occurrence. Negative if this is an opportunity",
+                        "name": "Cost",
+                        "type": "Double"
+                    },
+                    {
+                        "dimension": 0,
+                        "description": "Used in case the this event occur within an interval",
+                        "name": "Duration",
+                        "type": "Double",
+                        "defaultValue": "0"
+                    },
+                    {
+                        "dimension": 0,
+                        "name": "entityId",
+                        "type": "String"
+                    },
+                    {
+                        "dimension": 0,
+                        "name": "TimeInstant",
+                        "type": "String"
+                    },
+                    {
+                        "dimension": 0,
+                        "name": "Latitud",
+                        "type": "Double"
+                    },
+                    {
+                        "dimension": 0,
+                        "name": "Longitud",
+                        "type": "Double"
+                    },
+                    {
+                        "dimension": 0,
+                        "name": "entityType",
+                        "type": "String"
+                    },
+                    {
+                        "dimension": 0,
+                        "name": "ActivePower",
+                        "type": "Integer"
+                    },
+                    {
+                        "dimension": 0,
+                        "name": "ReactivePower",
+                        "type": "Integer"
+                    },
+                    {
+                        "dimension": 0,
+                        "name": "electricPotential",
+                        "type": "Integer"
+                    },
+                    {
+                        "dimension": 0,
+                        "name": "electricCurrent",
+                        "type": "Integer"
+                    }
+                ],
+                "createdDate": "Thu May 23 2013"
+            },
+            {
+                "name": "ElectricPotentialAlert",
+                "attributes": [
+                    {
+                        "dimension": 0,
+                        "description": "The certainty that this event happen (value between 0 to 1)",
+                        "name": "Certainty",
+                        "type": "Double",
+                        "defaultValue": "1"
+                    },
+                    {
+                        "dimension": 0,
+                        "description": "No value means it equals the event detection time, other option is to use one of the defined distribution functions with parameters",
+                        "name": "OccurrenceTime",
+                        "type": "Date"
+                    },
+                    {
+                        "dimension": 0,
+                        "description": "Only till this time the cost and certainty parameters of the event are valid, and only till this time a proactive action is considered",
+                        "name": "ExpirationTime",
+                        "type": "Date"
+                    },
+                    {
+                        "dimension": 0,
+                        "description": "The cost of this event occurrence. Negative if this is an opportunity",
+                        "name": "Cost",
+                        "type": "Double"
+                    },
+                    {
+                        "dimension": 0,
+                        "description": "Used in case the this event occur within an interval",
+                        "name": "Duration",
+                        "type": "Double",
+                        "defaultValue": "0"
+                    },
+                    {
+                        "dimension": 0,
+                        "name": "entityId",
+                        "type": "String"
+                    },
+                    {
+                        "dimension": 0,
+                        "name": "entityType",
+                        "type": "String"
+                    },
+                    {
+                        "dimension": 0,
+                        "name": "TimeInstant",
+                        "type": "Date"
+                    },
+                    {
+                        "dimension": 0,
+                        "name": "AffectedEntity",
+                        "type": "String"
+                    },
+                    {
+                        "dimension": 0,
+                        "name": "AffectedEntityType",
+                        "type": "String"
+                    },
+                    {
+                        "dimension": 0,
+                        "name": "EventType",
+                        "type": "String"
+                    },
+                    {
+                        "dimension": 0,
+                        "name": "EventSeverity",
+                        "type": "String"
+                    }
+                ],
+                "createdDate": "Thu May 23 2013"
+            },
+            {
+                "name": "InternalNodeContextUpdate",
+                "attributes": [
+                    {
+                        "dimension": 0,
+                        "name": "entityId",
+                        "type": "String"
+                    },
+                    {
+                        "dimension": 0,
+                        "name": "batteryCharge",
+                        "type": "Integer"
+                    }
+                ],
+                "createdDate": "Thu May 23 2013"
+            },
+            {
+                "name": "InternalNodeContextUpdateRegular",
+                "attributes": [
+                    {
+                        "dimension": 0,
+                        "name": "entityId",
+                        "type": "String"
+                    },
+                    {
+                        "dimension": 0,
+                        "name": "batteryCharge",
+                        "type": "Integer"
+                    }
+                ],
+                "createdDate": "Thu May 23 2013"
+            }
+        ],
+        "consumers": [
+            {
+                "events": [
+                    {
+                        "name": "LowBatteryAlert"
+                    },
+                    {
+                        "name": "ElectricPotentialAlert"
+                    }
+                ],
+                "name": "PSB",
+                "properties": [
+                    {
+                        "name": "URL",
+                        "value": "http://130.206.82.140:1026/NGSI10/updateContext"
+                    },
+                    {
+                        "name": "contentType",
+                        "value": "application/xml"
+                    },
+                    {
+                        "name": "formatter",
+                        "value": "xml"
+                    },
+                    {
+                        "name": "delimiter",
+                        "value": ";"
+                    },
+                    {
+                        "name": "tagDataSeparator",
+                        "value": "="
+                    },
+                    {
+                        "name": "dateFormat",
+                        "value": "yyyy-MM-dd'T'HH:mm:ss.S'000'z"
+                    }
+                ],
+                "type": "Rest",
+                "createdDate": "Thu May 23 2013",
+                "actions": []
+            },
+            {
+                "events": [
+                    {
+                        "name": "LowBatteryAlert"
+                    },
+                    {
+                        "name": "NodeContextUpdate"
+                    },
+                    {
+                        "name": "AMMSContextUpdate"
+                    },
+                    {
+                        "name": "RegulatorContextUpdate"
+                    },
+                    {
+                        "name": "ElectricPotentialAlert"
+                    }
+                ],
+                "name": "File",
+                "properties": [
+                    {
+                        "name": "filename",
+                        "value": "./sample/liveDemoEvents.txt"
+                    },
+                    {
+                        "name": "formatter",
+                        "value": "xml"
+                    },
+                    {
+                        "name": "delimiter",
+                        "value": ";"
+                    },
+                    {
+                        "name": "tagDataSeparator",
+                        "value": "="
+                    },
+                    {
+                        "name": "SendingDelay",
+                        "value": "100"
+                    },
+                    {
+                        "name": "dateFormat",
+                        "value": "yyyy-MM-dd'T'HH:mm:ss.S'000'z"
+                    }
+                ],
+                "type": "File",
+                "createdDate": "Thu May 23 2013",
+                "actions": []
+            },
+            {
+                "events": [
+                    {
+                        "name": "LowBatteryAlert"
+                    },
+                    {
+                        "name": "NodeContextUpdate"
+                    },
+                    {
+                        "name": "AMMSContextUpdate"
+                    },
+                    {
+                        "name": "RegulatorContextUpdate"
+                    },
+                    {
+                        "name": "ElectricPotentialAlert"
+                    }
+                ],
+                "name": "SimpleFile",
+                "properties": [
+                    {
+                        "name": "filename",
+                        "value": "./sample/simpleLiveDemoEvents.txt"
+                    },
+                    {
+                        "name": "formatter",
+                        "value": "json"
+                    },
+                    {
+                        "name": "delimiter",
+                        "value": ";"
+                    },
+                    {
+                        "name": "tagDataSeparator",
+                        "value": "="
+                    },
+                    {
+                        "name": "SendingDelay",
+                        "value": "100"
+                    },
+                    {
+                        "name": "dateFormat",
+                        "value": "yyyy-MM-dd'T'HH:mm:ss.S'000'z"
+                    }
+                ],
+                "type": "File",
+                "createdDate": "Thu May 23 2013",
+                "actions": []
+            }
+        ],
+        "epas": [
+            {
+                "derivedActions": [],
+                "inputEvents": [
+                    {
+                        "instanceSelectionPolicy": "First",
+                        "name": "NodeContextUpdate",
+                        "filterExpression": "NodeContextUpdate.batteryCharge<15 && NodeContextUpdate.batteryCharge>=5",
+                        "consumptionPolicy": "Consume"
+                    }
+                ],
+                "evaluationPolicy": "Deferred",
+                "derivedEvents": [
+                    {
+                        "name": "LowBatteryAlert",
+                        "reportParticipants": false,
+                        "expressions": {
+                            "TimeInstant": "NodeContextUpdate.DetectionTime",
+                            "Duration": "0",
+                            "entityId": "\"CEPEventReporter_Singleton\"",
+                            "EventType": "\"LowBatteryAlert\"",
+                            "entityType": "\"CEPEventReporter\"",
+                            "AffectedEntity": "NodeContextUpdate.entityId",
+                            "AffectedEntityType": "NodeContextUpdate.entityType",
+                            "EventSeverity": "\"Warning\""
+                        }
+                    }
+                ],
+                "description": "Raise an Issue when the batteryCharge of a given Node is below a given threshold (pe. 15%) for 30 seconds",
+                "name": "WarningBatteryRule",
+                "context": "WarningBatteryComp",
+                "internalSegmentation": [],
+                "epaType": "All",
+                "cardinalityPolicy": "Single",
+                "createdDate": "Thu May 23 2013",
+                "computedVariables": []
+            },
+            {
+                "derivedActions": [],
+                "inputEvents": [
+                    {
+                        "instanceSelectionPolicy": "First",
+                        "name": "NodeContextUpdate",
+                        "filterExpression": "NodeContextUpdate.batteryCharge=80",
+                        "consumptionPolicy": "Consume"
+                    }
+                ],
+                "evaluationPolicy": "Immediate",
+                "derivedEvents": [
+                    {
+                        "name": "LowBatteryAlert",
+                        "reportParticipants": false,
+                        "expressions": {
+                            "TimeInstant": "NodeContextUpdate.DetectionTime",
+                            "Duration": "0",
+                            "entityId": "\"CEPEventReporter_Singleton\"",
+                            "EventType": "\"TestIntegration\"",
+                            "entityType": "\"CEPEventReporter\"",
+                            "AffectedEntity": "NodeContextUpdate.entityId",
+                            "AffectedEntityType": "NodeContextUpdate.entityType",
+                            "EventSeverity": "\"Info\""
+                        }
+                    }
+                ],
+                "description": "Raise an Issue when the batteryCharge of a given Node is exactly 80%",
+                "name": "TestIntegration",
+                "context": "always",
+                "internalSegmentation": [],
+                "epaType": "Basic",
+                "cardinalityPolicy": "Single",
+                "createdDate": "Thu May 23 2013",
+                "computedVariables": []
+            },
+            {
+                "derivedActions": [],
+                "inputEvents": [
+                    {
+                        "instanceSelectionPolicy": "First",
+                        "name": "RegulatorContextUpdate",
+                        "filterExpression": "RegulatorContextUpdate.electricPotential<0 && RegulatorContextUpdate.electricPotential>-5",
+                        "consumptionPolicy": "Consume"
+                    }
+                ],
+                "evaluationPolicy": "Immediate",
+                "derivedEvents": [
+                    {
+                        "name": "ElectricPotentialAlert",
+                        "reportParticipants": false,
+                        "expressions": {
+                            "TimeInstant": "RegulatorContextUpdate.TimeInstant",
+                            "Duration": "0",
+                            "entityId": "\"CEPEventReporter_Singleton\"",
+                            "EventType": "\"ElectricPotentialAlert\"",
+                            "entityType": "\"CEPEventReporter\"",
+                            "AffectedEntity": "RegulatorContextUpdate.entityId",
+                            "AffectedEntityType": "RegulatorContextUpdate.entityType",
+                            "EventSeverity": "\"Warning\""
+                        }
+                    }
+                ],
+                "name": "WarningElectricPotentialRule",
+                "context": "always",
+                "internalSegmentation": [],
+                "epaType": "Basic",
+                "cardinalityPolicy": "Single",
+                "createdDate": "Sun Jun 02 2013",
+                "computedVariables": []
+            },
+            {
+                "derivedActions": [],
+                "inputEvents": [
+                    {
+                        "instanceSelectionPolicy": "First",
+                        "name": "RegulatorContextUpdate",
+                        "filterExpression": "RegulatorContextUpdate.electricPotential<-5",
+                        "consumptionPolicy": "Consume"
+                    }
+                ],
+                "evaluationPolicy": "Immediate",
+                "derivedEvents": [
+                    {
+                        "name": "ElectricPotentialAlert",
+                        "reportParticipants": false,
+                        "expressions": {
+                            "TimeInstant": "RegulatorContextUpdate.TimeInstant",
+                            "Duration": "0",
+                            "entityId": "\"CEPEventReporter_Singleton\"",
+                            "EventType": "\"ElectricPotentialAlert\"",
+                            "entityType": "\"CEPEventReporter\"",
+                            "AffectedEntity": "RegulatorContextUpdate.entityId",
+                            "AffectedEntityType": "RegulatorContextUpdate.entityType",
+                            "EventSeverity": "\"Critical\""
+                        }
+                    }
+                ],
+                "name": "CriticalElectricPotentialRule",
+                "context": "always",
+                "internalSegmentation": [],
+                "epaType": "Basic",
+                "cardinalityPolicy": "Single",
+                "createdDate": "Sun Jun 02 2013",
+                "computedVariables": []
+            },
+            {
+                "derivedActions": [],
+                "inputEvents": [
+                    {
+                        "instanceSelectionPolicy": "First",
+                        "name": "NodeContextUpdate",
+                        "filterExpression": "NodeContextUpdate.batteryCharge<5",
+                        "consumptionPolicy": "Consume"
+                    }
+                ],
+                "evaluationPolicy": "Deferred",
+                "derivedEvents": [
+                    {
+                        "name": "LowBatteryAlert",
+                        "reportParticipants": false,
+                        "expressions": {
+                            "TimeInstant": "NodeContextUpdate.DetectionTime",
+                            "Duration": "0",
+                            "entityId": "\"CEPEventReporter_Singleton\"",
+                            "EventType": "\"LowBatteryAlert\"",
+                            "entityType": "\"CEPEventReporter\"",
+                            "AffectedEntity": "NodeContextUpdate.entityId",
+                            "AffectedEntityType": "NodeContextUpdate.entityType",
+                            "EventSeverity": "\"Critical\""
+                        }
+                    }
+                ],
+                "name": "CriticalBatteryRule",
+                "context": "CriticalBatteryComp",
+                "internalSegmentation": [],
+                "epaType": "All",
+                "cardinalityPolicy": "Single",
+                "createdDate": "Tue Jun 04 2013",
+                "computedVariables": []
+            },
+            {
+                "derivedActions": [],
+                "inputEvents": [
+                    {
+                        "instanceSelectionPolicy": "First",
+                        "name": "NodeContextUpdate",
+                        "filterExpression": "NodeContextUpdate.batteryCharge>=5",
+                        "consumptionPolicy": "Consume"
+                    }
+                ],
+                "evaluationPolicy": "Immediate",
+                "derivedEvents": [
+                    {
+                        "name": "InternalNodeContextUpdate",
+                        "reportParticipants": false,
+                        "expressions": {
+                            "entityId": "NodeContextUpdate.entityId",
+                            "batteryCharge": "NodeContextUpdate.batteryCharge"
+                        }
+                    }
+                ],
+                "name": "InternalBatteryCriticalTerminator",
+                "context": "always",
+                "internalSegmentation": [],
+                "epaType": "Basic",
+                "cardinalityPolicy": "Single",
+                "createdDate": "Tue Jun 04 2013",
+                "computedVariables": []
+            },
+            {
+                "derivedActions": [],
+                "inputEvents": [
+                    {
+                        "instanceSelectionPolicy": "First",
+                        "name": "NodeContextUpdate",
+                        "filterExpression": "NodeContextUpdate.batteryCharge>=15",
+                        "consumptionPolicy": "Consume"
+                    }
+                ],
+                "evaluationPolicy": "Immediate",
+                "derivedEvents": [
+                    {
+                        "name": "InternalNodeContextUpdateRegular",
+                        "reportParticipants": false,
+                        "expressions": {
+                            "entityId": "NodeContextUpdate.entityId",
+                            "batteryCharge": "NodeContextUpdate.batteryCharge"
+                        }
+                    }
+                ],
+                "name": "InternalBatteryWarningTerminator",
+                "context": "always",
+                "internalSegmentation": [],
+                "epaType": "Basic",
+                "cardinalityPolicy": "Single",
+                "createdDate": "Tue Jun 04 2013",
+                "computedVariables": []
+            }
+        ],
+        "contexts": {
+            "temporal": [
+                {
+                    "neverEnding": true,
+                    "terminators": [],
+                    "atStartup": true,
+                    "name": "always",
+                    "type": "TemporalInterval",
+                    "createdDate": "Thu May 23 2013",
+                    "initiators": []
+                },
+                {
+                    "neverEnding": false,
+                    "terminators": [
+                        {
+                            "terminatorPolicy": "First",
+                            "terminationType": "Discard",
+                            "name": "InternalNodeContextUpdateRegular",
+                            "terminatorType": "Event"
+                        },
+                        {
+                            "terminationType": "Terminate",
+                            "relativeTime": "30000",
+                            "terminatorType": "RelativeTime"
+                        }
+                    ],
+                    "atStartup": false,
+                    "name": "WarningBatteryWindow",
+                    "type": "TemporalInterval",
+                    "createdDate": "Sun Jun 02 2013",
+                    "initiators": [
+                        {
+                            "initiatorPolicy": "Ignore",
+                            "condition": "NodeContextUpdate.batteryCharge<15 && NodeContextUpdate.batteryCharge>=5",
+                            "name": "NodeContextUpdate",
+                            "initiatorType": "Event"
+                        }
+                    ]
+                },
+                {
+                    "neverEnding": false,
+                    "terminators": [
+                        {
+                            "terminatorPolicy": "First",
+                            "terminationType": "Discard",
+                            "name": "InternalNodeContextUpdate",
+                            "terminatorType": "Event"
+                        },
+                        {
+                            "terminationType": "Terminate",
+                            "relativeTime": "30000",
+                            "terminatorType": "RelativeTime"
+                        }
+                    ],
+                    "atStartup": false,
+                    "name": "CriticalBatteryWindow",
+                    "type": "TemporalInterval",
+                    "createdDate": "Tue Jun 04 2013",
+                    "initiators": [
+                        {
+                            "initiatorPolicy": "Ignore",
+                            "condition": "NodeContextUpdate.batteryCharge<5",
+                            "name": "NodeContextUpdate",
+                            "initiatorType": "Event"
+                        }
+                    ]
+                }
+            ],
+            "segmentation": [
+                {
+                    "name": "NodeID",
+                    "participantEvents": [
+                        {
+                            "expression": "NodeContextUpdate.entityId",
+                            "name": "NodeContextUpdate"
+                        },
+                        {
+                            "expression": "InternalNodeContextUpdate.entityId",
+                            "name": "InternalNodeContextUpdate"
+                        },
+                        {
+                            "expression": "InternalNodeContextUpdateRegular.entityId",
+                            "name": "InternalNodeContextUpdateRegular"
+                        }
+                    ],
+                    "createdDate": "Wed May 29 2013"
+                }
+            ],
+            "composite": [
+                {
+                    "segmentationContexts": [
+                        {
+                            "name": "NodeID"
+                        }
+                    ],
+                    "temporalContexts": [
+                        {
+                            "name": "WarningBatteryWindow"
+                        }
+                    ],
+                    "name": "WarningBatteryComp",
+                    "createdDate": "Sun Jun 02 2013"
+                },
+                {
+                    "segmentationContexts": [
+                        {
+                            "name": "NodeID"
+                        }
+                    ],
+                    "temporalContexts": [
+                        {
+                            "name": "CriticalBatteryWindow"
+                        }
+                    ],
+                    "name": "CriticalBatteryComp",
+                    "createdDate": "Tue Jun 04 2013"
+                }
+            ]
+        },
+        "producers": [],
+        "actions": []
+    }
+}

@@ -1,0 +1,38 @@
+== IBM Proactive Technology Online ==
+The IBM Proactive Technology Online is an open source complex event processing engine developed at IBM Research - Haifa. It provides language primitives for defining, submitting, and executing event processing networks. The goal of the system is to respond to raw events and identify meaningful events within contexts. The system comes with a set of built-in operators (such as sequence, all, etc.) for determining CEP patterns. It also has extendable APIs for adding additional custom operators. The system comes with existing source/sink adapters, allowing it to extract raw events from files or pull them from RESTful services. It also provides extendable APIs for adding more adapter types. 
+
+=== The repository includes ===
+
+.The standalone J2SE version includes:
+- launchProton.bat - a sample bat file that launches proton application. by default the application uses as an input  .\config\Proton.properties file any other properties file should be given as an input.
+- ProtonApp.jar - proton application jar
+- config folder - contains Proton.properties. properties file for Proton configuration. contains path to metadata file and port numbers for Proton socket servers
+- sample folder - Contains a sample definition and scenario.more about that in the user guide.
+- docs folder - Contains Proton user guide
+- lib folder - contains external libraries required by Proton application
+
+=== Instructions ===
+For detailed instructions on how to configure and install IBM Proactive Technology Online on Tomcat, see the following guide: https://forge.fi-ware.org/plugins/mediawiki/wiki/fiware/index.php/CEP_GE_-_IBM_Proactive_Technology_Online_Installation_and_Administration_Guide
+
+.How to run the application
+To run the application on Windows with the sample definition file, simply run launchProton.bat contained in this directory.
+
+.What output should be expected
+In _sample_ directory you will see 3 output files:
+- DoSAttack_TrafficReport.txt -> a file representing a consumer for the traffic report events that are sent as an input
+- DoSAttack_PredictedCrash.txt -->  a file representing a consumer for the predicted crash future event that is generated during the run 
+- DoSAttack_Actions.txt--> a file representing a consumer for the actions generated during the run. the sample scenario simulates a situation where Block90Action is expected.
+
+.To change the logging level
+In the _config_ directory, the properties for logging is contained within the _logging.properties_ file. The current console logging level is set to INFO as follows:
+
+..........................
+java.util.logging.ConsoleHandler.level=INFO
+..........................
+
+Change that according to your preferences.
+
+
+=== Licence ===
+IBM Proactive Technology Online is licenced under the Apache Licence Version 2.0 for more information see the LICENCE.md
+
