@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- ******************************************************************************/
+ ******************************************************************************/ 
  /**
  * global enums
  */
@@ -156,7 +156,8 @@ ATEnum.Definitions = {
 	SegmentationContext : "SegmentationContext",
 	CompositeContext : "CompositeContext",
 	Consumer : "Consumer",
-	Producer : "Producer"
+	Producer : "Producer",
+	Template: "Template"
 };
 
 ATEnum.AttributeTypes = {

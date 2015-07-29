@@ -58,6 +58,7 @@ dojo.require("widgets.TemporalTab");
 dojo.require("widgets.SegmentationTab");
 dojo.require("widgets.ProducerTab");
 dojo.require("widgets.ConsumerTab");
+dojo.require("widgets.TemplateTab");
 dojo.require("widgets.CompositeTab");
 dojo.require("widgets.TemporalTerminator");
 dojo.require("widgets.validate");
@@ -74,7 +75,7 @@ dojo.declare("widgets.ProtonMain",
              [dijit._Widget, dijit._Templated],
 {
     widgetsInTemplate: true,
-     //templateString: '<div>Go</div>',
+     //templateString: '<div>Go</div>', 
     templatePath: dojo.moduleUrl("widgets","proton_main.html"),
     
     constructor: function() {
@@ -123,6 +124,7 @@ dojo.declare("widgets.ProtonMain",
 	showSegmentation: function() {this.showDialog("Segmentation Context");},
 	showComposite: function() {this.showDialog("Composite Context");},
 	showConsumer: function() {this.showDialog("Consumer");},
+	showTemplate: function() {this.showDialog("Template");},
 	showProducer: function() {this.showDialog("Producer");},
 		
 	showDialog: function(name, item, callBack) {
@@ -396,6 +398,8 @@ dojo.declare("widgets.ProtonMain",
 		   	consumerEntry.setDisabled(false);
 		   	var producerEntry = dijit.byId("producerMenu");
 		   	producerEntry.setDisabled(false);
+		   	var templateEntry = dijit.byId("templateMenu");
+		   	templateEntry.setDisabled(false);
 			this.saveJson.set('disabled',false);
 			this.verifyJson.set('disabled',false);
 			this.deleteProject.set('disabled',false);
@@ -476,6 +480,10 @@ dojo.declare("widgets.ProtonMain",
 	    {
 	    label: 'Producers',
 	    id: '8',
+	    children: []},
+	    {
+	    label: 'Templates',
+	    id: '9',
 	    children: []}
 	    ];
 	  	
@@ -534,6 +542,14 @@ dojo.declare("widgets.ProtonMain",
 	   		this.rawdata[4]['children'][i].label = producerList[i];
 	   		this.rawdata[4]['children'][i].tag="Producer";
 		}
+	   	var templateList=this.myEPN.getTemplateList();
+	   	for(i=0, l=templateList.length; i<l; i++){
+	   		this.rawdata[5]['children'][i]=new Object;
+	   		this.rawdata[5]['children'][i].id = 8000+i;
+	   		this.rawdata[5]['children'][i].label = templateList[i];
+	   		this.rawdata[5]['children'][i].tag="Template";
+		}
+	   	
 	 },
 	addTab:function(name,type) {
 		 	var tc = dijit.byId('tabContainer');
@@ -627,6 +643,14 @@ dojo.declare("widgets.ProtonMain",
 			tc.addChild(producerTab);
 			tc.selectChild(producerTab);
 			ATVars.CURRENT_TAB = producerTab;
+		} else if (type == "Template" || type == "TEMPLATE") {
+			var templateTab = new widgets.TemplateTab({
+				title: name || "New Template",
+				closable: true
+			});
+			tc.addChild(templateTab);
+			tc.selectChild(templateTab);
+			ATVars.CURRENT_TAB = templateTab;
 		}
 	},
 	closeAllTabs:function(){

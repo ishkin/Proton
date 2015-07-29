@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- ******************************************************************************/
+ *******************************************************************************/
  dojo.provide("widgets.AddObject");
 
 dojo.require("dijit._Templated");
@@ -53,9 +53,11 @@ dojo.declare("widgets.AddObject",
 			this.newConsumer();
 		} else if (this.NewType == "Producer") {
 			this.newProducer();
-		} else if (this.fromDerivation) {
+		} else if (this.NewType == "Template") {
+			this.newTemplate();		
+    	}else if (this.fromDerivation) {
 			dojo.publish("NewEventToDerivation", [ [ this.newName, this.fromDerivation ] ]);
-		}
+		} 
     },
     
     closeDialog:function(){
@@ -160,6 +162,20 @@ dojo.declare("widgets.AddObject",
 				dojo.publish("PublishNewObject", [{item:this.newName, type:"Producer"}]);
 		}}else(alert("There is a Producer with this name ("+this.newName+")"));
 	},
+	
+	newTemplate:function(){
+		var that=this;
+		//check that there is no Template with this name
+		var inTemplate = dojo.filter(ATVars.MY_EPN.getTemplateList(), function(item) {
+	    	return item==that.newName;
+	  		});
+	  	if (inTemplate.length==0){
+		// add to data structure and to array
+			if (ATVars.MY_EPN.addTemplate(this.newName)){
+				//send to ProtonMain to create tab and tree node
+				dojo.publish("PublishNewObject", [{item:this.newName, type:"Template"}]);
+		}}else(alert("There is a Template with this name ("+this.newName+")"));
+	},
 
 	newProject:function(){
 		this.createNewJson();
@@ -195,6 +211,7 @@ dojo.declare("widgets.AddObject",
 		this.obj.epn.contexts.composite=[];
 		this.obj.epn.consumers=[];
 		this.obj.epn.producers=[];
+		//this.obj.epn.templates=[];
 		this.obj.epn.name=this.newName; 
 		
 	},

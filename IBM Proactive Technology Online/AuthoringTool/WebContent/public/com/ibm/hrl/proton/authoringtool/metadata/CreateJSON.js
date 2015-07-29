@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- ******************************************************************************/
+ ******************************************************************************/ 
  dojo.provide("metadata.CreateJSON");
 dojo.require("metadata.EPN");
 dojo.require("metadata.BaseDefinition");
@@ -45,8 +45,9 @@ dojo
 						this.epn.name = name;
 					},
 
-					StartCreate : function() {
+					StartCreate : function() {						
 						this.epn.name = ATVars.MY_EPN.getEPNName();
+
 						var eventList = ATVars.MY_EPN.getEventList();
 						if (eventList.length > 0) {
 							for (i = 0, l = eventList.length; i < l; i++) {
@@ -108,7 +109,126 @@ dojo
 							}
 						}
 						// alert("Finish To Save");
+						var templateList = ATVars.MY_EPN.getTemplateList();
+						if (templateList.length > 0) {
+							for (i = 0, l = templateList.length; i < l; i++) {
+								if (this.hasValue(templateList[i])) {
+									this.pushTemplateDefinitions(templateList[i]);
+								}
+							}
+						}
 					},
+					
+					pushTemplateDefinitions : function(templateName) {
+						//the template UI object
+						var tTemplate = ATVars.MY_EPN.getTemplate(templateName);
+						//the matching template description
+						var templateTypeEnum = tTemplate.getType();						
+						var templateType = TemplateEnum.Templates[templateTypeEnum];
+						var templateTypeString = JSON.stringify(templateType);
+						//TODO: future - get the template name and add the template name to all constructs names					
+						var i, l;
+						for (i = 0, l = tTemplate.getNumberOfProperties(); i < l; i++) {							
+							var propertyName = tTemplate.getPropertyName(i);
+							var propertyValue = tTemplate.getPropertyValue(i);
+							templateTypeString = templateTypeString.replace(new RegExp(this.escapeRegExp(propertyName), 'g'),propertyValue);
+							
+						}
+						
+						//go over all the constructs in the JSON, and change their names
+						//to be constructed from object name+template name
+						var parsedJSON = JSON.parse(templateTypeString);
+						var epas = parsedJSON.epas;
+						for(var i = 0; i < epas.length; i++) {
+						    var obj = epas[i];						    						 
+						    var oldName = obj.name;
+						    templateTypeString = templateTypeString.replace(new RegExp(this.escapeRegExp(oldName), 'g'),oldName+templateName);
+						}
+						var parsedJSON = JSON.parse(templateTypeString);
+						var contexts = parsedJSON.contexts;
+						if (typeof contexts !== 'undefined'){
+							var temporalContexts = contexts.temporal;
+							var segmentationContexts = contexts.segmentation;
+							var compositeContexts = contexts.composite;
+							
+							if(typeof temporalContexts !== 'undefined')
+							{
+								for(var i = 0; i < temporalContexts.length; i++) 
+								{
+								    var obj = temporalContexts[i];
+								    var oldName = obj.name;
+								    templateTypeString = templateTypeString.replace(new RegExp(this.escapeRegExp(oldName), 'g'),oldName+templateName);
+								}
+							}
+							
+							if(typeof segmentationContexts !== 'undefined')
+							{
+								for(var i = 0; i < segmentationContexts.length; i++) 
+								{
+								    var obj = segmentationContexts[i];
+								    var oldName = obj.name;
+								    templateTypeString = templateTypeString.replace(new RegExp(this.escapeRegExp(oldName), 'g'),oldName+templateName);
+								}
+							}
+							
+							if(typeof compositeContexts !== 'undefined')
+							{
+								for(var i = 0; i < compositeContexts.length; i++) 
+								{
+								    var obj = compositeContexts[i];
+								    var oldName = obj.name;
+								    templateTypeString = templateTypeString.replace(new RegExp(this.escapeRegExp(oldName), 'g'),oldName+templateName);
+								}
+							}
+							
+						}
+						
+						//parse the JSON, push the subjsons into appropriate JSON objects
+						var newParsedJSON = JSON.parse(templateTypeString);
+						var epas = newParsedJSON.epas;
+						for(var i = 0; i < epas.length; i++) {
+						    var obj = epas[i];						    
+						    this.epn.epas.push(obj);						    
+						}
+						var contexts = newParsedJSON.contexts;
+											
+						if (typeof contexts !== 'undefined'){
+							var temporalContexts = contexts.temporal;
+							var segmentationContexts = contexts.segmentation;
+							var compositeContexts = contexts.composite;
+							
+							if(typeof temporalContexts !== 'undefined')
+							{
+								for(var i = 0; i < temporalContexts.length; i++) {
+								    var obj = temporalContexts[i];
+								    this.epn.contexts.temporal.push(obj);						    
+								}
+							}
+							
+							if(typeof segmentationContexts !== 'undefined')
+							{
+								for(var i = 0; i < segmentationContexts.length; i++) {
+								    var obj = segmentationContexts[i];
+								    this.epn.contexts.segmentation.push(obj);						    
+								}
+							}
+							
+							if(typeof compositeContexts !== 'undefined')
+							{
+								for(var i = 0; i < compositeContexts.length; i++) {
+								    var obj = compositeContexts[i];
+								    this.epn.contexts.composite.push(obj);						    
+								}
+							}
+						}
+						
+						
+					},
+					
+					escapeRegExp : function (string) {
+					    return string.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1");
+					},
+
 					createJsonEvent : function(eventName) {
 						var tEvent = ATVars.MY_EPN.getEvent(eventName);
 						var jEvent = {};

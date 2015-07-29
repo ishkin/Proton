@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- ******************************************************************************/
+ ******************************************************************************/ 
  dojo.provide("metadata.EPN");
 dojo.require("metadata.BaseDefinition");
 dojo.require("metadata.Event");
@@ -23,6 +23,7 @@ dojo.require("metadata.SegmentationContext");
 dojo.require("metadata.CompositeContext");
 dojo.require("metadata.Consumer");
 dojo.require("metadata.Producer");
+dojo.require("metadata.Template");
 dojo.declare("metadata.EPN",null,{
  
 	constructor: function(args){
@@ -35,6 +36,7 @@ dojo.declare("metadata.EPN",null,{
 		this._compositeContexts=new Array();
 		this._consumers=new Array();
 		this._producers=new Array();
+		this._templates = new Array();
 		this._errors=new Object();
 		this._eventList=new Array();
 		this._epaList=new Array();
@@ -43,6 +45,7 @@ dojo.declare("metadata.EPN",null,{
 		this._compositeContextList=new Array();
 		this._consumerList=new Array();
 		this._producerList=new Array();
+		this._templateList = new Array();
 		
 		try{
 			var i,l;
@@ -101,7 +104,13 @@ dojo.declare("metadata.EPN",null,{
 							this._producers[i] = new metadata.Producer(args.epn.producers[i], this._errors, ATEnum.Definitions.Producer, this);
 							this._producerList[i] = this._producers[i].getName();
 						}
+					}if(args.epn.templates){
+						for(i=0, l=args.epn.templates.length; i<l; i++){
+							this._templates[i] = new metadata.Template(args.epn.template[i], this._errors, ATEnum.Definitions.Template, this);
+							this._templateList[i] = this._templates[i].getName();
+						}
 					}
+					
 				}
 			}else{	//new EPN created by the user with name only
 				this._name = args || "EPN";					
@@ -167,6 +176,11 @@ dojo.declare("metadata.EPN",null,{
 			for(i=0, l=this._producers.length; i<l; i++){
 				if(this._producers[i].getName() === objectName){
 					return this._producers[i];
+				}
+			}
+			for(i=0, l=this._templates.length; i<l; i++){
+				if(this._templates[i].getName() === objectName){
+					return this._templates[i];
 				}
 			}
 
@@ -433,6 +447,22 @@ dojo.declare("metadata.EPN",null,{
 		}		
 	},
 
+	addTemplate: function(name){
+		try{
+			if(!name){
+				throw new metadata.ParseError("Must Declare Template Name");
+				return false;
+			}else {
+				this._templates.push(new metadata.Template(name, this._errors, ATEnum.Definitions.Template, this));
+				this._templateList.push(name);
+				return true;
+			}
+		}catch(err){
+			console.log(err.msg);
+			return false;
+		}		
+	},
+
 	
 	getEventList: function(){
 		return this._eventList;
@@ -464,6 +494,10 @@ dojo.declare("metadata.EPN",null,{
 	
 	getProducerList: function(){
 		return this._producerList;
+	},
+	
+	getTemplateList: function(){
+		return this._templateList;
 	},
 	
 
@@ -532,6 +566,15 @@ dojo.declare("metadata.EPN",null,{
 		for(i=0, l=this._producers.length; i<l; i++){
 			if(this._producers[i].getName()===name){
 				return this._producers[i];
+			}
+		}		
+	},
+	
+	getTemplate: function(name){
+		var i,l;
+		for(i=0, l=this._templates.length; i<l; i++){
+			if(this._templates[i].getName()===name){
+				return this._templates[i];
 			}
 		}		
 	},
