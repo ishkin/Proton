@@ -1,0 +1,304 @@
+{
+  "declaredClass": "metadata.CreateJSON",
+  "epn": {
+    "events": [
+      {
+        "name": "EmergencyHandling",
+        "attributes": [
+          {
+            "dimension": 0,
+            "description": "The certainty that this event happen (value between 0 to 1)",
+            "name": "sourceAssetId",
+            "type": "String"
+          },
+          {
+            "dimension": 0,
+            "description": "No value means it equals the event detection time, other option is to use one of the defined distribution functions with parameters",
+            "name": "detectionTime",
+            "type": "Date"
+          },
+          {
+            "dimension": 0,
+            "name": "sourceAssetType",
+            "type": "String"
+          },
+          {
+            "dimension": "0",
+            "name": "type",
+            "type": "String"
+          }
+        ],
+        "createdDate": "Mon Jul 13 2015"
+      },
+      {
+        "name": "EMHTUnavailable",
+        "attributes": [
+          {
+            "dimension": 0,
+            "description": "The certainty that this event happen (value between 0 to 1)",
+            "name": "affectedAssetId",
+            "type": "String"
+          },
+          {
+            "dimension": 0,
+            "description": "No value means it equals the event detection time, other option is to use one of the defined distribution functions with parameters",
+            "name": "OccurrenceTime",
+            "type": "Date"
+          },
+          {
+            "dimension": 0,
+            "description": "Used in case the this event occur within an interval",
+            "name": "misbehaviourTypeId",
+            "type": "String",
+            "defaultValue": "'0'"
+          },
+          {
+            "dimension": 0,
+            "name": "affectedAssetType",
+            "type": "String"
+          }
+        ],
+        "createdDate": "Mon Jul 13 2015"
+      }
+    ],
+    "name": "WP8EMHT2",
+    "consumers": [
+      {
+        "events": [
+          {
+            "name": "EMHTUnavailable"
+          }
+        ],
+        "name": "ToFile",
+        "properties": [
+          {
+            "name": "filename",
+            "value": "D:\\GitHub\\Proton\\IBM Proactive Technology Online\\ProtonOnWebServer\\config\\output.txt"
+          },
+          {
+            "name": "formatter",
+            "value": "json"
+          },
+          {
+            "name": "delimiter",
+            "value": ";"
+          },
+          {
+            "name": "tagDataSeparator",
+            "value": "="
+          },
+          {
+            "name": "SendingDelay",
+            "value": "1000"
+          }
+        ],
+        "type": "File",
+        "createdDate": "Mon Jul 13 2015"
+      }
+    ],
+    "epas": [
+      {
+        "inputEvents": [
+          {
+            "alias": "EH",
+            "instanceSelectionPolicy": "First",
+            "name": "EmergencyHandling",
+            "filterExpression": "EH.type == 'ALARM_ASSIGNED'",
+            "consumptionPolicy": "Consume"
+          }
+        ],
+        "evaluationPolicy": "Deferred",
+        "derivedEvents": [
+          {
+            "name": "EMHTUnavailable",
+            "reportParticipants": false,
+            "expressions": {
+              "misbehaviourTypeId": "'LateAssignment'",
+              "affectedAssetType": "context.ByType",
+              "affectedAssetId": "context.ById"
+            }
+          }
+        ],
+        "name": "NotAssigned",
+        "context": "AssignedByIdAndType",
+        "internalSegmentation": [],
+        "epaType": "Absence",
+        "cardinalityPolicy": "Single",
+        "createdDate": "Mon Jul 13 2015",
+        "computedVariables": []
+      },
+      {
+        "inputEvents": [
+          {
+            "alias": "EH1",
+            "instanceSelectionPolicy": "First",
+            "name": "EmergencyHandling",
+            "filterExpression": "EH1.type == 'ALARM_CLOSED'",
+            "consumptionPolicy": "Consume"
+          }
+        ],
+        "evaluationPolicy": "Deferred",
+        "derivedEvents": [
+          {
+            "name": "EMHTUnavailable",
+            "reportParticipants": false,
+            "expressions": {
+              "misbehaviourTypeId": "'LateClosing'",
+              "affectedAssetType": "context.ByType",
+              "affectedAssetId": "context.ById"
+            }
+          }
+        ],
+        "name": "NotClosed",
+        "context": "ClosedByIdAndType",
+        "internalSegmentation": [],
+        "epaType": "Absence",
+        "cardinalityPolicy": "Single",
+        "createdDate": "Mon Jul 13 2015",
+        "computedVariables": []
+      }
+    
+    ],
+    "contexts": {
+      "temporal": [
+        {
+          "neverEnding": false,
+          "terminators": [
+            {
+              "terminationType": "Terminate",
+              "relativeTime": "5000",
+              "terminatorType": "RelativeTime"
+            }
+          ],
+          "atStartup": false,
+          "name": "Assigning",
+          "type": "TemporalInterval",
+          "createdDate": "Mon Jul 13 2015",
+          "initiators": [
+            {
+              "initiatorPolicy": "Add",
+              "condition": "EmergencyHandling.type == 'ALARM_NEW'",
+              "name": "EmergencyHandling",
+              "initiatorType": "Event"
+            }
+          ]
+        },
+        {
+          "neverEnding": false,
+          "terminators": [
+            {
+              "terminationType": "Terminate",
+              "relativeTime": "5000",
+              "terminatorType": "RelativeTime"
+            }
+          ],
+          "atStartup": false,
+          "name": "Closing",
+          "type": "TemporalInterval",
+          "createdDate": "Mon Jul 13 2015",
+          "initiators": [
+            {
+              "initiatorPolicy": "Add",
+              "condition": "EmergencyHandling.type = 'ALARM_ASSIGNED'",
+              "name": "EmergencyHandling",
+              "initiatorType": "Event"
+            }
+          ]
+        }
+       
+      ],
+      "segmentation": [
+        {
+          "name": "ById",
+          "participantEvents": [
+            {
+              "expression": "EmergencyHandling.sourceAssetId",
+              "name": "EmergencyHandling"
+            }
+          ],
+          "createdDate": "Mon Jul 13 2015"
+        },
+        {
+          "name": "ByType",
+          "participantEvents": [
+            {
+              "expression": "EmergencyHandling.sourceAssetType",
+              "name": "EmergencyHandling"
+            }
+          ],
+          "createdDate": "Mon Jul 13 2015"
+        }
+      ],
+      "composite": [
+        {
+          "segmentationContexts": [
+            {
+              "name": "ById"
+            },
+            {
+              "name": "ByType"
+            }
+          ],
+          "temporalContexts": [
+            {
+              "name": "Assigning"
+            }
+          ],
+          "name": "AssignedByIdAndType",
+          "createdDate": "Mon Jul 13 2015"
+        },
+        {
+          "segmentationContexts": [
+            {
+              "name": "ById"
+            },
+            {
+              "name": "ByType"
+            }
+          ],
+          "temporalContexts": [
+            {
+              "name": "Closing"
+            }
+          ],
+          "name": "ClosedByIdAndType",
+          "createdDate": "Mon Jul 13 2015"
+        }
+      ]
+    },
+    "producers": [
+      {
+        "events": [],
+        "name": "FromFile",
+        "properties": [
+          {
+            "name": "filename",
+            "value": "D:\\GitHub\\Proton\\IBM Proactive Technology Online\\ProtonOnWebServer\\config\\Input.txt"
+          },
+          {
+            "name": "pollingInterval",
+            "value": "1000"
+          },
+          {
+            "name": "sendingDelay",
+            "value": "2000"
+          },
+          {
+            "name": "formatter",
+            "value": "json"
+          },
+          {
+            "name": "delimiter",
+            "value": ";"
+          },
+          {
+            "name": "tagDataSeparator",
+            "value": "="
+          }
+        ],
+        "type": "File",
+        "createdDate": "Mon Jul 13 2015"
+      }
+    ]
+  }
+}

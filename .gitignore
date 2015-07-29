@@ -16,6 +16,12 @@ local.properties
 .settings/
 .loadpath
 
+#RTC
+*.jazzignore
+*.factorypath
+.jazzignore
+.factorypath
+
 # External tool builders
 .externalToolBuilders/
 

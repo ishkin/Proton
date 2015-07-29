@@ -30,7 +30,6 @@ import com.ibm.hrl.proton.adapters.interfaces.IAdapter;
 import com.ibm.hrl.proton.adapters.interfaces.IInputAdapter;
 import com.ibm.hrl.proton.adapters.rest.client.RESTInputAdapter;
 import com.ibm.hrl.proton.expression.facade.EepFacade;
-import com.ibm.hrl.proton.metadata.inout.ConsumerProducerMetadata;
 import com.ibm.hrl.proton.metadata.inout.ProducerMetadata;
 import com.ibm.hrl.proton.metadata.inout.ProducerMetadata.ProducerType;
 import com.ibm.hrl.proton.runtime.metadata.IMetadataFacade;
@@ -53,7 +52,7 @@ public class InputServer extends AbstractServer {
 	@Override
 	public List<IAdapter> initializeAdapters() throws AdapterException {	
 		List<IAdapter> adapters = new LinkedList<IAdapter>();
-		Collection<ProducerMetadata> producers = ConsumerProducerMetadata.getInstance().getProducers();
+		Collection<ProducerMetadata> producers = metadataFacade.getConsumerProducerMetadata().getProducers();
     	for (ProducerMetadata producerMetadata : producers) {
 			//get the producer name, type and properties
     		ProducerType producerType = producerMetadata.getProducerType();

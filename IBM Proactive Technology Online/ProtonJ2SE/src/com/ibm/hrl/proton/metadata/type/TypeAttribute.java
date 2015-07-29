@@ -126,6 +126,10 @@ public class TypeAttribute implements Serializable, IFieldMeta{
 		return AttributeValueParser.parseConstantValue(attrValue, attrName, objectMetadata, dateFormatter,eep);
 	}
 	
+	public static Object parseConstantValue(String attrValue,String attrName, String attrType,IDataObjectMeta objectMetadata,DateFormat dateFormatter,EepFacade eep) throws EEPException{
+		return AttributeValueParser.parseConstantValue(attrValue, attrName, objectMetadata, attrType,dateFormatter,eep);
+	}
+	
 	/**
      * @param attrValue
      */

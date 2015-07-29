@@ -1,5 +1,6 @@
 package com.ibm.hrl.proton.webapp;
 
+import com.ibm.hrl.proton.metadata.inout.ConsumerProducerMetadata;
 import com.ibm.hrl.proton.runtime.metadata.ContextMetadataFacade;
 import com.ibm.hrl.proton.runtime.metadata.EPAManagerMetadataFacade;
 import com.ibm.hrl.proton.runtime.metadata.EventMetadataFacade;
@@ -13,6 +14,7 @@ public class WebMetadataFacade implements IMetadataFacade {
 	private EPAManagerMetadataFacade epaManagerMetadataFacade;
 	private EventMetadataFacade eventMetadataFacade;
 	private RoutingMetadataFacade routingMetadataFacade;
+	private ConsumerProducerMetadata consumerProducerMetadata;
 	
 	private WebMetadataFacade(){
 		
@@ -72,6 +74,19 @@ public class WebMetadataFacade implements IMetadataFacade {
 		this.routingMetadataFacade.clear();
 		this.epaManagerMetadataFacade.clear();
 		this.eventMetadataFacade.clear();
+		this.consumerProducerMetadata.clear();
+	}
+
+	@Override
+	public ConsumerProducerMetadata getConsumerProducerMetadata() {
+		return consumerProducerMetadata;
+	}
+
+	@Override
+	public void setConsumerProducerMetadata(
+			ConsumerProducerMetadata consumerProducerMetadata) {
+		this.consumerProducerMetadata = consumerProducerMetadata;
+		
 	}
 	
 }

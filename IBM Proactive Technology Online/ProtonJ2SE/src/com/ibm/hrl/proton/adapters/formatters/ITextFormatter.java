@@ -28,8 +28,9 @@ public interface ITextFormatter
 	 * The instance might represent both events or actions
 	 * @param instance
 	 * @return
+	 * @throws AdapterException 
 	 */
-	public String formatInstance(IDataObject instance);
+	public String formatInstance(IDataObject instance) throws AdapterException;
 	
 	/**
 	 * Parse the given text line , representing event instance, according to this formatter's type and properties

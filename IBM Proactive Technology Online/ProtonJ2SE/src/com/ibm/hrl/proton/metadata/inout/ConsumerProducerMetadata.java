@@ -22,27 +22,17 @@ import java.util.Map;
 
 public class ConsumerProducerMetadata implements Serializable{
 
-	private static ConsumerProducerMetadata instance;
+	
 	private Map<String,ConsumerMetadata> consumers;
 	private Map<String,ProducerMetadata> producers;
 	
-	private ConsumerProducerMetadata()
+	public ConsumerProducerMetadata()
 	{
 		this.consumers = new HashMap<String,ConsumerMetadata>();
 		this.producers = new HashMap<String,ProducerMetadata>();
 	}
 	
-	public static ConsumerProducerMetadata initializeInstance()
-	{
-		instance = new ConsumerProducerMetadata();
-		return instance;
-	}
-	
-	public static ConsumerProducerMetadata getInstance()
-	{
-		return instance;
-	}
-	
+		
 	public ConsumerMetadata getConsumer(String name){
 		return consumers.get(name);
 	}
@@ -65,6 +55,11 @@ public class ConsumerProducerMetadata implements Serializable{
 	
 	public void addProducer(String producerName, ProducerMetadata producerMetadata){
 		producers.put(producerName, producerMetadata);
+	}
+	
+	public void clear(){
+		this.consumers.clear();
+		this.producers.clear();
 	}
 
 }

@@ -1,0 +1,3 @@
+Name=TrafficReport;Certainty=0.0;Duration=0.0;ExpirationTime=null;Cost=0.0;Annotation=;OccurrenceTime=null;volume=1000;EventSource=;EventId=a1a1d756-3b76-45f7-9fae-79b299156dc7;DetectionTime=29/07/2015-11:54:09;Chronon=null;
+Name=TrafficReport;Certainty=0.0;Duration=0.0;ExpirationTime=null;Cost=0.0;Annotation=;OccurrenceTime=null;volume=1600;EventSource=;EventId=7bb2eb32-ea4d-4add-9adc-5433247532dd;DetectionTime=29/07/2015-11:54:14;Chronon=null;
+Name=TrafficReport;Certainty=0.0;Duration=0.0;ExpirationTime=null;Cost=0.0;Annotation=;OccurrenceTime=null;volume=2500;EventSource=;EventId=08391383-68da-49be-966e-b988136acd03;DetectionTime=29/07/2015-11:54:19;Chronon=null;

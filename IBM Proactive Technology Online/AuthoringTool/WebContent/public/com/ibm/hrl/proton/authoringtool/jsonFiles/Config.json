@@ -1,0 +1,6 @@
+{
+	serverURL:'/AuthoringToolWebServer/',
+	projectsURL:'/AuthoringToolWebServer/ProjectManager/',
+	verifierURL:'/AuthoringToolWebServer/Verifier/',
+	fileURL:'/AuthoringToolWebServer/FileServer/'
+}

@@ -204,9 +204,9 @@ public class ContextServiceFacade implements IContextService
     	
     	// we currently enforce processing order: terminate, initiate, participate
     	if (roles.contains(EventRoleInContextEnum.TERMINATOR)) {
-    		logger.debug("processEventInstance: the role of the event is terminator, terminating partitions...");
+    		logger.info("processEventInstance: the role of the event is terminator, terminating partitions...");
     		terminatedPartitions = cInstance.processContextTerminator(timedObject);
-    		logger.debug("processEventInstance: terminated partitions: "+terminatedPartitions);
+    		logger.info("processEventInstance: terminated partitions: "+terminatedPartitions);
     	}
 
     	if (roles.contains(EventRoleInContextEnum.INITIATOR)) {

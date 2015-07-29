@@ -24,6 +24,7 @@ import java.util.logging.Logger;
 
 import com.ibm.hrl.proton.adapters.configuration.IInputAdapterConfiguration;
 import com.ibm.hrl.proton.adapters.connector.IInputConnector;
+import com.ibm.hrl.proton.adapters.formatters.CSVTextFormatter;
 import com.ibm.hrl.proton.adapters.formatters.ITextFormatter;
 import com.ibm.hrl.proton.adapters.formatters.ITextFormatter.TextFormatterType;
 import com.ibm.hrl.proton.adapters.formatters.JSONFormatter;
@@ -55,7 +56,8 @@ public class FileInputAdapter extends AbstractInputAdapter {
 		switch (formatterType) 
 		{
 		case CSV:
-			throw new UnsupportedOperationException("Currently CVS formatter is not supported");
+			fileFormatter = new CSVTextFormatter(producerMetadata.getProducerProperties(),eventMetadata,eep);
+			break;
 		case XML:
 			throw new UnsupportedOperationException("Currently XML formatter is not supported");
 		case JSON:

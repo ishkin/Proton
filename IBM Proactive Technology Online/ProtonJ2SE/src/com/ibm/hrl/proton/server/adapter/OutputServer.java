@@ -31,7 +31,6 @@ import com.ibm.hrl.proton.adapters.rest.client.RESTOutputAdapter;
 import com.ibm.hrl.proton.expression.facade.EepFacade;
 import com.ibm.hrl.proton.metadata.inout.BaseConsumerMetadata.ConsumerType;
 import com.ibm.hrl.proton.metadata.inout.ConsumerMetadata;
-import com.ibm.hrl.proton.metadata.inout.ConsumerProducerMetadata;
 import com.ibm.hrl.proton.router.DataSenderException;
 import com.ibm.hrl.proton.runtime.metadata.IMetadataFacade;
 import com.ibm.hrl.proton.server.adapter.connectors.ServerOutputConnector;
@@ -96,7 +95,7 @@ public class OutputServer extends AbstractServer
 	@Override
 	public List<IAdapter> initializeAdapters() throws AdapterException {
 		List<IAdapter> adapters = new LinkedList<IAdapter>();
-		Collection<ConsumerMetadata> consumers = ConsumerProducerMetadata.getInstance().getConsumers();
+		Collection<ConsumerMetadata> consumers = metadataFacade.getConsumerProducerMetadata().getConsumers();
     	for (ConsumerMetadata consumerMetadata : consumers) {
 			//get the producer name, type and properties
     		ConsumerType consumerType = consumerMetadata.getConsumerType();

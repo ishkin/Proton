@@ -271,6 +271,7 @@ public class CompositeContextInstance implements ITimerListener {
 					if (initiator.getInitiatorType().equals(event.getEventType()) &&
 							window.satisfiesInitiatorPredicate(event)) {						
 						SegmentationValue segmentValue = globalSegmentation.getSegmentationValue(event);
+						System.out.println("Initiating new context window for context"+this.getAgentName()+"at " + System.currentTimeMillis()+" with segmentation value: "+segmentValue.toString());
 						//ComposedSegmentation segmentationType = window.getSegmentationContextType();
 						//SegmentationValue segmentValue = segmentationType.getSegmentValue(event);
 						EventInitiator initiatorInstance = new EventInitiator(
@@ -334,7 +335,7 @@ public class CompositeContextInstance implements ITimerListener {
 	 * @param 	event
      * @return 	Collection<String> - internal partitions this event falls into
      */  
-	public Collection<Pair<String,Map<String,Object>>> processContextParticipant(IEventInstance event) throws ContextServiceException {
+	public Collection<Pair<String,Map<String,Object>>> processContextParticipant(IEventInstance event) {
 		
 		// if all participants must agree on internal segmentation -
 		// check if there are ActiveContextSegment(s) this event falls into
@@ -379,7 +380,7 @@ public class CompositeContextInstance implements ITimerListener {
 				}catch(Exception e)
 				{
 					logger.error("processContextParticipant: finding internal partitions failed "+ e.getMessage());
-					throw new ContextServiceException(e.getMessage());
+					throw e;
 				}
 				logger.debug("processContextParticipant: finished adding internal partitions to the list,returning: "+internalPartitions);
 			}			

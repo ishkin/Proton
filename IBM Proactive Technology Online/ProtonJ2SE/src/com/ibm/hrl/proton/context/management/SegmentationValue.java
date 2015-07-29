@@ -125,5 +125,15 @@ public class SegmentationValue {
 	public boolean isEmpty() {
 		return segmentsValuesMap.isEmpty();
 	}
+	
+	@Override
+	public String toString() {
+		StringBuffer segmentsValue = new StringBuffer();
+		for (UUID key: segmentsValuesMap.keySet()) {
+			segmentsValue.append("key:"+key+", value: "+segmentsValuesMap.get(key));			
+		}
+		
+		return segmentsValue.toString();
+	}
 
 }

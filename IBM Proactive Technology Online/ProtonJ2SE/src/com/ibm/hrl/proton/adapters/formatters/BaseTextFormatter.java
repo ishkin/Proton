@@ -43,8 +43,8 @@ public abstract class BaseTextFormatter extends AbstractTextFormatter {
 	protected BaseTextFormatter(String delimeter, String tagDataSeparator,String dateFormat,EventMetadataFacade eventMetadata,EepFacade eep) throws AdapterException
 	{
 		super(dateFormat,eventMetadata,eep);
-		this.delimeter = delimeter;
-		this.tagDataSeparator = tagDataSeparator;
+		this.delimeter = delimeter != null ? delimeter : ";";
+		this.tagDataSeparator = tagDataSeparator != null ? tagDataSeparator : "=";
 	}
 	
 	@Override
@@ -72,34 +72,22 @@ public abstract class BaseTextFormatter extends AbstractTextFormatter {
 		{
 			//separate the tag from the value using the tagDataSeparator
 			String[] separatedPair = tagValue.split(tagDataSeparator);
-			String attrName = separatedPair[0]; //the tag is always the first in the pair
+			String attrName = separatedPair[0].trim(); //the tag is always the first in the pair
+			String attrStringValue = separatedPair[1].trim();
+
+			if (attrName.equals(NULL_STRING) || attrName.equals("")) {
+				// the attribute doesn't have a value
+				throw new AdapterException("Could not parse the event string " + eventText + ", reason: Attribute name not specified");
+			}
 			
-			if (attrName != null) {
-				attrName = attrName.trim();
-			}
-
-			//some attributes might not have value specified at all
-			if (separatedPair.length < 2)
-			{
-	        	attrValues.put(attrName, null);
-	        	continue;
-
-			}
-
-			String attrStringValue = separatedPair[1];
-			if (attrStringValue != null) {
-				attrStringValue = attrStringValue.trim();
-			}
-
-			if (attrStringValue.equals(NULL_STRING))
+			if (attrStringValue.equals(NULL_STRING) || attrStringValue.equals(""))
 	        {
-	        	//the attribute has a value of null
+	        	//the attribute has a value of null, or no value at all (';name=;')
 	        	attrValues.put(attrName, null);
 	        	continue;
 	        }
 			
-			TypeAttribute eventTypeAttribute = eventType.getTypeAttributeSet()
-					.getAttribute(attrName);
+			TypeAttribute eventTypeAttribute = eventType.getTypeAttributeSet().getAttribute(attrName);
 
 			
 			attrStringValue = getAttributeStringValue(eventTypeAttribute, attrStringValue);			

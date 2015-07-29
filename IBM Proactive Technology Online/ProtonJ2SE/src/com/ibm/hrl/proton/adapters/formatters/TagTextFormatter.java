@@ -47,7 +47,7 @@ public class TagTextFormatter extends BaseTextFormatter {
 		StringBuffer stringBuffer = new StringBuffer();
 		
 		//making sure event name appears first - readability purposes
-		String nameTag=nameTag = EventHeader.NAME_ATTRIBUTE;
+		String nameTag = EventHeader.NAME_ATTRIBUTE;
 		
 		
 		String typeName = instance.getMetadata().getName();
