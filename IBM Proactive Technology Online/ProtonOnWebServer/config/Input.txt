@@ -1,4 +1,0 @@
-{"Name":"EmergencyHandling", "detectionTime":"02/04/2014-08:38:14", "sourceAssetId":"1", "type":"ALARM_NEW", "sourceAssetType":"Test"}
-{"Name":"EmergencyHandling", "detectionTime":"02/04/2014-08:38:14", "sourceAssetId":"3", "type":"ALARM_ASSIGNED", "sourceAssetType":"Test"}
-{"Name":"EmergencyHandling", "detectionTime":"02/04/2014-08:38:14", "sourceAssetId":"2", "type":"ALARM_NEW", "sourceAssetType":"Test"}
-{"Name":"EmergencyHandling", "detectionTime":"02/04/2014-08:38:14", "sourceAssetId":"1", "type":"ALARM_ASSIGNED", "sourceAssetType":"Test"}
