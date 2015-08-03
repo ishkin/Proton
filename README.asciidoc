@@ -12,7 +12,6 @@ them from RESTful services. It also provides extendable APIs for adding more ada
 This is a version of the engine adapted to run on a web server. It allows users to push RESTful events to the engine in addition to pulling 
 RESTful events option provided by the REST adapter. This version also provides 	REST APIs for managing the engine’s instance lifecycle, and managing the definition repository.
 - The Proton web UI, providing authoring environment for Proton applications. Those are the AuthoringTool and AuthoringToolWebServer projects.
-
 .The Proton on STORM version, which allows to run the engine in a distributed manner on multiple machines using STORM infrastructure.
 
 === For working with source code ===
@@ -24,7 +23,7 @@ Additionaly, by executing the "mvn deploy"	command of the same parent pom after 
 === For working with artifacts ===
 The https://github.com/ishkin/Proton/tree/master/mvn-repo/com/ibm/hrl contains all the built artifacts. 
 
-For standalone engine, the ProtonJ2SE artifact build will also include a .zip distribution, with ProtonJ2SE executable jar, launch script, sample and docs directory. 
+For standalone engine, the ProtonJ2SE artifact (located in mvn-repo under com.ibm.hrl.proton/ProtonJ2SE/<version> folder)  also includes a .zip distribution, with ProtonJ2SE executable jar, launch script, sample and docs directory. 
 
 For instructions on how to configure and install IBM Proactive Technology Online on Tomcat (web version), see the following guide: https://forge.fi-ware.org/plugins/mediawiki/wiki/fiware/index.php/CEP_GE_-_IBM_Proactive_Technology_Online_Installation_and_Administration_Guide
 
