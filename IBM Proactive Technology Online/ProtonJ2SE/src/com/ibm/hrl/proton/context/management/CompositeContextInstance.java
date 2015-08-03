@@ -263,6 +263,7 @@ public class CompositeContextInstance implements ITimerListener {
 				assert (initiator instanceof ContextEventInitiator ||
 					initiator instanceof ContextAbsoluteTimeInitiator);
 				
+				SegmentationValue segmentValue = new SegmentationValue();
 				// initiation object can be either event initiator or absolute time initiator  
 				if (initiator instanceof ContextEventInitiator &&
 						object instanceof EventInstance) {
@@ -270,8 +271,8 @@ public class CompositeContextInstance implements ITimerListener {
 					IEventInstance event = (EventInstance)object;					
 					if (initiator.getInitiatorType().equals(event.getEventType()) &&
 							window.satisfiesInitiatorPredicate(event)) {						
-						SegmentationValue segmentValue = globalSegmentation.getSegmentationValue(event);
-						System.out.println("Initiating new context window for context"+this.getAgentName()+"at " + System.currentTimeMillis()+" with segmentation value: "+segmentValue.toString());
+						segmentValue = globalSegmentation.getSegmentationValue(event);
+						logger.debug("Initiating new context window for context"+this.getAgentName()+"at " + System.currentTimeMillis()+" with segmentation value: "+segmentValue.toString());
 						//ComposedSegmentation segmentationType = window.getSegmentationContextType();
 						//SegmentationValue segmentValue = segmentationType.getSegmentValue(event);
 						EventInitiator initiatorInstance = new EventInitiator(
@@ -286,7 +287,7 @@ public class CompositeContextInstance implements ITimerListener {
 					// initiator instanceof ContextAbsoluteTimeInitiator					
 					ContextInitiationNotification notification = (ContextInitiationNotification)object;
 					if (initiator.getId().toString().equals(notification.getContextBoundId())) {
-						SegmentationValue segmentValue = new SegmentationValue();
+						segmentValue = new SegmentationValue();
 						AbsoluteTimeInitiator initiatorInstance = new AbsoluteTimeInitiator(
 								(ContextAbsoluteTimeInitiator)initiator,notification);
 												
@@ -295,7 +296,7 @@ public class CompositeContextInstance implements ITimerListener {
 					}					
 				}
 				if (eventAdded) {
-					window.handleAbsoluteAndRelaiveTerminators(this,agentType);
+					window.handleAbsoluteAndRelaiveTerminators(this,agentType,segmentValue);
 					globalEventAdded = eventAdded;
 				}
 			}
@@ -309,7 +310,7 @@ public class CompositeContextInstance implements ITimerListener {
 										
 				globalEventAdded = window.handleInitiatorInstance(initiatorInstance,notification,segmentValue);
 				// the startup initiator was definitely added as initiator
-				window.handleAbsoluteAndRelaiveTerminators(this,agentType);				
+				window.handleAbsoluteAndRelaiveTerminators(this,agentType,segmentValue);				
 			}	
 		}
 			
@@ -475,7 +476,7 @@ public class CompositeContextInstance implements ITimerListener {
 					// terminator is ContextAbsoluteTimeInitiator or ContextRelativeTimeInitiator 					
 					ContextTerminationNotification notification = (ContextTerminationNotification)object;
 					if (terminator.getId().toString().equals(notification.getContextBoundId())) {
-						SegmentationValue segmentValue = new SegmentationValue();
+						SegmentationValue segmentValue = notification.getSegmentValue();
 						RelativeTimeTerminator terminatorInstance = new RelativeTimeTerminator(
 								(ContextRelativeTimeTerminator)terminator,notification);
 												
@@ -531,9 +532,11 @@ public class CompositeContextInstance implements ITimerListener {
      */  
 	public Object onTimer(Object info) throws Exception {
 		String contextBoundId = ((AdditionalInformation)info).getContextBoundId().toString();
+		SegmentationValue segmentValue = ((AdditionalInformation)info).getSegmentValue();
 		NotificationTypeEnum notificationType = ((AdditionalInformation)info).getNotificationType();
 
-		System.out.println("on timer - composite context instance, with " +
+		
+		logger.debug("on timer - composite context instance, with " +
 				notificationType + " at " + System.currentTimeMillis()+"for "+contextBoundId +" and agent "+agentType.getName());
 		
 		IContextNotification notification;
@@ -545,7 +548,7 @@ public class CompositeContextInstance implements ITimerListener {
 		else { // notificationType == NotificationTypeEnum.terminator
 			notification = new ContextTerminationNotification(contextType.getName(),
 					System.currentTimeMillis(),System.currentTimeMillis(),
-					contextBoundId,agentType.getName());			
+					contextBoundId,agentType.getName(),segmentValue);			
 		}
 	
 		facade.getEventHandler(

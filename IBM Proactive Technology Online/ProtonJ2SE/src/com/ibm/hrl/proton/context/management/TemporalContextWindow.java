@@ -164,7 +164,7 @@ public class TemporalContextWindow {
 	}
 
 	public void handleAbsoluteAndRelaiveTerminators(ITimerListener listener,
-			IEventProcessingAgent agentType) throws ContextServiceException {
+			IEventProcessingAgent agentType,SegmentationValue segmentValue) throws ContextServiceException {
 		// for absolute or relative terminator - generate a timer
 		List<ContextAbsoluteTimeTerminator> aTer = temporalContextType.getAbsoluteTimeTerminators();
 		List<ContextRelativeTimeTerminator> rTer = temporalContextType.getRelativeTimeTerminators();
@@ -175,7 +175,7 @@ public class TemporalContextWindow {
 			// handle absolute time terminators
 			for (ContextAbsoluteTimeTerminator terminator: aTer) {
 				AdditionalInformation info = new AdditionalInformation(temporalContextType.getName(),
-						agentType.getName(),terminator.getId(),NotificationTypeEnum.TERMINATOR);
+						agentType.getName(),terminator.getId(),NotificationTypeEnum.TERMINATOR,segmentValue);
 	
 				long terminationTime = terminator.getTerminationTime().getTime();
 				long duration = terminationTime - System.currentTimeMillis();				
@@ -184,7 +184,7 @@ public class TemporalContextWindow {
 			// handle relative time terminators
 			for (ContextRelativeTimeTerminator terminator: rTer) {
 				AdditionalInformation info = new AdditionalInformation(temporalContextType.getName(),
-						agentType.getName(),terminator.getId(),NotificationTypeEnum.TERMINATOR);
+						agentType.getName(),terminator.getId(),NotificationTypeEnum.TERMINATOR,segmentValue);
 	
 				long duration = terminator.getRelativeTerminationTime();				
 				facade.getTimerServices().createTimer(listener,info,false,duration,0);					

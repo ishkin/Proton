@@ -35,16 +35,22 @@ public class AdditionalInformation {
 	protected NotificationTypeEnum notificationType;
 	protected String contextName;
 	protected String agentName;
+	protected SegmentationValue segmentValue;
 
 	
 	public AdditionalInformation(String contextName, String agentName, UUID contextBoundId,
-			NotificationTypeEnum notificationType) {
+			NotificationTypeEnum notificationType,SegmentationValue segmentationValue) {
 		this.contextBoundId = contextBoundId;
 		this.notificationType = notificationType;
 		this.contextName = contextName;
-		this.agentName = agentName;		 
+		this.agentName = agentName;	
+		this.segmentValue = segmentationValue;
 	}
 	
+	public SegmentationValue getSegmentValue() {
+		return segmentValue;
+	}
+
 	public UUID getContextBoundId() {
 		return contextBoundId;
 	}

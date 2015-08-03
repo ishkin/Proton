@@ -33,7 +33,7 @@ public class SlidingPartitionAdditionalInformation extends AdditionalInformation
 			String agentName, UUID contextBoundId, NotificationTypeEnum notificationType,
 			UUID partitionId, UUID internalPartitionId) {
 
-		super(contextName, agentName, contextBoundId, notificationType);
+		super(contextName, agentName, contextBoundId, notificationType,new SegmentationValue());
 		this.internalPartitionId = internalPartitionId;
 		this.partitionId = partitionId;
 		
