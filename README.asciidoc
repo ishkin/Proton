@@ -28,7 +28,7 @@ For standalone engine, the ProtonJ2SE artifact (located in mvn-repo under com.ib
 
 For instructions on how to configure and install IBM Proactive Technology Online on Tomcat (web version), see the following guide: https://forge.fi-ware.org/plugins/mediawiki/wiki/fiware/index.php/CEP_GE_-_IBM_Proactive_Technology_Online_Installation_and_Administration_Guide
 
-== Documentation ===
+=== Documentation ===
 Can be found under the /documentation folder, and includes Proton's User Guide (explaining the language building blocks and the authoring tool use) and Programmer's Guide (explaining possible extension points to the Proton's programming model)
 
 === Licence ===
