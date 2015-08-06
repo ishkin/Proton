@@ -715,28 +715,22 @@ public class MetadataParser extends BaseMetadataParser{
 								propertiesMap.keySet(), "name", property, consumerName, DefinitionType.CONSUMER,
 								ErrorElement.PROPERTY_NAME, stringParser, rowNumber));
 						// parse property, warning on null
-						if (propertyName.equals(CSV_ATTRIBUTES)) {
-							JSONArray propertyValue = tryException(new WarningNullChecker<JSONArray>("value", property,
-									consumerName, DefinitionType.CONSUMER, ErrorElement.PROPERTY_VALUE, jsonArrayParser, rowNumber));
-							propertiesMap.put(propertyName, propertyValue);
-						} else {
-							String propertyValue = tryException(new WarningNullChecker<String>("value", property,
-									consumerName, DefinitionType.CONSUMER, ErrorElement.PROPERTY_VALUE, stringParser, rowNumber));
-							if (propertyName.equals(DATE_FORMAT)) //if there is a date format property check that the format is legal one
-							{
-								try{
-									@SuppressWarnings("unused")
-									SimpleDateFormat dateFormatter = new SimpleDateFormat(propertyValue);
-								}catch(IllegalArgumentException e){
-									//add to exceptions list
-									ProtonParseException exception = new ProtonParseException(ParseErrorEnum.BAD_VALUE, consumerName, DefinitionType.CONSUMER, ErrorType.ERROR,ErrorElement.PROPERTY_VALUE, rowNumber);
-									exceptions.add(exception);
-								}
-								
+						String propertyValue = tryException(new WarningNullChecker<String>("value", property,
+								consumerName, DefinitionType.CONSUMER, ErrorElement.PROPERTY_VALUE, stringParser, rowNumber));
+						if (propertyName.equals(DATE_FORMAT)) //if there is a date format property check that the format is legal one
+						{
+							try{
+								@SuppressWarnings("unused")
+								SimpleDateFormat dateFormatter = new SimpleDateFormat(propertyValue);
+							}catch(IllegalArgumentException e){
+								//add to exceptions list
+								ProtonParseException exception = new ProtonParseException(ParseErrorEnum.BAD_VALUE, consumerName, DefinitionType.CONSUMER, ErrorType.ERROR,ErrorElement.PROPERTY_VALUE, rowNumber);
+								exceptions.add(exception);
 							}
-							//parse properties that are not CSV_ATTRIBUTES or DATE_FORMAT
-							propertiesMap.put(propertyName, propertyValue);
+							
 						}
+						//parse properties that are not CSV_ATTRIBUTES or DATE_FORMAT
+						propertiesMap.put(propertyName, propertyValue);
 					} catch (MetadataParseException e) {
 						// allows catching exceptions for separate attributes
 						continue;
@@ -830,25 +824,24 @@ public class MetadataParser extends BaseMetadataParser{
 						String propertyName = tryException(new NullCheckerAndRepeats<String>(
 								propertiesMap.keySet(), "name", property, producerName, DefinitionType.PRODUCER,
 								ErrorElement.PROPERTY_NAME, stringParser, rowNumber));
-						// parse property, warning on null						
-							String propertyValue = tryException(new WarningNullChecker<String>("value", property,
-									producerName, DefinitionType.PRODUCER, ErrorElement.PROPERTY_VALUE, stringParser, rowNumber));
-							
-							if (propertyName.equals(DATE_FORMAT)) //if there is a date format property check that the format is legal one
-							{
-								try{
-									@SuppressWarnings("unused")
-									SimpleDateFormat dateFormatter = new SimpleDateFormat(propertyValue);
-								}catch(IllegalArgumentException e){
-									//add to exceptions list
-									ProtonParseException exception = new ProtonParseException(ParseErrorEnum.BAD_VALUE, producerName, DefinitionType.PRODUCER, ErrorType.ERROR,ErrorElement.PROPERTY_VALUE, rowNumber);
-									exceptions.add(exception);
-								}
-								
-							}
-							//parse properties that are not CSV_ATTRIBUTES or DATE_FORMAT
-							propertiesMap.put(propertyName, propertyValue);
+						// parse property, warning on null
+						String propertyValue = tryException(new WarningNullChecker<String>("value", property,
+								producerName, DefinitionType.PRODUCER, ErrorElement.PROPERTY_VALUE, stringParser, rowNumber));
 						
+						if (propertyName.equals(DATE_FORMAT)) //if there is a date format property check that the format is legal one
+						{
+							try{
+								@SuppressWarnings("unused")
+								SimpleDateFormat dateFormatter = new SimpleDateFormat(propertyValue);
+							}catch(IllegalArgumentException e){
+								//add to exceptions list
+								ProtonParseException exception = new ProtonParseException(ParseErrorEnum.BAD_VALUE, producerName, DefinitionType.PRODUCER, ErrorType.ERROR,ErrorElement.PROPERTY_VALUE, rowNumber);
+								exceptions.add(exception);
+							}
+							
+						}
+						//parse properties that are not CSV_ATTRIBUTES or DATE_FORMAT
+						propertiesMap.put(propertyName, propertyValue);						
 					} catch (MetadataParseException e) {
 						continue;
 					}
