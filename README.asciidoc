@@ -7,29 +7,29 @@ them from RESTful services. It also provides extendable APIs for adding more ada
 
 === The repository includes ===
 .The Proton standalone version:
-- The Proton J2SE version, which is just a simple Java app running the Proton engine. This can be found under ProtonJ2SE project.
-- The Proton web version, providing a RESTful interface for sending events, and also the admin app for managing Proton apps. Those are the ProtonOnWebServer and ProtonOnWebServerAdmin projects respectively.
-This is a version of the engine adapted to run on a web server. It allows users to push RESTful events to the engine in addition to pulling 
-RESTful events option provided by the REST adapter. This version also provides 	REST APIs for managing the engine’s instance lifecycle, and managing the definition repository.
-- The Proton web UI, providing authoring environment for Proton applications. Those are the AuthoringTool and AuthoringToolWebServer projects.
+- The Proton J2SE version,  is which is just a simple Java app running the Proton engine. This can be found under ProtonJ2SE project.
+- The Proton web version provides , providing a RESTful interface for sending events, and alsoas well as the admin app for managing Proton apps. ;: Those are the ProtonOnWebServer and ProtonOnWebServerAdmin projects, respectively.
+This is a version of the engine is adapted to run on a web server. It allows users to push RESTful events to the engine in addition to pulling 
+RESTful events options provided by the REST adapter. This version also provides 	REST APIs for managingto manage the engine’s instance lifecycle, and to managing manage the definition repository.
+- The Proton web UI,  provides an providing authoring environment for Proton applications. ; Thoese are the AuthoringTool and AuthoringToolWebServer projects.
 
-.The Proton on STORM version, which allows to run the engine in a distributed manner on multiple machines using STORM infrastructure.
+.The Proton on STORM version, which allows to runenables running the engine in a distributed manner on multiple machines using the STORM infrastructure.
 
 === For working with source code ===
-The projects are maven projects, they can be built using the "clean install" targets by running mvn command on the parent pom (located in the "Proton) directory. This command will build all the
+The projects are maven projects, . they They can be built using the "clean install" targets by running the mvn command on the parent pom (located in the "Proton) “ directory. This command will build all the
 Proton projects.
 
-Additionaly, by executing the "mvn deploy"	command of the same parent pom after performing clean install, the target jars will be installed into local repository named "mvn-repo" (/Proton/maven-repo).
+AdditionalyIn addition, by executing the "mvn deploy" 	command of the same parent pom after performing clean install, the target jars will be installed into a local repository named "mvn-repo" (/Proton/maven-repo).
 
 === For working with artifacts ===
 The https://github.com/ishkin/Proton/tree/master/mvn-repo/com/ibm/hrl contains all the built artifacts. 
 
-For standalone engine, the ProtonJ2SE artifact (located in mvn-repo under com.ibm.hrl.proton/ProtonJ2SE/<version> folder)  also includes a .zip distribution, with ProtonJ2SE executable jar, launch script, sample and docs directory. 
+For standalone engines, the ProtonJ2SE artifact (located in mvn-repo under com.ibm.hrl.proton/ProtonJ2SE/<version> folder)  also includes a .zip distribution, with ProtonJ2SE executable jar, launch script, sample, and docs directory. 
 
 For instructions on how to configure and install IBM Proactive Technology Online on Tomcat (web version), see the following guide: https://forge.fi-ware.org/plugins/mediawiki/wiki/fiware/index.php/CEP_GE_-_IBM_Proactive_Technology_Online_Installation_and_Administration_Guide
 
 === Documentation ===
-Can be found under the /documentation folder, and includes Proton's User Guide (explaining the language building blocks and the authoring tool use) and Programmer's Guide (explaining possible extension points to the Proton's programming model)
+Can be found under the /documentation folder, and includes the Proton's User Guide (explaining the language building blocks and use of the authoring tool use) and Programmer's Guide (explaining possible extension points to the Proton's programming model)
 
-=== Licence ===
-IBM Proactive Technology Online is licenced under the Apache Licence Version 2.0 for more information see the LICENCE.md
+=== Licence License ===
+IBM Proactive Technology Online is licenced licensed under the Apache Licence License Version 2.0.  for For more information see the LICENCE.md
