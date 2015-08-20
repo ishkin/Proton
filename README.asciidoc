@@ -22,7 +22,7 @@ Proton projects.
 AdditionalyIn addition, by executing the "mvn deploy" 	command of the same parent pom after performing clean install, the target jars will be installed into a local repository named "mvn-repo" (/Proton/maven-repo).
 
 === For working with artifacts ===
-The https://github.com/ishkin/Proton/tree/master/mvn-repo/com/ibm/hrl contains all the built artifacts. 
+The https://github.com/ishkin/Proton/tree/master/mvn-repo/com/ibm/hrl/proton contains all the built artifacts. 
 
 For standalone engines, the ProtonJ2SE artifact (located in mvn-repo under com.ibm.hrl.proton/ProtonJ2SE/<version> folder)  also includes a .zip distribution, with ProtonJ2SE executable jar, launch script, sample, and docs directory. 
 
