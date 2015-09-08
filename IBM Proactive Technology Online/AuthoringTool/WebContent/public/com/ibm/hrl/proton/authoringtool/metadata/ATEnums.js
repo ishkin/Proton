@@ -173,6 +173,7 @@ ATEnum.AttributeDimension = [ 0, 1, 2 ];
 
 ATEnum.InOutType = {
 	File : "File",
+	Timed: "Timed", 
 	// Database:"DB", //currently not implemented
 	// JMS : "JMS",   //does not supported in the open source version
 	Rest : "Rest",
@@ -181,6 +182,37 @@ ATEnum.InOutType = {
 
 ATEnum.ConsumerBuiltInAttributes = {
 	"File" : [
+			{
+				"name" : "filename",
+				"value" : "",
+				"description" : ""
+			},
+			{
+				"name" : "formatter",
+				"value" : "tag",
+				"description" : ""
+			},
+			{
+				"name" : "delimiter",
+				"value" : ";",
+				"description" : ""
+			},
+			{
+				"name" : "tagDataSeparator",
+				"value" : "=",
+				"description" : ""
+			},
+			{
+				"name" : "SendingDelay",
+				"value" : "1000",
+				"description" : "Requested delay between events sent to the consumer"
+			},
+			{
+				"name" : "dateFormat",
+				"value" : "dd/MM/yyyy-HH:mm:ss",
+				"description" : "Optional formatter for date type attributes. The default formatter is dd/MM/yyyy-HH:mm:ss"
+			} ],
+	"Timed" : [
 			{
 				"name" : "filename",
 				"value" : "",
@@ -313,6 +345,31 @@ ATEnum.ProducerBuiltInAttributes = {
 			},
 			{
 				"name" : "sendingDelay",
+				"description" : ""
+			},
+			{
+				"name" : "formatter",
+				"value" : "tag",
+				"description" : ""
+			},
+			{
+				"name" : "delimiter",
+				"value" : ";",
+				"description" : ""
+			},
+			{
+				"name" : "tagDataSeparator",
+				"value" : "=",
+				"description" : ""
+			},
+			{
+				"name" : "dateFormat",
+				"value" : "dd/MM/yyyy-HH:mm:ss",
+				"description" : "Optional formatter for date type attributes. The default formatter is dd/MM/yyyy-HH:mm:ss"
+			} ],
+	"Timed" : [
+			{
+				"name" : "filename",
 				"description" : ""
 			},
 			{

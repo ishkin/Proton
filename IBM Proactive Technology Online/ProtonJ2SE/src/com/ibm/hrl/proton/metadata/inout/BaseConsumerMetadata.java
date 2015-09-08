@@ -23,7 +23,7 @@ import com.ibm.hrl.proton.metadata.event.IEventType;
 import com.ibm.hrl.proton.runtime.epa.interfaces.IExpression;
 
 public abstract class BaseConsumerMetadata implements Serializable{
-	public enum ConsumerType {FILE,DB,JMS,REST, CUSTOM};
+	public enum ConsumerType {FILE,DB,JMS,REST, CUSTOM, TIMED};
 	
 	private String consumerName;
 	private ConsumerType consumerType;

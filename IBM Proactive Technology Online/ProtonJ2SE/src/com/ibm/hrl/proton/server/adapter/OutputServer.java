@@ -103,6 +103,8 @@ public class OutputServer extends AbstractServer
     		IOutputAdapter outputAdapter = null;
     		switch (consumerType) {
 			case FILE:
+			case TIMED:
+				//for consumers, file and timed adapters are the same
 				//get the input file properties
 				//TODO - the parsing of the properties should be done by the specific adapter implementation in static method, return the appropriate configuration object				
 				outputAdapter = new FileOutputAdapter(consumerMetadata, new ServerOutputConnector(this.port),metadataFacade.getEventMetadataFacade(),eep);

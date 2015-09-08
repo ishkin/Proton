@@ -18,6 +18,8 @@
  */
 package com.ibm.hrl.proton.adapters.formatters;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
@@ -92,12 +94,12 @@ public class XmlNgsiFormatter extends AbstractTextFormatter {
 		String ngsiXml = 
 				 "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
 				+"<updateContextRequest>\n"
-			    +"   <contextElementList>\n"
-			    +"    <contextElement>\n"
-			    +"		 <entityId type=\"" + entityType + "\" isPattern=\"false\">\n"
-			    +"			<id>" + entityID + "</id>\n"
-			    +"		 </entityId>\n"
-			    +"		<contextAttributeList>\n";
+			    +"	<contextElementList>\n"
+			    +"		<contextElement>\n"
+			    +"			<entityId type=\"" + entityType + "\" isPattern=\"false\">\n"
+			    +"				<id>" + entityID + "</id>\n"
+			    +"			</entityId>\n"
+			    +"			<contextAttributeList>\n";
 
 		
 		for (Map.Entry<String, Object> attributeEntry : instanceAttrs.entrySet()) {
@@ -116,19 +118,19 @@ public class XmlNgsiFormatter extends AbstractTextFormatter {
 						attrValue = formatTimestamp((Long)value);
 					}
 					String xmlAttr = 
-							 "   	   <contextAttribute>\n"
-							+"            <name>"+ attrName + "</name>\n"
-							+"    		  <contextValue>" + attrValue + "</contextValue>\n"
-							+"         </contextAttribute>\n";
+							 "				<contextAttribute>\n"
+							+"					<name>"+ attrName + "</name>\n"
+							+"					<contextValue>" + attrValue + "</contextValue>\n"
+							+"				</contextAttribute>\n";
 					ngsiXml = ngsiXml.concat(xmlAttr);				
 				}
 			}
 		}
 		String xmlEnd = 
-				 "      </contextAttributeList>\n"
-				+"    </contextElement>\n"
-				+"   </contextElementList>\n"
-				+"   <updateAction>UPDATE</updateAction>\n"
+				 "			</contextAttributeList>\n"
+				+"		</contextElement>\n"
+				+"	</contextElementList>\n"
+				+"	<updateAction>UPDATE</updateAction>\n"
 				+"</updateContextRequest>";
 		
 		ngsiXml = ngsiXml.concat(xmlEnd);
@@ -144,18 +146,17 @@ public class XmlNgsiFormatter extends AbstractTextFormatter {
 		try {
 			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 			DocumentBuilder db = dbf.newDocumentBuilder();
-			Document doc = db.parse(eventText);
+			InputStream eventStream = new ByteArrayInputStream(eventText.getBytes());
+			Document doc = db.parse(eventStream);
 			doc.getDocumentElement().normalize();
 
 			Node entityIdNode = doc.getElementsByTagName("entityId").item(0);
 			String entityType = entityIdNode.getAttributes().getNamedItem("type").getNodeValue();
 			String entityId = getNodeValue(((Node)doc.getElementsByTagName("id").item(0)));
-			System.out.println("Entity type: " + entityType + " Entity id:"	+ entityId);
 			String eventName = entityType+EVENT_NAME_SUFFIX;
 
 			IEventType eventType= eventMetadata.getEventType(eventName);
 			Map<String,Object> attrValues = new HashMap<String,Object>();
-			
 			addAttribute(ENTITY_TYPE_ATTRIBUTE, entityType, eventType, attrValues);
 			addAttribute(ENTITY_ID_ATTRIBUTE, entityId, eventType, attrValues);
 
@@ -166,8 +167,6 @@ public class XmlNgsiFormatter extends AbstractTextFormatter {
 				Element attr = (Element)attrNodes.item(i); 
 				String attrName = getNodeValue(attr.getElementsByTagName("name").item(0));
 				String attrStringValue = getNodeValue(attr.getElementsByTagName("contextValue").item(0));
-				System.out.println("Attribute[" + i + "] name: " + attrName +
-									" value:" + attrStringValue);
 				
 				addAttribute(attrName, attrStringValue, eventType, attrValues);
 			}
@@ -200,6 +199,7 @@ public class XmlNgsiFormatter extends AbstractTextFormatter {
 		} catch (Exception e) {
 		    throw new AdapterException("Could not convert XML input attribute " + attrName + " to event attribute");
 		}
+		
 
 	}
 

@@ -210,7 +210,7 @@
 		       "description":{"type":"string", "optional":true},
 		       "createdDate":{"type":"string", "optional":true, "format":"date", "description":"in the format of YYYY-MM-DD"},
 		       "createdBy":{"type":"string", "optional":true},
-	           "type":{"type":"string", "required":true, "enum":["File","Database", "JMS", "Rest", "Custom"]},
+	           "type":{"type":"string", "required":true, "enum":["File", "Timed", "Database", "JMS", "Rest", "Custom"]},
 	           "properties":{
 	             "type":"object",
 	             "items":{
@@ -243,7 +243,7 @@
 		       "description":{"type":"string", "optional":true},
 		       "createdDate":{"type":"string", "optional":true, "format":"date", "description":"in the format of YYYY-MM-DD"},
 		       "createdBy":{"type":"string", "optional":true},
-	           "type":{"type":"string", "required":true, "enum":["File","Database", "JMS", "Rest", "Custom"]},
+	           "type":{"type":"string", "required":true, "enum":["File", "Timed", "Database", "JMS", "Rest", "Custom"]},
 	           "properties":{
 	             "type":"object",
 	             "items":{

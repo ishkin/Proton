@@ -28,6 +28,7 @@ import com.ibm.hrl.proton.adapters.formatters.ITextFormatter.TextFormatterType;
 import com.ibm.hrl.proton.adapters.formatters.CSVTextFormatter;
 import com.ibm.hrl.proton.adapters.formatters.JSONFormatter;
 import com.ibm.hrl.proton.adapters.formatters.TagTextFormatter;
+import com.ibm.hrl.proton.adapters.formatters.XmlNgsiFormatter;
 import com.ibm.hrl.proton.adapters.interfaces.AbstractInputTimedAdapter;
 import com.ibm.hrl.proton.adapters.interfaces.AdapterException;
 import com.ibm.hrl.proton.expression.facade.EepFacade;
@@ -55,13 +56,14 @@ public class FileTimedInputAdapter extends AbstractInputTimedAdapter {
 		
 		switch (formatterType) 
 		{
-		case CSV:
-			fileFormatter = new CSVTextFormatter(producerMetadata.getProducerProperties(),eventMetadata,eep);
-			break;
 		case XML:
-			throw new UnsupportedOperationException("Currently XML formatter is not supported");
+			fileFormatter = new XmlNgsiFormatter(producerMetadata.getProducerProperties(),eventMetadata,eep);
+			break;
 		case JSON:
 			fileFormatter = new JSONFormatter(producerMetadata.getProducerProperties(),eventMetadata,eep);
+			break;
+		case CSV:
+			fileFormatter = new CSVTextFormatter(producerMetadata.getProducerProperties(),eventMetadata,eep);
 			break;
 		case TAG:
 			fileFormatter = new TagTextFormatter(producerMetadata.getProducerProperties(),eventMetadata,eep);
