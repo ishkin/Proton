@@ -8,18 +8,17 @@ them from RESTful services. It also provides extendable APIs for adding more ada
 === The repository includes ===
 .The Proton standalone version:
 - The Proton J2SE version,  is which is just a simple Java app running the Proton engine. This can be found under ProtonJ2SE project.
-- The Proton web version provides , providing a RESTful interface for sending events, and alsoas well as the admin app for managing Proton apps. ;: Those are the ProtonOnWebServer and ProtonOnWebServerAdmin projects, respectively.
-This is a version of the engine is adapted to run on a web server. It allows users to push RESTful events to the engine in addition to pulling 
-RESTful events options provided by the REST adapter. This version also provides REST APIs for managing the engine’s instance lifecycle, and to managing manage the definition repository.
-- The Proton web UI,  provides an providing authoring environment for Proton applications. ; Those are the AuthoringTool and AuthoringToolWebServer projects.
+- The Proton web version provides a RESTful interface for sending events, as well as the admin app for managing Proton apps; Those are the ProtonOnWebServer and ProtonOnWebServerAdmin projects, respectively.
+This version of the engine is adapted to run on a web server. It allows users to push RESTful events to the engine in addition to pulling 
+RESTful events options provided by the REST adapter. This version also provides REST APIs for managing the engine’s instance lifecycle, and to manage the definition repository.
+- The Proton web UI,  provides an authoring environment for Proton applications; Those are the AuthoringTool and AuthoringToolWebServer projects.
 
-.The Proton on STORM version, which allows to runenables running the engine in a distributed manner on multiple machines using the STORM infrastructure.
+- The Proton on STORM version, which allows to runenables running the engine in a distributed manner on multiple machines using the STORM infrastructure.
 
 === For working with source code ===
-The projects are maven projects, . they They can be built using the "clean install" targets by running the mvn command on the parent pom (located in the "Proton) “ directory. This command will build all the
-Proton projects.
+The projects are maven projects. They can be built using the "clean install" targets by running the mvn command on the parent pom (located in the "Proton”) directory. This command will build all the Proton projects.
 
-AdditionalyIn addition, by executing the "mvn deploy" 	command of the same parent pom after performing clean install, the target jars will be installed into a local repository named "mvn-repo" (/Proton/maven-repo).
+In addition, by executing the "mvn deploy" 	command of the same parent pom after performing clean install, the target jars will be installed into a local repository named "mvn-repo" (/Proton/maven-repo).
 
 === For working with artifacts ===
 The https://github.com/ishkin/Proton/tree/master/mvn-repo/com/ibm/hrl/proton contains all the built artifacts. 
@@ -29,18 +28,17 @@ For standalone engines, the ProtonJ2SE artifact (located in mvn-repo under com.i
 For instructions on how to configure and install IBM Proactive Technology Online on Tomcat (web version), see the following guide: https://forge.fi-ware.org/plugins/mediawiki/wiki/fiware/index.php/CEP_GE_-_IBM_Proactive_Technology_Online_Installation_and_Administration_Guide
 
 === FIWARE related information ===
-This project is part of [FIWARE](https://www.fiware.org/).
-More information about this project is provided in the [FIWARE catalogue](http://catalogue.fiware.org/enablers/complex-event-processing-cep-proactive-technology-online). 
+This project is part of https://www.fiware.org/[FIWARE].
+More information about this project is provided in the http://catalogue.fiware.org/enablers/complex-event-processing-cep-proactive-technology-online[FIWARE catalogue]. 
 
-- In the catalogue you can find several ways to use the Proactive Technology Online Generic Enabler (creating instance, using existing instances, downloads the code). 
-- If you like to install the Proactive Technology Online, follow the [installation guide](https://forge.fiware.org/plugins/mediawiki/wiki/fiware/index.php/CEP_GE_-_IBM_Proactive_Technology_Online_Installation_and_Administration_Guide). This guide includes running instructions and sanity checks procedures.
-- For more advanced tests, you can follow the [unit tests](https://forge.fiware.org/plugins/mediawiki/wiki/fiware/index.php/CEP_GE_-_IBM_Proactive_Technology_Online_Unit_Testing_Plan).
-- General information on this technology can be found in the [CEP open specification page](http://forge.fiware.org/plugins/mediawiki/wiki/fiware/index.php/FIWARE.OpenSpecification.Data.CEP).
-- A high level description of the technology and an api overview can be found as part of the [FIWARE developers’ tour guide](https://www.fiware.org/devguides/real-time-processing-of-context-events/).
-- A complete set of the REST api can be found [here](http://forge.fiware.org/plugins/mediawiki/wiki/fiware/index.php/Complex_Event_Processing_Open_RESTful_API_Specification).
+- In the catalogue you can find several ways to use the Proactive Technology Online Generic Enabler instance (creating instance, using existing instances, downloads the code). 
+- If you like to install the Proactive Technology Online, follow the https://forge.fiware.org/plugins/mediawiki/wiki/fiware/index.php/CEP_GE_-_IBM_Proactive_Technology_Online_Installation_and_Administration_Guide[installation guide]. This guide includes running instructions and sanity checks procedures.
+- For more advanced tests, you can follow the https://forge.fiware.org/plugins/mediawiki/wiki/fiware/index.php/CEP_GE_-_IBM_Proactive_Technology_Online_Unit_Testing_Plan[unit tests].
+- General information on this technology can be found in the http://forge.fiware.org/plugins/mediawiki/wiki/fiware/index.php/FIWARE.OpenSpecification.Data.CEP[CEP open specification page].
+- A high level description of the technology and an api overview can be found as part of the https://www.fiware.org/devguides/real-time-processing-of-context-events/[FIWARE developers’ tour guide].
+- A complete set of the REST api can be found http://forge.fiware.org/plugins/mediawiki/wiki/fiware/index.php/Complex_Event_Processing_Open_RESTful_API_Specification[here].
 - More documentation is provided under the documentation folder, as described below. 
-- Education material can be found at the [FIWARE academy](https://edu.fiware.org/course/view.php?id=58)      
-
+- Education material can be found at the https://edu.fiware.org/course/view.php?id=58[FIWARE academy]
 
 === Documentation ===
 Can be found under the /documentation folder, and includes the Proton's User Guide (explaining the language building blocks and use of the authoring tool use) and Programmer's Guide (explaining possible extension points to the Proton's programming model)
