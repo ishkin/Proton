@@ -13,7 +13,7 @@ This version of the engine is adapted to run on a web server. It allows users to
 RESTful events options provided by the REST adapter. This version also provides REST APIs for managing the engine’s instance lifecycle, and to manage the definition repository.
 - The Proton web UI,  provides an authoring environment for Proton applications; Those are the AuthoringTool and AuthoringToolWebServer projects.
 
-- The Proton on STORM version, which allows to runenables running the engine in a distributed manner on multiple machines using the STORM infrastructure.
+- The Proton on STORM version, which allows to run the engine in a distributed manner on multiple machines using the STORM infrastructure.
 
 === For working with source code ===
 The projects are maven projects. They can be built using the "clean install" targets by running the mvn command on the parent pom (located in the "Proton”) directory. This command will build all the Proton projects.
