@@ -36,7 +36,7 @@
                 "properties": [
                     {
                         "name": "filename",
-                        "value": "../sample/DoSAttack_PredictedCrash.txt"
+                        "value": "./sample/DoSAttack_PredictedCrash.txt"
                     },
                     {
                         "name": "formatter",
@@ -68,7 +68,7 @@
                 "properties": [
                     {
                         "name": "filename",
-                        "value": "../sample/DoSAttack_TrafficReport.txt"
+                        "value": "./sample/DoSAttack_TrafficReport.txt"
                     },
                     {
                         "name": "formatter",
