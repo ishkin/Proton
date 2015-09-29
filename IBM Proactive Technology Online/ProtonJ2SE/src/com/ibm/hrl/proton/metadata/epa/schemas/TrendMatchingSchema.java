@@ -23,8 +23,6 @@ import java.util.Map;
 import com.ibm.hrl.proton.metadata.computedVariable.ComputedVariableType;
 import com.ibm.hrl.proton.metadata.epa.Operand;
 import com.ibm.hrl.proton.metadata.epa.enums.ConsumptionPolicyEnum;
-import com.ibm.hrl.proton.metadata.epa.enums.InstanceSelectionPolicyEnum;
-import com.ibm.hrl.proton.metadata.epa.enums.OrderPolicyEnum;
 import com.ibm.hrl.proton.metadata.epa.enums.TrendRelationEnum;
 import com.ibm.hrl.proton.metadata.epa.interfaces.IMatchingSchema;
 import com.ibm.hrl.proton.metadata.type.TypeAttribute;
@@ -36,6 +34,7 @@ public class TrendMatchingSchema extends StandardMatchingSchema implements IMatc
 	private static final long serialVersionUID = 1L;
 	public static final String TREND_COMPUTED_VARIABLE_NAME = "trend";
 	public static final String TREND_COMPUTED_VARIABLE_ATTR_NAME = "count";
+	public static final String TREND_COMPUTED_VARIABLE_PARTICIPANTS_NAME = "participants";
 	
 	protected Map<Operand,String> expressions; // textual representation of the trend expression
 	protected Map<Operand,IExpression> parsedExpressions; // run-time expression evaluate
@@ -55,6 +54,7 @@ public class TrendMatchingSchema extends StandardMatchingSchema implements IMatc
 	    trendTreshold = null;
 	    List<TypeAttribute> attributes = new ArrayList<TypeAttribute>();
 	    attributes.add(new TypeAttribute(TREND_COMPUTED_VARIABLE_ATTR_NAME,AttributeTypesEnum.INTEGER));
+	    attributes.add(new TypeAttribute(TREND_COMPUTED_VARIABLE_PARTICIPANTS_NAME,AttributeTypesEnum.OBJECT));
 	    this.computedVariableType = new ComputedVariableType(TREND_COMPUTED_VARIABLE_NAME,attributes);
 	}
 	
