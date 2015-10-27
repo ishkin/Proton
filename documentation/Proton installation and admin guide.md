@@ -1,6 +1,7 @@
 #Proactive Technology Online Installation and Administration Guide
 
 This document describes how to install and configure the Proactive Technology Online (aka Proton) on a web server. This is the way the Proactive Technology Online is operated as the CEP GE in FIWARE. 
+
 The Proton runtime engine detects patterns on incoming events, and the Proton authoring tool is a web-based user interface in which CEP applications can be defined and deployed to the engine.
 
 ##Prerequisites
