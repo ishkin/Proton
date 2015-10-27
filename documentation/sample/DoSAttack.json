@@ -1,0 +1,191 @@
+{
+    "declaredClass": "metadata.CreateJSON",
+    "name": "DoSAttack",
+    "epn": {
+        "events": [
+            {
+                "name": "TrafficReport",
+                "attributes": [
+                    {
+                        "dimension": 0,
+                        "name": "volume",
+                        "type": "Integer"
+                    }
+                ]
+            },
+            {
+                "name": "ExpectedCrash",
+                "attributes": [
+                    {
+                        "dimension": 0,
+                        "name": "Cost",
+                        "type": "Double"
+                    }
+                ]
+            }
+        ],
+        "name": "DoSAttack",
+        "consumers": [
+            {
+                "events": [
+                    {
+                        "name": "ExpectedCrash"
+                    }
+                ],
+                "name": "SysTemCrashConsumer",
+                "properties": [
+                    {
+                        "name": "filename",
+                        "value": "./sample/DoSAttack_PredictedCrash.txt"
+                    },
+                    {
+                        "name": "formatter",
+                        "value": "json"
+                    },
+                    {
+                        "name": "delimiter",
+                        "value": ";"
+                    },
+                    {
+                        "name": "tagDataSeparator",
+                        "value": "="
+                    },
+                    {
+                        "name": "SendingDelay",
+                        "value": "1000"
+                    }
+                ],
+                "type": "File",
+                "actions": []
+            },
+            {
+                "events": [
+                    {
+                        "name": "TrafficReport"
+                    }
+                ],
+                "name": "DoSAttackTRConsumer",
+                "properties": [
+                    {
+                        "name": "filename",
+                        "value": "./sample/DoSAttack_TrafficReport.txt"
+                    },
+                    {
+                        "name": "formatter",
+                        "value": "json"
+                    },
+                    {
+                        "name": "delimiter",
+                        "value": ";"
+                    },
+                    {
+                        "name": "tagDataSeparator",
+                        "value": "="
+                    },
+                    {
+                        "name": "SendingDelay",
+                        "value": "1000"
+                    }
+                ],
+                "type": "File",
+                "actions": []
+            }
+        ],
+        "epas": [
+            {
+                "derivedActions": [],
+                "inputEvents": [
+                    {
+                        "alias": "TR1",
+                        "instanceSelectionPolicy": "First",
+                        "name": "TrafficReport",
+                        "consumptionPolicy": "Consume"
+                    },
+                    {
+                        "alias": "TR2",
+                        "instanceSelectionPolicy": "First",
+                        "name": "TrafficReport",
+                        "consumptionPolicy": "Consume"
+                    },
+                    {
+                        "alias": "TR3",
+                        "instanceSelectionPolicy": "First",
+                        "name": "TrafficReport",
+                        "consumptionPolicy": "Consume"
+                    }
+                ],
+                "evaluationPolicy": "Immediate",
+                "derivedEvents": [
+                    {
+                        "name": "ExpectedCrash",
+                        "reportParticipants": false,
+                        "expressions": {
+                            "Cost": "10.0"
+                        }
+                    }
+                ],
+                "name": "IncreasingTraffic",
+                "context": "3MinAfterStartUp",
+                "internalSegmentation": [],
+                "epaType": "Sequence",
+                "cardinalityPolicy": "Single",
+                "assertion": "TR3.volume>1.50* TR2.volume AND TR2.volume>1.50 * TR1.volume",
+                "computedVariables": []
+            }
+        ],
+        "contexts": {
+            "temporal": [
+                {
+                    "neverEnding": false,
+                    "terminators": [
+                        {
+                            "terminationType": "Terminate",
+                            "relativeTime": "180000",
+                            "terminatorType": "RelativeTime"
+                        }
+                    ],
+                    "atStartup": true,
+                    "name": "3MinAfterStartUp",
+                    "type": "TemporalInterval",
+                    "initiators": []
+                }
+            ],
+            "segmentation": [],
+            "composite": []
+        },
+        "producers": [
+            {
+                "events": [],
+                "name": "TrafficReportFileProducer",
+                "properties": [
+                    {
+                        "name": "filename",
+                        "value": "./sample/DoSAttackScenarioJSON.txt"
+                    },
+                    {
+                        "name": "pollingInterval",
+                        "value": "1000"
+                    },
+                    {
+                        "name": "sendingDelay",
+                        "value": "5000"
+                    },
+                    {
+                        "name": "formatter",
+                        "value": "json"
+                    },
+                    {
+                        "name": "delimiter",
+                        "value": ";"
+                    },
+                    {
+                        "name": "tagDataSeparator",
+                        "value": "="
+                    }
+                ],
+                "type": "File"
+            }
+        ],
+        "actions": []
+    }
+}

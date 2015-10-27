@@ -95,6 +95,7 @@ public abstract class BaseMetadataParser {
 	public static final String CONTENT_TYPE = "contentType";
 	public static final String TIME_WINDOW = "windowSize";
 	public static final String DATE_FORMAT = "dateFormat";
+	public static final String CSV_ATTRIBUTES = "csvAttributeNames";
 	
 	protected final IParser<String>		stringParser	= new StringParser();
 	protected final IParser<JSONArray>	jsonArrayParser	= new JSONArrayParser();
@@ -249,7 +250,7 @@ public abstract class BaseMetadataParser {
 					{
 						//IExpression defaultValueExpression = eep.createExpression(defaultValue, signature);						
 						//value = defaultValueExpression.evaluate(instance);
-						value = TypeAttribute.parseConstantValue(defaultValue,attrName, object,null,eep);						
+						value = TypeAttribute.parseConstantValue(defaultValue,attrName, type.getName(),object,null,eep);						
 						
 						
 					}
@@ -598,7 +599,7 @@ public abstract class BaseMetadataParser {
 			signatureAliases.add(aliasName);
 			// must be parsed by eep
 			try {
-				IExpression parsedExpression =  eep.createExpression(expression, trendSignature,
+				IExpression parsedExpression = eep.createExpression(expression, trendSignature,
 						signatureAliases);
 				((TrendMatchingSchema)matchingSchema).addParsedExpression(operand, parsedExpression);
 			}catch (Exception e) {

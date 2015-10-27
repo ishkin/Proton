@@ -1,0 +1,284 @@
+{ 
+ "type":"object",
+ "properties": {
+   "epn": {
+	 "type":"object",
+	 "properties":{
+	   "name":{"type":"string"},
+	   "events":{
+		 "type":"object",
+		 "items":{
+		   "type":"object",
+		   "properties":{	   
+		     "name":{"type":"string", "required":true},
+		     "description":{"type":"string", "optional":true},
+		     "createdDate":{"type":"string", "optional":true, "format":"date", "description":"in the format of YYYY-MM-DD"},
+		     "createdBy":{"type":"string", "optional":true},
+		     "attributes":{
+		       "type":"object",
+		       "items":{
+		         "type":"object",
+		         "properties":{
+		           "name":{"type":"string", "required":true},
+		           "type":{"type":"string", "enum":["String","Integer","Long","Double","Date","Boolean","Object"],"required":true},
+		           "defaultValue":{"optional":true}
+		         }
+		       }
+		     }
+		   }
+		 }
+	   },
+	   "epas":{
+	     "type":"object",
+	     "items":{
+	       "type":"object",
+	       "properties":{
+	         "name":{"type":"string", "required":true},
+		     "description":{"type":"string", "optional":true},
+		     "createdDate":{"type":"string", "optional":true, "format":"date", "description":"in the format of YYYY-MM-DD"},
+		     "createdBy":{"type":"string", "optional":true},
+		     "epaType":{"type":"string","enum":["Basic","Aggregate","All","Sequence","Absence"]},
+		 	 "context":{"type":"string"},
+		 	 "inputEvents":{
+		 	   "type":"object",
+		 	   "items":{
+		 	     "type":"object",
+		 	     "properties":{
+		 	       "name":{"type":"string", "required":true},
+		 	       "alias":{"type":"string", "optional":true},
+		 	       "filterExpression":{"type":"string", "optional":true},
+		 	       "consumptionPolicy":{"type":"string", "optional":true, "enum":["Consume","Reuse"],"description":"for all, sequence operators"},
+		 	       "instanceSelectionPolicy":{"type":"string", "optional":true,"enum":["First","Last","Override"],"description":"for all, sequence operators"}
+		 	     }
+		 	   }
+		 	 },
+		 	 "computedVariables":{
+		 	   "type":"object",
+		 	   "optional":true,
+		 	   "items":{
+		 	     "type":"object",
+		 	     "properties":{
+		 	       "name":{"type":"string", "required":true},
+		 	       "aggregationType":{"type":"string", "required":true,"enum":["Count","Sum","Min","Max","Average"],"description":"defines the aggregation calculation"}
+		 	     }
+		 	   }  
+		 	 },
+		 	 "assertion":{"type":"string", "optional":true},
+		 	 "evaluationPolicy":{"type":"string", "optional":true,"enum":["Immediate","Deferred"], "default":"Immediate"},
+		 	 "cardinalityPolicy":{"type":"string", "optional":true,"enum":["Single","Unrestricted"], "default":"Unrestricted"},
+		 	 "internalSegmentation":{
+		 	 	"type":"object","optional":"true",		 	 	
+		 	 	"items":{
+		 	 	  "type":"object",
+		 	 	  "properties":{
+		 	 	    "name":{"type":"string"}
+		 	 	  }
+		 	 	}  
+		 	 },
+		 	 "derivedEvents":{
+	   	 	   "optional":true,
+		 	   "type":"object",
+		 	   "items":{
+		 	     "type":"object",
+		 	     "properties":{
+		 	       "name":{"type":"string"},
+		 	       "condition":{"type":"string", "optional":true},
+		 	       "reportParticipants":{"type":"boolean", "optional":true, "default":false},
+		 	       "expressions":{
+		 	         "type":"object",
+		 	 	     "items":{"type":"object","description":"for each expression the key is the attribute name and the value is the expression"}
+		 	 	   }
+		 	 	 }
+		 	   }
+		 	 }
+		   }
+		 }  	 	   
+	   },
+	   "contexts":{
+	     "type":"object",
+	     "properties":{
+	       "temporal":{
+	         "type":"object",
+	         "items":{
+	           "type":"object",
+	           "properties":{
+   	             "name":{"type":"string", "required":true},
+		         "description":{"type":"string", "optional":true},
+		         "createdDate":{"type":"string", "optional":true, "format":"date", "description":"in the format of YYYY-MM-DD"},
+		         "createdBy":{"type":"string", "optional":true},
+		         "type":{"type":"string","enum":["TemporalInterval", "SlidingTimeWindow"]},
+		         "slidingPeriod":{"type":"integer", "optional":true, "description":"used in sliding time window only"},
+		         "duration":{"type":"integer", "optional":true, "description":"used in sliding time window only"},
+		         "atStartup":{"type":"boolean", "optional":true, "default":"false"},
+		         "neverEnding":{"type":"boolean", "optional":true, "default":"false"},
+	             "initiators":{
+	               "type":"object",
+		 	       "items":{
+		 	         "type":"object",
+		 	         "properties":{
+		 	           "initiatorType":{"type":"string","enum":["Event","AbsoluteTime"]},
+		 	           "initiatorPolicy":{"type":"string","enum":["Add","Ignore"]},
+		 	           "name":{"type":"string", "optional":true, "description":"for event initiator"},
+		 	           "condition":{"type":"string", "optional":true, "description":"for event initiator"},
+		 	           "timeStamp":{"type":"string", "optional":true,"description":"for absolute time initiator. consider to use the date-time format of YYYY-MM-DDThh:mm:ssZ in UTC time."},
+		 	           "repeatingInterval":{"type":"integer", "optional":true,"minimum":"1","description":"for absolute time initiator. in milliseconds"}
+                     }   	             
+                   }
+                 },
+	             "terminators":{
+	               "type":"object",
+		 	       "items":{
+		 	         "type":"object",
+		 	         "properties":{
+		 	           "terminatorType":{"type":"string","enum":["Event","AbsoluteTime","RelativeTime"]},
+		 	           "terminatorPolicy":{"type":"string","enum":["First","Last","Each"], "optional":true},
+		 	           "TerminationType":{"type":"string", "optional":true, "enum":["Terminate","Discard"], "default":"Terminate"},
+		 	           "name":{"type":"string", "optional":true, "description":"for event initiator"},
+		 	           "condition":{"type":"string", "optional":true, "description":"for event initiator"},
+		 	           "timeStamp":{"type":"string", "optional":true,"description":"for absolute time terminator. consider to use the date-time format of YYYY-MM-DDThh:mm:ssZ in UTC time."},
+		 	           "relativeTime":{"type":"integer", "optional":true,"minimum":"1","description":"for relative time terminator. In milliseconds"}
+                     }   	             
+                   }
+                 }           	             
+	           }
+	         }
+	       },
+	       "segmentation":{
+	    	 "optional":true,
+	         "type":"object",
+	         "items":{
+	           "type":"object",
+	           "properties":{
+   	             "name":{"type":"string", "required":true},
+		         "description":{"type":"string", "optional":true},
+		         "createdDate":{"type":"string", "optional":true, "format":"date", "description":"in the format of YYYY-MM-DD"},
+		         "createdBy":{"type":"string", "optional":true},
+		         "type":{"type":"string","enum":["Segmentation"], "optional":true},
+		         "participantEvents":{
+	  	           "type":"object",
+	               "items":{
+	                 "type":"object",
+	                 "properties":{
+   	                   "name":{"type":"string", "required":true},
+		               "expression":{"type":"string"}
+	                 }           
+	               }
+	             }
+	           }
+	         }
+	       },
+	       "composite":{
+	         "optional":true,
+	         "type":"object",
+	         "items":{
+	           "type":"object",
+	           "properties":{
+   	             "name":{"type":"string", "required":true},
+		         "description":{"type":"string", "optional":true},
+		         "createdDate":{"type":"string", "optional":true, "format":"date", "description":"in the format of YYYY-MM-DD"},
+		         "createdBy":{"type":"string", "optional":true},
+	             "temporalContexts":{
+	               "type":"object",
+	               "optional":true,
+	               "items":{
+	                 "type":"object",
+	                 "properties":{
+   	                   "name":{"type":"string", "required":true}
+	                 }
+	               }  
+	             },
+   	             "segmentationContexts":{
+	               "type":"object",
+	               "optional":true,
+	               "items":{
+	                 "type":"object",
+	                 "properties":{
+   	                   "name":{"type":"string", "required":true}
+	                 }
+	               }  
+	             }
+	           }
+	         }
+	       }
+	     },
+	     "consumers":{
+	       "type":"object",
+	       "items":{
+	         "type":"object",
+	         "properties":{
+   	           "name":{"type":"string", "required":true},
+		       "description":{"type":"string", "optional":true},
+		       "createdDate":{"type":"string", "optional":true, "format":"date", "description":"in the format of YYYY-MM-DD"},
+		       "createdBy":{"type":"string", "optional":true},
+	           "type":{"type":"string", "required":true, "enum":["File", "Timed", "Database", "JMS", "Rest", "Custom"]},
+	           "properties":{
+	             "type":"object",
+	             "items":{
+	           	   "type":"object",
+	                 "properties":{
+	               	   "name":{"type":"string", "required":true},
+	               	   "value":{"type":"string", "required":true}
+	               	 }
+	             }
+	           },
+	           "events":{
+	             "type":"object",
+	             "items":{
+	               "type":"object",
+	               "properties":{
+	                 "name":{"type":"string", "required":true},
+	                 "condition":{"type":"string", "optional":true}
+	               }
+	             }
+	           }
+	       	 }
+	       }
+	     },
+	     "producers":{
+	       "type":"object",
+	       "items":{
+	         "type":"object",
+	         "properties":{
+   	           "name":{"type":"string", "required":true},
+		       "description":{"type":"string", "optional":true},
+		       "createdDate":{"type":"string", "optional":true, "format":"date", "description":"in the format of YYYY-MM-DD"},
+		       "createdBy":{"type":"string", "optional":true},
+	           "type":{"type":"string", "required":true, "enum":["File", "Timed", "Database", "JMS", "Rest", "Custom"]},
+	           "properties":{
+	             "type":"object",
+	             "items":{
+	               "type":"object",
+	               "properties":{
+	                 "name":{"type":"string", "required":true},
+	               	 "value":{"type":"string", "required":true}
+	               }
+	             }
+	           },
+	           "events":{
+	             "optional":true,
+	             "type":"object",
+	             "items":{
+	               "type":"object",
+	               "properties":{
+	                 "name":{"type":"string", "required":true},
+	                 "condition":{"type":"string", "optional":true}
+	               }
+	             }
+	           }	           
+	       	 }
+	       }	        
+	      }  
+	    } 
+      }
+    }
+  }
+}
+	  
+	   	          
+	   
+
+
+
+
+
+				  

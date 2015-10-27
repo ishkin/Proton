@@ -17,6 +17,7 @@ package com.ibm.hrl.proton.adapters.rest.client;
 
 import com.ibm.hrl.proton.adapters.configuration.IOutputAdapterConfiguration;
 import com.ibm.hrl.proton.adapters.connector.IOutputConnector;
+import com.ibm.hrl.proton.adapters.formatters.CSVTextFormatter;
 import com.ibm.hrl.proton.adapters.formatters.ITextFormatter;
 import com.ibm.hrl.proton.adapters.formatters.ITextFormatter.TextFormatterType;
 import com.ibm.hrl.proton.adapters.formatters.JSONFormatter;
@@ -55,7 +56,7 @@ public class RESTOutputAdapter extends AbstractOutputAdapter {
 			textFormatter = new XmlNgsiFormatter(consumerMetadata.getConsumerProperties(),eventMetadata,eep);
 			break;
 		case CSV:			
-			 throw new UnsupportedOperationException("CSV format is not supported");
+			textFormatter = new CSVTextFormatter(consumerMetadata.getConsumerProperties(),eventMetadata,eep);
 		case JSON:
 			textFormatter = new JSONFormatter(consumerMetadata.getConsumerProperties(),eventMetadata,eep);
 			break;

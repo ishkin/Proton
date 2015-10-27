@@ -23,6 +23,7 @@ import java.util.Set;
 
 
 
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,6 +33,7 @@ import com.ibm.hrl.proton.context.management.AdditionalInformation;
 import com.ibm.hrl.proton.context.management.AdditionalInformation.NotificationTypeEnum;
 import com.ibm.hrl.proton.context.management.CompositeContextInstance;
 import com.ibm.hrl.proton.context.management.ContextInitiationNotification;
+import com.ibm.hrl.proton.context.management.SegmentationValue;
 import com.ibm.hrl.proton.context.state.ContextStateManager;
 import com.ibm.hrl.proton.eventHandler.IEventHandler;
 import com.ibm.hrl.proton.metadata.context.ContextAbsoluteTimeInitiator;
@@ -127,7 +129,7 @@ public class ContextServiceFacade implements IContextService
 		    				// create timer for each repeating absolute time initiator
 		    				AdditionalInformation info = new AdditionalInformation(contextType.getName(),
 		    						agentType.getName(),initiator.getId(),
-		    						NotificationTypeEnum.INITIATOR);
+		    						NotificationTypeEnum.INITIATOR,new SegmentationValue());
 	
 		    				long initiationTime = initiator.getInitiationTime().getTime();
 		    				long duration = initiationTime - System.currentTimeMillis();
@@ -204,9 +206,9 @@ public class ContextServiceFacade implements IContextService
     	
     	// we currently enforce processing order: terminate, initiate, participate
     	if (roles.contains(EventRoleInContextEnum.TERMINATOR)) {
-    		logger.debug("processEventInstance: the role of the event is terminator, terminating partitions...");
+    		logger.info("processEventInstance: the role of the event is terminator, terminating partitions...");
     		terminatedPartitions = cInstance.processContextTerminator(timedObject);
-    		logger.debug("processEventInstance: terminated partitions: "+terminatedPartitions);
+    		logger.info("processEventInstance: terminated partitions: "+terminatedPartitions);
     	}
 
     	if (roles.contains(EventRoleInContextEnum.INITIATOR)) {

@@ -1,0 +1,3 @@
+{"Cost":"0.0","Certainty":"0.0","Name":"TrafficReport","EventSource":"","Duration":"0.0","Annotation":"","volume":"1000","EventId":"f4c4ffc7-e3c2-4310-9f54-ff4ecab8401b","DetectionTime":"20\/09\/2015-11:37:37"}
+{"Cost":"0.0","Certainty":"0.0","Name":"TrafficReport","EventSource":"","Duration":"0.0","Annotation":"","volume":"1600","EventId":"24580303-1269-49dc-94d5-e8fb663689b2","DetectionTime":"20\/09\/2015-11:37:42"}
+{"Cost":"0.0","Certainty":"0.0","Name":"TrafficReport","EventSource":"","Duration":"0.0","Annotation":"","volume":"2500","EventId":"cdab0137-d9c9-46be-8057-8f28a1d9d24f","DetectionTime":"20\/09\/2015-11:37:47"}

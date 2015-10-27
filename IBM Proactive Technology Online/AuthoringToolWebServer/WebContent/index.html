@@ -1,0 +1,72 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html dir="ltr">
+    
+    <head>
+        <style type="text/css">
+            body, html { font-family:helvetica,arial,sans-serif; font-size:90%; }
+        </style>
+        <script src="http://ajax.googleapis.com/ajax/libs/dojo/1.6/dojo/dojo.xd.js"
+        djConfig="parseOnLoad: true">
+        </script>
+        <script type="text/javascript">
+            dojo.require("dijit.form.Button");
+
+            function sendText() {
+                var button = dijit.byId("submitButton2");
+
+                dojo.connect(button, "onClick", function(event) {
+                    //The parameters to pass to xhrPost, the message, and the url to send it to
+                    //Also, how to handle the return and callbacks.
+                    var xhrArgs = {
+                        url: "ProjectManager",
+                        content: {name : 'hello', content : 'this is the content I wish to send'},
+                        handleAs: "text",
+                        load: function(data) {
+                            dojo.byId("response2").innerHTML = "Message posted.";
+                        },
+                        error: function(error) {
+                            //We'll 404 in the demo, but that's okay.  We don't have a 'postIt' service on the
+                            //docs server.
+                            dojo.byId("response2").innerHTML = "Message posted.";
+                        }
+                    }
+                    dojo.byId("response2").innerHTML = "Message being sent..."
+                    //Call the asynchronous xhrPost
+                    var deferred = dojo.xhrPost(xhrArgs);
+                });
+            }
+            dojo.addOnLoad(sendText);
+        </script>
+        <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/dojo/1.6/dijit/themes/claro/claro.css"
+        />
+    </head>
+    
+    <body class=" claro ">
+        <b>
+            Push the button to POST some text.
+        </b>
+        <br>
+        <br>
+        <button dojoType="dijit.form.Button" id="submitButton2">
+            Send it!
+        </button>
+        <br>
+        <br>
+        <b>
+            Result
+        </b>
+        <div id="response2">
+        </div>
+        <!-- NOTE: the following script tag is not intended for usage in real
+        world!! it is part of the CodeGlass and you should just remove it when
+        you use the code -->
+        <script type="text/javascript">
+            dojo.addOnLoad(function() {
+                if (document.pub) {
+                    document.pub();
+                }
+            });
+        </script>
+    </body>
+
+</html>

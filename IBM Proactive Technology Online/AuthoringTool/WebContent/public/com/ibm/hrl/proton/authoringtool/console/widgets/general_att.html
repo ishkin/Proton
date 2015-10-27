@@ -1,0 +1,42 @@
+
+<div>
+<!-- 	Copyright 2014 IBM
+
+	Licensed under the Apache License, Version 2.0 (the "License");
+	you may not use this file except in compliance with the License.
+	You may obtain a copy of the License at
+
+	http://www.apache.org/licenses/LICENSE-2.0
+
+	Unless required by applicable law or agreed to in writing, software
+	distributed under the License is distributed on an "AS IS" BASIS,
+	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+	See the License for the specific language governing permissions and
+	limitations under the License.	
+--> 
+ 	<div dojoType="widgets.SectionPane" dojoAttachPoint="gAtt">
+ 		<div sectionType="collapsed" stateTitle="${fieldName}"></div>
+	    <div sectionType="expanded" stateTitle="${fieldName}"><br>
+	    	<table cellpadding="10">
+			<tr>
+				<td style="width:70px;"><span dojoType="dijit.InlineEditBox" dojoAttachPoint="objectName" 
+						editor="dijit.form.Textarea" width="150px" 
+						dojoAttachEvent="onChange:saveObjectName">Edit Name</span></td>
+				<td><span style="width:400px;"></span></td>
+				<td>Created By:</td>
+				<td><span dojoType="dijit.InlineEditBox" dojoAttachPoint="createdBy"
+						style="width:50px;border:0px solid;" editor="dijit.form.Textarea" 
+						dojoAttachEvent="onChange:saveCreatedBy"></td>
+			</tr>
+			<tr>
+			</tr>
+			<tr>
+				<td>Description:</td>
+				<td style="width:300px;"><span dojoType="dijit.InlineEditBox" dojoAttachPoint="objectDesc" editor="dijit.form.Textarea" width="300px" dojoAttachEvent="onChange:saveObjectDesc"></span></td>
+				<td>Created On:</td>
+				<td><input dojoType="dijit.form.TextBox" dojoAttachPoint="createdOn" readonly="readonly" style="width:150px;border:0px solid;"></td>
+			</tr>
+			</table>
+	    </div>
+ 	</div> 
+</div>

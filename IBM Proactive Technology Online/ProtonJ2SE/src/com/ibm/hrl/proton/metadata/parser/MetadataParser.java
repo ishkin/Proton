@@ -628,6 +628,29 @@ public class MetadataParser extends BaseMetadataParser{
 							
 						
 					}
+					
+					if ((attributeExpression != null && epaType.equals(EPATypeEnum.TREND))) 
+					{
+						Integer rowNumber = attributeRowNumbers.get(derivationName + "." + typeAttribute.getName());
+						// convert the expression to correct syntax using computed variables
+						
+						//find participants within the expression
+						String newDerivationExpression;
+						try {
+							newDerivationExpression = findParticipantsWithinExpression(attributeExpression,inputEventsList,aliases,computedVariableType,operands);
+						} catch (ParseException e) {
+							handleEEPException(epaName, DefinitionType.EPA, ErrorElement.DERIVATION_EXPRESSIONS,
+									rowNumber, tableNumber, e);
+							continue;
+						}
+						if (!newDerivationExpression.equals(attributeExpression)) {
+							//at least one of the expression depends on the input events, need to gather them in computed variable
+							derivationSchema.setReportingParticipants(true);
+							attributeExpression = newDerivationExpression;
+						}
+							
+						
+					}
 
 					specificStringExpressions.put(typeAttribute, attributeExpression);
 					IExpression parsedAttributeExpression = null;
@@ -687,7 +710,7 @@ public class MetadataParser extends BaseMetadataParser{
 	 */
 	protected void parseConsumerProducer(JSONArray consumers, JSONArray producers) throws ParseException {
 		EventMetadataFacade instance = metadataFacade.getEventMetadataFacade();
-		ConsumerProducerMetadata consumerProducerMetadata = ConsumerProducerMetadata.initializeInstance();
+		ConsumerProducerMetadata consumerProducerMetadata = new ConsumerProducerMetadata();
 
 		// parsing consumer definitions
 		Set<String> consumerNames = new HashSet<String>();
@@ -720,6 +743,7 @@ public class MetadataParser extends BaseMetadataParser{
 						if (propertyName.equals(DATE_FORMAT)) //if there is a date format property check that the format is legal one
 						{
 							try{
+								@SuppressWarnings("unused")
 								SimpleDateFormat dateFormatter = new SimpleDateFormat(propertyValue);
 							}catch(IllegalArgumentException e){
 								//add to exceptions list
@@ -728,6 +752,7 @@ public class MetadataParser extends BaseMetadataParser{
 							}
 							
 						}
+						//parse properties that are not CSV_ATTRIBUTES or DATE_FORMAT
 						propertiesMap.put(propertyName, propertyValue);
 					} catch (MetadataParseException e) {
 						// allows catching exceptions for separate attributes
@@ -829,6 +854,7 @@ public class MetadataParser extends BaseMetadataParser{
 						if (propertyName.equals(DATE_FORMAT)) //if there is a date format property check that the format is legal one
 						{
 							try{
+								@SuppressWarnings("unused")
 								SimpleDateFormat dateFormatter = new SimpleDateFormat(propertyValue);
 							}catch(IllegalArgumentException e){
 								//add to exceptions list
@@ -837,8 +863,8 @@ public class MetadataParser extends BaseMetadataParser{
 							}
 							
 						}
-						
-						propertiesMap.put(propertyName, propertyValue);
+						//parse properties that are not CSV_ATTRIBUTES or DATE_FORMAT
+						propertiesMap.put(propertyName, propertyValue);						
 					} catch (MetadataParseException e) {
 						continue;
 					}
@@ -891,6 +917,8 @@ public class MetadataParser extends BaseMetadataParser{
 				continue;
 			}
 		}
+		
+		metadataFacade.setConsumerProducerMetadata(consumerProducerMetadata);
 	}
 			
 			

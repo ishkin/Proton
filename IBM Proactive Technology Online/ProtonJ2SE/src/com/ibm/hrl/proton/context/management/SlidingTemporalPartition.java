@@ -198,6 +198,7 @@ public class SlidingTemporalPartition extends TemporalPartition implements ITime
 				notificationType + " at " + System.currentTimeMillis());
 		
 		
+		
 		if (notificationType == NotificationTypeEnum.INITIATOR) {
 			// initiate new sliding temporal partition
 			initiateSlidingTemporalPartition();			
@@ -214,9 +215,10 @@ public class SlidingTemporalPartition extends TemporalPartition implements ITime
 						System.currentTimeMillis(),System.currentTimeMillis(),contextBoundId,
 						getPartitionUUID(),internalPartitionId);
 				
+				
 			}else
 			{
-				logger.debug("Creating sliding context termination notification");
+				logger.debug("Creating sliding context termination notification");				
 				notification = new SlidingWindowTerminationNotification(contextName,((SlidingPartitionAdditionalInformation)info).getAgentName(),
 						System.currentTimeMillis(),System.currentTimeMillis(),contextBoundId,
 						getPartitionUUID(),internalPartitionId);
@@ -230,7 +232,7 @@ public class SlidingTemporalPartition extends TemporalPartition implements ITime
 	
 	private  UUID initiateSlidingTemporalPartition() throws ContextServiceException {
 		
-		logger.debug("SlidingTemporalPartition: initiateSlidingTemporalPartition: creating new sliding partition , initiating termination timer on new sliding temporal partition");
+		logger.debug("SlidingTemporalPartition: initiateSlidingTemporalPartition: creating new sliding partition , initiating termination timer on new sliding temporal partition");		
 		SlidingTemporalInternalPartition partition = new SlidingTemporalInternalPartition(this.globalSegmentation);
 		logger.debug("SlidingTemporalPartition: initiateSlidingTemporalPartition:created new sliding partition : "+partition.getId().toString());
 		slidingInternalPartitions.add(partition);

@@ -24,6 +24,7 @@ import com.ibm.hrl.proton.adapters.configuration.IOutputAdapterConfiguration;
 import com.ibm.hrl.proton.adapters.connector.IOutputConnector;
 import com.ibm.hrl.proton.adapters.formatters.ITextFormatter;
 import com.ibm.hrl.proton.adapters.formatters.ITextFormatter.TextFormatterType;
+import com.ibm.hrl.proton.adapters.formatters.CSVTextFormatter;
 import com.ibm.hrl.proton.adapters.formatters.JSONFormatter;
 import com.ibm.hrl.proton.adapters.formatters.TagTextFormatter;
 import com.ibm.hrl.proton.adapters.formatters.XmlNgsiFormatter;
@@ -57,7 +58,7 @@ public class FileOutputAdapter extends AbstractOutputAdapter {
 			fileFormatter = new JSONFormatter(consumerMetadata.getConsumerProperties(),eventMetadata,eep);
 			break;
 		case CSV:			
-			 throw new UnsupportedOperationException("CSV format is not supported");
+			fileFormatter = new CSVTextFormatter(consumerMetadata.getConsumerProperties(),eventMetadata,eep);
 		case TAG:
 			fileFormatter = new TagTextFormatter(consumerMetadata.getConsumerProperties(),eventMetadata,eep);
 			break;

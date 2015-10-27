@@ -24,10 +24,16 @@ import com.ibm.hrl.proton.runtime.context.notifications.IContextTerminationNotif
  */
 public class ContextTerminationNotification extends ContextNotification 
 	implements IContextTerminationNotification {
+	private SegmentationValue segmentValue;
 	
 	public ContextTerminationNotification(String name, long occurrence,
-			long detection, String boundId,String agentName) {		
+			long detection, String boundId,String agentName,SegmentationValue segmentValue) {		
 		super(name,occurrence,detection,boundId,agentName);
+		this.segmentValue = segmentValue;
+	}
+
+	public SegmentationValue getSegmentValue() {
+		return segmentValue;
 	}
 
 }

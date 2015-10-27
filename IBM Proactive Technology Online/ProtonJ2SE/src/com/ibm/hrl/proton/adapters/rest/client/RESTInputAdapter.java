@@ -26,6 +26,7 @@ import org.apache.commons.httpclient.methods.GetMethod;
 import com.ibm.hrl.proton.adapters.configuration.IInputAdapterConfiguration;
 import com.ibm.hrl.proton.adapters.configuration.IInputAdapterConfiguration.InputAdapterPullModeEnum;
 import com.ibm.hrl.proton.adapters.connector.IInputConnector;
+import com.ibm.hrl.proton.adapters.formatters.CSVTextFormatter;
 import com.ibm.hrl.proton.adapters.formatters.ITextFormatter;
 import com.ibm.hrl.proton.adapters.formatters.ITextFormatter.TextFormatterType;
 import com.ibm.hrl.proton.adapters.formatters.JSONFormatter;
@@ -64,7 +65,7 @@ public class RESTInputAdapter extends AbstractInputAdapter {
 			textFormatter = new JSONFormatter(producerMetadata.getProducerProperties(),eventMetadata,eep);
 			break;
 		case CSV:			
-			throw new UnsupportedOperationException("CSV format is not supported");
+			textFormatter = new CSVTextFormatter(producerMetadata.getProducerProperties(),eventMetadata,eep);
 		case TAG:
 			textFormatter = new TagTextFormatter(producerMetadata.getProducerProperties(),eventMetadata,eep);
 			break;

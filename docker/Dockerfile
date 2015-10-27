@@ -31,10 +31,22 @@ COPY ./tomcat-users.xml /etc/tomcat7/
 # Initial start of the tomcat server for deploying the apps
 RUN service tomcat7 start || echo OK
 RUN apt-get -y install unzip
-WORKDIR /root/Proton/IBM Proactive Technology Online
-RUN unzip -d IBMProtonOnWebServer IBMProtonOnWebServer.zip 
-WORKDIR /root/Proton/IBM Proactive Technology Online/IBMProtonOnWebServer
-RUN cp *war /var/lib/tomcat7/webapps/
+#WORKDIR /root/Proton/IBM Proactive Technology Online
+#RUN unzip -d IBMProtonOnWebServer IBMProtonOnWebServer.zip 
+#WORKDIR /root/Proton/mvn-repo/com/ibm/hrl/proton/AuthoringTool/0.0.1
+#RUN cp *war /var/lib/tomcat7/webapps/AuthoringTool.war
+#WORKDIR /root/Proton/mvn-repo/com/ibm/hrl/proton/AuthoringToolWebServer/0.0.1
+#RUN cp *war /var/lib/tomcat7/webapps/AuthoringToolWebServer.war
+#WORKDIR /root/Proton/mvn-repo/com/ibm/hrl/proton/ProtonOnWebServer/0.0.1
+#RUN cp *war /var/lib/tomcat7/webapps/ProtonOnWebServer.war
+#WORKDIR /root/Proton/mvn-repo/com/ibm/hrl/proton/ProtonOnWebServerAdmin/0.0.1
+#RUN cp *war /var/lib/tomcat7/webapps/ProtonOnWebServerAdmin.war
+#take wars from the artifacts directory 
+WORKDIR /root/Proton/artifacts
+RUN cp AuthoringTool.war /var/lib/tomcat7/webapps/AuthoringTool.war
+RUN cp AuthoringToolWebServer.war /var/lib/tomcat7/webapps/AuthoringToolWebServer.war 
+RUN cp ProtonOnWebServer.war /var/lib/tomcat7/webapps/ProtonOnWebServer.war
+RUN cp ProtonOnWebServerAdmin.war /var/lib/tomcat7/webapps/ProtonOnWebServerAdmin.war
 RUN mkdir /root/docker
 WORKDIR /root
 # install curl for smoketest

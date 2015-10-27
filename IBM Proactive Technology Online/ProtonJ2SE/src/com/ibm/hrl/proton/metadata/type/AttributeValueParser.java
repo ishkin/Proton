@@ -30,7 +30,7 @@ import com.ibm.hrl.proton.runtime.event.EventInstance;
 
 public class AttributeValueParser {
 	
-	public static Object parseConstantValue(String attrValue,String attrName,IDataObjectMeta objectMetadata,DateFormat dateFormatter,EepFacade eep) throws EEPException{
+	public static Object parseConstantValue(String attrValue,String attrName,IDataObjectMeta objectMetadata,String attrType,DateFormat dateFormatter,EepFacade eep) throws EEPException{
 		Object value;
 		ArrayList<IDataObjectMeta> signature = new ArrayList<IDataObjectMeta>();
 		signature.add(objectMetadata);
@@ -38,13 +38,12 @@ public class AttributeValueParser {
 		
 		IExpression defaultValueExpression;
 		try {
-			defaultValueExpression = eep.createExpression(attrValue, signature);
-			value = defaultValueExpression.evaluate(instance);
-		} catch (Exception e) {
+			
 			//TODO temporal workaround
 			//In the future extend EEP to allow different date formats		
 			//perhaps the value is a Date expression in a format EEP cannot read, recheck
-			if (objectMetadata.getFieldMetaData(attrName).getType().toUpperCase().equals(AttributeTypesEnum.DATE.getName().toUpperCase()) && dateFormatter != null)
+			
+			if (attrType.toUpperCase().equals(AttributeTypesEnum.DATE.getName().toUpperCase()) && dateFormatter != null)
 			{
 				//try parsing with provided formatter
 				try {
@@ -58,13 +57,23 @@ public class AttributeValueParser {
 					}
 					
 				}
-			}else
-			{
-				throw new EEPException("Error parsing attribute value"+attrValue+", reason: "+e.getMessage());
 			}
+			else{
+				defaultValueExpression = eep.createExpression(attrValue, signature);
+				value = defaultValueExpression.evaluate(instance);
+			}
+			
+		} catch (Exception e) {
+			
+				throw new EEPException("Error parsing attribute value"+attrValue+", reason: "+e.getMessage());
+			
+			
 		}						
 		
 		
 		return value;
+	}
+	public static Object parseConstantValue(String attrValue,String attrName,IDataObjectMeta objectMetadata,DateFormat dateFormatter,EepFacade eep) throws EEPException{
+		return parseConstantValue(attrValue,attrName,objectMetadata,objectMetadata.getFieldMetaData(attrName).getType(), dateFormatter, eep);
 	}
 }

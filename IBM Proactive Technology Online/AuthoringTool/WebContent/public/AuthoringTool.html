@@ -1,0 +1,44 @@
+
+<html>
+<head>
+<!-- 	Copyright 2014 IBM
+
+	Licensed under the Apache License, Version 2.0 (the "License");
+	you may not use this file except in compliance with the License.
+	You may obtain a copy of the License at
+
+	http://www.apache.org/licenses/LICENSE-2.0
+
+	Unless required by applicable law or agreed to in writing, software
+	distributed under the License is distributed on an "AS IS" BASIS,
+	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+	See the License for the specific language governing permissions and
+	limitations under the License.	
+--> 
+
+<script type="text/javascript" src="dojo/dojo.js" djConfig="parseOnLoad: true"></script>
+
+<script type="text/javascript">
+	dojo.registerModulePath("metadata", "../com/ibm/hrl/proton/authoringtool/metadata");
+	// Parse the declarative markup
+	dojo.require('dojo.parser');
+	dojo.addOnLoad(function() {
+	    dojo.parser.parse();
+	});
+</script>
+
+<script type="text/javascript" src="com/ibm/hrl/proton/authoringtool/metadata/DerivationSchema.js"></script>
+<script type="text/javascript" src="com/ibm/hrl/proton/authoringtool/metadata/ParseError.js"></script>
+<script type="text/javascript" src="com/ibm/hrl/proton/authoringtool/metadata/BaseDefinition.js"></script>
+<script type="text/javascript" src="com/ibm/hrl/proton/authoringtool/metadata/EventAttribute.js"></script>
+<script type="text/javascript" src="com/ibm/hrl/proton/authoringtool/metadata/Event.js"></script>
+<script type="text/javascript" src="com/ibm/hrl/proton/authoringtool/metadata/EPA.js"></script>
+<script type="text/javascript" src="com/ibm/hrl/proton/authoringtool/metadata/EPN.js"></script>
+<script type="text/javascript" src="loadEPN.js"></script>
+
+</head>
+<body>
+<div><span id="zone"></span></div>
+<button type="button" ONCLICK="loadJSONVariabale('epnExample.json')">Load Metadata</button><br/>
+</body>
+</html>

@@ -16,6 +16,7 @@
 package com.ibm.hrl.proton.epa.simple.operators;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -25,12 +26,14 @@ import java.util.Set;
 import com.ibm.hrl.proton.epa.simple.abstractOperators.AbstractStandardOperator;
 import com.ibm.hrl.proton.epa.state.TrendOperatorData;
 import com.ibm.hrl.proton.metadata.computedVariable.ComputedVariableType;
+import com.ibm.hrl.proton.metadata.computedVariable.IComputedVariableType;
 import com.ibm.hrl.proton.metadata.epa.Operand;
 import com.ibm.hrl.proton.metadata.epa.StatefulEventProcesingAgentType;
 import com.ibm.hrl.proton.metadata.epa.basic.IDataObject;
 import com.ibm.hrl.proton.metadata.epa.enums.ConsumptionPolicyEnum;
 import com.ibm.hrl.proton.metadata.epa.enums.TrendRelationEnum;
 import com.ibm.hrl.proton.metadata.epa.schemas.TrendMatchingSchema;
+import com.ibm.hrl.proton.metadata.type.TypeAttribute;
 import com.ibm.hrl.proton.runtime.computedVariable.ComputedVariableInstance;
 import com.ibm.hrl.proton.runtime.epa.interfaces.IExpression;
 import com.ibm.hrl.proton.runtime.event.EventInstance;
@@ -83,6 +86,7 @@ public class TrendOperator extends AbstractStandardOperator {
     	boolean firstCandidateCheck = true;    	
     	TrendOperatorData internalSate = (TrendOperatorData)getInternalState();
     	LinkedList<IEventInstance> candidates = internalSate.getCandidates();
+    	ArrayList<IEventInstance> participantsArray = new ArrayList<IEventInstance>();
     	
     	double currentTrendValue = 0;
     	matchingSets.setPatternDetected(false);
@@ -103,7 +107,17 @@ public class TrendOperator extends AbstractStandardOperator {
     		// calculate the expression value
     		// at this point it only works for numeric expression values (int, double...)
     		// need to make a more generic implementation (any object implementing comparable interface)
-    		double value = (Double)parsedExpression.evaluate(candidate);
+    		Object evaluationResult = parsedExpression.evaluate(candidate);
+    		double value;    	   		    			
+    		
+    		if (evaluationResult instanceof Integer){
+    			value = new Double((Integer)evaluationResult);
+    		}
+    		else
+    		{
+    			value = (Double)evaluationResult; 
+    		}
+    	
     		if (!firstCandidateCheck) {
     			// check if trend is satisfied according to trend relation
     			switch (relation) {
@@ -111,26 +125,36 @@ public class TrendOperator extends AbstractStandardOperator {
     					if (value <= currentTrendValue) {
     						currentTrendValue = value;
     						trendCount =1;
+    						participantsArray.clear();
+    						participantsArray.add(candidate);
     						continue;
     					} 
     					trendCount++;
+    					participantsArray.add(candidate);
     					break;
     				}
     				case DECREASE: { // we are looking for decreasing values
     					if (value >= currentTrendValue) {
     						currentTrendValue = value;
     						trendCount =1;
+    						participantsArray.clear();
+    						participantsArray.add(candidate);
     						continue;
     					}    
     					trendCount++;
+    					participantsArray.add(candidate);
     					break;
     				}
     				case STABLE: { // we are looking for equal values
     					if (value != currentTrendValue) {
     						currentTrendValue = value;
     						trendCount =1;
+    						participantsArray.clear();
+    						participantsArray.add(candidate);
+    						continue;
     					}
     					trendCount++;
+    					participantsArray.add(candidate);
     					break;
     				}
     				default: {
@@ -140,6 +164,7 @@ public class TrendOperator extends AbstractStandardOperator {
     			}
     		} else { // firstCandidateCheck
     			firstCandidateCheck = false;
+    			participantsArray.add(candidate);
     		}    		
     		currentTrendValue = value;    		
     	}
@@ -156,7 +181,29 @@ public class TrendOperator extends AbstractStandardOperator {
     		ComputedVariableType computedVariableType = ((TrendMatchingSchema)agentType.
         			getMatchingSchema()).getComputedVariableType();
     		Map<String,Object> attributes = new HashMap<String,Object>();
+    		
+    		//in case we need the participants information as well, prepare this information
+    		if (this.agentType.getDerivationSchema().isReportingParticipants())
+			{
+				//prepare the data structure for fetching input events attribute's arrays
+				Map<Integer,HashMap<String,List<Object>>> participantAttributes = prepareParticipantsArrays(computedVariableType,participantsArray);
+				//go over the computed variable type defs, for any attribute which name is not 
+				//in the calculated variable result set get the array attribute from participating
+				//input events
+				for (Map.Entry<Integer,HashMap<String,List<Object>>> operandData : participantAttributes.entrySet()) 
+				{
+					String attributeNamePrefix = "operand"+operandData.getKey().toString();
+					for (Map.Entry<String, List<Object>> attributeValuesArray : operandData.getValue().entrySet()) {
+						String fullAttrName = attributeNamePrefix+"_"+attributeValuesArray.getKey();
+						List<Object> attributeValues = attributeValuesArray.getValue();
+						
+						attributes.put(fullAttrName, attributeValues);
+					}
+				}
+			}
+    		
     		attributes.put(TrendMatchingSchema.TREND_COMPUTED_VARIABLE_ATTR_NAME, trendCount);
+    		attributes.put(TrendMatchingSchema.TREND_COMPUTED_VARIABLE_PARTICIPANTS_NAME, participantsArray);
     		List<IDataObject> matchingSet = new ArrayList<IDataObject>();
     		matchingSet.add(new ComputedVariableInstance(computedVariableType, attributes));
     		matchingSets.addMatchingSet(matchingSet);
@@ -188,6 +235,62 @@ public class TrendOperator extends AbstractStandardOperator {
     			trendConsumedCandidates.add(event);
     		}
     	}		
+	}
+	
+	/**
+	 * Prepare arrays of participant data per operand from all the participants information
+	 * @param computedVariableType
+	 * @param calculatedVariables
+	 * @return
+	 */
+	private Map<Integer,HashMap<String,List<Object>>> prepareParticipantsArrays(IComputedVariableType computedVariableType, ArrayList<IEventInstance> participantsArray) {
+		Map<Integer,HashMap<String,List<Object>>> attributes = new HashMap<Integer,HashMap<String,List<Object>>>();
+		/*for (Map.Entry<Operand, List<IEventInstance>> operandsList : participants.entrySet()) 
+		{
+			Integer operandIndex = operandsList.getKey().getOperandIndex();			
+			attributes.put(operandIndex, new HashMap<String,List<Object>>());			
+		}*/
+		
+		//iterate over the type attributes and see which of them should be filled from the operator participants
+		Collection<TypeAttribute> typeAttributes = computedVariableType.getTypeAttributes();
+		for (TypeAttribute typeAttribute : typeAttributes) {
+			String attributeName = typeAttribute.getName();
+			if (!attributeName.equals(TrendMatchingSchema.TREND_COMPUTED_VARIABLE_PARTICIPANTS_NAME) &&
+					!attributeName.equals(TrendMatchingSchema.TREND_COMPUTED_VARIABLE_ATTR_NAME))
+			{
+				//this attribute is not a computed variable but based on participants
+				//parse it and see on which operands it depends and which attribute it is based on
+				String delimeter = "_";
+				int delimeterIndex = attributeName.indexOf(delimeter);
+				Integer operandIndex = Integer.valueOf(attributeName.substring(7, delimeterIndex));  //starting from index 6 since the syntax of attr name is "operand<N>_<attrName>"
+				String attribute = attributeName.substring(delimeterIndex+1);
+				
+				HashMap<String,List<Object>> participantsAttributesMap = attributes.get(operandIndex);
+				if (participantsAttributesMap == null)
+				{
+					participantsAttributesMap =  new HashMap<String,List<Object>>();
+					attributes.put(operandIndex, participantsAttributesMap);
+				}
+				participantsAttributesMap.put(attribute, new ArrayList());
+			}
+		}
+		
+		for (IEventInstance eventInstance : participantsArray) {
+			//figure which operand this event instance matches
+			//for each event type there is just one operand
+			Operand operand = agentType.getEventInputOperands(eventInstance.getEventType()).get(0);			
+			HashMap<String,List<Object>> eventAttributes = attributes.get(operand.getOperandIndex());
+			if (eventAttributes == null) continue;  //this participant is not part of derivation
+			for (String attribute : eventAttributes.keySet()) 
+			{
+				Object attrValue = eventInstance.getEventAttribute(attribute);
+				eventAttributes.get(attribute).add(attrValue);
+			}
+		}
+		
+		
+		return attributes;
+		
 	}
 
 	@Override
