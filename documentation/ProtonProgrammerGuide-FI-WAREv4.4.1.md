@@ -47,8 +47,6 @@ The architecture also ensures separation of logic and environment-specific servi
 
 ###<a name="higharch"></a>High-level Architecture 
 
-![alt tag](https://github.com/ishkin/Proton/tree/master/documentation/PG-images/High-level architecture.jpg "High-level Architecture")<br>
-*Figure 1: High-level architecture*
 ![High-level Architecture](https://github.com/ishkin/Proton/tree/master/documentation/PG-images/High-level architecture.jpg "High-level Architecture")<br>
 *Figure 1: High-level architecture*
 
