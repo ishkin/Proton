@@ -21,13 +21,10 @@ extra_css: ["http://fiware.org/style/monokai_sublime.css"]
 pages:
 
   - 'User Guide':
-
-      - 'User Guide': 'ProtonUserGuide-FI-WAREv4.4.1.md'
+    - 'User Guide': 'ProtonUserGuide-FI-WAREv4.4.1.md'
 
   - 'Programmer Guide':
-	
-      - 'Programmer Guide': 'ProtonProgrammerGuide-FI-WAREv4.4.1.md'
+    - 'Programmer Guide': 'ProtonProgrammerGuide-FI-WAREv4.4.1.md'
 
   - 'Installation & Administration Manual':
-
-      - 'Installation & Administration Manual': 'Proton installation and admin guide.md'
+    - 'Installation & Administration Manual': 'Proton installation and admin guide.md'
