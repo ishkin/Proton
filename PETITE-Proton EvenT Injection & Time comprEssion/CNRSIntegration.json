@@ -1,0 +1,1092 @@
+{
+  "epn": {
+    "events": [
+      {
+        "name": "AggregatedSensorRead",
+        "createdDate": "Tue Aug 19 2014",
+        "attributes": [
+          {
+            "name": "Certainty",
+            "type": "Double",
+            "defaultValue": "1",
+            "dimension": 0,
+            "description": "The certainty that this event happen (value between 0 to 1)"
+          },
+          {
+            "name": "OccurrenceTime",
+            "type": "Date",
+            "dimension": 0,
+            "description": "No value means it equals the event detection time, other option is to use one of the defined distribution functions with parameters"
+          },
+          {
+            "name": "ExpirationTime",
+            "type": "Date",
+            "dimension": 0
+          },
+          {
+            "name": "Cost",
+            "type": "Double",
+            "dimension": 0,
+            "description": "The cost of this event occurrence. Negative if this is an opportunity"
+          },
+          {
+            "name": "Duration",
+            "type": "Double",
+            "defaultValue": "0",
+            "dimension": 0,
+            "description": "Used in case the this event occur within an interval"
+          },
+          {
+            "name": "location",
+            "type": "String",
+            "dimension": 0
+          },
+          {
+            "name": "lane",
+            "type": "String",
+            "dimension": 0
+          },
+          {
+            "name": "occupancy",
+            "type": "Double",
+            "dimension": 0
+          },
+          {
+            "name": "vehicles",
+            "type": "Integer",
+            "dimension": 0
+          },
+          {
+            "name": "average_speed",
+            "type": "Double",
+            "dimension": 0
+          }
+        ]
+      },
+      {
+        "name": "Congestion",
+        "createdDate": "Sun Aug 31 2014",
+        "attributes": [
+          {
+            "name": "Certainty",
+            "type": "Double",
+            "defaultValue": "1",
+            "dimension": 0,
+            "description": "The certainty that this event happen (value between 0 to 1)"
+          },
+          {
+            "name": "OccurrenceTime",
+            "type": "Date",
+            "dimension": 0,
+            "description": "No value means it equals the event detection time, other option is to use one of the defined distribution functions with parameters"
+          },
+          {
+            "name": "ExpirationTime",
+            "type": "Date",
+            "dimension": 0,
+            "description": "Only till this time the cost and certainty parameters of the event are valid, and only till this time a proactive action is considered"
+          },
+          {
+            "name": "Cost",
+            "type": "Double",
+            "dimension": 0,
+            "description": "The cost of this event occurrence. Negative if this is an opportunity"
+          },
+          {
+            "name": "Duration",
+            "type": "Double",
+            "defaultValue": "0",
+            "dimension": 0,
+            "description": "Used in case the this event occur within an interval"
+          },
+          {
+            "name": "location",
+            "type": "String",
+            "dimension": 0
+          },
+          {
+            "name": "average_density",
+            "type": "Double",
+            "dimension": 0
+          },
+          {
+            "name": "problem_id",
+            "type": "String",
+            "dimension": 0
+          }
+        ]
+      },
+      {
+        "name": "PredictedCongestion",
+        "createdDate": "Sun Aug 31 2014",
+        "attributes": [
+          {
+            "name": "Certainty",
+            "type": "Double",
+            "defaultValue": "1",
+            "dimension": 0,
+            "description": "The certainty that this event happen (value between 0 to 1)"
+          },
+          {
+            "name": "OccurrenceTime",
+            "type": "Date",
+            "dimension": 0,
+            "description": "No value means it equals the event detection time, other option is to use one of the defined distribution functions with parameters"
+          },
+          {
+            "name": "ExpirationTime",
+            "type": "Date",
+            "dimension": 0,
+            "description": "Only till this time the cost and certainty parameters of the event are valid, and only till this time a proactive action is considered"
+          },
+          {
+            "name": "Cost",
+            "type": "Double",
+            "dimension": 0,
+            "description": "The cost of this event occurrence. Negative if this is an opportunity"
+          },
+          {
+            "name": "Duration",
+            "type": "Double",
+            "defaultValue": "0",
+            "dimension": 0,
+            "description": "Used in case the this event occur within an interval"
+          },
+          {
+            "name": "location",
+            "type": "String",
+            "dimension": 0
+          },
+          {
+            "name": "average_density",
+            "type": "Double",
+            "dimension": 0
+          },
+          {
+            "name": "problem_id",
+            "type": "String",
+            "dimension": 0
+          }
+        ]
+      },
+      {
+        "name": "ClearCongestion",
+        "createdDate": "Sun Aug 31 2014",
+        "attributes": [
+          {
+            "name": "Certainty",
+            "type": "Double",
+            "defaultValue": "1",
+            "dimension": 0,
+            "description": "The certainty that this event happen (value between 0 to 1)"
+          },
+          {
+            "name": "OccurrenceTime",
+            "type": "Date",
+            "dimension": 0,
+            "description": "No value means it equals the event detection time, other option is to use one of the defined distribution functions with parameters"
+          },
+          {
+            "name": "ExpirationTime",
+            "type": "Date",
+            "dimension": 0,
+            "description": "Only till this time the cost and certainty parameters of the event are valid, and only till this time a proactive action is considered"
+          },
+          {
+            "name": "Cost",
+            "type": "Double",
+            "dimension": 0,
+            "description": "The cost of this event occurrence. Negative if this is an opportunity"
+          },
+          {
+            "name": "Duration",
+            "type": "Double",
+            "defaultValue": "0",
+            "dimension": 0,
+            "description": "Used in case the this event occur within an interval"
+          },
+          {
+            "name": "location",
+            "type": "String",
+            "dimension": 0
+          },
+          {
+            "name": "problem_id",
+            "type": "String",
+            "dimension": 0
+          }
+        ]
+      },
+      {
+        "name": "OnRampFlow",
+        "createdDate": "Sun Aug 31 2014",
+        "attributes": [
+          {
+            "name": "Certainty",
+            "type": "Double",
+            "defaultValue": "1",
+            "dimension": 0,
+            "description": "The certainty that this event happen (value between 0 to 1)"
+          },
+          {
+            "name": "OccurrenceTime",
+            "type": "Date",
+            "dimension": 0,
+            "description": "No value means it equals the event detection time, other option is to use one of the defined distribution functions with parameters"
+          },
+          {
+            "name": "ExpirationTime",
+            "type": "Date",
+            "dimension": 0,
+            "description": "Only till this time the cost and certainty parameters of the event are valid, and only till this time a proactive action is considered"
+          },
+          {
+            "name": "Cost",
+            "type": "Double",
+            "dimension": 0,
+            "description": "The cost of this event occurrence. Negative if this is an opportunity"
+          },
+          {
+            "name": "Duration",
+            "type": "Double",
+            "defaultValue": "0",
+            "dimension": 0,
+            "description": "Used in case the this event occur within an interval"
+          },
+          {
+            "name": "location",
+            "type": "String",
+            "dimension": 0
+          },
+          {
+            "name": "average_flow",
+            "type": "Double",
+            "dimension": 0
+          },
+          {
+            "name": "average_speed",
+            "type": "Double",
+            "dimension": 0
+          },
+          {
+            "name": "average_density",
+            "type": "Double",
+            "dimension": 0
+          }
+        ]
+      },
+      {
+        "name": "AverageDensityAndSpeedPerLocation",
+        "createdDate": "Sun Aug 31 2014",
+        "attributes": [
+          {
+            "name": "Certainty",
+            "type": "Double",
+            "defaultValue": "1",
+            "dimension": 0,
+            "description": "The certainty that this event happen (value between 0 to 1)"
+          },
+          {
+            "name": "OccurrenceTime",
+            "type": "Date",
+            "dimension": 0,
+            "description": "No value means it equals the event detection time, other option is to use one of the defined distribution functions with parameters"
+          },
+          {
+            "name": "ExpirationTime",
+            "type": "Date",
+            "dimension": 0,
+            "description": "Only till this time the cost and certainty parameters of the event are valid, and only till this time a proactive action is considered"
+          },
+          {
+            "name": "Cost",
+            "type": "Double",
+            "dimension": 0,
+            "description": "The cost of this event occurrence. Negative if this is an opportunity"
+          },
+          {
+            "name": "Duration",
+            "type": "Double",
+            "defaultValue": "0",
+            "dimension": 0,
+            "description": "Used in case the this event occur within an interval"
+          },
+          {
+            "name": "location",
+            "type": "String",
+            "dimension": 0
+          },
+          {
+            "name": "average_flow",
+            "type": "Double",
+            "dimension": 0
+          },
+          {
+            "name": "average_density",
+            "type": "Double",
+            "dimension": 0
+          },
+          {
+            "name": "average_speed",
+            "type": "Double",
+            "dimension": 0
+          }
+             
+        ]
+      },
+      {
+        "name": "2minsAverageDensityAndSpeedPerLocation",
+        "createdDate": "Sun Aug 31 2014",
+        "attributes": [
+          {
+            "name": "Certainty",
+            "type": "Double",
+            "defaultValue": "1",
+            "dimension": 0,
+            "description": "The certainty that this event happen (value between 0 to 1)"
+          },
+          {
+            "name": "OccurrenceTime",
+            "type": "Date",
+            "dimension": 0,
+            "description": "No value means it equals the event detection time, other option is to use one of the defined distribution functions with parameters"
+          },
+          {
+            "name": "ExpirationTime",
+            "type": "Date",
+            "dimension": 0,
+            "description": "Only till this time the cost and certainty parameters of the event are valid, and only till this time a proactive action is considered"
+          },
+          {
+            "name": "Cost",
+            "type": "Double",
+            "dimension": 0,
+            "description": "The cost of this event occurrence. Negative if this is an opportunity"
+          },
+          {
+            "name": "Duration",
+            "type": "Double",
+            "defaultValue": "0",
+            "dimension": 0,
+            "description": "Used in case the this event occur within an interval"
+          },
+          {
+            "name": "location",
+            "type": "String",
+            "dimension": 0
+          },
+          {
+            "name": "average_flow",
+            "type": "Double",
+            "dimension": 0
+          },
+          {
+            "name": "average_density",
+            "type": "Double",
+            "dimension": 0
+          },
+          {
+            "name": "average_speed",
+            "type": "Double",
+            "dimension": 0
+          }
+        ]
+      },
+      {
+        "name": "PredictedTrend",
+        "createdDate": "Mon Nov 10 2014",
+        "attributes": [
+          {
+            "name": "Certainty",
+            "type": "Double",
+            "defaultValue": "1",
+            "dimension": 0,
+            "description": "The certainty that this event happen (value between 0 to 1)"
+          },
+          {
+            "name": "OccurrenceTime",
+            "type": "Date",
+            "dimension": 0,
+            "description": "No value means it equals the event detection time, other option is to use one of the defined distribution functions with parameters"
+          },
+          {
+            "name": "ExpirationTime",
+            "type": "Date",
+            "dimension": 0,
+            "description": "Only till this time the cost and certainty parameters of the event are valid, and only till this time a proactive action is considered"
+          },
+          {
+            "name": "Cost",
+            "type": "Double",
+            "dimension": 0,
+            "description": "The cost of this event occurrence. Negative if this is an opportunity"
+          },
+          {
+            "name": "Duration",
+            "type": "Double",
+            "defaultValue": "0",
+            "dimension": 0,
+            "description": "Used in case the this event occur within an interval"
+          },
+          {
+            "name": "location",
+            "type": "String",
+            "dimension": 0
+          },
+          {
+            "name": "problem_id",
+            "type": "String",
+            "dimension": 0
+          }         
+        ]
+      }
+    ],
+    "epas": [
+      {
+        "name": "AvgDensityAndSpeedPerLocation",
+        "createdDate": "Mon Nov 10 2014",
+        "epaType": "Aggregate",
+        "context": "14secsLocationCompositeContext",
+        "inputEvents": [
+          {
+            "name": "AggregatedSensorRead",
+            "filterExpression": "!EqualsIgnoreCase(AggregatedSensorRead.lane,'onramp') && AggregatedSensorRead.average_speed != -1",
+            "consumptionPolicy": "Consume",
+            "instanceSelectionPolicy": "First"
+          }
+        ],
+        "computedVariables": [
+          {
+            "name": "AverageSpeed",
+            "aggregationType": "Average",
+            "AggregatedSensorRead": "AggregatedSensorRead.average_speed"
+          },
+          {
+            "name": "AverageFlow",
+            "aggregationType": "Average",
+            "AggregatedSensorRead": "AggregatedSensorRead.vehicles"
+          }
+        ],
+        "evaluationPolicy": "Deferred",
+        "cardinalityPolicy": "Single",
+        "internalSegmentation": [],
+        "derivedEvents": [
+          {
+            "name": "AverageDensityAndSpeedPerLocation",
+            "reportParticipants": true,
+            "expressions": {
+              "Duration": "0",
+              "location": "context.SegmentationByLocation",
+              "average_flow": "AverageFlow",
+              "average_density": "AverageFlow/(AverageSpeed*1000/3600)",
+              "average_speed": "AverageSpeed"
+              
+            }
+          }
+        ],
+        "derivedActions": []
+      },
+      {
+        "name": "CongestionEPA",
+        "createdDate": "Mon Nov 10 2014",
+        "epaType": "Basic",
+        "context": "CompositeMonitoringCongestion",
+        "inputEvents": [
+          {
+            "name": "AverageDensityAndSpeedPerLocation",
+            "filterExpression": "AverageDensityAndSpeedPerLocation.average_density>0.95 and AverageDensityAndSpeedPerLocation.average_speed < 45",
+            "consumptionPolicy": "Consume",
+            "instanceSelectionPolicy": "First"
+          }
+        ],
+        "computedVariables": [],
+        "evaluationPolicy": "Immediate",
+        "cardinalityPolicy": "Single",
+        "internalSegmentation": [],
+        "derivedEvents": [
+          {
+            "name": "Congestion",
+            "reportParticipants": false,
+            "expressions": {
+              "Duration": "0",
+              "location": "AverageDensityAndSpeedPerLocation.location",
+              "average_density": "AverageDensityAndSpeedPerLocation.average_density",
+              "problem_id": "AverageDensityAndSpeedPerLocation.location"
+            }
+          }
+        ],
+        "derivedActions": []
+      },
+      {
+        "name": "ClearCongestionEPA",
+        "createdDate": "Mon Nov 10 2014",
+        "epaType": "Basic",
+        "context": "CompositeMonitoringClearCongestion",
+        "inputEvents": [
+          {
+            "name": "AverageDensityAndSpeedPerLocation",
+            "filterExpression": "AverageDensityAndSpeedPerLocation.average_density<0.8 and AverageDensityAndSpeedPerLocation.average_speed>70",
+            "consumptionPolicy": "Consume",
+            "instanceSelectionPolicy": "First"
+          }
+        ],
+        "computedVariables": [],
+        "evaluationPolicy": "Immediate",
+        "cardinalityPolicy": "Single",
+        "internalSegmentation": [],
+        "derivedEvents": [
+          {
+            "name": "ClearCongestion",
+            "reportParticipants": false,
+            "expressions": {
+              "Duration": "0",
+              "location": "AverageDensityAndSpeedPerLocation.location",
+              "problem_id": "AverageDensityAndSpeedPerLocation.location"
+            }
+          }
+        ],
+        "derivedActions": []
+      },
+      {
+        "name": "PredictedTrendEPA",
+        "createdDate": "Mon Nov 10 2014",
+        "epaType": "Trend",
+        "context": "CompositeMonitoringTrend",
+        "inputEvents": [
+          {
+            "name": "AverageDensityAndSpeedPerLocation",
+            "filterExpression": " (AverageDensityAndSpeedPerLocation.average_density >=0.8 AND AverageDensityAndSpeedPerLocation.average_density < 0.95) AND (AverageDensityAndSpeedPerLocation.average_speed < 51 AND AverageDensityAndSpeedPerLocation.average_speed >= 45)",
+            "expression": "AverageDensityAndSpeedPerLocation.average_density",
+            "consumptionPolicy": "Reuse",
+            "instanceSelectionPolicy": "First"
+          }
+        ],
+        "computedVariables": [],
+        "evaluationPolicy": "Immediate",
+        "cardinalityPolicy": "Unrestricted",
+        "trendN": "5",
+        "trendRelation": "Increase",
+        "internalSegmentation": [],
+        "derivedEvents": [
+          {
+            "name": "PredictedTrend",
+            "reportParticipants": false,
+            "expressions": {
+              "Duration": "0",
+              "Certainty": "Sigmoid(1,6,trend.count)",
+              "location": "context.SegmentationByProblemId",
+              "problem_id": "context.SegmentationByProblemId"
+            }
+          }
+        ],
+        "derivedActions": []
+      },
+      {
+        "name": "PredictedCongestionEPA",
+        "createdDate": "Mon Nov 10 2014",
+        "epaType": "All",
+        "context": "CompositeMonitoringTrend",
+        "inputEvents": [
+          {
+            "name": "AverageDensityAndSpeedPerLocation",
+            "consumptionPolicy": "Reuse",
+            "instanceSelectionPolicy": "Override"
+          },
+          {
+            "name": "PredictedTrend",
+            "consumptionPolicy": "Consume",
+            "instanceSelectionPolicy": "Last"
+          }
+        ],
+        "computedVariables": [],
+        "evaluationPolicy": "Immediate",
+        "cardinalityPolicy": "Unrestricted",
+        "internalSegmentation": [],
+        "derivedEvents": [
+          {
+            "name": "PredictedCongestion",
+            "reportParticipants": false,
+            "expressions": {
+              "Duration": "0",
+              "Certainty": "PredictedTrend.Certainty",
+              "location": "PredictedTrend.location",
+              "average_density": "AverageDensityAndSpeedPerLocation.average_density",
+              "problem_id": "PredictedTrend.problem_id"
+            }
+          }
+        ],
+        "derivedActions": []
+      },
+      {
+        "name": "AvgOnRampEPA",
+        "createdDate": "Mon Nov 10 2014",
+        "epaType": "Aggregate",
+        "context": "CompositeOnRamp2minsContext",
+        "inputEvents": [
+          {
+            "name": "AggregatedSensorRead",
+            "filterExpression": "EqualsIgnoreCase(AggregatedSensorRead.lane,'onramp')",
+            "consumptionPolicy": "Consume",
+            "instanceSelectionPolicy": "First"
+          }
+        ],
+        "computedVariables": [
+          {
+            "name": "AverageFlow",
+            "aggregationType": "Average",
+            "AggregatedSensorRead": "AggregatedSensorRead.vehicles"
+          },
+          {
+            "name": "AverageSpeed",
+            "aggregationType": "Average",
+            "AggregatedSensorRead": "AggregatedSensorRead.average_speed"
+          }
+        ],
+        "evaluationPolicy": "Deferred",
+        "cardinalityPolicy": "Single",
+        "internalSegmentation": [],
+        "derivedEvents": [
+          {
+            "name": "OnRampFlow",
+            "reportParticipants": false,
+            "expressions": {
+              "Duration": "0",
+              "location": "context.SegmentationByLocation",
+              "average_flow": "AverageFlow",
+              "average_density": "AverageFlow/(AverageSpeed*1000/3600)",
+              "average_speed": "AverageSpeed"
+            }
+          }
+        ],
+        "derivedActions": []
+      },
+      {
+        "name": "AvgAggregationOverTimeEPA",
+        "createdDate": "Mon Nov 10 2014",
+        "epaType": "Aggregate",
+        "context": "CompositeAggregated2minsContext",
+        "inputEvents": [
+          {
+            "name": "AverageDensityAndSpeedPerLocation",
+            "consumptionPolicy": "Consume",
+            "instanceSelectionPolicy": "First"
+          }
+        ],
+        "computedVariables": [
+          {
+            "name": "AverageSpeed",
+            "aggregationType": "Average",
+            "AverageDensityAndSpeedPerLocation": "AverageDensityAndSpeedPerLocation.average_speed"
+          },
+          {
+            "name": "AverageFlow",
+            "aggregationType": "Average",
+            "AverageDensityAndSpeedPerLocation": "AverageDensityAndSpeedPerLocation.average_flow"
+          }
+        ],
+        "evaluationPolicy": "Deferred",
+        "cardinalityPolicy": "Single",
+        "internalSegmentation": [],
+        "derivedEvents": [
+          {
+            "name": "2minsAverageDensityAndSpeedPerLocation",
+            "reportParticipants": false,
+            "expressions": {
+              "Duration": "0",
+              "location": "context.SegmentationByLocation",
+              "average_flow": "AverageFlow",
+              "average_density": "AverageFlow/(AverageSpeed*1000/3600)",
+              "average_speed": "AverageSpeed"
+            }
+          }
+        ],
+        "derivedActions": []
+      }
+    ],
+    "contexts": {
+      "temporal": [
+        {
+          "name": "14SecsNonOverlappingContext",
+          "createdDate": "Sun Nov 09 2014",
+          "type": "TemporalInterval",
+          "atStartup": false,
+          "neverEnding": false,
+          "initiators": [
+            {
+              "initiatorType": "Event",
+              "initiatorPolicy": "Ignore",
+              "name": "AggregatedSensorRead"
+            }
+          ],
+          "terminators": [
+            {
+              "terminatorType": "RelativeTime",
+              "terminationType": "Terminate",
+              "relativeTime": "14000"
+            }
+          ]
+        },
+        {
+          "name": "TemporalMonitoringCongestion",
+          "createdDate": "Sun Nov 09 2014",
+          "type": "TemporalInterval",
+          "atStartup": false,
+          "neverEnding": false,
+          "initiators": [
+            {
+              "initiatorType": "Event",
+              "initiatorPolicy": "Ignore",
+              "name": "AverageDensityAndSpeedPerLocation"
+            }
+          ],
+          "terminators": [
+            {
+              "terminatorType": "Event",
+              "terminatorPolicy": "First",
+              "terminationType": "Terminate",
+              "name": "ClearCongestion"
+            }
+          ]
+        },
+        {
+          "name": "TemporalMonitoringClearCongestion",
+          "createdDate": "Sun Nov 09 2014",
+          "type": "TemporalInterval",
+          "atStartup": false,
+          "neverEnding": false,
+          "initiators": [
+            {
+              "initiatorType": "Event",
+              "initiatorPolicy": "Ignore",
+              "name": "Congestion"
+            },
+            {
+              "initiatorType": "Event",
+              "initiatorPolicy": "Ignore",
+              "name": "PredictedCongestion"
+            }
+          ],
+          "terminators": [
+            {
+              "terminatorType": "Event",
+              "terminatorPolicy": "First",
+              "terminationType": "Terminate",
+              "name": "ClearCongestion"
+            }
+          ]
+        },
+        {
+          "name": "TemporalMonitoringTrend",
+          "createdDate": "Sun Nov 09 2014",
+          "type": "TemporalInterval",
+          "atStartup": false,
+          "neverEnding": false,
+          "initiators": [
+            {
+              "initiatorType": "Event",
+              "initiatorPolicy": "Ignore",
+              "name": "AverageDensityAndSpeedPerLocation"
+            }
+          ],
+          "terminators": [
+            {
+              "terminatorType": "Event",
+              "terminatorPolicy": "Each",
+              "terminationType": "Terminate",
+              "name": "Congestion"
+            },
+            {
+              "terminatorType": "Event",
+              "terminatorPolicy": "Each",
+              "terminationType": "Terminate",
+              "name": "ClearCongestion"
+            }
+          ]
+        },
+        {
+          "name": "2minsTemporalWindowsForOnRamp",
+          "createdDate": "Sun Nov 09 2014",
+          "type": "TemporalInterval",
+          "atStartup": false,
+          "neverEnding": false,
+          "initiators": [
+            {
+              "initiatorType": "Event",
+              "initiatorPolicy": "Add",
+              "name": "AggregatedSensorRead",
+              "condition": "EqualsIgnoreCase(AggregatedSensorRead.lane,'onramp')"
+            }
+          ],
+          "terminators": [
+            {
+              "terminatorType": "RelativeTime",
+              "terminationType": "Terminate",
+              "relativeTime": "120000"
+            }
+          ]
+        },
+        {
+          "name": "2minsTemporalWindowAggregated",
+          "createdDate": "Sun Nov 09 2014",
+          "type": "TemporalInterval",
+          "atStartup": false,
+          "neverEnding": false,
+          "initiators": [
+            {
+              "initiatorType": "Event",
+              "initiatorPolicy": "Add",
+              "name": "AverageDensityAndSpeedPerLocation"
+            }
+          ],
+          "terminators": [
+            {
+              "terminatorType": "RelativeTime",
+              "terminationType": "Terminate",
+              "relativeTime": "120000"
+            }
+          ]
+        }
+      ],
+      "segmentation": [
+        {
+          "name": "SegmentationByLocation",
+          "createdDate": "Sun Aug 31 2014",
+          "participantEvents": [
+            {
+              "name": "AggregatedSensorRead",
+              "expression": "AggregatedSensorRead.location"
+            },
+            {
+              "name": "AverageDensityAndSpeedPerLocation",
+              "expression": "AverageDensityAndSpeedPerLocation.location"
+            }
+          ]
+        },
+        {
+          "name": "SegmentationByLane",
+          "createdDate": "Sun Aug 31 2014",
+          "participantEvents": [
+            {
+              "name": "AggregatedSensorRead",
+              "expression": "AggregatedSensorRead.lane"
+            }
+          ]
+        },
+        {
+          "name": "SegmentationByProblemId",
+          "createdDate": "Sun Nov 09 2014",
+          "participantEvents": [
+            {
+              "name": "Congestion",
+              "expression": "Congestion.problem_id"
+            },
+            {
+              "name": "PredictedCongestion",
+              "expression": "PredictedCongestion.problem_id"
+            },
+            {
+              "name": "PredictedTrend",
+              "expression": "PredictedTrend.problem_id"
+            },
+            {
+              "name": "ClearCongestion",
+              "expression": "ClearCongestion.problem_id"
+            },
+            {
+              "name": "AverageDensityAndSpeedPerLocation",
+              "expression": " AverageDensityAndSpeedPerLocation.location"
+            }
+          ]
+        }
+      ],
+      "composite": [
+        {
+          "name": "14secsLocationCompositeContext",
+          "createdDate": "Sun Nov 09 2014",
+          "temporalContexts": [
+            {
+              "name": "14SecsNonOverlappingContext"
+            }
+          ],
+          "segmentationContexts": [
+            {
+              "name": "SegmentationByLocation"
+            }
+          ]
+        },
+        {
+          "name": "CompositeMonitoringCongestion",
+          "createdDate": "Sun Nov 09 2014",
+          "temporalContexts": [
+            {
+              "name": "TemporalMonitoringCongestion"
+            }
+          ],
+          "segmentationContexts": [
+            {
+              "name": "SegmentationByProblemId"
+            }
+          ]
+        },
+        {
+          "name": "CompositeMonitoringClearCongestion",
+          "createdDate": "Sun Nov 09 2014",
+          "temporalContexts": [
+            {
+              "name": "TemporalMonitoringClearCongestion"
+            }
+          ],
+          "segmentationContexts": [
+            {
+              "name": "SegmentationByProblemId"
+            }
+          ]
+        },
+        {
+          "name": "CompositeMonitoringTrend",
+          "createdDate": "Sun Nov 09 2014",
+          "temporalContexts": [
+            {
+              "name": "TemporalMonitoringTrend"
+            }
+          ],
+          "segmentationContexts": [
+            {
+              "name": "SegmentationByProblemId"
+            }
+          ]
+        },
+        {
+          "name": "CompositeOnRamp2minsContext",
+          "createdDate": "Sun Nov 09 2014",
+          "temporalContexts": [
+            {
+              "name": "2minsTemporalWindowsForOnRamp"
+            }
+          ],
+          "segmentationContexts": [
+            {
+              "name": "SegmentationByLocation"
+            }
+          ]
+        },
+        {
+          "name": "CompositeAggregated2minsContext",
+          "createdDate": "Sun Nov 09 2014",
+          "temporalContexts": [
+            {
+              "name": "2minsTemporalWindowAggregated"
+            }
+          ],
+          "segmentationContexts": [
+            {
+              "name": "SegmentationByLocation"
+            }
+          ]
+        }
+      ]
+    },
+    "consumers": 
+    [
+    	{
+        "name": "TextConsumer",
+        "createdDate": "Sun Aug 31 2014",
+        "type": "File",
+        "properties": [
+          {
+            "name": "filename",
+            "value": "D:\\EP\\Projects\\EU\\SPEEDD\\usecases\\CNRS\\exampleOutput.txt"
+          },
+          {
+            "name": "formatter",
+            "value": "tag"
+          },
+          {
+            "name": "delimiter",
+            "value": ";"
+          },
+          {
+            "name": "tagDataSeparator",
+            "value": "="
+          },
+          {
+            "name": "SendingDelay",
+            "value": "1000"
+          },
+          {
+            "name": "dateFormat",
+            "value": "dd/MM/yyyy-HH:mm:ss"
+          }
+        ],
+        "events": [
+          {
+            "name": "PredictedCongestion"
+          },
+          {
+            "name": "AggregatedSensorRead"
+          },
+          {
+            "name": "PredictedTrend"
+          },
+          {       
+            "name": "Congestion"
+          },
+          {
+            "name": "ClearCongestion"
+          },
+    	  {
+            "name": "OnRampFlow"
+          },
+          {
+            "name": "AverageDensityAndSpeedPerLocation"
+          },
+           {
+            "name": "2minsAverageDensityAndSpeedPerLocation"
+          }              
+        ],
+        "actions": []
+      }
+    ],
+    "producers": 
+    [
+    	      {
+        "name": "TextProducer",
+        "createdDate": "Sun Aug 31 2014",
+        "type": "File",
+        "properties": [
+          {
+            "name": "filename",
+            "value": "D:\\EP\\Projects\\EU\\SPEEDD\\usecases\\CNRS\\exampleInput.txt"
+          },
+          {
+            "name": "pollingInterval",
+            "value": "500"
+          },
+          {
+            "name": "sendingDelay",
+            "value": "4000"
+          },
+          {
+            "name": "formatter",
+            "value": "tag"
+          },
+          {
+            "name": "delimiter",
+            "value": ";"
+          },
+          {
+            "name": "tagDataSeparator",
+            "value": "="
+          },
+          {
+            "name": "dateFormat",
+            "value": "dd/MM/yyyy-HH:mm:ss"
+          }
+        ],
+        "events": []
+      }
+    ],
+    "actions": [],
+    "name": "CNRSnew"
+  }
+}

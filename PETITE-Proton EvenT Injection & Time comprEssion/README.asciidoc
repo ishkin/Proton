@@ -1,0 +1,33 @@
+== PETITE-Proton EvenT Injection & Time comprEssion   ==
+This script provides a mechanism for injecting large amounts of events in a short period of time. Sometimes to test the CEP application it is necessary to inject large amounts of historical events during 
+a short predefined period of time.  Therefore, we needed a mechanism that can take the input events and inject them into the engine at very high rates (much higher than in reality imposed by their timestamps) and process them very fast without altering the logic of the application.
+For example, we would like to run a IBM Proactive Technology Online CEP application which works with
+historical data as input, and this data spawns two weeks. Additionally the CEP application is defined with temporal windows of 5 hours each. 
+However we would like to be able to run the CEP application on this historical data and make sure the run takes no more than 3 hours.
+This utility, given an ordered input file and a total elapsed time for processing all the events in the input file  (a “ratio”) it:
+a.	Check for feasibility of the requested ratio. This means that events are injected in a way that can be processed by the engine without being out of order, contexts are not too small and there is a minimal interval between input events. For example, having an input file that starts with the first input event occurrence time at Dec.1 2014 and 
+ends with the last input event occurrence time at Dec. 7 2014, we target to run all these events in only one hour then our ratio is 168 (we need to “compress” or reduce all times by 168, as we are moving from one week or 168 hours to one hour).
+b.	Alters the temporal contexts in the JSON definition file for PROTON in such a way that the ratio is met and the application logic is maintained.
+d.	Alters the time intervals between input events so that they are "compressed" to the requested injection rate. The original date and time remains intact for the purposes of date comparisons etc, however an additional column of timestamps are
+added to the input file, so that they can be used as "OccurenceTime" attribute in the Timed File Input adapter of Proton for injection of events based on those intervals.
+
+For our purposes currently we support the scenario input files only as CSV (comma separated) files.
+
+The mode in which the date information is represented in the input file is important. We support the following notations: the date can be given as a timestamp (long) value, it can be given as a date value in an acceptable
+format (in which case a format will be provided as a separate argument), or it can be  two separate fields, one column for the date with a certain format, and one column for the time with a certain format.
+
+=== The repository includes ===
+- The jar file for the compression utility
+- The launch script for Windows which includes an example of the arguments which can be passed to the utility.
+- The input file and the JSON file for the example
+
+=== Arguments for the utility ===
+The following arguments should be provided to the utility:
+-The input scenario file name (the name or the absolute path to the file) with the input events
+-The JSON file name (or absolute path) which is the CEP application definitions file.
+-The desired length of the injection window in milisecs (if we want the whole run to take two hours, this would be 2*60*60*1000 milis)
+-The name or absolute path to the updated input scenario file (with the added timestamps for event's occurence time)
+-In case the input file includes the date as a single timestamp (long) value, the index of  the column within the CSV file which contains this timestamp value (starting from 0)
+-In case the input file contains a single date column, formatted, two arguments: the index of the column for the date (starting from 0), and the format for parsing the date in the standard Java-like date notation - i.e. "yyyy-MM-dd'T'HH:mm:ss.SSSXXX"
+-In case the input file contains two columns for representing date, one for date and one for time, the following arguments should be provided: the index of the date column, the index of the time column,
+and the combined comma-separated format for parsing the date and time: for example if the date is given as ""yyyy-MM-dd" and the time as "HH:mm:ss" then the third argument would be "yyyy-MM-dd,HH:mm:ss"
