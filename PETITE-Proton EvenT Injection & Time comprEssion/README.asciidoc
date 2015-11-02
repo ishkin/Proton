@@ -7,6 +7,7 @@ historical data as input, and this data spawns two weeks. Additionally the CEP a
 However we would like to be able to run the CEP application on this historical data and make sure the run takes no more than 3 hours.
 
 This utility, given an ordered input file and a total elapsed time for processing all the events in the input file  (a “ratio”) it:
+
 - Check for feasibility of the requested ratio. This means that events are injected in a way that can be processed by the engine without being out of order, contexts are not too small and there is a minimal interval between input events. For example, having an input file that starts with the first input event occurrence time at Dec.1 2014 and 
 ends with the last input event occurrence time at Dec. 7 2014, we target to run all these events in only one hour then our ratio is 168 (we need to “compress” or reduce all times by 168, as we are moving from one week or 168 hours to one hour).
 - Alters the temporal contexts in the JSON definition file for PROTON in such a way that the ratio is met and the application logic is maintained.
