@@ -1,0 +1,2939 @@
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Complex Event Processing (CEP) API Cookbook</title>
+    <link href="css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
+    <link href="css/font-awesome.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/idea.css">
+    <script src="js/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <link rel="stylesheet" type="text/css" href="css/api-specification.css"> 
+
+    
+</head>
+<body id="respecDocument" class="h-entry">
+<div class="container">
+  <div id="TOC-container">
+    
+<section id="toc">
+
+        <div id="fiware-logo"></div>
+    <ul class="toc">
+
+
+    
+    
+
+
+
+
+
+<li><a href="#API_specification">API Specification</a>
+    <ul class="toc">
+    
+
+                        <li>
+                            
+                                <a href="#default_group" title = "Group default">Default</a>
+                            
+                            <ul class="toc">
+                              
+                                
+                                    <li>
+                                        <a href="#resource_cep-instance-api-root" title = "Resource CEP Instance API Root">Resource CEP Instance API Root</a>
+                                        <ul class="toc  ">
+                                        
+                                        </ul>
+                                    </li>
+                                
+                              
+                                
+                                    <li>
+                                        <a href="#resource_receiving-input-events" title = "Resource Receiving input events">Resource Receiving input events</a>
+                                        <ul class="toc  ">
+                                        
+                                            
+                                                <li><a href="#action_receive-a-new-input-event-in-json,-tag,-or-ngsi-xml-formats" title ="POST - Receive a new input event in json, tag, or NGSI xml formats">POST - Receive a new input event in json, tag, or NGSI xml formats</a></li>
+                                            
+
+                                        
+                                            
+                                                <li><a href="#action_sending-output-events" title ="POST - Sending output events">POST - Sending output events</a></li>
+                                            
+
+                                        
+                                        </ul>
+                                    </li>
+                                
+                              
+                                
+                                    <li>
+                                        <a href="#resource_cep-administration-api-root" title = "Resource CEP Administration API Root">Resource CEP Administration API Root</a>
+                                        <ul class="toc  ">
+                                        
+                                        </ul>
+                                    </li>
+                                
+                              
+                                
+                                    <li>
+                                        <a href="#resource_definitions" title = "Resource Definitions">Resource Definitions</a>
+                                        <ul class="toc  ">
+                                        
+                                            
+                                                <li><a href="#action_retrieve-all-the-existing-definitions-in-the-repository" title ="GET - Retrieve all the existing definitions in the repository">GET - Retrieve all the existing definitions in the repository</a></li>
+                                            
+
+                                        
+                                            
+                                                <li><a href="#action_creating-a-new-definition" title ="POST - Creating a new definition">POST - Creating a new definition</a></li>
+                                            
+
+                                        
+                                            
+                                                <li><a href="#action_retrieve-an-application-definition-in-json-format" title ="GET - Retrieve an application definition in JSON format">GET - Retrieve an application definition in JSON format</a></li>
+                                            
+
+                                        
+                                            
+                                                <li><a href="#action_replace-content-of-an-existing-definition-with-new-content" title ="PUT - Replace content of an existing definition with new content">PUT - Replace content of an existing definition with new content</a></li>
+                                            
+
+                                        
+                                            
+                                                <li><a href="#action_delete-a-definition" title ="DELETE - Delete a definition">DELETE - Delete a definition</a></li>
+                                            
+
+                                        
+                                        </ul>
+                                    </li>
+                                
+                              
+                                
+                                    <li>
+                                        <a href="#resource_administrating-run-time-instances" title = "Resource Administrating run-time instances">Resource Administrating run-time instances</a>
+                                        <ul class="toc  ">
+                                        
+                                            
+                                                <li><a href="#action_get-instance-status" title ="GET - Get instance status">GET - Get instance status</a></li>
+                                            
+
+                                        
+                                            
+                                                <li><a href="#action_configuring/changing-a-definition-for-an-instance" title ="PUT - Configuring/Changing a definition for an instance">PUT - Configuring/Changing a definition for an instance</a></li>
+                                            
+
+                                        
+                                        </ul>
+                                    </li>
+                                
+                              
+                            </ul>
+                        </li>
+                      
+    <li><a href="#examples">Examples</a></li>
+    </ul>
+</li>
+    
+    
+    
+    
+    
+        <li><a href="#references">References</a></li>
+    
+   </ul>
+</section>
+
+  </div>
+  <div id="API-content">
+  
+	
+
+	
+		<h1>Complex Event Processing RESTful API Specification </h1>
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+		<span class="dateLabel">DATE:</span> <span class="dateValue"> 1 September 2015 </span>
+	
+
+	
+
+	
+
+
+
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+		<h2 id="editors">Editors</h2>
+		<ul>
+<li>Tali Yatzkar Haham, IBM</li>
+</ul>
+	
+
+
+
+	
+
+
+<hr>
+
+
+	<h2 id="abstract">Abstract</h2>
+	<p>CEP API Cookbook</p>
+<p>As described in the <a href="http://forge.fiware.org/plugins/mediawiki/wiki/fiware/index.php?title=FIWARE.OpenSpecification.Data.CEP">CEP GE open specification document</a>, CEP has three main interfaces: </p>
+<ul>
+<li>
+<p>Receiving raw events from event producers using a RESTful service</p>
+</li>
+<li>
+<p>Sending output events to event consumers using an output REST client adapter</p>
+</li>
+<li>
+<p>Administrating the CEP engine state, and its definition repository</p>
+</li>
+</ul>
+<p>Please check the following <a href="http://forge.fiware.org/plugins/mediawiki/wiki/fiware/index.php/FI-WARE_Open_Specification_Legal_Notice_(implicit_patents_license)">FI-WARE Open Specification Legal Notice</a> to understand the rights to use this specification.</p>
+
+
+
+
+	
+
+<hr>
+
+    
+    
+
+
+
+
+		
+	
+	
+		
+	
+
+
+
+
+
+	
+		
+	
+
+
+
+    
+
+  
+  <section id="API_specification">
+      <h1>API Specification</h1>
+      
+
+
+
+
+        
+            <section id="default_group" class="resourceGroup">
+             <div class= "header" ><h2 id="h-default_group"> Default </h2></div>
+        
+	
+        
+            <section id="resource_cep-instance-api-root" class="resource">
+                 <div class= "header" ><h3 id="h-resource_cep-instance-api-root">CEP Instance API Root [/{instance_name}/rest]</h3> </div>
+                
+                
+                
+
+		        
+                
+                
+
+
+
+
+
+
+    
+
+
+                
+
+	<span class="parameters-title">Parameters</span>
+	<dl>
+		
+			<dt>
+				instance_name (Required, string
+				)
+			</dt>
+			<dd>
+				the name of the CEP instance. The default name is ProtonOnWebServer. Used to support multiple CEP instances running on the same server.
+				
+			</dd>
+		
+	</dl>
+
+
+                    
+            </section>
+        
+            <section id="resource_receiving-input-events" class="resource">
+                 <div class= "header" ><h3 id="h-resource_receiving-input-events">Receiving input events [/events]</h3> </div>
+                <p>Note:</p>
+<ul>
+<li>
+<p>Name is a built-in attribute used to represent the event type being reported. Please consult the user guide for event representation and built-in attributes.</p>
+</li>
+<li>
+<p>The data in the tag format should be given with no blanks.</p>
+</li>
+<li>
+<p>In the JSON format, all the attributes values are given as strings, the CEP processes each attribute value according to its defined type (in the event definition).</p>
+</li>
+</ul>
+                
+                
+
+		        
+                
+                
+
+
+
+
+
+
+    
+
+
+                
+
+
+                    
+                        
+                            <div id="action_receive-a-new-input-event-in-json,-tag,-or-ngsi-xml-formats" class="action POST">
+                        
+
+                        
+    <h4 id="h-action_receive-a-new-input-event-in-json,-tag,-or-ngsi-xml-formats">
+        Receive a new input event in json, tag, or NGSI xml formats -
+        POST
+        
+            /events
+        
+    </h4>
+
+        
+                            <div id="receive-a-new-input-event-in-json,-tag,-or-ngsi-xml-formats_body" class="">
+                                
+                                
+                                
+                                
+			
+                                
+                                
+      
+                                    
+        	                            
+                                            
+                                            
+                                            
+                                            
+
+<div class="rest-packet-div">
+
+            <span class="packetType">Request </span> 
+        
+            (application/json)
+        
+    
+            
+            
+     
+</div>
+        	                            
+    
+        	                            
+        		                            
+                                        
+                                        
+                                        
+
+<div class="rest-packet-div">
+
+            <span class="packetType">Response 201</span> 
+            
+            
+     
+</div>
+        	                            
+                                    
+        	                            
+                                            
+                                            
+                                            
+                                            
+
+<div class="rest-packet-div">
+
+            <span class="packetType">Request </span> 
+        
+            (text/plain)
+        
+    
+            
+            
+     
+</div>
+        	                            
+    
+        	                            
+        		                            
+                                        
+                                        
+                                        
+
+<div class="rest-packet-div">
+
+            <span class="packetType">Response 201</span> 
+            
+            
+     
+</div>
+        	                            
+                                    
+        	                            
+                                            
+                                            
+                                            
+                                            
+
+<div class="rest-packet-div">
+
+            <span class="packetType">Request </span> 
+        
+            (application/xml)
+        
+    
+            
+            
+     
+</div>
+        	                            
+    
+        	                            
+        		                            
+                                        
+                                        
+                                        
+
+<div class="rest-packet-div">
+
+            <span class="packetType">Response 201</span> 
+            
+            
+     
+</div>
+        	                            
+                                    
+                                    
+                                    <div class="goExample">
+                                        <a href="#action_receive-a-new-input-event-in-json,-tag,-or-ngsi-xml-formats_examples">Go to example</a>
+                                    </div>
+                                    
+                                        
+    <div class="goApiary">
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+    </div>
+
+                                    
+                                
+                            </div>
+                        </div>
+                    
+                        
+                            <div id="action_sending-output-events" class="action POST">
+                        
+
+                        
+    <h4 id="h-action_sending-output-events">
+        Sending output events -
+        POST
+        
+            /application-name/consumer
+        
+    </h4>
+
+        
+                            <div id="sending-output-events_body" class="">
+                                <p>The CEP GE activates a REST client for sending output events (in a push mode) to an external application REST service</p>
+<p>The following is what the REST consumer will generate as a request to an external REST service called /application-name/consumer. This external REST service is expected to be able to interpret either the tag-delimited, JSON or XML/NGSI data format sent via the POST method.
+Note: ’Name’ is a built-in attribute used to represent the event type being reported. Please consult the user guide for event representation and built-in attributes. </p>
+<p>Note: that this is an external REST service of another application that is activated by the CEP consumer, according to the defined consumer in the CEP application. The URI of the service, the format, and the event types to be sent to this service are defined as part of the Consumer definition as part of the CEP application definition. Although this is not a CEP api, it is described here to show what is the data the CEP posts to an external service, when such a consumer is defined.</p>
+                                
+                                
+                                
+			
+                                
+                                
+      
+                                    
+        	                            
+                                            
+                                            
+                                            
+                                            
+
+<div class="rest-packet-div">
+
+            <span class="packetType">Request </span> 
+        
+            (application/json)
+        
+    
+            
+            
+     
+</div>
+        	                            
+    
+        	                            
+        		                            
+                                        
+                                        
+                                        
+
+<div class="rest-packet-div">
+
+            <span class="packetType">Response 201</span> 
+            
+            
+     
+</div>
+        	                            
+                                    
+        	                            
+                                            
+                                            
+                                            
+                                            
+
+<div class="rest-packet-div">
+
+            <span class="packetType">Request </span> 
+        
+            (text/plain)
+        
+    
+            
+            
+     
+</div>
+        	                            
+    
+        	                            
+        		                            
+                                        
+                                        
+                                        
+
+<div class="rest-packet-div">
+
+            <span class="packetType">Response 201</span> 
+            
+            
+     
+</div>
+        	                            
+                                    
+        	                            
+                                            
+                                            
+                                            
+                                            
+
+<div class="rest-packet-div">
+
+            <span class="packetType">Request </span> 
+        
+            (application/xml)
+        
+    
+            
+            
+     
+</div>
+        	                            
+    
+        	                            
+        		                            
+                                        
+                                        
+                                        
+
+<div class="rest-packet-div">
+
+            <span class="packetType">Response 201</span> 
+            
+            
+     
+</div>
+        	                            
+                                    
+                                    
+                                    <div class="goExample">
+                                        <a href="#action_sending-output-events_examples">Go to example</a>
+                                    </div>
+                                    
+                                        
+    <div class="goApiary">
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+    </div>
+
+                                    
+                                
+                            </div>
+                        </div>
+                    
+            </section>
+        
+            <section id="resource_cep-administration-api-root" class="resource">
+                 <div class= "header" ><h3 id="h-resource_cep-administration-api-root">CEP Administration API Root [/{CEP_Admin}/resources/]</h3> </div>
+                
+                
+                
+
+		        
+                
+                
+
+
+
+
+
+
+    
+
+
+                
+
+	<span class="parameters-title">Parameters</span>
+	<dl>
+		
+			<dt>
+				CEP_Admin (Required, string
+				)
+			</dt>
+			<dd>
+				the name of the CEP administration service. The default name is ProtonOnWebServerAdmin.
+				
+			</dd>
+		
+	</dl>
+
+
+                    
+            </section>
+        
+            <section id="resource_definitions" class="resource">
+                 <div class= "header" ><h3 id="h-resource_definitions">Definitions [/definitions]</h3> </div>
+                <p>This service allows to manage the definitions repository. The repository is a file directory. Adding or deleting a definition will add or remove a file from the directory respectively. Each definition represents a CEP application definition in json format. Each definition is identified by a unique name (prefixed by the repository location) and a URI associated with it. The URI is used to retrieve the file by the applications that make use of the definition.</p>
+                
+                
+
+		        
+                
+                
+
+
+
+
+
+
+    
+
+
+                
+
+
+                    
+                        
+                            <div id="action_retrieve-all-the-existing-definitions-in-the-repository" class="action GET">
+                        
+
+                        
+    <h4 id="h-action_retrieve-all-the-existing-definitions-in-the-repository">
+        Retrieve all the existing definitions in the repository -
+        GET
+        
+            /definitions
+        
+    </h4>
+
+        
+                            <div id="retrieve-all-the-existing-definitions-in-the-repository_body" class="">
+                                
+                                
+                                
+                                
+			
+                                
+                                
+      
+                                    
+        	                            
+    
+        	                            
+        		                            
+                                        
+                                        
+                                        
+
+<div class="rest-packet-div">
+
+            <span class="packetType">Response 200</span> 
+            
+            
+     
+</div>
+        	                            
+                                    
+                                    
+                                    <div class="goExample">
+                                        <a href="#action_retrieve-all-the-existing-definitions-in-the-repository_examples">Go to example</a>
+                                    </div>
+                                    
+                                        
+    <div class="goApiary">
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+    </div>
+
+                                    
+                                
+                            </div>
+                        </div>
+                    
+                        
+                            <div id="action_creating-a-new-definition" class="action POST">
+                        
+
+                        
+    <h4 id="h-action_creating-a-new-definition">
+        Creating a new definition -
+        POST
+        
+            /definitions
+        
+    </h4>
+
+        
+                            <div id="creating-a-new-definition_body" class="">
+                                <p>The application definition itself, in json format, can be generated by the CEP UI, and can be generated programmatically by any other application. The format of this definition file is described by a [JSON schema for a CEP application] (https://forge.fi-ware.eu/docman/view.php/9/2732/CEP_EPN_Schema_FI_WARE.json) while the semantics of the various elements in this schema are described in a user guide. Examples for definitions can be found in the <a href="https://forge.fiware.org/plugins/mediawiki/wiki/fiware/index.php/CEP_GE_-_IBM_Proactive_Technology_Online_Unit_Testing_Plan">CEP test plan</a>. The “name” property (containing the name for the definition) added alongside the “epn” property (containing the full definition).</p>
+                                
+                                
+                                
+			
+                                
+                                
+      
+                                    
+        	                            
+                                            
+                                            
+                                            
+                                            
+
+<div class="rest-packet-div">
+
+            <span class="packetType">Request </span> 
+            
+            
+     
+</div>
+        	                            
+    
+        	                            
+        		                            
+                                        
+                                        
+                                        
+
+<div class="rest-packet-div">
+
+            <span class="packetType">Response 201</span> 
+            
+            
+     
+</div>
+        	                            
+                                    
+                                    
+                                    <div class="goExample">
+                                        <a href="#action_creating-a-new-definition_examples">Go to example</a>
+                                    </div>
+                                    
+                                        
+    <div class="goApiary">
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+    </div>
+
+                                    
+                                
+                            </div>
+                        </div>
+                    
+                        
+                            <div id="action_retrieve-an-application-definition-in-json-format" class="action GET">
+                        
+
+                        
+    <h4 id="h-action_retrieve-an-application-definition-in-json-format">
+        Retrieve an application definition in JSON format -
+        GET
+        
+            /{definition_name}
+        
+    </h4>
+
+        
+                            <div id="retrieve-an-application-definition-in-json-format_body" class="">
+                                
+                                
+                                
+                                
+
+	<span class="parameters-title">Parameters</span>
+	<dl>
+		
+			<dt>
+				definition_name (Required, string
+				)
+			</dt>
+			<dd>
+				the name of the CEP definition e.g., DoSAttack
+				
+			</dd>
+		
+	</dl>
+			
+                                
+                                
+      
+                                    
+        	                            
+    
+        	                            
+        		                            
+                                        
+                                        
+                                        
+
+<div class="rest-packet-div">
+
+            <span class="packetType">Response 200</span> 
+            
+            
+     
+</div>
+        	                            
+                                    
+                                    
+                                    <div class="goExample">
+                                        <a href="#action_retrieve-an-application-definition-in-json-format_examples">Go to example</a>
+                                    </div>
+                                    
+                                        
+    <div class="goApiary">
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+    </div>
+
+                                    
+                                
+                            </div>
+                        </div>
+                    
+                        
+                            <div id="action_replace-content-of-an-existing-definition-with-new-content" class="action PUT">
+                        
+
+                        
+    <h4 id="h-action_replace-content-of-an-existing-definition-with-new-content">
+        Replace content of an existing definition with new content -
+        PUT
+        
+            /{definition_name}
+        
+    </h4>
+
+        
+                            <div id="replace-content-of-an-existing-definition-with-new-content_body" class="">
+                                
+                                
+                                
+                                
+
+	<span class="parameters-title">Parameters</span>
+	<dl>
+		
+			<dt>
+				definition_name (Required, string
+				)
+			</dt>
+			<dd>
+				the name of the CEP definition
+				
+			</dd>
+		
+	</dl>
+			
+                                
+                                
+      
+                                    
+        	                            
+                                            
+                                            
+                                            
+                                            
+
+<div class="rest-packet-div">
+
+            <span class="packetType">Request </span> 
+            
+            
+     
+</div>
+        	                            
+    
+        	                            
+        		                            
+                                        
+                                        
+                                        
+
+<div class="rest-packet-div">
+
+            <span class="packetType">Response 200</span> 
+            
+            
+     
+</div>
+        	                            
+                                    
+                                    
+                                    <div class="goExample">
+                                        <a href="#action_replace-content-of-an-existing-definition-with-new-content_examples">Go to example</a>
+                                    </div>
+                                    
+                                        
+    <div class="goApiary">
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+    </div>
+
+                                    
+                                
+                            </div>
+                        </div>
+                    
+                        
+                            <div id="action_delete-a-definition" class="action DELETE">
+                        
+
+                        
+    <h4 id="h-action_delete-a-definition">
+        Delete a definition -
+        DELETE
+        
+            /{definition_name}
+        
+    </h4>
+
+        
+                            <div id="delete-a-definition_body" class="">
+                                
+                                
+                                
+                                
+
+	<span class="parameters-title">Parameters</span>
+	<dl>
+		
+			<dt>
+				definition_name (Required, string
+				)
+			</dt>
+			<dd>
+				the name of the CEP definition
+				
+			</dd>
+		
+	</dl>
+			
+                                
+                                
+      
+                                    
+        	                            
+    
+        	                            
+        		                            
+                                        
+                                        
+                                        
+
+<div class="rest-packet-div">
+
+            <span class="packetType">Response 200</span> 
+            
+            
+     
+</div>
+        	                            
+                                    
+                                    
+                                    <div class="goExample">
+                                        <a href="#action_delete-a-definition_examples">Go to example</a>
+                                    </div>
+                                    
+                                        
+    <div class="goApiary">
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+    </div>
+
+                                    
+                                
+                            </div>
+                        </div>
+                    
+            </section>
+        
+            <section id="resource_administrating-run-time-instances" class="resource">
+                 <div class= "header" ><h3 id="h-resource_administrating-run-time-instances">Administrating run-time instances [/instances/{instance_name}]</h3> </div>
+                <p>There are two administration actions that can be performed on a run-time instance. The first is changing the definition (epn) for the instance to work with on its next activation. This will define the types of events the instance will accept for processing and the type of patterns it will be computing. The second action is to start or stop the run time engine. </p>
+<p>Note: When you change the definition file of the engine, it has no affect on the current run. You need to stop and start the engine to make it run with the updated definition. </p>
+                
+                
+
+		        
+                
+                
+
+
+
+
+
+
+    
+
+
+                
+
+	<span class="parameters-title">Parameters</span>
+	<dl>
+		
+			<dt>
+				instance_name (Required, string
+				)
+			</dt>
+			<dd>
+				the name of the CEP instance. The default value is ProtonOnWebServerAdmin
+				
+			</dd>
+		
+	</dl>
+
+
+                    
+                        
+                            <div id="action_get-instance-status" class="action GET">
+                        
+
+                        
+    <h4 id="h-action_get-instance-status">
+        Get instance status -
+        GET
+        
+            /instances/{instance_name}
+        
+    </h4>
+
+        
+                            <div id="get-instance-status_body" class="">
+                                
+                                
+                                
+                                
+			
+                                
+                                
+      
+                                    
+        	                            
+    
+        	                            
+        		                            
+                                        
+                                        
+                                        
+
+<div class="rest-packet-div">
+
+            <span class="packetType">Response 200</span> 
+            
+            
+     
+</div>
+        	                            
+                                    
+                                    
+                                    <div class="goExample">
+                                        <a href="#action_get-instance-status_examples">Go to example</a>
+                                    </div>
+                                    
+                                        
+    <div class="goApiary">
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+    </div>
+
+                                    
+                                
+                            </div>
+                        </div>
+                    
+                        
+                            <div id="action_configuring/changing-a-definition-for-an-instance" class="action PUT">
+                        
+
+                        
+    <h4 id="h-action_configuring/changing-a-definition-for-an-instance">
+        Configuring/Changing a definition for an instance -
+        PUT
+        
+            /instances/{instance_name}
+        
+    </h4>
+
+        
+                            <div id="configuring/changing-a-definition-for-an-instance_body" class="">
+                                <p>Note that there are two actions. The first action tells the engine to run with a different definition set. You must stop and start the engine if you want it to read the updated definition.
+The second action is to change the run status of the engine. To start a run or to stop a current run.</p>
+                                
+                                
+                                
+			
+                                
+                                
+      
+                                    
+        	                            
+                                            
+                                            
+                                            
+                                            
+
+<div class="rest-packet-div">
+
+            <span class="packetType">Request </span> 
+            
+            
+     
+</div>
+        	                            
+    
+        	                            
+        		                            
+                                        
+                                        
+                                        
+
+<div class="rest-packet-div">
+
+            <span class="packetType">Response 200</span> 
+            
+            
+     
+</div>
+        	                            
+                                    
+        	                            
+                                            
+                                            
+                                            
+                                            
+
+<div class="rest-packet-div">
+
+            <span class="packetType">Request </span> 
+            
+            
+     
+</div>
+        	                            
+    
+        	                            
+        		                            
+                                        
+                                        
+                                        
+
+<div class="rest-packet-div">
+
+            <span class="packetType">Response 200</span> 
+            
+            
+     
+</div>
+        	                            
+                                    
+        	                            
+                                            
+                                            
+                                            
+                                            
+
+<div class="rest-packet-div">
+
+            <span class="packetType">Request </span> 
+            
+            
+     
+</div>
+        	                            
+    
+        	                            
+        		                            
+                                        
+                                        
+                                        
+
+<div class="rest-packet-div">
+
+            <span class="packetType">Response 200</span> 
+            
+            
+     
+</div>
+        	                            
+                                    
+                                    
+                                    <div class="goExample">
+                                        <a href="#action_configuring/changing-a-definition-for-an-instance_examples">Go to example</a>
+                                    </div>
+                                    
+                                        
+    <div class="goApiary">
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+    </div>
+
+                                    
+                                
+                            </div>
+                        </div>
+                    
+            </section>
+        
+    </section>
+
+<section id="examples">
+    <div class= "header" ><h2>Examples</h2> </div>
+    
+        
+            <section id="resource_group__example" class="resourceGroupExample">
+                <div class= "header" ><h3 id="h-resource_group__example">Default</h3> </div>
+        
+
+                
+                    <section id="resource_cep-instance-api-root_example" class="resourceExample">
+                         <div class= "header" ><h4 id="h-resource_cep-instance-api-root_example">CEP Instance API Root [/{instance_name}/rest]</h4></div>
+                            
+                            
+                            
+
+                            
+                            
+                            
+
+                            
+
+	<span class="parameters-title">Parameters</span>
+	<dl>
+		
+			<dt>
+				instance_name (Required, string
+				)
+			</dt>
+			<dd>
+				the name of the CEP instance. The default name is ProtonOnWebServer. Used to support multiple CEP instances running on the same server.
+				
+			</dd>
+		
+	</dl>
+
+
+                            
+                    </section>
+            
+                    <section id="resource_receiving-input-events_example" class="resourceExample">
+                         <div class= "header" ><h4 id="h-resource_receiving-input-events_example">Receiving input events [/events]</h4></div>
+                            
+                            
+                            
+
+                            
+                            
+                            
+
+                            
+
+
+                            
+                                <div id="action_receive-a-new-input-event-in-json,-tag,-or-ngsi-xml-formats_examples" class="actionExample POST">
+
+                                    
+    <h4 id="h-action_receive-a-new-input-event-in-json,-tag,-or-ngsi-xml-formats_examples">
+        Receive a new input event in json, tag, or NGSI xml formats -
+        POST
+        
+            /events
+        
+    </h4>
+
+                
+                                    <div id="action_receive-a-new-input-event-in-json,-tag,-or-ngsi-xml-formats_body" class=""> 
+                                        
+                                        
+                                        
+                                        
+         
+                                        
+                                            
+                                            
+                                                
+                                                    
+                                                    
+                                                    
+                                                    
+
+<div class="rest-packet-div">
+
+            <span class="packetType">Request </span> 
+        
+            (application/json)
+        
+    
+            
+            
+            
+            
+
+
+
+ 
+            <div id="action_receive-a-new-input-event-in-json,-tag,-or-ngsi-xml-formats_Request_1_body" class=" action-div-body">
+                <p></p>
+
+                
+        	         <div class= "header"><p>Headers</p></div>
+                    
+                    
+                        
+                    
+
+        	        <pre><code>Content-Type: application/json</code></pre>
+                
+
+                
+                    <div class= "header"><p>Body</p></div>
+                    <pre><code>{
+    "Name":"TrafficReport", 
+    "volume":"1000"
+}
+</code></pre>
+                
+
+                
+            </div>
+            
+            
+     
+</div>
+                                                
+            
+                                                
+                                                    
+                                                
+                                                
+                                                
+
+<div class="rest-packet-div">
+
+            <span class="packetType">Response 201</span> 
+            
+            
+            
+            
+
+
+
+ 
+            <div id="action_receive-a-new-input-event-in-json,-tag,-or-ngsi-xml-formats_Response_1_body" class=" action-div-body">
+                <p></p>
+
+                
+
+                
+
+                
+            </div>
+            
+            
+     
+</div>
+                                                
+                                            
+                                                
+                                                    
+                                                    
+                                                    
+                                                    
+
+<div class="rest-packet-div">
+
+            <span class="packetType">Request </span> 
+        
+            (text/plain)
+        
+    
+            
+            
+            
+            
+
+
+
+ 
+            <div id="action_receive-a-new-input-event-in-json,-tag,-or-ngsi-xml-formats_Request_1_body" class=" action-div-body">
+                <p></p>
+
+                
+        	         <div class= "header"><p>Headers</p></div>
+                    
+                    
+                        
+                    
+
+        	        <pre><code>Content-Type: text/plain</code></pre>
+                
+
+                
+                    <div class= "header"><p>Body</p></div>
+                    <pre><code>Name=TrafficReport;volume=1000;
+</code></pre>
+                
+
+                
+            </div>
+            
+            
+     
+</div>
+                                                
+            
+                                                
+                                                    
+                                                
+                                                
+                                                
+
+<div class="rest-packet-div">
+
+            <span class="packetType">Response 201</span> 
+            
+            
+            
+            
+
+
+
+ 
+            <div id="action_receive-a-new-input-event-in-json,-tag,-or-ngsi-xml-formats_Response_1_body" class=" action-div-body">
+                <p></p>
+
+                
+
+                
+
+                
+            </div>
+            
+            
+     
+</div>
+                                                
+                                            
+                                                
+                                                    
+                                                    
+                                                    
+                                                    
+
+<div class="rest-packet-div">
+
+            <span class="packetType">Request </span> 
+        
+            (application/xml)
+        
+    
+            
+            
+            
+            
+
+
+
+ 
+            <div id="action_receive-a-new-input-event-in-json,-tag,-or-ngsi-xml-formats_Request_1_body" class=" action-div-body">
+                <p></p>
+
+                
+        	         <div class= "header"><p>Headers</p></div>
+                    
+                    
+                        
+                    
+
+        	        <pre><code>Content-Type: application/xml</code></pre>
+                
+
+                
+                    <div class= "header"><p>Body</p></div>
+                    <pre><code>&lt;notifyContextRequest>
+&lt;subscriptionId>51a60c7a286043f73ce9606c&lt;/subscriptionId>
+&lt;originator>localhost&lt;/originator>
+&lt;contextResponseList>
+    &lt;contextElementResponse>
+        &lt;contextElement>
+            &lt;entityId type="Node" isPattern="false">
+                &lt;id>OUTSMART.NODE_3505&lt;/id>
+            &lt;/entityId>
+            &lt;contextAttributeList>
+                &lt;contextAttribute>
+                    &lt;name>TimeInstant&lt;/name>
+                    &lt;type>urn:x-ogc:def:trs:IDAS:1.0:ISO8601&lt;/type>
+                    &lt;contextValue>2013-05-31T18:59:08+0300&lt;/contextValue>
+                &lt;/contextAttribute>
+                &lt;contextAttribute>
+                    &lt;name>presence&lt;/name>
+                    &lt;type>urn:x-ogc:def:phenomenon:IDAS:1.0:presence&lt;/type>
+                    &lt;contextValue>&lt;/contextValue>
+                &lt;/contextAttribute>
+                &lt;contextAttribute>
+                    &lt;name>batteryCharge&lt;/name>
+                    &lt;type>urn:x-ogc:def:phenomenon:IDAS:1.0:batteryCharge&lt;/type>
+                    &lt;contextValue>2&lt;/contextValue>
+                &lt;/contextAttribute>
+                &lt;contextAttribute>
+                    &lt;name>illuminance&lt;/name>
+                    &lt;type>urn:x-ogc:def:phenomenon:IDAS:1.0:illuminance&lt;/type>
+                    &lt;contextValue>&lt;/contextValue>
+                &lt;/contextAttribute>
+                &lt;contextAttribute>
+                    &lt;name>Latitud&lt;/name>
+                    &lt;type>urn:x-ogc:def:phenomenon:IDAS:1.0:latitude&lt;/type>
+                    &lt;contextValue>&lt;/contextValue>
+                &lt;/contextAttribute>
+                &lt;contextAttribute>
+                    &lt;name>Longitud&lt;/name>
+                    &lt;type>urn:x-ogc:def:phenomenon:IDAS:1.0:longitude&lt;/type>
+                    &lt;contextValue>&lt;/contextValue>
+                &lt;/contextAttribute>
+            &lt;/contextAttributeList>
+        &lt;/contextElement>
+        &lt;statusCode>
+            &lt;code>200&lt;/code>
+            &lt;reasonPhrase>OK&lt;/reasonPhrase>
+        &lt;/statusCode>
+    &lt;/contextElementResponse>
+&lt;/contextResponseList>
+&lt;/notifyContextRequest>
+</code></pre>
+                
+
+                
+            </div>
+            
+            
+     
+</div>
+                                                
+            
+                                                
+                                                    
+                                                
+                                                
+                                                
+
+<div class="rest-packet-div">
+
+            <span class="packetType">Response 201</span> 
+            
+            
+            
+            
+
+
+
+ 
+            <div id="action_receive-a-new-input-event-in-json,-tag,-or-ngsi-xml-formats_Response_1_body" class=" action-div-body">
+                <p></p>
+
+                
+
+                
+
+                
+            </div>
+            
+            
+     
+</div>
+                                                
+                                            
+                                            <div class="goActions">
+                                                <a href="#action_receive-a-new-input-event-in-json,-tag,-or-ngsi-xml-formats">Go to specification</a>
+                                            </div>
+                                    </div>
+                                </div>
+                            
+                                <div id="action_sending-output-events_examples" class="actionExample POST">
+
+                                    
+    <h4 id="h-action_sending-output-events_examples">
+        Sending output events -
+        POST
+        
+            /application-name/consumer
+        
+    </h4>
+
+                
+                                    <div id="action_sending-output-events_body" class=""> 
+                                        
+                                        
+                                        
+                                        
+         
+                                        
+                                            
+                                            
+                                                
+                                                    
+                                                    
+                                                    
+                                                    
+
+<div class="rest-packet-div">
+
+            <span class="packetType">Request </span> 
+        
+            (application/json)
+        
+    
+            
+            
+            
+            
+
+
+
+ 
+            <div id="action_sending-output-events_Request_1_body" class=" action-div-body">
+                <p></p>
+
+                
+        	         <div class= "header"><p>Headers</p></div>
+                    
+                    
+                        
+                    
+
+        	        <pre><code>Content-Type: application/json</code></pre>
+                
+
+                
+                    <div class= "header"><p>Body</p></div>
+                    <pre><code>{
+    "Cost":"0.0",
+    "Certainty":"0.0",
+    "Name":"TrafficReport",
+    "EventSource":"",
+    "Duration":"0.0",
+    "Annotation":"",
+    "volume":"1000",
+    "EventId":"e206b5e8-9f3a-4711-9f46-d0e9431fe215",
+    "DetectionTime":"1350311378034"
+}
+</code></pre>
+                
+
+                
+            </div>
+            
+            
+     
+</div>
+                                                
+            
+                                                
+                                                    
+                                                
+                                                
+                                                
+
+<div class="rest-packet-div">
+
+            <span class="packetType">Response 201</span> 
+            
+            
+            
+            
+
+
+
+ 
+            <div id="action_sending-output-events_Response_1_body" class=" action-div-body">
+                <p></p>
+
+                
+
+                
+
+                
+            </div>
+            
+            
+     
+</div>
+                                                
+                                            
+                                                
+                                                    
+                                                    
+                                                    
+                                                    
+
+<div class="rest-packet-div">
+
+            <span class="packetType">Request </span> 
+        
+            (text/plain)
+        
+    
+            
+            
+            
+            
+
+
+
+ 
+            <div id="action_sending-output-events_Request_1_body" class=" action-div-body">
+                <p></p>
+
+                
+        	         <div class= "header"><p>Headers</p></div>
+                    
+                    
+                        
+                    
+
+        	        <pre><code>Content-Type: text/plain</code></pre>
+                
+
+                
+                    <div class= "header"><p>Body</p></div>
+                    <pre><code>Name=TrafficReport;Certainty=0.0;Cost=0.0;EventSource=;OccurrenceTime=null;Annotation=;Duration=0.0;volume=1000;EventId=40f68052-3c7c-4245ae5a-6e20def2e618;ExpirationTime=null;Chronon=null;DetectionTime=1349181899221;
+</code></pre>
+                
+
+                
+            </div>
+            
+            
+     
+</div>
+                                                
+            
+                                                
+                                                    
+                                                
+                                                
+                                                
+
+<div class="rest-packet-div">
+
+            <span class="packetType">Response 201</span> 
+            
+            
+            
+            
+
+
+
+ 
+            <div id="action_sending-output-events_Response_1_body" class=" action-div-body">
+                <p></p>
+
+                
+
+                
+
+                
+            </div>
+            
+            
+     
+</div>
+                                                
+                                            
+                                                
+                                                    
+                                                    
+                                                    
+                                                    
+
+<div class="rest-packet-div">
+
+            <span class="packetType">Request </span> 
+        
+            (application/xml)
+        
+    
+            
+            
+            
+            
+
+
+
+ 
+            <div id="action_sending-output-events_Request_1_body" class=" action-div-body">
+                <p></p>
+
+                
+        	         <div class= "header"><p>Headers</p></div>
+                    
+                    
+                        
+                    
+
+        	        <pre><code>Content-Type: application/xml</code></pre>
+                
+
+                
+                    <div class= "header"><p>Body</p></div>
+                    <pre><code>&lt;updateContextRequest>
+    &lt;contextElementList>
+        &lt;contextElement>
+            &lt;entityId type="CEPEventReporter" isPattern="false">
+                &lt;id>CEPEventReporter_Singleton&lt;/id>
+            &lt;/entityId>
+            &lt;contextAttributeList>
+                &lt;contextAttribute>
+                    &lt;name>EventId&lt;/name>
+                    &lt;contextValue>4be0ab1c-ec30-4525-b278-78222f3ce081&lt;/contextValue>
+                &lt;/contextAttribute>
+                &lt;contextAttribute>
+                    &lt;name>EventType&lt;/name>
+                    &lt;contextValue>LowBatteryAlert&lt;/contextValue>
+                &lt;/contextAttribute>
+                &lt;contextAttribute>
+                    &lt;name>DetectionTime&lt;/name>
+                    &lt;contextValue>2013-06-05T08:25:15.804000CEST&lt;/contextValue>
+                &lt;/contextAttribute>
+                &lt;contextAttribute>
+                    &lt;name>EventSeverity&lt;/name>
+                    &lt;contextValue>Critical&lt;/contextValue>
+                &lt;/contextAttribute>
+                &lt;contextAttribute>
+                    &lt;name>Cost&lt;/name>
+                    &lt;contextValue>0.0&lt;/contextValue>
+                &lt;/contextAttribute>
+                &lt;contextAttribute>
+                    &lt;name>Certainty&lt;/name>
+                    &lt;contextValue>1&lt;/contextValue>
+                &lt;/contextAttribute>
+                &lt;contextAttribute>
+                    &lt;name>Name&lt;/name>
+                    &lt;contextValue>LowBatteryAlert&lt;/contextValue>
+                &lt;/contextAttribute>
+                &lt;contextAttribute>
+                    &lt;name>OccurrenceTime&lt;/name>
+                    &lt;contextValue>2013-06-05T08:25:15.804000CEST&lt;/contextValue>
+                &lt;/contextAttribute>
+                &lt;contextAttribute>
+                    &lt;name>TimeInstant&lt;/name>
+                    &lt;contextValue>2013-06-05T08:24:45.581000CEST&lt;/contextValue>
+                &lt;/contextAttribute>
+                &lt;contextAttribute>
+                    &lt;name>Duration&lt;/name>
+                    &lt;contextValue>0&lt;/contextValue>
+                &lt;/contextAttribute>
+                &lt;contextAttribute>
+                    &lt;name>AffectedEntityType&lt;/name>
+                    &lt;contextValue>Node&lt;/contextValue>
+                &lt;/contextAttribute>
+                &lt;contextAttribute>
+                    &lt;name>AffectedEntity&lt;/name>
+                    &lt;contextValue>OUTSMART.NODE_3505&lt;/contextValue>
+                &lt;/contextAttribute>
+            &lt;/contextAttributeList>
+        &lt;/contextElement>
+    &lt;/contextElementList>
+    &lt;updateAction>UPDATE&lt;/updateAction>
+&lt;/updateContextRequest> 
+</code></pre>
+                
+
+                
+            </div>
+            
+            
+     
+</div>
+                                                
+            
+                                                
+                                                    
+                                                
+                                                
+                                                
+
+<div class="rest-packet-div">
+
+            <span class="packetType">Response 201</span> 
+            
+            
+            
+            
+
+
+
+ 
+            <div id="action_sending-output-events_Response_1_body" class=" action-div-body">
+                <p></p>
+
+                
+
+                
+
+                
+            </div>
+            
+            
+     
+</div>
+                                                
+                                            
+                                            <div class="goActions">
+                                                <a href="#action_sending-output-events">Go to specification</a>
+                                            </div>
+                                    </div>
+                                </div>
+                            
+                    </section>
+            
+                    <section id="resource_cep-administration-api-root_example" class="resourceExample">
+                         <div class= "header" ><h4 id="h-resource_cep-administration-api-root_example">CEP Administration API Root [/{CEP_Admin}/resources/]</h4></div>
+                            
+                            
+                            
+
+                            
+                            
+                            
+
+                            
+
+	<span class="parameters-title">Parameters</span>
+	<dl>
+		
+			<dt>
+				CEP_Admin (Required, string
+				)
+			</dt>
+			<dd>
+				the name of the CEP administration service. The default name is ProtonOnWebServerAdmin.
+				
+			</dd>
+		
+	</dl>
+
+
+                            
+                    </section>
+            
+                    <section id="resource_definitions_example" class="resourceExample">
+                         <div class= "header" ><h4 id="h-resource_definitions_example">Definitions [/definitions]</h4></div>
+                            
+                            
+                            
+
+                            
+                            
+                            
+
+                            
+
+
+                            
+                                <div id="action_retrieve-all-the-existing-definitions-in-the-repository_examples" class="actionExample GET">
+
+                                    
+    <h4 id="h-action_retrieve-all-the-existing-definitions-in-the-repository_examples">
+        Retrieve all the existing definitions in the repository -
+        GET
+        
+            /definitions
+        
+    </h4>
+
+                
+                                    <div id="action_retrieve-all-the-existing-definitions-in-the-repository_body" class=""> 
+                                        
+                                        
+                                        
+                                        
+         
+                                        
+                                            
+                                            
+                                                
+            
+                                                
+                                                    
+                                                
+                                                
+                                                
+
+<div class="rest-packet-div">
+
+            <span class="packetType">Response 200</span> 
+            
+            
+            
+            
+
+
+
+ 
+            <div id="action_retrieve-all-the-existing-definitions-in-the-repository_Response_1_body" class=" action-div-body">
+                <p></p>
+
+                
+
+                
+                    <div class= "header"><p>Body</p></div>
+                    <pre><code>[
+    {
+        "name": "/opt/repositories/tomcat10/DoSAttack.json”,
+        "url": "/ProtonOnWebServerAdmin/resources/definitions/DoSAttack"
+    },
+    {
+        "name": "/opt/repositories/tomcat10/DoSAttack2.json”,
+        "url": "/ProtonOnWebServerAdmin/resources/definitions/DoSAttack2”
+    }
+]
+</code></pre>
+                
+
+                
+            </div>
+            
+            
+     
+</div>
+                                                
+                                            
+                                            <div class="goActions">
+                                                <a href="#action_retrieve-all-the-existing-definitions-in-the-repository">Go to specification</a>
+                                            </div>
+                                    </div>
+                                </div>
+                            
+                                <div id="action_creating-a-new-definition_examples" class="actionExample POST">
+
+                                    
+    <h4 id="h-action_creating-a-new-definition_examples">
+        Creating a new definition -
+        POST
+        
+            /definitions
+        
+    </h4>
+
+                
+                                    <div id="action_creating-a-new-definition_body" class=""> 
+                                        
+                                        
+                                        
+                                        
+         
+                                        
+                                            
+                                            
+                                                
+                                                    
+                                                    
+                                                    
+                                                    
+
+<div class="rest-packet-div">
+
+            <span class="packetType">Request </span> 
+            
+            
+            
+            
+
+
+
+ 
+            <div id="action_creating-a-new-definition_Request_1_body" class=" action-div-body">
+                <p></p>
+
+                
+
+                
+                    <div class= "header"><p>Body</p></div>
+                    <pre><code>{
+    "name":"MyDefinition",
+    "epn":{…}
+}
+</code></pre>
+                
+
+                
+            </div>
+            
+            
+     
+</div>
+                                                
+            
+                                                
+                                                    
+                                                
+                                                
+                                                
+
+<div class="rest-packet-div">
+
+            <span class="packetType">Response 201</span> 
+            
+            
+            
+            
+
+
+
+ 
+            <div id="action_creating-a-new-definition_Response_1_body" class=" action-div-body">
+                <p></p>
+
+                
+
+                
+                    <div class= "header"><p>Body</p></div>
+                    <pre><code>/ProtonOnWebServerAdmin/resources/definitions/MyDefinition
+</code></pre>
+                
+
+                
+            </div>
+            
+            
+     
+</div>
+                                                
+                                            
+                                            <div class="goActions">
+                                                <a href="#action_creating-a-new-definition">Go to specification</a>
+                                            </div>
+                                    </div>
+                                </div>
+                            
+                                <div id="action_retrieve-an-application-definition-in-json-format_examples" class="actionExample GET">
+
+                                    
+    <h4 id="h-action_retrieve-an-application-definition-in-json-format_examples">
+        Retrieve an application definition in JSON format -
+        GET
+        
+            /{definition_name}
+        
+    </h4>
+
+                
+                                    <div id="action_retrieve-an-application-definition-in-json-format_body" class=""> 
+                                        
+                                        
+                                        
+                                        
+
+	<span class="parameters-title">Parameters</span>
+	<dl>
+		
+			<dt>
+				definition_name (Required, string
+				)
+			</dt>
+			<dd>
+				the name of the CEP definition e.g., DoSAttack
+				
+			</dd>
+		
+	</dl>
+         
+                                        
+                                            
+                                            
+                                                
+            
+                                                
+                                                    
+                                                
+                                                
+                                                
+
+<div class="rest-packet-div">
+
+            <span class="packetType">Response 200</span> 
+            
+            
+            
+            
+
+
+
+ 
+            <div id="action_retrieve-an-application-definition-in-json-format_Response_1_body" class=" action-div-body">
+                <p></p>
+
+                
+
+                
+                    <div class= "header"><p>Body</p></div>
+                    <pre><code>{
+    "epn": {…}
+}
+</code></pre>
+                
+
+                
+            </div>
+            
+            
+     
+</div>
+                                                
+                                            
+                                            <div class="goActions">
+                                                <a href="#action_retrieve-an-application-definition-in-json-format">Go to specification</a>
+                                            </div>
+                                    </div>
+                                </div>
+                            
+                                <div id="action_replace-content-of-an-existing-definition-with-new-content_examples" class="actionExample PUT">
+
+                                    
+    <h4 id="h-action_replace-content-of-an-existing-definition-with-new-content_examples">
+        Replace content of an existing definition with new content -
+        PUT
+        
+            /{definition_name}
+        
+    </h4>
+
+                
+                                    <div id="action_replace-content-of-an-existing-definition-with-new-content_body" class=""> 
+                                        
+                                        
+                                        
+                                        
+
+	<span class="parameters-title">Parameters</span>
+	<dl>
+		
+			<dt>
+				definition_name (Required, string
+				)
+			</dt>
+			<dd>
+				the name of the CEP definition
+				
+			</dd>
+		
+	</dl>
+         
+                                        
+                                            
+                                            
+                                                
+                                                    
+                                                    
+                                                    
+                                                    
+
+<div class="rest-packet-div">
+
+            <span class="packetType">Request </span> 
+            
+            
+            
+            
+
+
+
+ 
+            <div id="action_replace-content-of-an-existing-definition-with-new-content_Request_1_body" class=" action-div-body">
+                <p></p>
+
+                
+
+                
+                    <div class= "header"><p>Body</p></div>
+                    <pre><code>{
+    "epn": {…}
+}
+</code></pre>
+                
+
+                
+            </div>
+            
+            
+     
+</div>
+                                                
+            
+                                                
+                                                    
+                                                
+                                                
+                                                
+
+<div class="rest-packet-div">
+
+            <span class="packetType">Response 200</span> 
+            
+            
+            
+            
+
+
+
+ 
+            <div id="action_replace-content-of-an-existing-definition-with-new-content_Response_1_body" class=" action-div-body">
+                <p></p>
+
+                
+
+                
+                    <div class= "header"><p>Body</p></div>
+                    <pre><code>/ProtonOnWebServerAdmin/resources/definitions/MyDefinition
+</code></pre>
+                
+
+                
+            </div>
+            
+            
+     
+</div>
+                                                
+                                            
+                                            <div class="goActions">
+                                                <a href="#action_replace-content-of-an-existing-definition-with-new-content">Go to specification</a>
+                                            </div>
+                                    </div>
+                                </div>
+                            
+                                <div id="action_delete-a-definition_examples" class="actionExample DELETE">
+
+                                    
+    <h4 id="h-action_delete-a-definition_examples">
+        Delete a definition -
+        DELETE
+        
+            /{definition_name}
+        
+    </h4>
+
+                
+                                    <div id="action_delete-a-definition_body" class=""> 
+                                        
+                                        
+                                        
+                                        
+
+	<span class="parameters-title">Parameters</span>
+	<dl>
+		
+			<dt>
+				definition_name (Required, string
+				)
+			</dt>
+			<dd>
+				the name of the CEP definition
+				
+			</dd>
+		
+	</dl>
+         
+                                        
+                                            
+                                            
+                                                
+            
+                                                
+                                                    
+                                                
+                                                
+                                                
+
+<div class="rest-packet-div">
+
+            <span class="packetType">Response 200</span> 
+            
+            
+            
+            
+
+
+
+ 
+            <div id="action_delete-a-definition_Response_1_body" class=" action-div-body">
+                <p></p>
+
+                
+
+                
+                    <div class= "header"><p>Body</p></div>
+                    <pre><code>true
+</code></pre>
+                
+
+                
+            </div>
+            
+            
+     
+</div>
+                                                
+                                            
+                                            <div class="goActions">
+                                                <a href="#action_delete-a-definition">Go to specification</a>
+                                            </div>
+                                    </div>
+                                </div>
+                            
+                    </section>
+            
+                    <section id="resource_administrating-run-time-instances_example" class="resourceExample">
+                         <div class= "header" ><h4 id="h-resource_administrating-run-time-instances_example">Administrating run-time instances [/instances/{instance_name}]</h4></div>
+                            
+                            
+                            
+
+                            
+                            
+                            
+
+                            
+
+	<span class="parameters-title">Parameters</span>
+	<dl>
+		
+			<dt>
+				instance_name (Required, string
+				)
+			</dt>
+			<dd>
+				the name of the CEP instance. The default value is ProtonOnWebServerAdmin
+				
+			</dd>
+		
+	</dl>
+
+
+                            
+                                <div id="action_get-instance-status_examples" class="actionExample GET">
+
+                                    
+    <h4 id="h-action_get-instance-status_examples">
+        Get instance status -
+        GET
+        
+            /instances/{instance_name}
+        
+    </h4>
+
+                
+                                    <div id="action_get-instance-status_body" class=""> 
+                                        
+                                        
+                                        
+                                        
+         
+                                        
+                                            
+                                            
+                                                
+            
+                                                
+                                                    
+                                                
+                                                
+                                                
+
+<div class="rest-packet-div">
+
+            <span class="packetType">Response 200</span> 
+            
+            
+            
+            
+
+
+
+ 
+            <div id="action_get-instance-status_Response_1_body" class=" action-div-body">
+                <p></p>
+
+                
+
+                
+                    <div class= "header"><p>Body</p></div>
+                    <pre><code>{
+    "state":"started",
+    "definitions-url":"/ProtonOnWebServerAdmin/resources/definitions/DoSAttack"
+}
+</code></pre>
+                
+
+                
+            </div>
+            
+            
+     
+</div>
+                                                
+                                            
+                                            <div class="goActions">
+                                                <a href="#action_get-instance-status">Go to specification</a>
+                                            </div>
+                                    </div>
+                                </div>
+                            
+                                <div id="action_configuring/changing-a-definition-for-an-instance_examples" class="actionExample PUT">
+
+                                    
+    <h4 id="h-action_configuring/changing-a-definition-for-an-instance_examples">
+        Configuring/Changing a definition for an instance -
+        PUT
+        
+            /instances/{instance_name}
+        
+    </h4>
+
+                
+                                    <div id="action_configuring/changing-a-definition-for-an-instance_body" class=""> 
+                                        
+                                        
+                                        
+                                        
+         
+                                        
+                                            
+                                            
+                                                
+                                                    
+                                                    
+                                                    
+                                                    
+
+<div class="rest-packet-div">
+
+            <span class="packetType">Request </span> 
+            
+            
+            
+            
+
+
+
+ 
+            <div id="action_configuring/changing-a-definition-for-an-instance_Request_1_body" class=" action-div-body">
+                <p></p>
+
+                
+
+                
+                    <div class= "header"><p>Body</p></div>
+                    <pre><code>{
+    "action":"ChangeDefinitions",
+    "definitions-url":"/ProtonOnWebServerAdmin/resources/definitions/DoSAttack"
+}
+</code></pre>
+                
+
+                
+            </div>
+            
+            
+     
+</div>
+                                                
+            
+                                                
+                                                    
+                                                
+                                                
+                                                
+
+<div class="rest-packet-div">
+
+            <span class="packetType">Response 200</span> 
+            
+            
+            
+            
+
+
+
+ 
+            <div id="action_configuring/changing-a-definition-for-an-instance_Response_1_body" class=" action-div-body">
+                <p></p>
+
+                
+
+                
+
+                
+            </div>
+            
+            
+     
+</div>
+                                                
+                                            
+                                                
+                                                    
+                                                    
+                                                    
+                                                    
+
+<div class="rest-packet-div">
+
+            <span class="packetType">Request </span> 
+            
+            
+            
+            
+
+
+
+ 
+            <div id="action_configuring/changing-a-definition-for-an-instance_Request_1_body" class=" action-div-body">
+                <p></p>
+
+                
+
+                
+                    <div class= "header"><p>Body</p></div>
+                    <pre><code>{
+    "action":"ChangeState",
+    "state":"start"
+}
+</code></pre>
+                
+
+                
+            </div>
+            
+            
+     
+</div>
+                                                
+            
+                                                
+                                                    
+                                                
+                                                
+                                                
+
+<div class="rest-packet-div">
+
+            <span class="packetType">Response 200</span> 
+            
+            
+            
+            
+
+
+
+ 
+            <div id="action_configuring/changing-a-definition-for-an-instance_Response_1_body" class=" action-div-body">
+                <p></p>
+
+                
+
+                
+
+                
+            </div>
+            
+            
+     
+</div>
+                                                
+                                            
+                                                
+                                                    
+                                                    
+                                                    
+                                                    
+
+<div class="rest-packet-div">
+
+            <span class="packetType">Request </span> 
+            
+            
+            
+            
+
+
+
+ 
+            <div id="action_configuring/changing-a-definition-for-an-instance_Request_1_body" class=" action-div-body">
+                <p></p>
+
+                
+
+                
+                    <div class= "header"><p>Body</p></div>
+                    <pre><code>{
+    "action":"ChangeState",
+    "state”:”stop”
+}
+</code></pre>
+                
+
+                
+            </div>
+            
+            
+     
+</div>
+                                                
+            
+                                                
+                                                    
+                                                
+                                                
+                                                
+
+<div class="rest-packet-div">
+
+            <span class="packetType">Response 200</span> 
+            
+            
+            
+            
+
+
+
+ 
+            <div id="action_configuring/changing-a-definition-for-an-instance_Response_1_body" class=" action-div-body">
+                <p></p>
+
+                
+
+                
+
+                
+            </div>
+            
+            
+     
+</div>
+                                                
+                                            
+                                            <div class="goActions">
+                                                <a href="#action_configuring/changing-a-definition-for-an-instance">Go to specification</a>
+                                            </div>
+                                    </div>
+                                </div>
+                            
+                    </section>
+            
+        </section>
+    
+
+
+
+</section>
+  </section>
+  
+   
+
+
+
+	
+
+    
+    
+    
+      <section id="references">
+      <h1>References</h1>
+          <ul>
+              
+                  <li><a href="http://forge.fiware.org/plugins/mediawiki/wiki/fiware/index.php?title=FIWARE.OpenSpecification.Data.CEP">CEP GE open specification document</a></li>
+              
+                  <li><a href="http://forge.fiware.org/plugins/mediawiki/wiki/fiware/index.php/FI-WARE_Open_Specification_Legal_Notice_(implicit_patents_license)">FI-WARE Open Specification Legal Notice</a></li>
+              
+                  <li><a href="https://forge.fiware.org/plugins/mediawiki/wiki/fiware/index.php/CEP_GE_-_IBM_Proactive_Technology_Online_Unit_Testing_Plan">CEP test plan</a></li>
+              
+          </ul>
+      </section>
+    
+  </div>
+</div>
+</body>
+</html>
