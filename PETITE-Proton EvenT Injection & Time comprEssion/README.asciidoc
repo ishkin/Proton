@@ -24,7 +24,6 @@ format (in which case a format will be provided as a separate argument), or it c
 - The input file and the JSON file for the example
 
 === Arguments for the utility ===
-The following arguments should be provided to the utility:
 - The input scenario file name (the name or the absolute path to the file) with the input events
 - The JSON file name (or absolute path) which is the CEP application definitions file.
 - The desired length of the injection window in milisecs (if we want the whole run to take two hours, this would be 2*60*60*1000 milis)
