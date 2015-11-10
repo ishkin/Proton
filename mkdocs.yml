@@ -26,5 +26,5 @@ pages:
   - 'Programmer Guide':
     - 'Programmer Guide': 'ProtonProgrammerGuide-FI-WAREv4.4.1.md'
 
-  - 'Installation & Administration Manual':
-    - 'Installation & Administration Manual': 'Proton installation and admin guide.md'
+  - 'Installation and Administration Manual':
+    - 'Installation and Administration Manual': 'Proton-InstallationAndAdminGuide.md'
