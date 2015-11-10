@@ -30,6 +30,8 @@ format (in which case a format will be provided as a separate argument), or it c
 - The JSON file name (or absolute path) which is the CEP application definitions file.
 - The desired length of the injection window in milisecs (if we want the whole run to take two hours, this would be 2*60*60*1000 milis)
 - The name or absolute path to the updated input scenario file (with the added timestamps for event's occurence time)
+- The name or absolute path to the updated JSON file
+- The delimiter to use for parsing the CSV file (for example, "," or "|")
 - In case the input file includes the date as a single timestamp (long) value, the index of  the column within the CSV file which contains this timestamp value (starting from 0)
 - In case the input file contains a single date column, formatted, two arguments: the index of the column for the date (starting from 0), and the format for parsing the date in the standard Java-like date notation - i.e. "yyyy-MM-dd'T'HH:mm:ss.SSSXXX"
 - In case the input file contains two columns for representing date, one for date and one for time, the following arguments should be provided: the index of the date column, the index of the time column,
