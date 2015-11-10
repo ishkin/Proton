@@ -181,9 +181,6 @@ public class ContextServiceFacade implements IContextService
     	Collection<Pair<String,Map<String,Object>>> participatingPartitions = new HashSet<Pair<String,Map<String,Object>>>();    	
     	ContextMetadataFacade metadata = this.contextMetadata;
     	
-    	assert (timedObject instanceof IContextNotification ||
-    			timedObject instanceof IEventInstance);
-    	
     	Set<EventRoleInContextEnum> roles = new HashSet<EventRoleInContextEnum>();
     	// if the received object is a context notification on timers
     	if (timedObject instanceof IContextNotification) {
@@ -219,7 +216,6 @@ public class ContextServiceFacade implements IContextService
     	
     	if (roles.contains(EventRoleInContextEnum.PARTICIPANT)) {
     		logger.debug("processEventInstance: the role of the event is participant");
-    		assert (timedObject instanceof IEventInstance);
     		participatingPartitions = cInstance.processContextParticipant(
     				(IEventInstance)timedObject);
     		logger.debug("processEventInstance: the object"+timedObject+" participates in partitions: "+participatingPartitions);

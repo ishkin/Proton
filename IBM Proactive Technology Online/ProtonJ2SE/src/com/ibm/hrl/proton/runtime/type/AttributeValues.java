@@ -28,8 +28,11 @@ public class AttributeValues extends BaseAttributeValues {
 	
 	public void assignValue(String attributeName, Object val)
 	{
-		assert(attributes.getAttribute(attributeName) == null);
-		assert (!val.getClass().equals(attributes.getAttribute(attributeName).getTypeEnum().getTypeClass()));
+		assert(attributes.getAttribute(attributeName) != null);
+		System.out.println(attributeName);
+		System.out.println(val.toString());
+
+		assert (val.getClass().equals(attributes.getAttribute(attributeName).getTypeEnum().getTypeClass()));
 		attributeValues.put(attributeName, val);
 	}
 	

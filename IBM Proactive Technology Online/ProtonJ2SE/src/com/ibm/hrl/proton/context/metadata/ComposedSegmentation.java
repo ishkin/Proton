@@ -51,7 +51,6 @@ public class ComposedSegmentation {
 	public ComposedSegmentation(Collection<ISegmentationContextType> segmentation) {
 		segments = new ArrayList<SegmentationContextType>();
 		for (ISegmentationContextType segment: segmentation) {
-			assert (segment instanceof SegmentationContextType);
 			segments.add((SegmentationContextType)segment);
 		}
 	}

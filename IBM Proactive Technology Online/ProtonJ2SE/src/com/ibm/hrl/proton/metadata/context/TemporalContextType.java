@@ -241,8 +241,6 @@ public class TemporalContextType extends ContextType implements ITemporalContext
 
 	public ContextInitiatorPolicyEnum getInitiationPolicy(ITimedObject object) {
 
-		assert (!initiators.isEmpty());
-		
 		for (ContextInitiator initiator: initiators) {
 
 			if (object instanceof IEventInstance) {

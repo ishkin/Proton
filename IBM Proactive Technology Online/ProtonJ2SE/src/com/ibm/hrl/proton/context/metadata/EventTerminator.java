@@ -80,10 +80,6 @@ public class EventTerminator implements ITemporalContextBound {
 			return false;
 		}
 		
-		// events id is equal - it should be the same initiator
-		// make sure they have the same segmentation (assertion check)
-		assert (segment.equals(otherTerminator.getSegmentationValue()));		
-
 		return true;
 	}	
 

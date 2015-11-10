@@ -72,10 +72,6 @@ public class EventInitiator extends TemporalContextInitiator {
 			return false;
 		}
 		
-		// events id is equal - it should be the same initiator
-		// make sure they have the same segmentation (assertion check)
-		assert (segment.equals(otherInitiator.getSegmentationValue()));		
-
 		return true;
 	}	
 
