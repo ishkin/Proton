@@ -12,6 +12,7 @@ them from RESTful services. It also provides extendable APIs for adding more ada
 This version of the engine is adapted to run on a web server. It allows users to push RESTful events to the engine in addition to pulling 
 RESTful events options provided by the REST adapter. This version also provides REST APIs for managing the engine’s instance lifecycle, and to manage the definition repository.
 - The Proton web UI,  provides an authoring environment for Proton applications; Those are the AuthoringTool and AuthoringToolWebServer projects.
+- Puppet installation script. Download and unzip the puppet.zip file. This folder is used for installation of the web version on new ubuntu machine with or without puppet installed on it. To run without puppet installed, run the script miscalleneous/CEP_Install_via_puppet.sh
 
 - The Proton on STORM version, which allows to run the engine in a distributed manner on multiple machines using the STORM infrastructure.
 
