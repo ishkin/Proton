@@ -27,7 +27,10 @@ download_artifacts(){
 	umask 0177
 	for file_name in "${!download_list[@]}"; do
 		print "Downloading ${download_list[$file_name]} as $file_name"
-		/usr/bin/curl --silent --show-error --ssl-reqd --tlsv1 --connect-timeout 30 --location  "${download_list[$file_name]}" --output "$destination_folder/$file_name"
+		/usr/bin/curl --silent --show-error --tlsv1 --connect-timeout 30 --location  "${download_list[$file_name]}" --output "$destination_folder/$file_name"
+		rc=$rc+$?
+
+		/bin/chmod 644 "$destination_folder/$file_name"
 		rc=$rc+$?
 	done
 	return $rc

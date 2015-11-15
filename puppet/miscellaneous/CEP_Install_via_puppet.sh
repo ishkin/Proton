@@ -56,11 +56,10 @@ download_puppet_cep_module(){
 	git_base_url="https://raw.githubusercontent.com/ishkin/Proton/master/puppet/modules/cep"
 
 	local_cep_folder="$base_dir/puppet/modules/cep"
-	sudo_run mkdir -p "local_cep_folder"
-
-	sudo_run mkdir -p "$base_dir/puppet/modules/cep/manifests"
-	sudo_run mkdir -p "$base_dir/puppet/modules/cep/files"
-	sudo_run mkdir -p "$base_dir/puppet/modules/cep/templates"
+	sudo_run mkdir -p "$local_cep_folder"
+	sudo_run mkdir -p "$local_cep_folder/manifests"
+	sudo_run mkdir -p "$local_cep_folder/files"
+	sudo_run mkdir -p "$local_cep_folder/templates"
 
 	for FILE in \
 		"files/download_artifacts.ksh" \
@@ -70,7 +69,13 @@ download_puppet_cep_module(){
 		"manifests/config.pp" \
 		"manifests/validation.pp" \
 		; do
-				sudo_run /usr/bin/curl --silent --show-error --fail --ssl-reqd --tlsv1 --connect-timeout 30 --location  "$git_base_url/$FILE" --output "$local_cep_folder/$FILE"
+				sudo_run /usr/bin/curl --silent --show-error --fail --tlsv1 --connect-timeout 30 --location  "$git_base_url/$FILE" --output "$local_cep_folder/$FILE"
+				if [[ $FILE = *'.ksh' ]] || [[ $FILE = *'.sh' ]] ; then
+					new_mode=755
+				else
+					new_mode=644
+				fi
+				sudo_run /bin/chmod $new_mode "$local_cep_folder/$FILE"
 	done
 
 	return 0

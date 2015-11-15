@@ -1,5 +1,6 @@
 class cep {
 	include apt
+	include stdlib
 	include cep::pkgs
 	include cep::deploy
 	include cep::config

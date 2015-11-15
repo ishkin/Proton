@@ -58,7 +58,7 @@ class cep::pkgs {
 
 			exec {"exists $modules_folder/$module_name":
 				 command => '/bin/true',
-				 onlyif => "/usr/bin/test -e $modules_folder/$module_nameh",
+				 onlyif => "/usr/bin/test -e $modules_folder/$module_name",
 			}
 
 			exec { "$modules_folder/$module_name/download_artifacts.ksh":
