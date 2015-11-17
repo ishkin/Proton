@@ -56,7 +56,6 @@ public class ContextStateManager implements IContextStateManager {
 
     	// make sure this entry does not exist yet
     	String key = context.getContextName().concat(context.getAgentName());
-    	assert(!contexts.containsKey(key));    	    	
     	contexts.put(key,context);    	
     }
     

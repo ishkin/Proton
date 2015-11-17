@@ -260,8 +260,6 @@ public class CompositeContextInstance implements ITimerListener {
 			List<ContextInitiator> initiators = window.getContextType().getInitiators();
 			for (ContextInitiator initiator: initiators) {
 				eventAdded = false;
-				assert (initiator instanceof ContextEventInitiator ||
-					initiator instanceof ContextAbsoluteTimeInitiator);
 				
 				SegmentationValue segmentValue = new SegmentationValue();
 				// initiation object can be either event initiator or absolute time initiator  
@@ -449,10 +447,6 @@ public class CompositeContextInstance implements ITimerListener {
 			List<ContextTerminator> terminators = window.getContextType().getTerminators();
 			for (ContextTerminator terminator: terminators) {				
 
-				assert (terminator instanceof ContextEventTerminator ||
-						terminator instanceof ContextRelativeTimeTerminator ||
-						terminator instanceof ContextAbsoluteTimeTerminator);
-				
 				// termination object can be either event terminator or relative time terminator  
 				if (terminator instanceof ContextEventTerminator &&
 						object instanceof EventInstance) {				

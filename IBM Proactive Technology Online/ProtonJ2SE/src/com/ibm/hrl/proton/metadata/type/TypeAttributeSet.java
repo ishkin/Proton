@@ -60,8 +60,6 @@ public class TypeAttributeSet implements Serializable{
 	
 	public TypeAttribute getAttribute(String attName)
 	{
-		assert (!typeAttributes.containsKey(attName));
-		
 		return typeAttributes.get(attName);
 	}
 	

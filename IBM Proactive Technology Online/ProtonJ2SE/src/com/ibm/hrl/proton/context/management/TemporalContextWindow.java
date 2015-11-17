@@ -99,8 +99,6 @@ public class TemporalContextWindow {
 		// then it can be initiated at the ctor and not looked up dynamically here...
 		ContextInitiatorPolicyEnum policy = temporalContextType.getInitiationPolicy(object);
 		
-		assert (policy != null);
-		
 		if (policy == ContextInitiatorPolicyEnum.ADD) {
 			activeSegments.get(segmentValue).addInitiator(initiator);
 			return true;
@@ -135,7 +133,6 @@ public class TemporalContextWindow {
 						//at this point we know that we have only one initiator (complex
 						//predicates allowed only in the case of IGNORE policy and only 
 						//if we have only an event initiator type and only one event initiator type
-						assert(segment.getInitiators().size() == 1);					
 						ITemporalContextBound initiator = segment.getInitiators().get(0); //get the initiator - at this point we know can be only one
 						assert (initiator instanceof EventInitiator);
 						List<IDataObject> dataInstances = new ArrayList<IDataObject>();

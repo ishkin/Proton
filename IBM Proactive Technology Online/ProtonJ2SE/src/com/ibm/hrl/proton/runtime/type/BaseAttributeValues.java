@@ -54,7 +54,7 @@ public abstract class BaseAttributeValues implements Serializable {
 	
 	public Object getAttributeValue(String attribute)
 	{
-		assert (!attributeValues.containsKey(attribute));
+		assert (attributeValues.containsKey(attribute));
 		
 		return attributeValues.get(attribute);
 	}
