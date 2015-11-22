@@ -16,23 +16,41 @@
     <link rel="stylesheet" href="css/idea.css">
     <script src="js/highlight.pack.js"></script>
     <script>hljs.initHighlightingOnLoad();</script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="js/toc-resize.js"></script>
 
     <link rel="stylesheet" type="text/css" href="css/api-specification.css"> 
+    
+
 
     
 </head>
 <body id="respecDocument" class="h-entry">
 <div class="container">
+
+
   <div id="TOC-container">
     
-<section id="toc">
+<div id="fiware-logo-container">
+    <div id="fiware-logo"></div>
+</div>
+<nav id="toc">
 
-        <div id="fiware-logo"></div>
+        
     <ul class="toc">
 
+        
+	        
+        
+
+
+<li><a href="#api-summary">API Summary</a></li>
+
 
     
     
+
+
 
 
 
@@ -63,7 +81,7 @@
                                         <ul class="toc  ">
                                         
                                             
-                                                <li><a href="#action_receive-a-new-input-event-in-json,-tag,-or-ngsi-xml-formats" title ="POST - Receive a new input event in json, tag, or NGSI xml formats">POST - Receive a new input event in json, tag, or NGSI xml formats</a></li>
+                                                <li><a href="#action_receive-a-new-input-event-in-json-tag-or-ngsi-xml-formats" title ="POST - Receive a new input event in json, tag, or NGSI xml formats">POST - Receive a new input event in json, tag, or NGSI xml formats</a></li>
                                             
 
                                         
@@ -130,7 +148,7 @@
 
                                         
                                             
-                                                <li><a href="#action_configuring/changing-a-definition-for-an-instance" title ="PUT - Configuring/Changing a definition for an instance">PUT - Configuring/Changing a definition for an instance</a></li>
+                                                <li><a href="#action_configuringchanging-a-definition-for-an-instance" title ="PUT - Configuring/Changing a definition for an instance">PUT - Configuring/Changing a definition for an instance</a></li>
                                             
 
                                         
@@ -147,67 +165,46 @@
     
     
     
-    
-    
         <li><a href="#references">References</a></li>
     
    </ul>
-</section>
+</nav>
 
   </div>
+  
+
+
   <div id="API-content">
   
-	
-
-	
-		<h1>Complex Event Processing RESTful API Specification </h1>
-	
-
-	
-
-	
-
+    
 	
 
 
 
 	
 
-	
-
-	
-		<span class="dateLabel">DATE:</span> <span class="dateValue"> 1 September 2015 </span>
-	
-
-	
-
-	
 
 
 
 
 	
-
 	
-
-	
-
-	
-
 	
 
 
 
-	
-		<h2 id="editors">Editors</h2>
-		<ul>
-<li>Tali Yatzkar Haham, IBM</li>
-</ul>
-	
 
 
 
-	
+
+  
+  
+
+
+
+
+
+
 
 
 <hr>
@@ -232,9 +229,203 @@
 
 
 
-	
-
 <hr>
+  
+
+
+    
+    
+<nav class="api-summary">
+<h1 id="api-summary"> API Summary </h1>
+    <ul>
+
+
+    
+
+        <li>
+            
+                <a href="#default_group" title = "Default">Default</a>
+            
+            <ul>
+              
+                
+                    <li>
+                        <a href="#resource_cep-instance-api-root" title = "Resource CEP Instance API Root">
+                        
+                            CEP Instance API Root
+                        
+                        </a>
+                        <ul class="toc  ">
+                        
+                        </ul>
+                    </li>
+                
+              
+                
+                    <li>
+                        <a href="#resource_receiving-input-events" title = "Resource Receiving input events">
+                        
+                            Receiving input events
+                        
+                        </a>
+                        <ul class="toc  ">
+                        
+                            
+                                <li>
+                                    <a href="#action_receive-a-new-input-event-in-json-tag-or-ngsi-xml-formats" title ="POST - Receive a new input event in json, tag, or NGSI xml formats"><span class="actionMethod">POST</span> - Receive a new input event in json, tag, or NGSI xml formats
+                                    
+                                        [/events]
+                                    
+                                    </a>
+                                </li>
+                            
+
+                        
+                            
+                                <li>
+                                    <a href="#action_sending-output-events" title ="POST - Sending output events"><span class="actionMethod">POST</span> - Sending output events
+                                    
+                                        [/application-name/consumer]
+                                    
+                                    </a>
+                                </li>
+                            
+
+                        
+                        </ul>
+                    </li>
+                
+              
+                
+                    <li>
+                        <a href="#resource_cep-administration-api-root" title = "Resource CEP Administration API Root">
+                        
+                            CEP Administration API Root
+                        
+                        </a>
+                        <ul class="toc  ">
+                        
+                        </ul>
+                    </li>
+                
+              
+                
+                    <li>
+                        <a href="#resource_definitions" title = "Resource Definitions">
+                        
+                            Definitions
+                        
+                        </a>
+                        <ul class="toc  ">
+                        
+                            
+                                <li>
+                                    <a href="#action_retrieve-all-the-existing-definitions-in-the-repository" title ="GET - Retrieve all the existing definitions in the repository"><span class="actionMethod">GET</span> - Retrieve all the existing definitions in the repository
+                                    
+                                        
+                                            [/definitions]
+                                        
+                                    
+                                    </a>
+                                </li>
+                            
+
+                        
+                            
+                                <li>
+                                    <a href="#action_creating-a-new-definition" title ="POST - Creating a new definition"><span class="actionMethod">POST</span> - Creating a new definition
+                                    
+                                        
+                                            [/definitions]
+                                        
+                                    
+                                    </a>
+                                </li>
+                            
+
+                        
+                            
+                                <li>
+                                    <a href="#action_retrieve-an-application-definition-in-json-format" title ="GET - Retrieve an application definition in JSON format"><span class="actionMethod">GET</span> - Retrieve an application definition in JSON format
+                                    
+                                        [/{definition_name}]
+                                    
+                                    </a>
+                                </li>
+                            
+
+                        
+                            
+                                <li>
+                                    <a href="#action_replace-content-of-an-existing-definition-with-new-content" title ="PUT - Replace content of an existing definition with new content"><span class="actionMethod">PUT</span> - Replace content of an existing definition with new content
+                                    
+                                        [/{definition_name}]
+                                    
+                                    </a>
+                                </li>
+                            
+
+                        
+                            
+                                <li>
+                                    <a href="#action_delete-a-definition" title ="DELETE - Delete a definition"><span class="actionMethod">DELETE</span> - Delete a definition
+                                    
+                                        [/{definition_name}]
+                                    
+                                    </a>
+                                </li>
+                            
+
+                        
+                        </ul>
+                    </li>
+                
+              
+                
+                    <li>
+                        <a href="#resource_administrating-run-time-instances" title = "Resource Administrating run-time instances">
+                        
+                            Administrating run-time instances
+                        
+                        </a>
+                        <ul class="toc  ">
+                        
+                            
+                                <li>
+                                    <a href="#action_get-instance-status" title ="GET - Get instance status"><span class="actionMethod">GET</span> - Get instance status
+                                    
+                                        
+                                            [/instances/{instance_name}]
+                                        
+                                    
+                                    </a>
+                                </li>
+                            
+
+                        
+                            
+                                <li>
+                                    <a href="#action_configuringchanging-a-definition-for-an-instance" title ="PUT - Configuring/Changing a definition for an instance"><span class="actionMethod">PUT</span> - Configuring/Changing a definition for an instance
+                                    
+                                        
+                                            [/instances/{instance_name}]
+                                        
+                                    
+                                    </a>
+                                </li>
+                            
+
+                        
+                        </ul>
+                    </li>
+                
+              
+            </ul>
+        </li>
+      
+
+    </ul>
+</nav>
 
     
     
@@ -245,15 +436,11 @@
 		
 	
 	
-		
-	
 
 
 
 
 
-	
-		
 	
 
 
@@ -275,7 +462,12 @@
 	
         
             <section id="resource_cep-instance-api-root" class="resource">
-                 <div class= "header" ><h3 id="h-resource_cep-instance-api-root">CEP Instance API Root [/{instance_name}/rest]</h3> </div>
+                 <div class= "header" >
+                 
+                    <h3 id="h-resource_cep-instance-api-root">CEP Instance API Root</h3>
+                    <span class="extra-header">[/{instance_name}/rest]</span>
+                 
+                 </div>
                 
                 
                 
@@ -298,8 +490,7 @@
 	<dl>
 		
 			<dt>
-				instance_name (Required, string
-				)
+				<span class="parameter-name">instance_name</span> <span class="parameter-attributes">(Required, string)</span>
 			</dt>
 			<dd>
 				the name of the CEP instance. The default name is ProtonOnWebServer. Used to support multiple CEP instances running on the same server.
@@ -313,7 +504,12 @@
             </section>
         
             <section id="resource_receiving-input-events" class="resource">
-                 <div class= "header" ><h3 id="h-resource_receiving-input-events">Receiving input events [/events]</h3> </div>
+                 <div class= "header" >
+                 
+                    <h3 id="h-resource_receiving-input-events">Receiving input events</h3>
+                    <span class="extra-header">[/events]</span>
+                 
+                 </div>
                 <p>Note:</p>
 <ul>
 <li>
@@ -345,18 +541,21 @@
 
 
                     
-                        
-                            <div id="action_receive-a-new-input-event-in-json,-tag,-or-ngsi-xml-formats" class="action POST">
-                        
+                        <div id="action_receive-a-new-input-event-in-json-tag-or-ngsi-xml-formats" class="action POST">
 
                         
-    <h4 id="h-action_receive-a-new-input-event-in-json,-tag,-or-ngsi-xml-formats">
-        Receive a new input event in json, tag, or NGSI xml formats -
-        POST
+    <div class="header">
         
-            /events
+            <h4 id="h-action_receive-a-new-input-event-in-json,-tag,-or-ngsi-xml-formats">Receive a new input event in json, tag, or NGSI xml formats </h4>
+            <span class="extra-header">
+		POST 
+                
+                    /events
+                
+            </span>
         
-    </h4>
+
+    </div>
 
         
                             <div id="receive-a-new-input-event-in-json,-tag,-or-ngsi-xml-formats_body" class="">
@@ -471,9 +670,9 @@
 </div>
         	                            
                                     
-                                    
+                                    <div>
                                     <div class="goExample">
-                                        <a href="#action_receive-a-new-input-event-in-json,-tag,-or-ngsi-xml-formats_examples">Go to example</a>
+                                        <a href="#action_receive-a-new-input-event-in-json-tag-or-ngsi-xml-formats_examples">Go to example</a>
                                     </div>
                                     
                                         
@@ -481,33 +680,29 @@
     
         
     
-        
-    
-        
-    
-        
-    
-        
-    
     </div>
 
                                     
+                                    </div>
                                 
                             </div>
                         </div>
                     
-                        
-                            <div id="action_sending-output-events" class="action POST">
-                        
+                        <div id="action_sending-output-events" class="action POST">
 
                         
-    <h4 id="h-action_sending-output-events">
-        Sending output events -
-        POST
+    <div class="header">
         
-            /application-name/consumer
+            <h4 id="h-action_sending-output-events">Sending output events </h4>
+            <span class="extra-header">
+		POST 
+                
+                    /application-name/consumer
+                
+            </span>
         
-    </h4>
+
+    </div>
 
         
                             <div id="sending-output-events_body" class="">
@@ -625,7 +820,7 @@ Note: ’Name’ is a built-in attribute used to represent the event type being 
 </div>
         	                            
                                     
-                                    
+                                    <div>
                                     <div class="goExample">
                                         <a href="#action_sending-output-events_examples">Go to example</a>
                                     </div>
@@ -635,17 +830,10 @@ Note: ’Name’ is a built-in attribute used to represent the event type being 
     
         
     
-        
-    
-        
-    
-        
-    
-        
-    
     </div>
 
                                     
+                                    </div>
                                 
                             </div>
                         </div>
@@ -653,7 +841,12 @@ Note: ’Name’ is a built-in attribute used to represent the event type being 
             </section>
         
             <section id="resource_cep-administration-api-root" class="resource">
-                 <div class= "header" ><h3 id="h-resource_cep-administration-api-root">CEP Administration API Root [/{CEP_Admin}/resources/]</h3> </div>
+                 <div class= "header" >
+                 
+                    <h3 id="h-resource_cep-administration-api-root">CEP Administration API Root</h3>
+                    <span class="extra-header">[/{CEP_Admin}/resources/]</span>
+                 
+                 </div>
                 
                 
                 
@@ -676,8 +869,7 @@ Note: ’Name’ is a built-in attribute used to represent the event type being 
 	<dl>
 		
 			<dt>
-				CEP_Admin (Required, string
-				)
+				<span class="parameter-name">CEP_Admin</span> <span class="parameter-attributes">(Required, string)</span>
 			</dt>
 			<dd>
 				the name of the CEP administration service. The default name is ProtonOnWebServerAdmin.
@@ -691,7 +883,12 @@ Note: ’Name’ is a built-in attribute used to represent the event type being 
             </section>
         
             <section id="resource_definitions" class="resource">
-                 <div class= "header" ><h3 id="h-resource_definitions">Definitions [/definitions]</h3> </div>
+                 <div class= "header" >
+                 
+                    <h3 id="h-resource_definitions">Definitions</h3>
+                    <span class="extra-header">[/definitions]</span>
+                 
+                 </div>
                 <p>This service allows to manage the definitions repository. The repository is a file directory. Adding or deleting a definition will add or remove a file from the directory respectively. Each definition represents a CEP application definition in json format. Each definition is identified by a unique name (prefixed by the repository location) and a URI associated with it. The URI is used to retrieve the file by the applications that make use of the definition.</p>
                 
                 
@@ -712,18 +909,21 @@ Note: ’Name’ is a built-in attribute used to represent the event type being 
 
 
                     
-                        
-                            <div id="action_retrieve-all-the-existing-definitions-in-the-repository" class="action GET">
-                        
+                        <div id="action_retrieve-all-the-existing-definitions-in-the-repository" class="action GET">
 
                         
-    <h4 id="h-action_retrieve-all-the-existing-definitions-in-the-repository">
-        Retrieve all the existing definitions in the repository -
-        GET
+    <div class="header">
         
-            /definitions
+            <h4 id="h-action_retrieve-all-the-existing-definitions-in-the-repository">Retrieve all the existing definitions in the repository </h4>
+            <span class="extra-header">
+		GET 
+                
+                    /definitions
+                
+            </span>
         
-    </h4>
+
+    </div>
 
         
                             <div id="retrieve-all-the-existing-definitions-in-the-repository_body" class="">
@@ -753,7 +953,7 @@ Note: ’Name’ is a built-in attribute used to represent the event type being 
 </div>
         	                            
                                     
-                                    
+                                    <div>
                                     <div class="goExample">
                                         <a href="#action_retrieve-all-the-existing-definitions-in-the-repository_examples">Go to example</a>
                                     </div>
@@ -763,37 +963,33 @@ Note: ’Name’ is a built-in attribute used to represent the event type being 
     
         
     
-        
-    
-        
-    
-        
-    
-        
-    
     </div>
 
                                     
+                                    </div>
                                 
                             </div>
                         </div>
                     
-                        
-                            <div id="action_creating-a-new-definition" class="action POST">
-                        
+                        <div id="action_creating-a-new-definition" class="action POST">
 
                         
-    <h4 id="h-action_creating-a-new-definition">
-        Creating a new definition -
-        POST
+    <div class="header">
         
-            /definitions
+            <h4 id="h-action_creating-a-new-definition">Creating a new definition </h4>
+            <span class="extra-header">
+		POST 
+                
+                    /definitions
+                
+            </span>
         
-    </h4>
+
+    </div>
 
         
                             <div id="creating-a-new-definition_body" class="">
-                                <p>The application definition itself, in json format, can be generated by the CEP UI, and can be generated programmatically by any other application. The format of this definition file is described by a [JSON schema for a CEP application] (https://forge.fi-ware.eu/docman/view.php/9/2732/CEP_EPN_Schema_FI_WARE.json) while the semantics of the various elements in this schema are described in a user guide. Examples for definitions can be found in the <a href="https://forge.fiware.org/plugins/mediawiki/wiki/fiware/index.php/CEP_GE_-_IBM_Proactive_Technology_Online_Unit_Testing_Plan">CEP test plan</a>. The “name” property (containing the name for the definition) added alongside the “epn” property (containing the full definition).</p>
+                                <p>The application definition itself, in json format, can be generated by the CEP UI, and can be generated programmatically by any other application. The format of this definition file is described by a [JSON schema for a CEP application] (<a href="https://forge.fi-ware.eu/docman/view.php/9/2732/CEP_EPN_Schema_FI_WARE.json">https://forge.fi-ware.eu/docman/view.php/9/2732/CEP_EPN_Schema_FI_WARE.json</a>) while the semantics of the various elements in this schema are described in a user guide. Examples for definitions can be found in the <a href="https://forge.fiware.org/plugins/mediawiki/wiki/fiware/index.php/CEP_GE_-_IBM_Proactive_Technology_Online_Unit_Testing_Plan">CEP test plan</a>. The “name” property (containing the name for the definition) added alongside the “epn” property (containing the full definition).</p>
                                 
                                 
                                 
@@ -832,7 +1028,7 @@ Note: ’Name’ is a built-in attribute used to represent the event type being 
 </div>
         	                            
                                     
-                                    
+                                    <div>
                                     <div class="goExample">
                                         <a href="#action_creating-a-new-definition_examples">Go to example</a>
                                     </div>
@@ -842,33 +1038,29 @@ Note: ’Name’ is a built-in attribute used to represent the event type being 
     
         
     
-        
-    
-        
-    
-        
-    
-        
-    
     </div>
 
                                     
+                                    </div>
                                 
                             </div>
                         </div>
                     
-                        
-                            <div id="action_retrieve-an-application-definition-in-json-format" class="action GET">
-                        
+                        <div id="action_retrieve-an-application-definition-in-json-format" class="action GET">
 
                         
-    <h4 id="h-action_retrieve-an-application-definition-in-json-format">
-        Retrieve an application definition in JSON format -
-        GET
+    <div class="header">
         
-            /{definition_name}
+            <h4 id="h-action_retrieve-an-application-definition-in-json-format">Retrieve an application definition in JSON format </h4>
+            <span class="extra-header">
+		GET 
+                
+                    /{definition_name}
+                
+            </span>
         
-    </h4>
+
+    </div>
 
         
                             <div id="retrieve-an-application-definition-in-json-format_body" class="">
@@ -881,8 +1073,7 @@ Note: ’Name’ is a built-in attribute used to represent the event type being 
 	<dl>
 		
 			<dt>
-				definition_name (Required, string
-				)
+				<span class="parameter-name">definition_name</span> <span class="parameter-attributes">(Required, string)</span>
 			</dt>
 			<dd>
 				the name of the CEP definition e.g., DoSAttack
@@ -912,7 +1103,7 @@ Note: ’Name’ is a built-in attribute used to represent the event type being 
 </div>
         	                            
                                     
-                                    
+                                    <div>
                                     <div class="goExample">
                                         <a href="#action_retrieve-an-application-definition-in-json-format_examples">Go to example</a>
                                     </div>
@@ -922,33 +1113,29 @@ Note: ’Name’ is a built-in attribute used to represent the event type being 
     
         
     
-        
-    
-        
-    
-        
-    
-        
-    
     </div>
 
                                     
+                                    </div>
                                 
                             </div>
                         </div>
                     
-                        
-                            <div id="action_replace-content-of-an-existing-definition-with-new-content" class="action PUT">
-                        
+                        <div id="action_replace-content-of-an-existing-definition-with-new-content" class="action PUT">
 
                         
-    <h4 id="h-action_replace-content-of-an-existing-definition-with-new-content">
-        Replace content of an existing definition with new content -
-        PUT
+    <div class="header">
         
-            /{definition_name}
+            <h4 id="h-action_replace-content-of-an-existing-definition-with-new-content">Replace content of an existing definition with new content </h4>
+            <span class="extra-header">
+		PUT 
+                
+                    /{definition_name}
+                
+            </span>
         
-    </h4>
+
+    </div>
 
         
                             <div id="replace-content-of-an-existing-definition-with-new-content_body" class="">
@@ -961,8 +1148,7 @@ Note: ’Name’ is a built-in attribute used to represent the event type being 
 	<dl>
 		
 			<dt>
-				definition_name (Required, string
-				)
+				<span class="parameter-name">definition_name</span> <span class="parameter-attributes">(Required, string)</span>
 			</dt>
 			<dd>
 				the name of the CEP definition
@@ -1005,7 +1191,7 @@ Note: ’Name’ is a built-in attribute used to represent the event type being 
 </div>
         	                            
                                     
-                                    
+                                    <div>
                                     <div class="goExample">
                                         <a href="#action_replace-content-of-an-existing-definition-with-new-content_examples">Go to example</a>
                                     </div>
@@ -1015,33 +1201,29 @@ Note: ’Name’ is a built-in attribute used to represent the event type being 
     
         
     
-        
-    
-        
-    
-        
-    
-        
-    
     </div>
 
                                     
+                                    </div>
                                 
                             </div>
                         </div>
                     
-                        
-                            <div id="action_delete-a-definition" class="action DELETE">
-                        
+                        <div id="action_delete-a-definition" class="action DELETE">
 
                         
-    <h4 id="h-action_delete-a-definition">
-        Delete a definition -
-        DELETE
+    <div class="header">
         
-            /{definition_name}
+            <h4 id="h-action_delete-a-definition">Delete a definition </h4>
+            <span class="extra-header">
+		DELETE 
+                
+                    /{definition_name}
+                
+            </span>
         
-    </h4>
+
+    </div>
 
         
                             <div id="delete-a-definition_body" class="">
@@ -1054,8 +1236,7 @@ Note: ’Name’ is a built-in attribute used to represent the event type being 
 	<dl>
 		
 			<dt>
-				definition_name (Required, string
-				)
+				<span class="parameter-name">definition_name</span> <span class="parameter-attributes">(Required, string)</span>
 			</dt>
 			<dd>
 				the name of the CEP definition
@@ -1085,7 +1266,7 @@ Note: ’Name’ is a built-in attribute used to represent the event type being 
 </div>
         	                            
                                     
-                                    
+                                    <div>
                                     <div class="goExample">
                                         <a href="#action_delete-a-definition_examples">Go to example</a>
                                     </div>
@@ -1095,17 +1276,10 @@ Note: ’Name’ is a built-in attribute used to represent the event type being 
     
         
     
-        
-    
-        
-    
-        
-    
-        
-    
     </div>
 
                                     
+                                    </div>
                                 
                             </div>
                         </div>
@@ -1113,7 +1287,12 @@ Note: ’Name’ is a built-in attribute used to represent the event type being 
             </section>
         
             <section id="resource_administrating-run-time-instances" class="resource">
-                 <div class= "header" ><h3 id="h-resource_administrating-run-time-instances">Administrating run-time instances [/instances/{instance_name}]</h3> </div>
+                 <div class= "header" >
+                 
+                    <h3 id="h-resource_administrating-run-time-instances">Administrating run-time instances</h3>
+                    <span class="extra-header">[/instances/{instance_name}]</span>
+                 
+                 </div>
                 <p>There are two administration actions that can be performed on a run-time instance. The first is changing the definition (epn) for the instance to work with on its next activation. This will define the types of events the instance will accept for processing and the type of patterns it will be computing. The second action is to start or stop the run time engine. </p>
 <p>Note: When you change the definition file of the engine, it has no affect on the current run. You need to stop and start the engine to make it run with the updated definition. </p>
                 
@@ -1137,8 +1316,7 @@ Note: ’Name’ is a built-in attribute used to represent the event type being 
 	<dl>
 		
 			<dt>
-				instance_name (Required, string
-				)
+				<span class="parameter-name">instance_name</span> <span class="parameter-attributes">(Required, string)</span>
 			</dt>
 			<dd>
 				the name of the CEP instance. The default value is ProtonOnWebServerAdmin
@@ -1149,18 +1327,21 @@ Note: ’Name’ is a built-in attribute used to represent the event type being 
 
 
                     
-                        
-                            <div id="action_get-instance-status" class="action GET">
-                        
+                        <div id="action_get-instance-status" class="action GET">
 
                         
-    <h4 id="h-action_get-instance-status">
-        Get instance status -
-        GET
+    <div class="header">
         
-            /instances/{instance_name}
+            <h4 id="h-action_get-instance-status">Get instance status </h4>
+            <span class="extra-header">
+		GET 
+                
+                    /instances/{instance_name}
+                
+            </span>
         
-    </h4>
+
+    </div>
 
         
                             <div id="get-instance-status_body" class="">
@@ -1190,7 +1371,7 @@ Note: ’Name’ is a built-in attribute used to represent the event type being 
 </div>
         	                            
                                     
-                                    
+                                    <div>
                                     <div class="goExample">
                                         <a href="#action_get-instance-status_examples">Go to example</a>
                                     </div>
@@ -1200,33 +1381,29 @@ Note: ’Name’ is a built-in attribute used to represent the event type being 
     
         
     
-        
-    
-        
-    
-        
-    
-        
-    
     </div>
 
                                     
+                                    </div>
                                 
                             </div>
                         </div>
                     
-                        
-                            <div id="action_configuring/changing-a-definition-for-an-instance" class="action PUT">
-                        
+                        <div id="action_configuringchanging-a-definition-for-an-instance" class="action PUT">
 
                         
-    <h4 id="h-action_configuring/changing-a-definition-for-an-instance">
-        Configuring/Changing a definition for an instance -
-        PUT
+    <div class="header">
         
-            /instances/{instance_name}
+            <h4 id="h-action_configuring/changing-a-definition-for-an-instance">Configuring/Changing a definition for an instance </h4>
+            <span class="extra-header">
+		PUT 
+                
+                    /instances/{instance_name}
+                
+            </span>
         
-    </h4>
+
+    </div>
 
         
                             <div id="configuring/changing-a-definition-for-an-instance_body" class="">
@@ -1330,9 +1507,9 @@ The second action is to change the run status of the engine. To start a run or t
 </div>
         	                            
                                     
-                                    
+                                    <div>
                                     <div class="goExample">
-                                        <a href="#action_configuring/changing-a-definition-for-an-instance_examples">Go to example</a>
+                                        <a href="#action_configuringchanging-a-definition-for-an-instance_examples">Go to example</a>
                                     </div>
                                     
                                         
@@ -1340,17 +1517,10 @@ The second action is to change the run status of the engine. To start a run or t
     
         
     
-        
-    
-        
-    
-        
-    
-        
-    
     </div>
 
                                     
+                                    </div>
                                 
                             </div>
                         </div>
@@ -1369,67 +1539,67 @@ The second action is to change the run status of the engine. To start a run or t
 
                 
                     <section id="resource_cep-instance-api-root_example" class="resourceExample">
-                         <div class= "header" ><h4 id="h-resource_cep-instance-api-root_example">CEP Instance API Root [/{instance_name}/rest]</h4></div>
-                            
-                            
-                            
+                         <div class= "header" >
+                         
+                            <h4 id="h-resource_cep-instance-api-root_example">CEP Instance API Root</h4>
+                            <span class="extra-header">[/{instance_name}/rest]</span>
+                         
+                         </div>
 
                             
                             
                             
 
                             
+                            
+                            
 
-	<span class="parameters-title">Parameters</span>
-	<dl>
-		
-			<dt>
-				instance_name (Required, string
-				)
-			</dt>
-			<dd>
-				the name of the CEP instance. The default name is ProtonOnWebServer. Used to support multiple CEP instances running on the same server.
-				
-			</dd>
-		
-	</dl>
-
+                           
 
                             
                     </section>
             
                     <section id="resource_receiving-input-events_example" class="resourceExample">
-                         <div class= "header" ><h4 id="h-resource_receiving-input-events_example">Receiving input events [/events]</h4></div>
-                            
-                            
-                            
+                         <div class= "header" >
+                         
+                            <h4 id="h-resource_receiving-input-events_example">Receiving input events</h4>
+                            <span class="extra-header">[/events]</span>
+                         
+                         </div>
 
                             
                             
                             
 
                             
+                            
+                            
 
+                           
 
                             
-                                <div id="action_receive-a-new-input-event-in-json,-tag,-or-ngsi-xml-formats_examples" class="actionExample POST">
+                                <div id="action_receive-a-new-input-event-in-json-tag-or-ngsi-xml-formats_examples" class="actionExample POST">
 
                                     
-    <h4 id="h-action_receive-a-new-input-event-in-json,-tag,-or-ngsi-xml-formats_examples">
-        Receive a new input event in json, tag, or NGSI xml formats -
-        POST
+    <div class="header">
         
-            /events
+            <h5 id="h-action_receive-a-new-input-event-in-json,-tag,-or-ngsi-xml-formats_examples">Receive a new input event in json, tag, or NGSI xml formats </h5>
+            <span class="extra-header">
+		POST 
+                
+                    /events
+                
+            </span>
         
-    </h4>
+
+    </div>
 
                 
                                     <div id="action_receive-a-new-input-event-in-json,-tag,-or-ngsi-xml-formats_body" class=""> 
                                         
                                         
                                         
-                                        
-         
+                                                 
                                         
                                             
                                             
@@ -1725,7 +1895,7 @@ The second action is to change the run status of the engine. To start a run or t
                                                 
                                             
                                             <div class="goActions">
-                                                <a href="#action_receive-a-new-input-event-in-json,-tag,-or-ngsi-xml-formats">Go to specification</a>
+                                                <a href="#action_receive-a-new-input-event-in-json-tag-or-ngsi-xml-formats">Go to specification</a>
                                             </div>
                                     </div>
                                 </div>
@@ -1733,21 +1903,25 @@ The second action is to change the run status of the engine. To start a run or t
                                 <div id="action_sending-output-events_examples" class="actionExample POST">
 
                                     
-    <h4 id="h-action_sending-output-events_examples">
-        Sending output events -
-        POST
+    <div class="header">
         
-            /application-name/consumer
+            <h5 id="h-action_sending-output-events_examples">Sending output events </h5>
+            <span class="extra-header">
+		POST 
+                
+                    /application-name/consumer
+                
+            </span>
         
-    </h4>
+
+    </div>
 
                 
                                     <div id="action_sending-output-events_body" class=""> 
                                         
                                         
                                         
-                                        
-         
+                                                 
                                         
                                             
                                             
@@ -2069,67 +2243,67 @@ The second action is to change the run status of the engine. To start a run or t
                     </section>
             
                     <section id="resource_cep-administration-api-root_example" class="resourceExample">
-                         <div class= "header" ><h4 id="h-resource_cep-administration-api-root_example">CEP Administration API Root [/{CEP_Admin}/resources/]</h4></div>
-                            
-                            
-                            
+                         <div class= "header" >
+                         
+                            <h4 id="h-resource_cep-administration-api-root_example">CEP Administration API Root</h4>
+                            <span class="extra-header">[/{CEP_Admin}/resources/]</span>
+                         
+                         </div>
 
                             
                             
                             
 
                             
+                            
+                            
 
-	<span class="parameters-title">Parameters</span>
-	<dl>
-		
-			<dt>
-				CEP_Admin (Required, string
-				)
-			</dt>
-			<dd>
-				the name of the CEP administration service. The default name is ProtonOnWebServerAdmin.
-				
-			</dd>
-		
-	</dl>
-
+                           
 
                             
                     </section>
             
                     <section id="resource_definitions_example" class="resourceExample">
-                         <div class= "header" ><h4 id="h-resource_definitions_example">Definitions [/definitions]</h4></div>
-                            
-                            
-                            
+                         <div class= "header" >
+                         
+                            <h4 id="h-resource_definitions_example">Definitions</h4>
+                            <span class="extra-header">[/definitions]</span>
+                         
+                         </div>
 
                             
                             
                             
 
                             
+                            
+                            
 
+                           
 
                             
                                 <div id="action_retrieve-all-the-existing-definitions-in-the-repository_examples" class="actionExample GET">
 
                                     
-    <h4 id="h-action_retrieve-all-the-existing-definitions-in-the-repository_examples">
-        Retrieve all the existing definitions in the repository -
-        GET
+    <div class="header">
         
-            /definitions
+            <h5 id="h-action_retrieve-all-the-existing-definitions-in-the-repository_examples">Retrieve all the existing definitions in the repository </h5>
+            <span class="extra-header">
+		GET 
+                
+                    /definitions
+                
+            </span>
         
-    </h4>
+
+    </div>
 
                 
                                     <div id="action_retrieve-all-the-existing-definitions-in-the-repository_body" class=""> 
                                         
                                         
                                         
-                                        
-         
+                                                 
                                         
                                             
                                             
@@ -2189,21 +2363,25 @@ The second action is to change the run status of the engine. To start a run or t
                                 <div id="action_creating-a-new-definition_examples" class="actionExample POST">
 
                                     
-    <h4 id="h-action_creating-a-new-definition_examples">
-        Creating a new definition -
-        POST
+    <div class="header">
         
-            /definitions
+            <h5 id="h-action_creating-a-new-definition_examples">Creating a new definition </h5>
+            <span class="extra-header">
+		POST 
+                
+                    /definitions
+                
+            </span>
         
-    </h4>
+
+    </div>
 
                 
                                     <div id="action_creating-a-new-definition_body" class=""> 
                                         
                                         
                                         
-                                        
-         
+                                                 
                                         
                                             
                                             
@@ -2291,35 +2469,25 @@ The second action is to change the run status of the engine. To start a run or t
                                 <div id="action_retrieve-an-application-definition-in-json-format_examples" class="actionExample GET">
 
                                     
-    <h4 id="h-action_retrieve-an-application-definition-in-json-format_examples">
-        Retrieve an application definition in JSON format -
-        GET
+    <div class="header">
         
-            /{definition_name}
+            <h5 id="h-action_retrieve-an-application-definition-in-json-format_examples">Retrieve an application definition in JSON format </h5>
+            <span class="extra-header">
+		GET 
+                
+                    /{definition_name}
+                
+            </span>
         
-    </h4>
+
+    </div>
 
                 
                                     <div id="action_retrieve-an-application-definition-in-json-format_body" class=""> 
                                         
                                         
                                         
-                                        
-
-	<span class="parameters-title">Parameters</span>
-	<dl>
-		
-			<dt>
-				definition_name (Required, string
-				)
-			</dt>
-			<dd>
-				the name of the CEP definition e.g., DoSAttack
-				
-			</dd>
-		
-	</dl>
-         
+                                                 
                                         
                                             
                                             
@@ -2372,35 +2540,25 @@ The second action is to change the run status of the engine. To start a run or t
                                 <div id="action_replace-content-of-an-existing-definition-with-new-content_examples" class="actionExample PUT">
 
                                     
-    <h4 id="h-action_replace-content-of-an-existing-definition-with-new-content_examples">
-        Replace content of an existing definition with new content -
-        PUT
+    <div class="header">
         
-            /{definition_name}
+            <h5 id="h-action_replace-content-of-an-existing-definition-with-new-content_examples">Replace content of an existing definition with new content </h5>
+            <span class="extra-header">
+		PUT 
+                
+                    /{definition_name}
+                
+            </span>
         
-    </h4>
+
+    </div>
 
                 
                                     <div id="action_replace-content-of-an-existing-definition-with-new-content_body" class=""> 
                                         
                                         
                                         
-                                        
-
-	<span class="parameters-title">Parameters</span>
-	<dl>
-		
-			<dt>
-				definition_name (Required, string
-				)
-			</dt>
-			<dd>
-				the name of the CEP definition
-				
-			</dd>
-		
-	</dl>
-         
+                                                 
                                         
                                             
                                             
@@ -2487,35 +2645,25 @@ The second action is to change the run status of the engine. To start a run or t
                                 <div id="action_delete-a-definition_examples" class="actionExample DELETE">
 
                                     
-    <h4 id="h-action_delete-a-definition_examples">
-        Delete a definition -
-        DELETE
+    <div class="header">
         
-            /{definition_name}
+            <h5 id="h-action_delete-a-definition_examples">Delete a definition </h5>
+            <span class="extra-header">
+		DELETE 
+                
+                    /{definition_name}
+                
+            </span>
         
-    </h4>
+
+    </div>
 
                 
                                     <div id="action_delete-a-definition_body" class=""> 
                                         
                                         
                                         
-                                        
-
-	<span class="parameters-title">Parameters</span>
-	<dl>
-		
-			<dt>
-				definition_name (Required, string
-				)
-			</dt>
-			<dd>
-				the name of the CEP definition
-				
-			</dd>
-		
-	</dl>
-         
+                                                 
                                         
                                             
                                             
@@ -2566,51 +2714,46 @@ The second action is to change the run status of the engine. To start a run or t
                     </section>
             
                     <section id="resource_administrating-run-time-instances_example" class="resourceExample">
-                         <div class= "header" ><h4 id="h-resource_administrating-run-time-instances_example">Administrating run-time instances [/instances/{instance_name}]</h4></div>
-                            
-                            
-                            
+                         <div class= "header" >
+                         
+                            <h4 id="h-resource_administrating-run-time-instances_example">Administrating run-time instances</h4>
+                            <span class="extra-header">[/instances/{instance_name}]</span>
+                         
+                         </div>
 
                             
                             
                             
 
                             
+                            
+                            
 
-	<span class="parameters-title">Parameters</span>
-	<dl>
-		
-			<dt>
-				instance_name (Required, string
-				)
-			</dt>
-			<dd>
-				the name of the CEP instance. The default value is ProtonOnWebServerAdmin
-				
-			</dd>
-		
-	</dl>
-
+                           
 
                             
                                 <div id="action_get-instance-status_examples" class="actionExample GET">
 
                                     
-    <h4 id="h-action_get-instance-status_examples">
-        Get instance status -
-        GET
+    <div class="header">
         
-            /instances/{instance_name}
+            <h5 id="h-action_get-instance-status_examples">Get instance status </h5>
+            <span class="extra-header">
+		GET 
+                
+                    /instances/{instance_name}
+                
+            </span>
         
-    </h4>
+
+    </div>
 
                 
                                     <div id="action_get-instance-status_body" class=""> 
                                         
                                         
                                         
-                                        
-         
+                                                 
                                         
                                             
                                             
@@ -2661,24 +2804,28 @@ The second action is to change the run status of the engine. To start a run or t
                                     </div>
                                 </div>
                             
-                                <div id="action_configuring/changing-a-definition-for-an-instance_examples" class="actionExample PUT">
+                                <div id="action_configuringchanging-a-definition-for-an-instance_examples" class="actionExample PUT">
 
                                     
-    <h4 id="h-action_configuring/changing-a-definition-for-an-instance_examples">
-        Configuring/Changing a definition for an instance -
-        PUT
+    <div class="header">
         
-            /instances/{instance_name}
+            <h5 id="h-action_configuring/changing-a-definition-for-an-instance_examples">Configuring/Changing a definition for an instance </h5>
+            <span class="extra-header">
+		PUT 
+                
+                    /instances/{instance_name}
+                
+            </span>
         
-    </h4>
+
+    </div>
 
                 
                                     <div id="action_configuring/changing-a-definition-for-an-instance_body" class=""> 
                                         
                                         
                                         
-                                        
-         
+                                                 
                                         
                                             
                                             
@@ -2896,7 +3043,7 @@ The second action is to change the run status of the engine. To start a run or t
                                                 
                                             
                                             <div class="goActions">
-                                                <a href="#action_configuring/changing-a-definition-for-an-instance">Go to specification</a>
+                                                <a href="#action_configuringchanging-a-definition-for-an-instance">Go to specification</a>
                                             </div>
                                     </div>
                                 </div>
@@ -2915,8 +3062,6 @@ The second action is to change the run status of the engine. To start a run or t
 
 
 
-	
-
     
     
     
@@ -2928,7 +3073,7 @@ The second action is to change the run status of the engine. To start a run or t
               
                   <li><a href="http://forge.fiware.org/plugins/mediawiki/wiki/fiware/index.php/FI-WARE_Open_Specification_Legal_Notice_(implicit_patents_license)">FI-WARE Open Specification Legal Notice</a></li>
               
-                  <li><a href="https://forge.fiware.org/plugins/mediawiki/wiki/fiware/index.php/CEP_GE_-_IBM_Proactive_Technology_Online_Unit_Testing_Plan">CEP test plan</a></li>
+                  <li><a href="https://forge.fi-ware.eu/docman/view.php/9/2732/CEP_EPN_Schema_FI_WARE.json">https://forge.fi-ware.eu/docman/view.php/9/2732/CEP_EPN_Schema_FI_WARE.json</a>) while the semantics of the various elements in this schema are described in a user guide. Examples for definitions can be found in the <a href="https://forge.fiware.org/plugins/mediawiki/wiki/fiware/index.php/CEP_GE_-_IBM_Proactive_Technology_Online_Unit_Testing_Plan">CEP test plan</a></li>
               
           </ul>
       </section>
@@ -2936,4 +3081,5 @@ The second action is to change the run status of the engine. To start a run or t
   </div>
 </div>
 </body>
+
 </html>
