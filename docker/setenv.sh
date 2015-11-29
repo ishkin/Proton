@@ -1,0 +1,1 @@
+CATALINA_OPTS="-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=8686 -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false -Djava.security.egd=file:/dev/./urandom" # USED FOR FASTER STARTUP OF TOMCAT. WITHOUT THIS, CAN TAKE UP TO 10 MINUTES OR EVEN MORE

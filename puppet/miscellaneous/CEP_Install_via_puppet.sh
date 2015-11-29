@@ -97,3 +97,6 @@ sudo_run apt-get -y install puppet-module-puppetlabs-apt
 download_puppet_cep_module
 
 sudo_run /usr/bin/puppet apply --parser future --modulepath=$base_dir/puppet/modules:/etc/puppet/modules:/usr/share/puppet/modules -e 'include cep' --debug
+
+sudo_run echo "Done!"
+exit 0

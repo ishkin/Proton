@@ -11,7 +11,7 @@ echo $2
 
 at=`curl "http://$HOST:$PORT/ProtonOnWebServerAdmin/resources/instances/ProtonOnWebServer"`
 echo $at
-at2='{"state":"started","definitions-url":"\/ProtonOnWebServerAdmin\/resources\/definitions\/DoSAttack2"}'
+at2='{"state":"started","definitions-url":"\/ProtonOnWebServerAdmin\/resources\/definitions\/EmptyDefinition"}'
 if [ "$at" != "$at2" ];
 then
         echo "Proton instance not started sucessfully"

@@ -13,46 +13,45 @@ RUN apt-get -y install oracle-java7-installer
 RUN apt-get -y install tomcat7 tomcat7-admin
 RUN echo "JAVA_HOME=/usr/lib/jvm/java-7-oracle" >> /etc/default/tomcat7
 EXPOSE 8080
-# Install git
-RUN apt-get -y install git
-WORKDIR /root
-# Clone Proton repo
-RUN git clone https://github.com/ishkin/Proton.git
+# Some fixes to get Tomcat7 running smooth on Ubuntu 14.04
+RUN ln -s /var/lib/tomcat7/common /usr/share/tomcat7/common
+RUN ln -s /var/lib/tomcat7/server /usr/share/tomcat7/server
+RUN ln -s /var/lib/tomcat7/shared /usr/share/tomcat7/shared
+# Install zip and unzip
+RUN apt-get -y install zip
+RUN apt-get -y install unzip
+RUN mkdir /var/lib/Proton
+RUN mkdir /var/lib/Proton/ProtonDefinitions/
+WORKDIR /var/lib/Proton
+# Clone Proton .war files
+RUN wget https://github.com/ishkin/Proton/raw/master/artifacts/AuthoringTool.war
+RUN wget https://github.com/ishkin/Proton/raw/master/artifacts/AuthoringToolWebServer.war
+RUN wget https://github.com/ishkin/Proton/raw/master/artifacts/ProtonOnWebServer.war
+RUN wget https://github.com/ishkin/Proton/raw/master/artifacts/ProtonOnWebServerAdmin.war
+# Fix ProtonOnWebServerAdmin's ProtonAdmin.properties to point to a valid directory for definitions repository
+RUN mkdir tmp
+RUN unzip ProtonOnWebServerAdmin.war -d ./tmp
+WORKDIR ./tmp
+RUN sed -i -e 's/$//'	-e 's|^\(definitions-repository\)=.*|\1=/var/lib/Proton/ProtonDefinitions|' ProtonAdmin.properties
+RUN zip ../ProtonOnWebServerAdmin.war *
+WORKDIR /var/lib/Proton
+RUN rm -rf tmp
 # Ubuntu  Tomcat package sets CATALINA_HOME to this folder, and CATALINA_BASE to /var/lib/tomcat7. Proton expects them to be in the same folder.
-# This is a hack in order to get Proton running on Ubuntu official Tomcat packages
-# This is suboptimal, in case Proton.properties or JSON application files change syntax, the builds would fail and these files should also be updated.
-RUN mkdir /usr/share/tomcat7/webapps
-RUN mkdir /usr/share/tomcat7/webapps/ProtonOnWebServer
-COPY ./Proton.properties /usr/share/tomcat7/webapps/ProtonOnWebServer/
-COPY ./DoSAttack2.json /usr/share/tomcat7/webapps/ProtonOnWebServer/
 #startup.sh and tomcat-users settings according to the Installation Guide
 COPY ./startup.sh /usr/share/tomcat7/bin/
+COPY ./setenv.sh /usr/share/tomcat7/bin/
 COPY ./tomcat-users.xml /etc/tomcat7/
 # Initial start of the tomcat server for deploying the apps
 RUN service tomcat7 start || echo OK
-RUN apt-get -y install unzip
-#WORKDIR /root/Proton/IBM Proactive Technology Online
-#RUN unzip -d IBMProtonOnWebServer IBMProtonOnWebServer.zip 
-#WORKDIR /root/Proton/mvn-repo/com/ibm/hrl/proton/AuthoringTool/0.0.1
-#RUN cp *war /var/lib/tomcat7/webapps/AuthoringTool.war
-#WORKDIR /root/Proton/mvn-repo/com/ibm/hrl/proton/AuthoringToolWebServer/0.0.1
-#RUN cp *war /var/lib/tomcat7/webapps/AuthoringToolWebServer.war
-#WORKDIR /root/Proton/mvn-repo/com/ibm/hrl/proton/ProtonOnWebServer/0.0.1
-#RUN cp *war /var/lib/tomcat7/webapps/ProtonOnWebServer.war
-#WORKDIR /root/Proton/mvn-repo/com/ibm/hrl/proton/ProtonOnWebServerAdmin/0.0.1
-#RUN cp *war /var/lib/tomcat7/webapps/ProtonOnWebServerAdmin.war
 #take wars from the artifacts directory 
-WORKDIR /root/Proton/artifacts
 RUN cp AuthoringTool.war /var/lib/tomcat7/webapps/AuthoringTool.war
 RUN cp AuthoringToolWebServer.war /var/lib/tomcat7/webapps/AuthoringToolWebServer.war 
 RUN cp ProtonOnWebServer.war /var/lib/tomcat7/webapps/ProtonOnWebServer.war
 RUN cp ProtonOnWebServerAdmin.war /var/lib/tomcat7/webapps/ProtonOnWebServerAdmin.war
-RUN mkdir /root/docker
-WORKDIR /root
 # install curl for smoketest
 RUN apt-get -y install curl
 # smoketest bash script
-COPY ./docker_smoketest.sh /root/docker/
+COPY ./docker_smoketest.sh /root/Proton/
 ENV CATALINA_BASE /var/lib/tomcat7/
 ENV CATALINA_HOME /usr/share/tomcat7/
 CMD /usr/share/tomcat7/bin/catalina.sh run
