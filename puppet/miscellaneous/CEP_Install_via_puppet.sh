@@ -13,10 +13,10 @@ stdout_file=/tmp/$base_name.$$.out
 stderr_file=/tmp/$base_name.$$.err
 
 touch $log_file
-tail -f $log_file &
+##tail -f $log_file &
 
 touch $stdout_file
-tail -f $stdout_file &
+##tail -f $stdout_file &
 
 
 print_to_log(){
@@ -25,12 +25,13 @@ print_to_log(){
   [[ $sev = 'DEBUG' ]] && [[ $DEBUG != 'yes' ]] && return 0
 
   formated_date=$(date '+%Y-%m-%d_%H:%M:%S')
-  echo "[$formated_date] [$base_name] [$sev] [$*]" >> $log_file
+  echo "[$formated_date] [$base_name] [$sev] [$*]" | /usr/bin/tee -a $log_file
   return 0
 }
 
 sudo_run(){
-  sudo -n "$@" 1>>$stdout_file 2>$stderr_file
+#  sudo -n "$@" 1>>$stdout_file 2>$stderr_file
+  sudo -n "$@" 2>$stderr_file | /usr/bin/tee -a $stdout_file
   if [[ $? -ne 0 ]]; then
     print_to_log "ERROR" "Failed to run $*"
     print_to_log "DEBUG" "stderr was: `cat $stderr_file`"
@@ -98,5 +99,9 @@ download_puppet_cep_module
 
 sudo_run /usr/bin/puppet apply --parser future --modulepath=$base_dir/puppet/modules:/etc/puppet/modules:/usr/share/puppet/modules -e 'include cep' --debug
 
-sudo_run echo "Done!"
+print_to_log 'INFO' 'Done!'
+
+/bin/rm -f $stderr_file
+/bin/rm -f $stdout_file
+
 exit 0

@@ -6,6 +6,7 @@ PORT=$2
 echo $1
 echo $2
 
+[ "$HOST" ] || [ "$IP" ] && HOST="$IP"
 [ "$HOST" ] || HOST="localhost"
 [ "$PORT" ] || PORT="8080"
 
