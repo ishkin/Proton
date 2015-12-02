@@ -48,7 +48,7 @@ class cep::pkgs {
 		require => Package['tomcat7'],
 	}
 
-	package { ['zip','unzip','curl','ksh']:
+	package { ['zip','unzip','curl','ksh','xmlstarlet']:
 		ensure => latest
 	}
 
@@ -64,7 +64,7 @@ class cep::pkgs {
 			exec { "$modules_folder/$module_name/download_artifacts.ksh":
 				command => "$modules_folder/$module_name/files/download_artifacts.ksh",
 				onlyif => "/usr/bin/test -e $modules_folder/$module_name",
-				require => [Package['ksh'],Exec["exists $modules_folder/$module_name"]],
+				require => [Package['ksh'],Package['xmlstarlet'],Package['zip'],Package['unzip'],Package['curl'],Exec["exists $modules_folder/$module_name"]],
 			}
 		}
 	}

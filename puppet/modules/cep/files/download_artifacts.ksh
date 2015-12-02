@@ -36,19 +36,46 @@ download_artifacts(){
 	return $rc
 }
 
-fix_definitions_repository_path(){
+generate_random_password(){
+	password_length=12
+	random_password=''
+	[[ -z "$random_password" ]] && random_password=$(/usr/bin/openssl rand -base64 $password_length)
+	[[ -z "$random_password" ]] && random_password=$(/bin/dd if=/dev/urandom bs=128 count=3 2>/dev/null| /usr/bin/sha256sum 2>/dev/null | /usr/bin/cut -c1-$password_length 2>/dev/null)
+	[[ -z "$random_password" ]] && random_password=$(/bin/date "+$$.d1wE4.%s") && print "WARNING: Faind to generate a real random password!"
+	[[ -z "$random_password" ]] && random_password="zdKDsnHnE1r+9lnX" && print "WARNING: Faind to generate a random password! will use the default hardcoded password"
+	print "$random_password"
+}
+
+update_ProtonOnWebServerAdmin_war(){
 	tmp_folder="/tmp/ProtonAdmin.properties.$$.tmp"
 	mkdir -p "$tmp_folder" || return 1
 	cd "$tmp_folder"
 	unzip "$destination_folder/ProtonOnWebServerAdmin.war"
+
 	sed -i -e 's/$//'	-e 's|^\(definitions-repository\)=.*|\1=/var/lib/cep/ProtonDefinitions|' ProtonAdmin.properties
+
+	sed -i -e 's/^M$//' -e "s|^\(manager-password\)=.*|\1=$manager_password|" ProtonAdmin.properties
+
 	zip "$destination_folder/ProtonOnWebServerAdmin.war" * 
 	cd -
 	rm -rf "$tmp_folder"
 }
 
+update_tomcat_users_xml(){
+
+	xmlstarlet ed -L --update "/tomcat-users/user[@username='manager']/@password" -v "$manager_password" "$destination_folder/tomcat-users.xml"
+	xmlstarlet ed -L --update "/tomcat-users/user[@username='admin']/@password"   -v "$admin_password"   "$destination_folder/tomcat-users.xml"
+}
+
+#Generate new random passwords for the tomcat admin and manager login
+manager_password=`generate_random_password` || exit 1
+admin_password=`generate_random_password` || exit 1
+
 download_artifacts || exit 1
-fix_definitions_repository_path || exit 1
+
+# fix definitions repository path, and manager password in ProtonOnWebServerAdmin.war:
+update_ProtonOnWebServerAdmin_war || exit 1
+
+update_tomcat_users_xml || exit 1
 
 exit 0
-
