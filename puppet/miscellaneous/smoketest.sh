@@ -1,13 +1,19 @@
 #!/bin/sh
 
-HOST=$1
-PORT=$2
+HOST="$1"
+PORT="$2"
 
 echo $1
 echo $2
 
-[ "$HOST" ] || [ "$IP" ] && HOST="$IP"
-[ "$HOST" ] || HOST="localhost"
+if [ -z "$HOST" ]; then
+	if [ -z "$IP" ]; then
+		HOST="localhost"
+	else
+		HOST="$IP"
+	fi
+fi
+
 [ "$PORT" ] || PORT="8080"
 
 at=`curl "http://$HOST:$PORT/ProtonOnWebServerAdmin/resources/instances/ProtonOnWebServer"`
