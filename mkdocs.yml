@@ -12,4 +12,5 @@ extra_css: ["http://fiware.org/style/ogilvy.css"]
 pages:
   -  Home: index.md  
   - 'Installation and Administration Manual': 'Proton-InstallationAndAdminGuide.md'
-  - 'Programmer Guide': 'ProtonProgrammerGuide-FI-WAREv4_4_1.md' 
+  - 'User Guide': 'ProtonUserGuide_FI_WAREv4_4_1.md' 
+  - 'Programmer Guide': 'ProtonProgrammerGuide_FI_WAREv4_4_1.md'
