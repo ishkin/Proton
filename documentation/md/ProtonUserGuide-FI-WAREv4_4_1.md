@@ -517,7 +517,7 @@ The following values are relevant for the different template types:
 ![Authoring Tool – Fill Template Values](https://github.com/ishkin/Proton/tree/master/documentation/UG-images/AuthoringTool–FillTemplateValues.jpg "Authoring Tool – Fill Template Values")<br>
 *Figure 7: Authoring Tool – Fill Template Values*<br> 
 The template is then placed under artifacts of the project, and the tab can be opened or closed.<br>
-![Authoring Tool – Save / Export the Template](https://github.com/ishkin/Proton/tree/master/documentation/UG-images/AuthoringTool–Save-ExportTheTemplate.jpg "Authoring Tool – Save / Export the Template")<br>
+![Authoring Tool – Save / Export the Template](https://github.com/ishkin/Proton/tree/master/documentation/UG-images/AuthoringTool–SaveExportTheTemplate.jpg "Authoring Tool – Save / Export the Template")<br>
 *Figure 8: Authoring Tool – Save / Export the Template* 
  
 The template is not saved as part of the project. So if you open the project without saving, this information would be lost. 
