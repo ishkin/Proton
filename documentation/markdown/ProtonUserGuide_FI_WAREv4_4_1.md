@@ -456,13 +456,13 @@ Create a definition using templates as follows:
 The assumption is that all the event definitions of the application should already exist prior to using the templates, and the templates only define part of the application.<br>
 Relevant events depend on the template: for the **Filter** template it is just the input and the output event. For other templates, please see the template description.
 - In the Authoring Tool click on the New menu and choose the option of creating a new template: <br>
-![Authoring Tool – Created Template](https://github.com/ishkin/Proton/tree/master/documentation/UG-images/AuthoringToolNewMenu.jpg "Authoring Tool – New Menu")<br>
+![Authoring Tool – Created Template](UG-images/AuthoringToolNewMenu.jpg "Authoring Tool – New Menu")<br>
 *Figure 1: Authoring Tool – New Menu*<br>
 Specify the name for the template. The created template will be added to the project artifacts tree:
-![Authoring Tool – Created Template](https://github.com/ishkin/Proton/tree/master/documentation/UG-images/AuthoringToolCreatedTemplate.jpg "Authoring Tool – Created Template")<br>
+![Authoring Tool – Created Template](UG-images/AuthoringToolCreatedTemplate.jpg "Authoring Tool – Created Template")<br>
 *Figure 2: Authoring Tool – Created Template*
 - Choose the template type from the drop down box. Fill in the appropriate values in the  template parameters:<br> 
-![Authoring Tool – Type Selection](https://github.com/ishkin/Proton/tree/master/documentation/UG-images/AuthoringToolTypeSelection.jpg "Authoring Tool – Type Selection")<br> 
+![Authoring Tool – Type Selection](UG-images/AuthoringToolTypeSelection.jpg "Authoring Tool – Type Selection")<br> 
 *Figure 3: Authoring Tool – Type Selection*
 
 The following values are relevant for the different template types:
@@ -506,18 +506,18 @@ The following values are relevant for the different template types:
 - Verify the correctness of the values you provided by pressing the “**Verify**” button.
 - Click **Save and Export** to add the artifacts (EPAs and contexts) defined by the template. This will create the JSON representing the project together with template artifacts. This JSON can be imported back into a project to view the artifacts in the project tree, and to review/change.<br>
 **Note:** Take into account that the template is not a constant project artifact. It is a temporal artifact, therefore it is not saved as part of the project artifacts, If you **Save** or **Save and Export**, the EPA and context artifacts defined by the template will be added to the project, and can be viewed in the tree under **EPAs** and **Contexts** headers. However, the template itself is not saved as part of the project.<br>
-![Authoring Tool – Template Menu](https://github.com/ishkin/Proton/tree/master/documentation/UG-images/AuthoringToolTemplateMenu.jpg "Authoring Tool – Template Menu")<br>
+![Authoring Tool – Template Menu](UG-images/AuthoringToolTemplateMenu.jpg "Authoring Tool – Template Menu")<br>
 *Figure 4: Authoring Tool – Template Menu*<br> 
 - Choose the name of the template: <br>
-![Authoring Tool – Choose Template Name](https://github.com/ishkin/Proton/tree/master/documentation/UG-images/AuthoringToolChooseTemplateName.jpg "Authoring Tool – Choose Template Name")<br>
+![Authoring Tool – Choose Template Name](UG-images/AuthoringToolChooseTemplateName.jpg "Authoring Tool – Choose Template Name")<br>
 *Figure 5: Authoring Tool – Choose Template Name*<br> 
 - Choose the type and fill in the values:<br>
-![Authoring Tool – Choose Template Type](https://github.com/ishkin/Proton/tree/master/documentation/UG-images/AuthoringToolChooseTemplateType.jpg "Authoring Tool – Choose Template Type")<br>
+![Authoring Tool – Choose Template Type](UG-images/AuthoringToolChooseTemplateType.jpg "Authoring Tool – Choose Template Type")<br>
 *Figure 6: Authoring Tool – Choose Template Type*<br>  
-![Authoring Tool – Fill Template Values](https://github.com/ishkin/Proton/tree/master/documentation/UG-images/AuthoringToolFillTemplateValues.jpg "Authoring Tool – Fill Template Values")<br>
+![Authoring Tool – Fill Template Values](UG-images/AuthoringToolFillTemplateValues.jpg "Authoring Tool – Fill Template Values")<br>
 *Figure 7: Authoring Tool – Fill Template Values*<br> 
 The template is then placed under artifacts of the project, and the tab can be opened or closed.<br>
-![Authoring Tool – Save / Export the Template](https://github.com/ishkin/Proton/tree/master/documentation/UG-images/AuthoringToolSaveExportTheTemplate.jpg "Authoring Tool – Save / Export the Template")<br>
+![Authoring Tool – Save / Export the Template](UG-images/AuthoringToolSaveExportTheTemplate.jpg "Authoring Tool – Save / Export the Template")<br>
 *Figure 8: Authoring Tool – Save / Export the Template* 
  
 The template is not saved as part of the project. So if you open the project without saving, this information would be lost. 
@@ -753,7 +753,7 @@ The Proton user interface is a web-based application . The Proton application is
 - Editing area (in the center).
 - Messages and errors area (at the bottom).
   
-![Proton Authoring Tool](https://github.com/ishkin/Proton/tree/master/documentation/UG-images/ProtonAuthoringTool.jpg "Proton Authoring Tool")<br>
+![Proton Authoring Tool](UG-images/ProtonAuthoringTool.jpg "Proton Authoring Tool")<br>
 *Figure 9: Proton Authoring Tool*<br> 
 
 You will generally perform project activities using the buttons at the top, and editing activities using the editing area. 
@@ -933,7 +933,7 @@ The IBM Proactive Technology Online application should include a REST type consu
 
 Below is an example of such a consumer:
 
-![REST type consumer](https://github.com/ishkin/Proton/tree/master/documentation/UG-images/RESTTypeConsumer.jpg "REST type consumer")<br>
+![REST type consumer](UG-images/RESTTypeConsumer.jpg "REST type consumer")<br>
 *Figure 10: REST type consumer*
 
 Note that the content type of this consumer is application/xml and its formatter is xml.
