@@ -47,7 +47,7 @@ The architecture also ensures separation of logic and environment-specific servi
 
 ###<a name="higharch"></a>High-level Architecture 
 
-![High-level Architecture](https://github.com/ishkin/Proton/tree/master/documentation/PG-images/High-LevelArchitecture.jpg "High-level Architecture")<br>
+![High-level Architecture](https://github.com/ishkin/Proton/tree/master/documentation/markdown/PG-images/High-LevelArchitecture.jpg "High-level Architecture")<br>
 *Figure 1: High-level architecture*
 
 The incoming events are handled by multiple routing threads that route the events to the relevant agent queues - according to the agent type and/or context type that an event is intended for. After the buffering time (either minimal or correctness-based) of the agent queue expires, the event is handled by processing threads, sent to partitioning by context service, and sent to the EPA (Event Processing Agent) manager for processing by particular agent instance according to agent type and context partition.
