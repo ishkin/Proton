@@ -35,13 +35,14 @@ More information about this project is provided in the http://catalogue.fiware.o
 
 - In the catalogue you can find several ways to use the Proactive Technology Online Generic Enabler instance (creating instance, using existing instances, downloads the code). 
 - If you like to install the Proactive Technology Online, follow the http://proactive-technology-online.readthedocs.org/en/latest/Proton-InstallationAndAdminGuide/index.html[installation guide at ReadTheDocs]. This guide includes running instructions and sanity checks procedures. 
+- You can also install the Proactive Technology Online using a docker installation that is provided in the docker folder.
 - For more advanced tests, you can follow the https://forge.fiware.org/plugins/mediawiki/wiki/fiware/index.php/CEP_GE_-_IBM_Proactive_Technology_Online_Unit_Testing_Plan[unit tests].
 - General information on this technology can be found in the http://forge.fiware.org/plugins/mediawiki/wiki/fiware/index.php/FIWARE.OpenSpecification.Data.CEP[CEP open specification page].
 - A high level description of the technology and an api overview can be found as part of the https://www.fiware.org/devguides/real-time-processing-of-context-events/[FIWARE developers’ tour guide].
 - A complete set of the REST api can be found http://forge.fiware.org/plugins/mediawiki/wiki/fiware/index.php/Complex_Event_Processing_Open_RESTful_API_Specification[here], or in apiary format http://htmlpreview.github.io/?https://github.com/ishkin/Proton/blob/master/documentation/apiary/CEP-apiary-blueprint.html[here].
-- The http://proactive-technology-online.readthedocs.org/en/latest/index.html[Proactive Technology Online documents] are published at ReadTheDocs. You can find there the technology http://proactive-technology-online.readthedocs.org/en/latest/ProtonUserGuide_FI_WAREv4_4_1/index.html[User Guide] and its http://proactive-technology-online.readthedocs.org/en/latest/ProtonProgrammerGuide_FI_WAREv4_4_1/index.html[Programmer Guide] 
+- The http://proactive-technology-online.readthedocs.org/en/latest/index.html[Proactive Technology Online documents] are published at ReadTheDocs. You can find there the technology http://proactive-technology-online.readthedocs.org/en/latest/ProtonUserGuide_FI_WAREv4_4_1/index.html[User Guide] and its http://proactive-technology-online.readthedocs.org/en/latest/ProtonProgrammerGuide_FI_WAREv4_4_1/index.html[Programmer Guide]. 
 - More documentation is provided under the documentation folder, as described below. 
-- Education material can be found at the https://edu.fiware.org/course/view.php?id=58[FIWARE academy]
+- Education material can be found at the https://edu.fiware.org/course/view.php?id=58[FIWARE academy].
 
 === Documentation ===
 Can be found under the /documentation folder, and includes the Proton's User Guide (explaining the language building blocks and use of the authoring tool use) and Programmer's Guide (explaining possible extension points to the Proton's programming model)
