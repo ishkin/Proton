@@ -3,9 +3,13 @@
 You can install the Proactive Technology Online very easily using docker. 
 
 Follow these steps:
+
 1.  Update `/etc/hosts` to add the current machine as a hostname.
+
 2.	Install docker. 
+
 3.	Navigate to a folder where you’d like the docker files to be placed.
+
 4.	Download the docker files to this new folder from the [GitHub Proton repository](https://github.com/ishkin/Proton/tree/master/docker).
 
 5.	Build the Dockerfile.
