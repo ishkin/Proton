@@ -82,6 +82,14 @@ download_puppet_cep_module(){
 	return 0
 }
 
+handle_hostname_changes(){
+	#This fix will instruce cloud-init to control the /etc/hosts file
+	#to ensure we can resolve the hostname using this file.
+	if [[ -d /etc/cloud/cloud.cfg.d ]]; then
+		sudo_run sh -c 'echo "manage_etc_hosts: True" > /etc/cloud/cloud.cfg.d/06_manage_etc_hosts.cfg'
+	fi
+}
+
 
 ####################################################
 ####                                            ####
@@ -96,6 +104,8 @@ sudo_run apt-get update
 sudo_run apt-get -y install puppet-module-puppetlabs-apt
 
 download_puppet_cep_module
+
+handle_hostname_changes
 
 sudo_run /usr/bin/puppet apply --parser future --modulepath=$base_dir/puppet/modules:/etc/puppet/modules:/usr/share/puppet/modules -e 'include cep' --debug
 
