@@ -67,6 +67,7 @@ download_puppet_cep_module(){
 		"manifests/init.pp" \
 		"manifests/pkgs.pp" \
 		"manifests/deploy.pp" \
+		"manifests/download.pp" \
 		"manifests/config.pp" \
 		"manifests/validation.pp" \
 		; do
