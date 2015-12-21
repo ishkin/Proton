@@ -52,7 +52,7 @@ class cep::pkgs {
 		ensure => latest
 	}
 
-	if "$::servername" == "" {
+	if "$servername" == "" {
 		#We are running without a master, we will locate and run the download_artifacts.ksh locally
 		each(split($settings::modulepath, ':')) |$modules_folder| {
 
