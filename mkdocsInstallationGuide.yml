@@ -1,0 +1,14 @@
+site_name: Proactive-Technology-Online
+site_url: https://proactive-technology-online.readthedocs.org
+repo_url: https://github.com/ishkin/Proton.git
+site_description: Proactive Technology Online Documentation
+docs_dir: documentation/markdown
+site_dir: html
+markdown_extensions: [toc,fenced_code]
+use_directory_urls: false
+theme: readthedocs
+extra_css: ["http://fiware.org/style/ogilvy.css"]
+
+pages:
+  -  Home: index.md  
+  - 'Installation and Administration Manual': 'Proton-InstallationAndAdminGuide.md'
