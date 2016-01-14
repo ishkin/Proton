@@ -397,9 +397,9 @@ The participant events are comprised of the following properties:
 - **Condition** – filters the events that participate in the EPA and ignores those that do not satisfy the condition.
 - **Consumption** – defines the condition for events to be reused later in the same pattern. This operand is applicable only for **join** operators, **aggregation** operators, and **selection** operators. 
 
-######Operand Properties for Aggregation Operators
+######Operand Properties for Join Operators
 
-**Instance Selection** decides what to do when multiple events of the same operand occur. When the **quantifier** is set to **First**, it selects the first event of the operand that satisfies the pattern conditions. When the quantifier is set to **Last**, it selects the last event of the operand that satisfies the pattern conditions.
+**Instance Selection** decides what to do when multiple events of the same operand occur. When the **quantifier** is set to **First**, it selects the first event of the operand that satisfies the pattern conditions. When the quantifier is set to **Last**, it selects the last event of the operand that satisfies the pattern conditions. When the **quantifier** is set to **Override**, only one event is kept for each operand, and a new event replaces the previous event. The difference between **Last** and **Override** is that when using the **Last** selection, all the events are kept, and during the evaluation the **Last** event that matches the pattern condition is used. While when using  **Override** only the last event is available for the pattern evaluation.
  
 ######Operand Properties for Aggregation Operands 
 
