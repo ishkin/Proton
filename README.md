@@ -62,7 +62,7 @@ For instructions on how to configure and install IBM Proactive Technology Online
 
 [Top](#top)
 
-## API Reference
+## API Reference Documentation
 Detailed online documentation for installation, testing, web authoring of rules and web APIs are located in https://readthedocs.org/projects/proactive-technology-online/builds/
 Documentations is also available under the /documentation folder, and includes the Proton's User Guide (explaining the language building blocks and use of the authoring tool use) and Programmer's Guide (explaining possible extension points to the Proton's programming model)
 
