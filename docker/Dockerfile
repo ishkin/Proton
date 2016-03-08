@@ -54,4 +54,7 @@ RUN apt-get -y install curl
 COPY ./docker_smoketest.sh /root/Proton/
 ENV CATALINA_BASE /var/lib/tomcat7/
 ENV CATALINA_HOME /usr/share/tomcat7/
+# Changing definition via REST API effect only the file in /usr/share/tomcat7/webapps/ProtonOnWebServer/Proton.properties
+RUN mkdir -p /usr/share/tomcat7/webapps/ProtonOnWebServer
+RUN ln -s /var/lib/tomcat7/webapps/ProtonOnWebServer/Proton.properties /usr/share/tomcat7/webapps/ProtonOnWebServer/Proton.properties
 CMD /usr/share/tomcat7/bin/catalina.sh run
