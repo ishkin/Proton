@@ -2,8 +2,8 @@
 
 [![License badge](https://img.shields.io/hexpm/l/plug.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Documentation badge](https://readthedocs.org/projects/fiware-orion/badge/?version=latest)](http://proactive-technology-online.readthedocs.org/en/latest/Proton-InstallationAndAdminGuide/index.html)
-[![Docker badge](https://img.shields.io/docker/pulls/fiware/orion.svg)](https://hub.docker.com/r/fiware/orion/)
-[![Support badge]( https://img.shields.io/badge/support-sof-yellowgreen.svg)](http://stackoverflow.com/questions/tagged/fiware-orion)
+[![Docker badge](https://img.shields.io/docker/pulls/fiware/orion.svg)](https://hub.docker.com/r/fiware/cep/)
+[![Support badge]( https://img.shields.io/badge/support-sof-yellowgreen.svg)](http://stackoverflow.com/questions/tagged/fiware-cep)
 
 * [Introduction](#introduction)
 * [GEi overall description](#gei-overall-description)
