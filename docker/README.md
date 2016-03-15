@@ -1,5 +1,7 @@
 # How to install the Proactive Technology Online with Docker
 
+## Build your docker image
+
 You can install the Proactive Technology Online very easily using docker. 
 
 Follow these steps:
@@ -41,3 +43,6 @@ It is important to note that Tomcat is not started automatically inside the cont
         service tomcat7 start
         
         service tomcat7 status # THIS SHOULD RETURN: Starting Tomcat servlet engine tomcat7
+## Pull a ready docker image from the docker hub
+
+Use the pull command in the [Proton Docker Hub](https://hub.docker.com/r/fiware/proactivetechnologyonline/) 
