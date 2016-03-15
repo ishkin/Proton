@@ -35,8 +35,8 @@ Follow these steps:
     
 8. To access the container and run commands from within it:
 
-      sudo docker ps # That will provide <container_id> for the proton image.
-      sudo docker exec -it <container_id> bash
+            sudo docker ps # That will provide <container_id> for the proton image.
+            sudo docker exec -it <container_id> bash
 
 9. Start the Tomcat server. 
       It is important to note that Tomcat is not started automatically inside the container, and thus needs to be started manually. In order to do that, first access the container using the above command and then do:
