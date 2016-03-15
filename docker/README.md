@@ -46,4 +46,4 @@ Follow these steps:
 
 ## Pull a ready docker image from the docker hub
 
-Use the pull command in the [Proton Docker Hub](https://hub.docker.com/r/fiware/proactivetechnologyonline/) 
+Use the pull command in the [Proton Docker Hub](https://hub.docker.com/r/fiware/proactivetechnologyonline/), than continue from step 7 above.
