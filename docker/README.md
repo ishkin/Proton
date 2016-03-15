@@ -7,19 +7,23 @@ Follow these steps:
 1.  Update `/etc/hosts` to add the current machine as a hostname.
 
 2.	Install docker. 
+3.	Start the docker daeomon - either during the docker installationve, or with the command
 
-3.	Navigate to a folder where you’d like the docker files to be placed.
-
-4.	Download the docker files to this new folder from the [GitHub Proton repository](https://github.com/ishkin/Proton/tree/master/docker).
-
-5.	Build the Dockerfile.
-
-    This can be done in the following way:
-    
-        sudo docker build –t proton .
         sudo docker daemon & # THIS NEEDS TO BE RUN ONLY ONCE, IN THE BACKGROUND
+    
+    Or you can use the "Docker Quickstart Terminal" application.
 
-6.	Run the docker image
+4.	Navigate to a folder where you’d like the docker files to be placed.
+
+5.	Download the docker files to this new folder from the [GitHub Proton repository](https://github.com/ishkin/Proton/tree/master/docker). You can do that with the SVN command
+
+        svn checkout https://github.com/ishkin/Proton.git/trunk/docker
+
+6.	Build the Docker Image from the Dockerfile:
+
+        sudo docker build –t proton .
+
+7.	Run the docker image
 
     This can be done in the following way:
         
@@ -29,8 +33,8 @@ Follow these steps:
     
 To access the container and run commands from within it:
 
-        sudo docker ps
-        sudo docker exec -it <container_id taken from ps results> bash
+        sudo docker ps # That will provide <container_id> for the proton image.
+        sudo docker exec -it <container_id> bash
 
 It is important to note that Tomcat is not started automatically inside the container, and thus needs to be started manually. In order to do that, first access the container using the above command and then do:
 
