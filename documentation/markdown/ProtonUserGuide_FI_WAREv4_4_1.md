@@ -847,6 +847,8 @@ The integration is based on the NGSI/XML format supported by the Context Broker.
 
 Although the support of IBM Proactive Technology Online in the NGSI/XL format was designed as part of the integration with the Context Broker, any other application can use it and communicate with the IBM Proactive Technology Online in this manner. 
 
+*Note of Limitation*:
+
 Currently IBM Proactive Technology Online do not support JSON format for integration with the Context Broker. Therefore integration with the latest Orion Context Broker version , where the NGSI/XML format is deprecated will not be possible until a version of IBM Proactive Technology Online supporting the JSON format is published. 
 
 Additionally,  currently it is not possible to add the Fiware-Service and Fiware-ServicePath information to the header of the HTTP request sent to Context Broker by CEP, therefore it is not possible to work with entities in context broker requiring this information.
