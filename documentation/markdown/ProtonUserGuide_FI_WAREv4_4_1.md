@@ -4,11 +4,11 @@ IBM Research – Haifa
 
 Licensed Materials – Property of IBM
 
-©Copyright IBM Corp. 2012, 2013, 2014, 2015  All Rights Reserved.
+©Copyright IBM Corp. 2012, 2013, 2014, 2015, 2016  All Rights Reserved.
 
 
 
-Version 4.4.1: September 2015
+Version 4.4.1: March 2016
 
 ###Table of Contents
 
