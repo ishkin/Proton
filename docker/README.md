@@ -42,13 +42,13 @@ Follow these steps:
 
             cd /var/lib/tomcat7/webapps
             rm -rf AuthoringTool
-            
+
 9. Start the Tomcat server. 
       It is important to note that Tomcat is not started automatically inside the container, and thus needs to be started manually. In order to do that, first access the container using the above command and then do:
 
             service tomcat7 start
             service tomcat7 status # THIS SHOULD RETURN: Starting Tomcat servlet engine tomcat7
-            
+
 10. Try it.
      * Find the correct ip of your docker container on your network and try http://\<ip\>:\<port\>. That will display the tomcat "It Works!" welcome screen.
      * Try also the Web Rules Authoring Tool with http://\<ip\>:\<port\>/WebAuthoring, which should repsond with the Authoring Tool web screen.
