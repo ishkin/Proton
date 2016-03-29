@@ -48,9 +48,10 @@ Follow these steps:
 
             service tomcat7 start
             service tomcat7 status # THIS SHOULD RETURN: Starting Tomcat servlet engine tomcat7
+            
 10. Try it.
-     Find the correct ip of your docker container on your network and try http://<ip>:<port>. That will display the tomcat "It Works!" welcome screen.
-     Try also the Web Rules Authoring Tool with http://<ip>:<port>/WebAuthoring, which should repsond with the Authoring Tool web screen.
+     * Find the correct ip of your docker container on your network and try http://\<ip\>:\<port\>. That will display the tomcat "It Works!" welcome screen.
+     * Try also the Web Rules Authoring Tool with http://\<ip\>:\<port\>/WebAuthoring, which should repsond with the Authoring Tool web screen.
 
 ## Pull a ready docker image from the docker hub
 
