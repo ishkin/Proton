@@ -114,5 +114,7 @@ print_to_log 'INFO' 'Done!'
 
 /bin/rm -f $stderr_file
 /bin/rm -f $stdout_file
-
+if [ $1 = "--docker"  ]; then
+	/bin/rm -rf /var/lib/tomcat7/webapps/AuthoringTool /var/lib/tomcat7/webapps/ProtonOnWebServerAdmin/ /puppet/modules/cep/files/*.war
+fi
 exit 0
