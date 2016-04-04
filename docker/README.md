@@ -31,18 +31,18 @@ Follow these steps:
     
     The `tail –f /dev/null` is the command to execute inside the container, and it is used to force the container to continue running and not shut down immediately after starting.
     
-8. To access the container and run commands from within it:
+8. We still need to fix a problem with initializing the Proton apps in the tomcat server. For that, we need to access the container and run commands from within it:
 
             sudo docker ps # That will provide <container_id> for the proton image.
             sudo docker exec -it <container_id> bash
 
-9. (Interim fix for a problem)
+9. We need to remove these apps as the automatic installation did not do the well:
 
             cd /var/lib/tomcat7/webapps
-            rm -rf AuthoringTool
+            rm -rf AuthoringTool AuthoringToolWebServer ProtonOnWebServer ProtonOnWebServerAdmin
 
-10. Start the Tomcat server.
-      It is important to note that Tomcat is not started automatically inside the container, and thus needs to be started manually. In order to do that, first access the container using the above command and then do:
+10. Ensure the Tomcat server is started.
+      If the docker image does not start Tomcat automatically, we need to do that. You can use the second command to figure out tomcat7 status and if running, no need to start it again, but starting an already started service is harmless:
 
             service tomcat7 start
             service tomcat7 status # THIS SHOULD RETURN: Starting Tomcat servlet engine tomcat7
