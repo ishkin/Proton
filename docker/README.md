@@ -53,7 +53,7 @@ Follow these steps:
 
 ## Pull a ready docker image from the docker hub
 
-Using the ready image in the [Proton Docker Hub](https://hub.docker.com/r/fiware/proactivetechnologyonline/). Work with this modified step 7 and follow on with the remaining steps:
+Using the ready image in the [Proton Docker Hub](https://hub.docker.com/r/fiware/proactivetechnologyonline/). Work with this modified step 7 and follow on with the verification step 11 only:
 
 (7). Run the docker image from the docker hub:
 
