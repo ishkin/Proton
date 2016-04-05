@@ -1,13 +1,15 @@
-# Update Ubuntu
-FROM ubuntu:latest
-RUN apt-get update && apt-get -y upgrade
-RUN apt-get install -y wget bash curl
-RUN wget https://raw.githubusercontent.com/ishkin/Proton/master/puppet/miscellaneous/CEP_Install_via_puppet.sh
-RUN chmod o+x /CEP_Install_via_puppet.sh
-RUN bash /CEP_Install_via_puppet.sh
+# Update tomcat
+FROM tomcat
+RUN apt-get update && apt-get install -y bash curl
+WORKDIR /
+ADD tomcat-users.xml /usr/local/tomcat/conf
+ADD https://raw.githubusercontent.com/ishkin/Proton/master/artifacts/AuthoringTool.war /usr/local/tomcat/webapps
+ADD https://raw.githubusercontent.com/ishkin/Proton/master/artifacts/AuthoringToolWebServer.war /usr/local/tomcat/webapps
+ADD https://raw.githubusercontent.com/ishkin/Proton/master/artifacts/ProtonOnWebServer.war /usr/local/tomcat/webapps
+ADD https://raw.githubusercontent.com/ishkin/Proton/master/artifacts/ProtonOnWebServerAdmin.war /usr/local/tomcat/webapps
 
-RUN apt-get clean
 EXPOSE 8080
 # smoketest bash script
 RUN mkdir -p /root/Proton/
-RUN wget https://raw.githubusercontent.com/ishkin/Proton/master/docker/docker_smoketest.sh -q -O /root/Proton/docker_smoketest.sh
+ADD https://raw.githubusercontent.com/ishkin/Proton/master/docker/docker_smoketest.sh /root/Proton/docker_smoketest.sh
+ENTRYPOINT ["/usr/local/tomcat/bin/catalina.sh", "run"]
