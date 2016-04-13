@@ -459,6 +459,29 @@ public abstract class BaseMetadataParser {
 						ErrorElement.TREND_TRESHOLD, ProtonParseException.DEFAULT_INDEX, ProtonParseException.DEFAULT_INDEX, e.getMessage()));
 			}
 			
+			NullChecker<String> trendRatioChecker = new NullChecker<String>("trendRatio", epa,
+					epaName, DefinitionType.EPA, ErrorElement.TREND_RATIO,stringParser);
+			String trendRatio = trendRatioChecker.tryParse();
+			if (trendRatioChecker.checkElementParsed(trendRatio)) {
+				try {
+					Double trendRatioValue = Double.valueOf(trendRatio);
+					if (trendRelation == TrendRelationEnum.INCREASE && trendRatioValue < 1.0) {
+						exceptions.add(new ProtonParseException(ParseErrorEnum.BAD_VALUE, epaName, DefinitionType.EPA, ErrorType.ERROR,
+								ErrorElement.TREND_RATIO, ProtonParseException.DEFAULT_INDEX, ProtonParseException.DEFAULT_INDEX,
+								"Trend relation is Increase but trend ratio lesser than 1"));
+					} else if (trendRelation == TrendRelationEnum.DECREASE && (trendRatioValue > 1.0 || trendRatioValue <= 0.0)) {
+						exceptions.add(new ProtonParseException(ParseErrorEnum.BAD_VALUE, epaName, DefinitionType.EPA, ErrorType.ERROR,
+								ErrorElement.TREND_RATIO, ProtonParseException.DEFAULT_INDEX, ProtonParseException.DEFAULT_INDEX,
+								"Trend relation is Decrease but trend ratio is greater than 1 or lesser than or equal to 0"));
+					} else {
+						trendSchema.setTrendRatio(trendRatioValue);
+					}
+				} catch(NumberFormatException e){
+					exceptions.add(new ProtonParseException(ParseErrorEnum.BAD_VALUE, epaName, DefinitionType.EPA, ErrorType.ERROR,
+							ErrorElement.TREND_RATIO, ProtonParseException.DEFAULT_INDEX, ProtonParseException.DEFAULT_INDEX, e.getMessage()));
+				}
+			}
+			
 								
 			break;
 		default:

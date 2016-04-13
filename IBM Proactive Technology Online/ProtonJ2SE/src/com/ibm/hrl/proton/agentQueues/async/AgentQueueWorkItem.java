@@ -16,10 +16,12 @@
 package com.ibm.hrl.proton.agentQueues.async;
 
 import java.util.Set;
+import java.util.concurrent.LinkedBlockingQueue;
 
-import com.ibm.hrl.proton.agentQueues.queues.AgentAbstractQueue;
+import com.ibm.hrl.proton.agentQueues.exception.AgentQueueException;
 import com.ibm.hrl.proton.agentQueues.queues.QueueElement;
 import com.ibm.hrl.proton.agentQueues.queuesManagement.AgentQueuesManager;
+import com.ibm.hrl.proton.metadata.context.enums.ContextIntervalPolicyEnum;
 import com.ibm.hrl.proton.metadata.context.enums.EventRoleInContextEnum;
 import com.ibm.hrl.proton.runtime.metadata.RoutingMetadataFacade;
 import com.ibm.hrl.proton.runtime.metadata.epa.AgentQueueMetadata;
@@ -64,7 +66,13 @@ public class AgentQueueWorkItem implements IWorkItem
     public void run()
     {        
         AgentQueueMetadata agentChannelMeta = metadataFacade.getAgentQueueDefinitions(agentName);
-        AgentAbstractQueue channelQueue = manager.getAgentQueue(agentName, contextName);
+        LinkedBlockingQueue<QueueElement> channelQueue;
+		try {
+			channelQueue = manager.getAgentQueue(agentName, contextName);
+		} catch (AgentQueueException e) {			
+			e.printStackTrace();
+			throw new RuntimeException("Error adding events to queue for agent:"+agentName+", reason: "+e.getMessage());
+		}
                        
         long eventTimestamp;
         if (agentChannelMeta.getOrderingPolicy().equals(OrderingPolicy.DETECTION_TIME)){              
@@ -75,7 +83,7 @@ public class AgentQueueWorkItem implements IWorkItem
             eventTimestamp = timedObject.getOccurenceTime(); 
         }
         
-        QueueElement queueElement = new QueueElement(timedObject,eventTimestamp,channelQueue.getInitiationInterPolicy(),channelQueue.getTerminationInterPolicy(),eventRoles);
+        QueueElement queueElement = new QueueElement(timedObject,eventTimestamp,ContextIntervalPolicyEnum.IRRELEVANT,ContextIntervalPolicyEnum.IRRELEVANT,eventRoles);
         channelQueue.add(queueElement);
     }
 

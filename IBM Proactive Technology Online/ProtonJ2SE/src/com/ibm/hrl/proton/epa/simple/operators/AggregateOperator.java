@@ -16,17 +16,28 @@
 
 package com.ibm.hrl.proton.epa.simple.operators;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
-import com.ibm.hrl.proton.epa.aggregationCalculators.*;
+import com.ibm.hrl.proton.epa.aggregationCalculators.AggregationCalculator;
+import com.ibm.hrl.proton.epa.aggregationCalculators.AverageCalculator;
+import com.ibm.hrl.proton.epa.aggregationCalculators.CountCalculator;
+import com.ibm.hrl.proton.epa.aggregationCalculators.MaxCalculator;
+import com.ibm.hrl.proton.epa.aggregationCalculators.MinCalculator;
+import com.ibm.hrl.proton.epa.aggregationCalculators.SumCalculator;
 import com.ibm.hrl.proton.epa.simple.abstractOperators.AbstractStandardOperator;
 import com.ibm.hrl.proton.epa.state.SequenceOperatorData;
 import com.ibm.hrl.proton.metadata.computedVariable.IComputedVariableType;
-import com.ibm.hrl.proton.metadata.epa.*;
+import com.ibm.hrl.proton.metadata.epa.Operand;
+import com.ibm.hrl.proton.metadata.epa.StatefulEventProcesingAgentType;
 import com.ibm.hrl.proton.metadata.epa.enums.CardinalityPolicyEnum;
-import com.ibm.hrl.proton.metadata.epa.schemas.*;
+import com.ibm.hrl.proton.metadata.epa.schemas.AggregationSchema;
 import com.ibm.hrl.proton.metadata.epa.schemas.AggregationSchema.AggregationTypeEnum;
-import com.ibm.hrl.proton.metadata.event.IEventType;
 import com.ibm.hrl.proton.metadata.type.TypeAttribute;
 import com.ibm.hrl.proton.runtime.computedVariable.ComputedVariableInstance;
 import com.ibm.hrl.proton.runtime.epa.MatchingSets;
@@ -144,7 +155,7 @@ public class AggregateOperator extends AbstractStandardOperator implements IAggr
 
 	@Override
 	public boolean determineTerminationInstantiation() {
-		return false;
+		return true;
 	}
 
 	@Override

@@ -42,7 +42,7 @@ public class ExecutorUtils {
 
 
 	private static Logger logger = Logger.getLogger(ExecutorUtils.class.getName());
-    private static final int THREAD_POOL_SIZE = 50;
+    private static final int THREAD_POOL_SIZE = 500;
     private static final int QUEUE_BUFFER_SIZE = 50;
 
     protected static ExecutorServicesFactory executorServicesFactory = new DefaultExecutorServiceFactory();
@@ -58,7 +58,7 @@ public class ExecutorUtils {
     private static final ThreadFactory threadFactory = new SimpleThreadFactory();
 
     protected static ExecutorService defaultExecutorService = executorServicesFactory.newExecutor(Integer.MAX_VALUE);
-    protected static ScheduledExecutorService defaultScheduler = executorServicesFactory.newScheduledExecutor(THREAD_POOL_SIZE, THREAD_POOL_SIZE);
+    protected static ScheduledExecutorService defaultScheduler = executorServicesFactory.newScheduledExecutor(THREAD_POOL_SIZE, Integer.MAX_VALUE);
 
     /**
      * Executes the given command at some time in the future. The command may

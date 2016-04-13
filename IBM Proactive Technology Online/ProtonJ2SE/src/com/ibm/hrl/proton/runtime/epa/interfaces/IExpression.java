@@ -18,6 +18,7 @@ package com.ibm.hrl.proton.runtime.epa.interfaces;
 import java.io.Serializable;
 import java.util.List;
 
+import com.ibm.eep.Eep;
 import com.ibm.hrl.proton.metadata.epa.basic.IDataObject;
 import com.ibm.hrl.proton.metadata.epa.basic.IDataObjectMeta;
 
@@ -29,4 +30,5 @@ public interface IExpression  extends Serializable{
 	public String getStringExpression();
 	public List<IDataObjectMeta> getSignature();
 	public List<String> getSignatureNames();
+	public Eep getEep();
 }

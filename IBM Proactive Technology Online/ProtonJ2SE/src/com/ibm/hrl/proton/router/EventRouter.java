@@ -65,10 +65,10 @@ public class EventRouter extends BaseEventRouter
                 forwardEventsToConsumer(eventInstance);
             }
         }
-        logger.fine("routeTimedObject: timed object "+ timedObject+" determining if to submit back to Proton...");
+        //logger.fine("routeTimedObject: timed object "+ timedObject+" determining if to submit back to Proton...");
         //route the event back to the system
         facadesManager.getAgentQueuesManager().passEventToQueues(timedObject);
-        logger.fine("routeTimedObject: routed timed object "+ timedObject);
+        //logger.fine("routeTimedObject: routed timed object "+ timedObject);
         
     }
 

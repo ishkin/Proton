@@ -31,9 +31,9 @@ public class ComputedVariableInstance implements IComputedVariableInstance {
     public ComputedVariableInstance(IComputedVariableType computedVariableType, Map<String, Object> attributes)
 	{
 		this.computedVariableType = computedVariableType;
-		// need to fill in header attribute values which are not given by user like id etc.		
+		// need to fill in header attribute values which are not given by user like id etc.	
 		attributeValues = new AttributeValues(computedVariableType.getTypeAttributeSet());
-		attributeValues.assignValue(EventHeader.NAME_ATTRIBUTE, computedVariableType.getTypeName());			
+		attributeValues.assignValue(EventHeader.NAME_ATTRIBUTE, computedVariableType.getTypeName());	
 		attributeValues.assignAll(attributes);
 	}
 	

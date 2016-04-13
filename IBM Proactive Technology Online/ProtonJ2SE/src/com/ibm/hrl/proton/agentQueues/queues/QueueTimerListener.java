@@ -46,8 +46,9 @@ public class QueueTimerListener implements ITimerListener
     public Object onTimer(Object additionalInformation)
     throws Exception
     {
-        AgentAbstractQueue queue = queueManager.getAgentQueue(queueName);
-        return queue.onTimer(additionalInformation);
+        /*AgentAbstractQueue queue = queueManager.getAgentQueue(queueName);
+        return queue.onTimer(additionalInformation);*/
+    	return null;
     }
         
     

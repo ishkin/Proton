@@ -37,7 +37,6 @@ import com.ibm.hrl.proton.context.metadata.RelativeTimeTerminator;
 import com.ibm.hrl.proton.context.metadata.TemporalContextInitiator;
 import com.ibm.hrl.proton.metadata.context.CompositeContextType;
 import com.ibm.hrl.proton.metadata.context.ContextAbsoluteTimeInitiator;
-import com.ibm.hrl.proton.metadata.context.ContextAbsoluteTimeTerminator;
 import com.ibm.hrl.proton.metadata.context.ContextEventInitiator;
 import com.ibm.hrl.proton.metadata.context.ContextEventTerminator;
 import com.ibm.hrl.proton.metadata.context.ContextInitiator;
@@ -351,37 +350,37 @@ public class CompositeContextInstance implements ITimerListener {
 		// end for
 		
 		Collection<Pair<String,Map<String,Object>>> internalPartitions = new HashSet<Pair<String,Map<String,Object>>>();
-		logger.debug("processContextParticipant: processing context participant: "+event);
+		if (logger.isDebugEnabled()) logger.debug("processContextParticipant: processing context participant: "+event);
 		// check what temporal partitions this instance falls into
 		for (TemporalPartition partition: activePartitions) {
-			logger.debug("processContextParticipant: iterating over active partitions" +partition);
+			//logger.debug("processContextParticipant: iterating over active partitions" +partition);
 			SegmentationValue pSegmentation = partition.getContextSegmentationValue();
 			SegmentationValue eSegmentation = new SegmentationValue(pSegmentation.getType());
-			logger.debug("processContextParticipant: pSegmentation"+pSegmentation+", eSegmentation: "+eSegmentation);
+			if (logger.isDebugEnabled()) logger.debug("processContextParticipant: pSegmentation"+pSegmentation+", eSegmentation: "+eSegmentation);
 			
 			if (!pSegmentation.isEmpty()) {
 				eSegmentation = pSegmentation.getType().getSegmentationValue(event);
-				logger.debug("processContextParticipant: pSegmentation not empty, assigning value to eSegmentation"+eSegmentation);
+				if (logger.isDebugEnabled()) logger.debug("processContextParticipant: pSegmentation not empty, assigning value to eSegmentation"+eSegmentation);
 				
 			}
 			
 			// check if event falls into this temporal partition
 			if (pSegmentation.compliesWith(eSegmentation)) {
-				logger.debug("processContextParticipant: pSegmentation complies with eSegmentation, adding internal partition:"+partition);
+				if (logger.isDebugEnabled()) logger.debug("processContextParticipant: pSegmentation complies with eSegmentation, adding internal partition:"+partition);
 				// we don't add an event to internal partition, just return partition id
 				// partition.findInternalPartition has different implementation in TemporalPartition
 				// and in SlidingTemporalPartition, since in the latter there is additional level
 				// of hierarchy (SlidingTemporalInternalPartition) 
 				try{
-					logger.debug("processContextParticipant: before finding internal partition, event:"+event);
-					logger.debug("processContextParticipant: before finding internal partition,localSegmentation:"+localSegmentation);
+					if (logger.isDebugEnabled()) logger.debug("processContextParticipant: before finding internal partition, event:"+event);
+					if (logger.isDebugEnabled()) logger.debug("processContextParticipant: before finding internal partition,localSegmentation:"+localSegmentation);
 					internalPartitions.addAll(partition.findInternalPartition(event, localSegmentation));
 				}catch(Exception e)
 				{
 					logger.error("processContextParticipant: finding internal partitions failed "+ e.getMessage());
 					throw e;
 				}
-				logger.debug("processContextParticipant: finished adding internal partitions to the list,returning: "+internalPartitions);
+				if (logger.isDebugEnabled()) logger.debug("processContextParticipant: finished adding internal partitions to the list,returning: "+internalPartitions);
 			}			
 		}
 		
@@ -530,8 +529,8 @@ public class CompositeContextInstance implements ITimerListener {
 		NotificationTypeEnum notificationType = ((AdditionalInformation)info).getNotificationType();
 
 		
-		logger.debug("on timer - composite context instance, with " +
-				notificationType + " at " + System.currentTimeMillis()+"for "+contextBoundId +" and agent "+agentType.getName());
+		//logger.debug("on timer - composite context instance, with " +
+				//notificationType + " at " + System.currentTimeMillis()+"for "+contextBoundId +" and agent "+agentType.getName());
 		
 		IContextNotification notification;
 		if (notificationType == NotificationTypeEnum.INITIATOR) {

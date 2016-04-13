@@ -19,18 +19,15 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.logging.Logger;
 
 import com.ibm.hrl.proton.agentQueues.async.AgentQueueWorkItem;
+import com.ibm.hrl.proton.agentQueues.async.ConsumerWorkItem;
 import com.ibm.hrl.proton.agentQueues.exception.AgentQueueException;
-import com.ibm.hrl.proton.agentQueues.queues.AgentAbstractQueue;
-import com.ibm.hrl.proton.agentQueues.queues.AgentSortedQueue;
-import com.ibm.hrl.proton.agentQueues.queues.AgentlNonSortedQueue;
+import com.ibm.hrl.proton.agentQueues.queues.QueueElement;
 import com.ibm.hrl.proton.eventHandler.IEventHandler;
-import com.ibm.hrl.proton.metadata.context.enums.ContextIntervalPolicyEnum;
 import com.ibm.hrl.proton.metadata.context.enums.EventRoleInContextEnum;
-import com.ibm.hrl.proton.metadata.context.interfaces.IContextType;
-import com.ibm.hrl.proton.metadata.context.interfaces.ITemporalContextType;
 import com.ibm.hrl.proton.runtime.context.notifications.IContextInitiationNotification;
 import com.ibm.hrl.proton.runtime.context.notifications.IContextNotification;
 import com.ibm.hrl.proton.runtime.event.interfaces.IEventInstance;
@@ -38,7 +35,6 @@ import com.ibm.hrl.proton.runtime.metadata.ContextMetadataFacade;
 import com.ibm.hrl.proton.runtime.metadata.IMetadataFacade;
 import com.ibm.hrl.proton.runtime.metadata.RoutingMetadataFacade;
 import com.ibm.hrl.proton.runtime.metadata.epa.AgentQueueMetadata;
-import com.ibm.hrl.proton.runtime.metadata.epa.AgentQueueMetadata.SortingPolicy;
 import com.ibm.hrl.proton.runtime.timedObjects.ITimedObject;
 import com.ibm.hrl.proton.utilities.asynchronousWork.AsynchronousExecutionException;
 import com.ibm.hrl.proton.utilities.asynchronousWork.IWorkManager;
@@ -52,7 +48,7 @@ public class AgentQueuesManager {
     
 	
 	/**The datastructure where it maps the agent name to priority queue */
-	private Map<String,AgentAbstractQueue> registeredQueues;
+	private Map<String,LinkedBlockingQueue<QueueElement>> registeredQueues;
 	
 	ITimerServices timerServices;	
     IEventHandler eventHandler;
@@ -69,7 +65,7 @@ public class AgentQueuesManager {
 	 */
 	public AgentQueuesManager(ITimerServices timerService,IEventHandler eventHandler,IWorkManager workManager,IMetadataFacade metadataFacade){
 		//TODO: initialize the map to the agents size, so that resizing will not be required
-	    registeredQueues = new ConcurrentHashMap<String,AgentAbstractQueue>();
+	    registeredQueues = new ConcurrentHashMap<String,LinkedBlockingQueue<QueueElement>>();
 		this.timerServices = timerService;
 		this.eventHandler = eventHandler;
 		this.wm = workManager;
@@ -100,7 +96,7 @@ public class AgentQueuesManager {
 	 * @param queueName
 	 * @return
 	 */
-	public AgentAbstractQueue getAgentQueue(String queueName)
+	public LinkedBlockingQueue<QueueElement> getAgentQueue(String queueName)
 	{
 	    return registeredQueues.get(queueName);
 	}
@@ -110,8 +106,9 @@ public class AgentQueuesManager {
 	 * @param agentName
 	 * @param contextName
 	 * @return
+	 * @throws AgentQueueException 
 	 */
-	public AgentAbstractQueue getAgentQueue(String agentName, String contextName)
+	public LinkedBlockingQueue<QueueElement> getAgentQueue(String agentName, String contextName) throws AgentQueueException
 	{	
 	   
 	    String queueName = getQueueName(agentName, contextName);
@@ -122,7 +119,7 @@ public class AgentQueuesManager {
 				{				   
 				    
 				    AgentQueueMetadata agentChannelMeta = routingMetadataFacade.getAgentQueueDefinitions(agentName);
-			        long bufferingTime = agentChannelMeta.getBufferingTime();
+			        /*long bufferingTime = agentChannelMeta.getBufferingTime();
 			        SortingPolicy sortingPolicy = agentChannelMeta.getSortingPolicy();
 			       
 			        logger.fine("getAgentQueue: Creating a queue for agent: "+agentName+", context:"+contextName+", bufferingTime: "+bufferingTime+", sortingPolicy: "+sortingPolicy);
@@ -154,8 +151,20 @@ public class AgentQueuesManager {
 				    }else
 				    {
 				        channelQueue = new AgentlNonSortedQueue(contextName,agentName,bufferingTime,initIntervalPolicy,terminationInterPolicy,this);   
-				    }			
-					registeredQueues.put(queueName, channelQueue);
+				    }*/		
+				    LinkedBlockingQueue<QueueElement> registeredQueue = new  LinkedBlockingQueue<QueueElement>();
+				    //create the consumer for the queue
+				    ConsumerWorkItem consumerWorkItem = new ConsumerWorkItem(agentName,contextName,registeredQueue,this,routingMetadataFacade);
+		            try
+		            {
+		                wm.runWork(wm.createWork(consumerWorkItem));
+		            }
+		            catch (AsynchronousExecutionException e)
+		            {
+		                throw new AgentQueueException("Could not create consumer for queue: "+queueName+ ", reason: "+e.getMessage());
+		            }
+		            
+					registeredQueues.put(queueName, registeredQueue);
 				}
 			}
 		}
@@ -169,7 +178,7 @@ public class AgentQueuesManager {
 	    if (agentsList == null) return; //no agents defined for this event
 	    
 	    //iterate over all the intended channels and add the event to the channel queue
-	    logger.fine("passEventToQueues: going to asynchronously pass timed object "+timedObject+" to channel queues");
+	    //logger.fine("passEventToQueues: going to asynchronously pass timed object "+timedObject+" to channel queues");
 	    for (Pair<String, String> pair : agentsList)
         {
             String agentName = pair.getFirstValue();
@@ -238,8 +247,8 @@ public class AgentQueuesManager {
 	 */
 	public void updateBufferingTime(String agentName, String contextName, long newBufferingTime)
 	{	    
-	    AgentAbstractQueue channelQueue = getAgentQueue(agentName, contextName);
-	    channelQueue.setBufferingTime(newBufferingTime);
+	    /*AgentAbstractQueue channelQueue = getAgentQueue(agentName, contextName);
+	    channelQueue.setBufferingTime(newBufferingTime);*/
 	}
 	
 	

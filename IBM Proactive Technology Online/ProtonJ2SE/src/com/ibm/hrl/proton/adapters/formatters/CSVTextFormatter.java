@@ -7,12 +7,14 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
 
 import com.ibm.hrl.proton.adapters.interfaces.AdapterException;
 import com.ibm.hrl.proton.expression.facade.EepFacade;
 import com.ibm.hrl.proton.metadata.epa.basic.IDataObject;
+import com.ibm.hrl.proton.metadata.event.EventHeader;
 import com.ibm.hrl.proton.metadata.event.IEventType;
 import com.ibm.hrl.proton.metadata.parser.MetadataParser;
 import com.ibm.hrl.proton.metadata.type.TypeAttribute;
@@ -69,14 +71,25 @@ public class CSVTextFormatter extends AbstractTextFormatter {
 		
 		HashSet<String> eventAttributeNamesSet = new HashSet<String>();
 		
-		for (TypeAttribute eventAttribute : eventAttributes) {
+		//removing header attributes
+		List<TypeAttribute> headerAttributes = EventHeader.getAttributes();
+		List<TypeAttribute> eventAttributesNoHeader = new ArrayList<TypeAttribute>(eventAttributes);
+		
+		eventAttributesNoHeader.removeAll(headerAttributes);
+		
+		
+		for (TypeAttribute eventAttribute : eventAttributesNoHeader) {
 			eventAttributeNamesSet.add(eventAttribute.getName());
 		}
 		
-		// check that all CSV file attributes are really event attributes, and vice-versa
-		if(!eventAttributeNamesSet.containsAll(csvAttributeNamesSet)) {
+				
+		if (!csvAttributeNamesSet.containsAll(eventAttributeNamesSet))
+		{
 			throw new AdapterException("Could not parse the CSV file attributes, reason: Mismatch between CSV file attributes and Event attributes");
 		}
+		
+		
+		
 	}
 
 	@Override
@@ -116,7 +129,7 @@ public class CSVTextFormatter extends AbstractTextFormatter {
 		String[] attributeStringValues = eventText.split(delimiter, -1);
 		
 		if (attributeStringValues.length != this.attributeNames.size()) {
-			throw new AdapterException("Could not parse the event string " + eventText + ", reason: Mismatch between CSV file attributes and number of values");
+			throw new AdapterException("Could not parse the event string " + eventText + ", reason: Mismatch between CSV file attributes and number of values: number of values:"+attributeStringValues.length+", attribute declarations: "+this.attributeNames.size());
 		}
 		
 		Map<String,Object> attributeValues = new HashMap<String,Object>();
@@ -133,14 +146,17 @@ public class CSVTextFormatter extends AbstractTextFormatter {
 			++index;
 			attributeStringValues[index] = attributeStringValues[index].trim();
 			
-			
+			TypeAttribute eventTypeAttribute = eventType.getTypeAttributeSet().getAttribute(attributeName);
+			if (eventTypeAttribute == null){
+				continue;
+			}
 			
 			if (attributeStringValues[index].equals("") || attributeStringValues[index].equals(NULL_STRING)) {
 				attributeValues.put(attributeName, null);
 				continue;
 			}
 			
-			TypeAttribute eventTypeAttribute = eventType.getTypeAttributeSet().getAttribute(attributeName);
+			
 			String attributeStringValue = attributeStringValues[index];
 			attributeStringValue = getAttributeStringValue(eventTypeAttribute, attributeStringValue);
 						

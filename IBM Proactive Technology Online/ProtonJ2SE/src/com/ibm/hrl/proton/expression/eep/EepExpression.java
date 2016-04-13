@@ -25,6 +25,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.ibm.eep.Eep;
+import com.ibm.eep.ExpressionParser;
 import com.ibm.eep.ParsedExpression;
 import com.ibm.eep.exceptions.EepEvaluationException;
 import com.ibm.eep.exceptions.EepRetriableException;
@@ -108,6 +109,10 @@ public class EepExpression implements IExpression {
 	}
 	
 	
+	public Eep getEep() {
+		return eep;
+	}
+	
 	public String getStringExpression() {
 		return stringExpression;
 	}
@@ -140,11 +145,98 @@ public class EepExpression implements IExpression {
 		eventList.add(eventInstance);
 		return evaluate(eventList);
 	}
+	
+	public Object copyAndEvaluate(IDataObject eventInstance)
+	{
+		ArrayList<IDataObject> eventList = new ArrayList<IDataObject>();
+		eventList.add(eventInstance);
+		
+		ParsedExpression newParsedExpression;
+		try{
+			newParsedExpression = ExpressionParser.parseExpression(eep,stringExpression);
+		}catch(ParseException e){
+			e.printStackTrace();
+			throw new ExpressionEvaluatorException(e);
+		}
+		
+		
+		//logger.debug("evaluate: evaluating expression: "+newParsedExpression+ "with data: "+eventList);
+		for (Entry<String, Integer> varDOIndex : variableEventIndices.entrySet())
+		{
+			IDataObject obj = eventList.get(varDOIndex.getValue());
+			IFieldMeta objFieldMeta = obj.getFieldMetaData(variableAttribute.get(varDOIndex.getKey()));
+			Object objFieldValue = obj.getFieldValue(variableAttribute.get(varDOIndex.getKey()));
+			String attrType = objFieldMeta.getType();
+	        /*if (obj instanceof IEventInstance){
+	                if (((IEventInstance)obj).getEventTypeName().equals("ETA"))
+	                {
+	                    logger.info("Expression: "+this+", object: "+obj+", fieldMeta"+ objFieldMeta+", fieldValue:"+objFieldValue+", attrType:"+attrType);	                    
+	                }
+	            }*/
 
+			try {
+					if (objFieldMeta.getDimension() != 0)
+					{
+						newParsedExpression.setArrayVarType(
+								varDOIndex.getKey(),
+										ArrayOperand.ARRAY_OPERAND,
+										attrType);
+					} else 
+					{
+						newParsedExpression.setVarType(varDOIndex.getKey(), attrType);
+					}
+				
+				
+				newParsedExpression.setVarValue(varDOIndex.getKey(), objFieldValue);
+				
+			} catch (ElementNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				throw new ExpressionEvaluatorException(e);
+			} catch (IncompatibleTypeException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				throw new ExpressionEvaluatorException(e);
+			} catch (EepRetriableException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				throw new ExpressionEvaluatorException(e);
+			} catch (ElementCreationFailureException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				throw new ExpressionEvaluatorException(e);
+			}
+		}
+		
+		try {
+			//if the returned expression is Date turn it into long , 
+			//since all Dates represented as long in the system
+			Object result = newParsedExpression.getValue();
+			if (result instanceof java.util.Date)
+			{
+				return ((java.util.Date) result).getTime();
+			}else{
+				return  result;
+			}
+				 			
+		} catch (EepEvaluationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			throw new ExpressionEvaluatorException(e);
+		} catch (EepRetriableException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			throw new ExpressionEvaluatorException(e);
+		}
+				
+
+
+	}
+	
 	@Override
 	public synchronized Object evaluate(List<? extends IDataObject> dataObjects) {
 		// TODO Auto-generated method stub
-		logger.debug("evaluate: evaluating expression: "+parsedExpression+ "with data: "+dataObjects);
+		//logger.debug("evaluate: evaluating expression: "+parsedExpression+ "with data: "+dataObjects);
 		for (Entry<String, Integer> varDOIndex : variableEventIndices.entrySet())
 		{
 			IDataObject obj = dataObjects.get(varDOIndex.getValue());

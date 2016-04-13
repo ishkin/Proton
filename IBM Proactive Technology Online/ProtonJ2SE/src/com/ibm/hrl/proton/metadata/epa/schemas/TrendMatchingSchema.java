@@ -42,60 +42,60 @@ public class TrendMatchingSchema extends StandardMatchingSchema implements IMatc
 	
 	protected TrendRelationEnum relation;
 	protected Integer trendTreshold;
+	protected Double trendRatio;
 	private ComputedVariableType computedVariableType;
 	
 	
 
 	public TrendMatchingSchema(){
-		expressions = new HashMap<Operand,String>();
-		parsedExpressions = new HashMap<Operand,IExpression>();
-	    consumption = new HashMap<Operand,ConsumptionPolicyEnum>();
-	    relation = null;
-	    trendTreshold = null;
-	    List<TypeAttribute> attributes = new ArrayList<TypeAttribute>();
-	    attributes.add(new TypeAttribute(TREND_COMPUTED_VARIABLE_ATTR_NAME,AttributeTypesEnum.INTEGER));
-	    attributes.add(new TypeAttribute(TREND_COMPUTED_VARIABLE_PARTICIPANTS_NAME,AttributeTypesEnum.OBJECT));
-	    this.computedVariableType = new ComputedVariableType(TREND_COMPUTED_VARIABLE_NAME,attributes);
+	    this(new HashMap<Operand,String>(), new HashMap<Operand,IExpression>(), null,
+	    		new HashMap<Operand,ConsumptionPolicyEnum>(), null, null);
 	}
 	
-	
-
-	
-
-	public ComputedVariableType getComputedVariableType() {
-		return computedVariableType;
-	}
-
-
-
-
-
 	public TrendMatchingSchema(Map<Operand,String> expressions,
 			Map<Operand,IExpression> parsedExpressions, TrendRelationEnum relation,
 			Map<Operand,ConsumptionPolicyEnum> consumption,Integer trendTreshold)
+    {
+		this(expressions, parsedExpressions, relation, consumption, trendTreshold, null);
+    }
+	
+	public TrendMatchingSchema(Map<Operand,String> expressions,
+			Map<Operand,IExpression> parsedExpressions, TrendRelationEnum relation,
+			Map<Operand,ConsumptionPolicyEnum> consumption,Integer trendTreshold,
+			Double trendRatio)
     {
 		super(consumption);
         this.expressions = expressions;
         this.parsedExpressions = parsedExpressions;       
         this.relation = relation;
         this.trendTreshold = trendTreshold;
+        this.trendRatio = trendRatio;
+        
+        List<TypeAttribute> attributes = new ArrayList<TypeAttribute>();
+	    attributes.add(new TypeAttribute(TREND_COMPUTED_VARIABLE_ATTR_NAME,AttributeTypesEnum.INTEGER));
+	    attributes.add(new TypeAttribute(TREND_COMPUTED_VARIABLE_PARTICIPANTS_NAME,AttributeTypesEnum.OBJECT));
+	    this.computedVariableType = new ComputedVariableType(TREND_COMPUTED_VARIABLE_NAME, attributes);
     }
+
+	public ComputedVariableType getComputedVariableType() {
+		return computedVariableType;
+	}
 	
+	public Double getTrendRatio() {
+		return trendRatio;
+	}
+
+	public void setTrendRatio(Double trendRatio) {
+		this.trendRatio = trendRatio;
+	}
+
 	public Integer getTrendTreshold() {
 		return this.trendTreshold;
 	}
 
-
-
-
-
 	public void setTrendTreshold(Integer trendTreshold) {
 		this.trendTreshold = trendTreshold;
 	}
-
-
-
-
 
 	public void setRelation(TrendRelationEnum relation) {
 		this.relation = relation;
@@ -108,7 +108,6 @@ public class TrendMatchingSchema extends StandardMatchingSchema implements IMatc
 	public IExpression getParsedExpression(Operand operand) {
 		return parsedExpressions.get(operand);
 	}
-	
 		
 	public TrendRelationEnum getTrendRelation() {
 		return relation;

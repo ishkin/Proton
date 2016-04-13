@@ -18,16 +18,13 @@ package com.ibm.hrl.proton.context.metadata;
 import java.util.ArrayList;
 import java.util.Collection;
 
-
-
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.ibm.hrl.proton.context.management.SegmentationValue;
+import com.ibm.hrl.proton.expression.eep.EepExpression;
 import com.ibm.hrl.proton.metadata.context.SegmentationContextType;
 import com.ibm.hrl.proton.metadata.context.interfaces.ISegmentationContextType;
-import com.ibm.hrl.proton.runtime.epa.interfaces.IExpression;
 import com.ibm.hrl.proton.runtime.event.interfaces.IEventInstance;
 
 /**
@@ -71,26 +68,24 @@ public class ComposedSegmentation {
      */   
 	public SegmentationValue getSegmentationValue(IEventInstance event) {
 		// evaluate value of this segment for the given event
-		// if event does not contain attributes complying with the composite context
-		// return an empty SegmentationValue
-		logger.debug("getSegmentationValue: for event"+event);
-		// we assume that event attributes comply with given segment (defs parsing check)
-		SegmentationValue value = new SegmentationValue(this);
-		for (SegmentationContextType segment: segments) {
-			logger.debug("getSegmentationValue: iterating over segments"+segment);
-			logger.debug("getSegmentationValue: getting parsed expression for event type"+ event.getEventType());
-			IExpression expression = segment.getParsedSegmentationExpression(event.getEventType());
-			logger.debug("getSegmentationValue: the parsed expression for event type"+ event.getEventType()+", the expression: "+expression);
-			if (expression != null) { // event can either participate in this segment or not
-				// invoke eep to evaluate expression for the given event instance
-			    logger.debug("getSegmentationValue: evaluating expression: event "+event+", expression: "+expression);
-				String expressionValue = expression.evaluate(event).toString();
-				logger.debug("getSegmentationValue: evaluated expression:" +expression+", value: "+value);
-				value.addValue(segment.getId(),expressionValue);
-			}
-			logger.debug("getSegmentationValue: returning value: "+value);
-		}				
-		return value;
+				// if event does not contain attributes complying with the composite context
+				// return an empty SegmentationValue
+				//logger.debug("getSegmentationValue: for event"+event);
+				// we assume that event attributes comply with given segment (defs parsing check)
+				SegmentationValue value = new SegmentationValue(this);
+				for (SegmentationContextType segment: segments) {
+					//logger.debug("getSegmentationValue: iterating over segments"+segment);
+					//logger.debug("getSegmentationValue: getting parsed expression for event type"+ event.getEventType());
+					EepExpression expression = (EepExpression)segment.getParsedSegmentationExpression(event.getEventType());
+					
+					if (expression != null) { // event can either participate in this segment or not
+						// invoke eep to evaluate expression for the given event instance
+						Object expressionResult = expression.copyAndEvaluate(event);
+						String expressionValue = expressionResult.toString();
+						value.addValue(segment.getId(),expressionValue);
+					}
+				}				
+				return value;
 	}
 	
 }
