@@ -37,7 +37,7 @@ Follow these steps:
             sudo docker exec -it <container_id> bash
             
 9. Try it.
-     * Find the correct ip of your docker container on your network and try http://\<ip\>:\<port\>. That will display the tomcat "It Works!" welcome screen.
+     * Find the correct ip of your docker container on your network and try http://\<ip\>:\<port\>. That will display the tomcat welcome screen.
      * Try also the Web Rules Authoring Tool with http://\<ip\>:\<port\>/AuthoringTool, which should repsond with the Authoring Tool web screen.
 
 ## Pull a ready docker image from the docker hub
