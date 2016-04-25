@@ -9,7 +9,7 @@ The Proton runtime engine detects patterns on incoming events, and the Proton au
 The Proactive Technology Online is a standard web application. It requires the previous installation of the following:
 
 1. Java SE 7 or later
-2. Apache Tomcat 7  
+2. Apache Tomcat 7 or later  
 
 Proton was tested on Apache Tomcat 7.0.26 with Java SE 7, and apache-tomcat-7.0.59 with Java SE 8. Please note that newer Java version requires newer apache-tomcat version.
 
