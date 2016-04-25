@@ -1,20 +1,20 @@
 ## Installation options of CEP Proton
 
 The Proton utility can be deployed in several ways on Ubuntu 14:
-1. Using a puppet master.
- • Download the puppet folder for Proton, and work in the puppet/modules/cep folder there.
+1 Using a puppet master.
+ * Download the puppet folder for Proton, and work in the puppet/modules/cep folder there.
 You can download single folder from github using svn:
 svn checkout https://github.com/ishkin/Proton.git/trunk/puppet
- • We assume the puppet master environment is already installed and working.
- • Change the files permissions: chmod 644 ./manifests/*.pp ./files/* and chmod
+ * We assume the puppet master environment is already installed and working.
+ * Change the files permissions: chmod 644 ./manifests/*.pp ./files/* and chmod
 +x ./files/download_artifacts.ksh.
- • Install the APT module on your master (e.g. puppet module install puppetlabs-apt),
+ * Install the APT module on your master (e.g. puppet module install puppetlabs-apt),
 make sure its location is accessible to the client (via the modulepath puppet settings). It is
 possible that you will need to copy, or make soft links to that location.
- • Run once the script ./files/download_artifacts.ksh on the puppet master - to get the updated
+ * Run once the script ./files/download_artifacts.ksh on the puppet master - to get the updated
 version of CEP *.war files into the same folder, e.g. ./files/.
- • Add the CEP module to the client manifests (e.g. “include cep”).
- • The tomcat admin/manager passwords are randomly generated during the artifacts download
+ * Add the CEP module to the client manifests (e.g. “include cep”).
+ * The tomcat admin/manager passwords are randomly generated during the artifacts download
 stage (e.g. when running the ./files/download_artifacts.ksh in the puppet master). They are
 used during the clients’ deployment. Steps should be taken if different password for each
 machine is needed.
