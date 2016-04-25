@@ -20,19 +20,21 @@ used during the clients’ deployment. Steps should be taken if different passwo
 machine is needed.
  * Rerunning the ./files/download_artifacts.ksh in the puppet master will download a new
 version of CEP which will be pushed to all the puppet clients.
+
 ## 2 Using a standalone puppet client
  * Download the puppet folder for Proton (see fist bullet above, e.g. into the /tmp/ folder, than
 work in the puppet/modules/cep folder).
  * Install the puppet-module-puppetlabs-apt package (e.g. run sudo apt-get install
 puppet-module-puppetlabs-apt)
  * Change the files permissions: chmod 644 ./manifests/*.pp ./files/* and chmod
-+x ./files/download_artifacts.ksh.
+    +x ./files/download_artifacts.ksh.
  * Make sure the /etc/hosts file contain an entry with the local machine hostname
  * Install CEP using puppet. Note that the <puppet_modules_path> should point to the full path
 of your newly created module folder (e.g “/tmp/puppet/modules”):
-sudo /usr/bin/puppet apply --parser future --
-modulepath=<puppet_modules_path>:/etc/puppet/modules:/usr/share/puppe
-t/modules -e 'include cep' --debug
+    sudo /usr/bin/puppet apply --parser future --
+    modulepath=<puppet_modules_path>:/etc/puppet/modules:/usr/share/puppe
+    t/modules -e 'include cep' --debug
+
 ## 3. Install via a shell script:
  * The user running the script should be able to run sudo commands without a password prompt.
  * Download the CEP_Install_via_puppet.sh script file from gitub at puppet/miscellaneous/
