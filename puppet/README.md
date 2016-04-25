@@ -31,10 +31,11 @@ puppet-module-puppetlabs-apt)
  * Make sure the /etc/hosts file contain an entry with the local machine hostname
  * Install CEP using puppet. Note that the <puppet_modules_path> should point to the full path
 of your newly created module folder (e.g “/tmp/puppet/modules”):
+```
         sudo /usr/bin/puppet apply --parser future --
         modulepath=<puppet_modules_path>:/etc/puppet/modules:/usr/share/puppe
         t/modules -e 'include cep' --debug
-
+```
 ## 3. Install via a shell script:
  * The user running the script should be able to run sudo commands without a password prompt.
  * Download the CEP_Install_via_puppet.sh script file from gitub at puppet/miscellaneous/
