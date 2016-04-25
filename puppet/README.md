@@ -1,7 +1,7 @@
-## Installation options of CEP Proton
+# Installation options of CEP Proton
 
 The Proton utility can be deployed in several ways on Ubuntu 14:
-# 1 Using a puppet master.
+## 1 Using a puppet master.
  * Download the puppet folder for Proton, and work in the puppet/modules/cep folder there.
 You can download single folder from github using svn:
 svn checkout https://github.com/ishkin/Proton.git/trunk/puppet
@@ -20,7 +20,7 @@ used during the clients’ deployment. Steps should be taken if different passwo
 machine is needed.
  * Rerunning the ./files/download_artifacts.ksh in the puppet master will download a new
 version of CEP which will be pushed to all the puppet clients.
-# 2 Using a standalone puppet client
+## 2 Using a standalone puppet client
  * Download the puppet folder for Proton (see fist bullet above, e.g. into the /tmp/ folder, than
 work in the puppet/modules/cep folder).
  * Install the puppet-module-puppetlabs-apt package (e.g. run sudo apt-get install
@@ -33,7 +33,7 @@ of your newly created module folder (e.g “/tmp/puppet/modules”):
 sudo /usr/bin/puppet apply --parser future --
 modulepath=<puppet_modules_path>:/etc/puppet/modules:/usr/share/puppe
 t/modules -e 'include cep' --debug
-# 3. Install via a shell script:
+## 3. Install via a shell script:
  * The user running the script should be able to run sudo commands without a password prompt.
  * Download the CEP_Install_via_puppet.sh script file from gitub at puppet/miscellaneous/
 folder and execute it.
