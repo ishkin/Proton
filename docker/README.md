@@ -27,7 +27,7 @@ Follow these steps:
 
 7.	Run the docker image you just generated:
 
-            sudo docker run --privileged=true --name=proton --cap-add SYS_PTRACE -p 8080:8080 -it -d proton tail -f /dev/null
+            sudo docker run --name=proton -p 8080:8080 -it -d proton
     
     The `tail –f /dev/null` is the command to execute inside the container, and it is used to force the container to continue running and not shut down immediately after starting.
     
@@ -37,8 +37,17 @@ Follow these steps:
             sudo docker exec -it <container_id> bash
             
 9. Try it.
-     * Find the correct ip of your docker container on your network and try http://\<ip\>:\<port\>. That will display the tomcat welcome screen.
-     * Try also the Web Rules Authoring Tool with http://\<ip\>:\<port\>/AuthoringTool, which should repsond with the Authoring Tool web screen.
+     * If your computer supports the port mapping (not working on MacOs w/out some tweaking), you can check that tomcat works with the link https://localhost:8080. Otherwise, you need to find the correct ip of your docker container image, and test with http://\<ip\>:8080. That will display the tomcat welcome screen.
+     * Try also the Web Rules Authoring Tool with http://localhost:8080/AuthoringTool, which should repsond with the Authoring Tool web screen.
+ 10. Notes for working with MacOs. Docker should start with boot2docker:
+ 
+            boot2docker up          # startup the docker daemon
+            eval "$(boot2docker shellinit)"; # set up environment variables
+            boot2docker ip          # obtain docker image ip on your machine
+            # After starting your image (docker run command - see above), run the next command to set up the port mapping:
+            VBoxManage controlvm "boot2docker-vm" natpf1 "tcp-port8080,tcp,,8080,,8080";
+            # Now you can try tomcat with this command:
+            open http://localhost:8080
 
 ## Pull a ready docker image from the docker hub
 
@@ -46,6 +55,6 @@ Using the ready image in the [Proton Docker Hub](https://hub.docker.com/r/fiware
 
 (7). Run the docker image from the docker hub:
 
-            sudo docker run --privileged=true --name=proton --cap-add SYS_PTRACE -p 8080:8080 -it -d fiware/proactivetechnologyonline tail -f /dev/null
+            sudo docker run --name=proton -p 8080:8080 -it -d proton
     
     
