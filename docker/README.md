@@ -46,6 +46,6 @@ Using the ready image in the [Proton Docker Hub](https://hub.docker.com/r/fiware
 
 (7). Run the docker image from the docker hub:
 
-            sudo docker run --privileged=true --name=protob --cap-add SYS_PTRACE -p 8080:8080 -it -d fiware/proactivetechnologyonline tail -f /dev/null
+            sudo docker run --privileged=true --name=proton --cap-add SYS_PTRACE -p 8080:8080 -it -d fiware/proactivetechnologyonline tail -f /dev/null
     
     
