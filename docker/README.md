@@ -29,7 +29,6 @@ Follow these steps:
 
             sudo docker run --name=proton -p 8080:8080 -it -d proton
     
-    The `tail –f /dev/null` is the command to execute inside the container, and it is used to force the container to continue running and not shut down immediately after starting.
     
 8. We can login to the image:
 
