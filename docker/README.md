@@ -33,7 +33,7 @@ Follow these steps:
     
 8. We can login to the image:
 
-            sudo docker ps # That will provide <container_id> for the proton image.
+            sudo docker ps # That will provide <container_id> for the proton image. That id is also "proton" if the --name=proton param was used in the docker run command.
             sudo docker exec -it <container_id> bash
             
 9. Try it.
