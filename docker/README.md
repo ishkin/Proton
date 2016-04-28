@@ -38,15 +38,16 @@ Follow these steps:
 9. Try it.
      * If your computer supports the port mapping (not working on MacOs w/out some tweaking), you can check that tomcat works with the link https://localhost:8080. Otherwise, you need to find the correct ip of your docker container image, and test with http://\<ip\>:8080. That will display the tomcat welcome screen.
      * Try also the Web Rules Authoring Tool with http://localhost:8080/AuthoringTool, which should repsond with the Authoring Tool web screen.
- 10. Notes for working with MacOs. Docker should start with boot2docker:
+
+10. Notes for working with MacOs. Docker should start with boot2docker:
  
-            boot2docker up          # startup the docker daemon
-            eval "$(boot2docker shellinit)"; # set up environment variables
-            boot2docker ip          # obtain docker image ip on your machine
-            # After starting your image (docker run command - see above), run the next command to set up the port mapping:
-            VBoxManage controlvm "boot2docker-vm" natpf1 "tcp-port8080,tcp,,8080,,8080";
-            # Now you can try tomcat with this command:
-            open http://localhost:8080
+                                    boot2docker up          # startup the docker daemon
+                                    eval "$(boot2docker shellinit)"; # set up environment variables
+                                    boot2docker ip          # obtain docker image ip on your machine
+                                    # After starting your image (docker run command - see above), run the next command to set up the port mapping:
+                                    VBoxManage controlvm "boot2docker-vm" natpf1 "tcp-port8080,tcp,,8080,,8080";
+                                    # Now you can try tomcat with this command:
+                                    open http://localhost:8080
 
 ## Pull a ready docker image from the docker hub
 
