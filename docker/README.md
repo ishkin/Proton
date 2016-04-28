@@ -27,7 +27,7 @@ Follow these steps:
 
 7.	Run the docker image you just generated:
 
-            sudo docker run --privileged=true --cap-add SYS_PTRACE -p 8080:8080 -it -d proton tail -f /dev/null
+            sudo docker run --privileged=true --name=proton --cap-add SYS_PTRACE -p 8080:8080 -it -d proton tail -f /dev/null
     
     The `tail –f /dev/null` is the command to execute inside the container, and it is used to force the container to continue running and not shut down immediately after starting.
     
@@ -46,6 +46,6 @@ Using the ready image in the [Proton Docker Hub](https://hub.docker.com/r/fiware
 
 (7). Run the docker image from the docker hub:
 
-            sudo docker run --privileged=true --cap-add SYS_PTRACE -p 8080:8080 -it -d fiware/proactivetechnologyonline tail -f /dev/null
+            sudo docker run --privileged=true --name=protob --cap-add SYS_PTRACE -p 8080:8080 -it -d fiware/proactivetechnologyonline tail -f /dev/null
     
     
