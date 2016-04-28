@@ -41,13 +41,13 @@ Follow these steps:
 
 10. Notes for working with MacOs. Docker should start with boot2docker:
  
-                                    boot2docker up          # startup the docker daemon
-                                    eval "$(boot2docker shellinit)"; # set up environment variables
-                                    boot2docker ip          # obtain docker image ip on your machine
-                                    # After starting your image (docker run command - see above), run the next command to set up the port mapping:
-                                    VBoxManage controlvm "boot2docker-vm" natpf1 "tcp-port8080,tcp,,8080,,8080";
-                                    # Now you can try tomcat with this command:
-                                    open http://localhost:8080
+                        boot2docker up          # startup the docker daemon
+                        eval "$(boot2docker shellinit)"; # set up environment variables
+                        boot2docker ip          # obtain docker image ip on your machine
+                        # After starting your image (docker run command - see above), run the next command to set up the port mapping:
+                        VBoxManage controlvm "boot2docker-vm" natpf1 "tcp-port8080,tcp,,8080,,8080";
+                        # Now you can try tomcat with this command:
+                        open http://localhost:8080
 
 ## Pull a ready docker image from the docker hub
 
