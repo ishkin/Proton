@@ -39,7 +39,9 @@ Follow these steps:
      * If your computer supports the port mapping (not working on MacOs w/out some tweaking), you can check that tomcat works with the link https://localhost:8080. Otherwise, you need to find the correct ip of your docker container image, and test with http://\<ip\>:8080. That will display the tomcat welcome screen.
      * Try also the Web Rules Authoring Tool with http://localhost:8080/AuthoringTool, which should repsond with the Authoring Tool web screen.
 
-10. Notes for working with MacOs. Docker should start with boot2docker:
+## Notes for working with MacOs.
+
+Docker should start with boot2docker:
  
             boot2docker up          # startup the docker daemon
             eval "$(boot2docker shellinit)"; # set up environment variables
