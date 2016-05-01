@@ -1,0 +1,20 @@
+# Dockerfile to generate the proton image from v4.4.1 branch of github for cep.
+# Rename form Dockerfile.v4.4.1 to Dockerfile, than follow the instructions.
+ 
+FROM tomcat
+RUN apt-get update && apt-get install -y bash curl
+WORKDIR /
+#Add the tomcat-users.xml file
+#ADD tomcat-users.xml /usr/local/tomcat/conf
+ADD https://raw.githubusercontent.com/ishkin/Proton/v4.4.1/docker/tomcat-users.xml /usr/local/tomcat/conf
+#Add the war files
+ADD https://raw.githubusercontent.com/ishkin/Proton/v4.4.1/artifacts/AuthoringTool.war /usr/local/tomcat/webapps
+ADD https://raw.githubusercontent.com/ishkin/Proton/v4.4.1/artifacts/AuthoringToolWebServer.war /usr/local/tomcat/webapps
+ADD https://raw.githubusercontent.com/ishkin/Proton/v4.4.1/artifacts/ProtonOnWebServer.war /usr/local/tomcat/webapps
+ADD https://raw.githubusercontent.com/ishkin/Proton/v4.4.1/artifacts/ProtonOnWebServerAdmin.war /usr/local/tomcat/webapps
+
+EXPOSE 8080
+# smoketest bash script
+RUN mkdir -p /root/Proton/
+ADD https://raw.githubusercontent.com/ishkin/Proton/v4.4.1/docker/docker_smoketest.sh /root/Proton/docker_smoketest.sh
+ENTRYPOINT ["/usr/local/tomcat/bin/catalina.sh", "run"]
