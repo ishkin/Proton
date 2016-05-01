@@ -58,5 +58,9 @@ Using the ready image in the [Proton Docker Hub](https://hub.docker.com/r/fiware
 (7). Run the docker image from the docker hub:
 
             sudo docker run --name=proton -p 8080:8080 -it -d proton
+            
+## Use resources form branch v4.4.1
+
+Simply use the Dockerfile.v4.4.1, rename it to Dockerfile, and follow this procedure. It will use the resources in the v4.4.1 branch of this repository.
     
     
