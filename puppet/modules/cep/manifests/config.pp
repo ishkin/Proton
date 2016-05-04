@@ -5,7 +5,7 @@ class cep::config {
 
 	file { '/etc/tomcat7/tomcat-users.xml':
 		ensure  => file,
-		source  => "puppet:///modules/$module_name/tomcat-users.xml",
+		source  => "$pkgs::files_source/tomcat-users.xml",
 		owner   => 'root',
 		group   => 'root',
 		mode    => 0644,
