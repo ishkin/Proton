@@ -53,7 +53,10 @@ class cep::pkgs {
 	}
 
 	if "$serverversion" == "" {
-		#We are running without a master, we will locate and run the download_artifacts.ksh locally
+		#We are running without a master, we shall run the download_artifacts.ksh locally
 		include cep::download
+		$files_source = "$cep::download::local_temp_folder"
+	}else{
+		$files_source = "puppet:///modules/$module_name"
 	}
 }
