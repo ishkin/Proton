@@ -31,7 +31,7 @@ class cep::deploy {
 
 	file { '/var/lib/tomcat7/webapps/AuthoringTool.war':
 		ensure  => file,
-		source  => "puppet:///modules/$module_name/AuthoringTool.war",
+		source  => "$pkgs::files_source/AuthoringTool.war",
 		owner   => 'tomcat7',
 		group   => 'tomcat7',
 		mode    => 0644,
@@ -41,7 +41,7 @@ class cep::deploy {
 
 	file { '/var/lib/tomcat7/webapps/AuthoringToolWebServer.war':
 		ensure  => file,
-		source  => "puppet:///modules/$module_name/AuthoringToolWebServer.war",
+		source  => "$pkgs::files_source/AuthoringToolWebServer.war",
 		owner   => 'tomcat7',
 		group   => 'tomcat7',
 		mode    => 0644,
@@ -51,7 +51,7 @@ class cep::deploy {
 
 	file { '/var/lib/tomcat7/webapps/ProtonOnWebServer.war':
 		ensure  => file,
-		source  => "puppet:///modules/$module_name/ProtonOnWebServer.war",
+		source  => "$pkgs::files_source/ProtonOnWebServer.war",
 		owner   => 'tomcat7',
 		group   => 'tomcat7',
 		mode    => 0644,
@@ -61,7 +61,7 @@ class cep::deploy {
 
 	file { '/var/lib/tomcat7/webapps/ProtonOnWebServerAdmin.war':
 		ensure  => file,
-		source  => "puppet:///modules/$module_name/ProtonOnWebServerAdmin.war",
+		source  => "$pkgs::files_source/ProtonOnWebServerAdmin.war",
 		owner   => 'tomcat7',
 		group   => 'tomcat7',
 		mode    => 0644,
