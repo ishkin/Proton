@@ -108,7 +108,8 @@ download_puppet_cep_module
 handle_hostname_changes
 
 #Install the cep module using puppet
-sudo_run /usr/bin/puppet apply --parser future --modulepath=$base_dir/puppet/modules:/etc/puppet/modules:/usr/share/puppet/modules -e 'include cep' --debug
+#sudo_run /usr/bin/puppet apply --parser future --modulepath=$base_dir/puppet/modules:/etc/puppet/modules:/usr/share/puppet/modules -e 'include cep' --debug
+sudo_run /usr/bin/puppet apply --modulepath=$base_dir/puppet/modules:/etc/puppet/modules:/usr/share/puppet/modules -e 'include cep'
 
 print_to_log 'INFO' "The log file is saved as: $log_file"
 
