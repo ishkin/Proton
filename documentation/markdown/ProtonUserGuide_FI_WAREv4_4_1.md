@@ -194,7 +194,7 @@ Additional parameters common to all producer types are:
 For custom adapters, additional required parameters can be added. Each such parameter has a name and a value.
 
 ####<a name="api"></a>REST API Adapter
-As described above, there is an option for a REST API in Proton.
+As described above for producers, and below for consumers, there is an option for a REST API in Proton.
 
 For the REST API documentation see: [http://htmlpreview.github.io/?https://github.com/ishkin/Proton/blob/master/documentation/apiary/CEP-apiary-blueprint.html](http://htmlpreview.github.io/?https://github.com/ishkin/Proton/blob/master/documentation/apiary/CEP-apiary-blueprint.html)
 
