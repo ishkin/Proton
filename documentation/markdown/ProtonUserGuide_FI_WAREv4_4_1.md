@@ -174,8 +174,8 @@ A producer introduces events from the outside world to the event-processing netw
       - **URL** – the fully qualified URL of the REST service for event pull operation using a GET method.
       - **ContentType** – can be "text/plain", "application/xml", or "application/json". This is defined by the REST service.  
       - **PollingMode** – whether the web service returns a single instance or batch of event instances.<br>
-      **Note:** Proton includes a REST service that provides the ability to push (notify) events to the engine. [See CEP open specification document](http://forge.fiware.org/plugins/mediawiki/wiki/fiware/index.php/FIWARE.OpenSpecification.Data.CEP),
-      and a [detailed API description]([http://htmlpreview.github.io/?https://github.com/ishkin/Proton/blob/master/documentation/apiary/CEP-apiary-blueprint.html]).
+      **Note:** Proton includes a REST service that provides the ability to push (notify) events to the engine. See [CEP open specification document](http://forge.fiware.org/plugins/mediawiki/wiki/fiware/index.php/FIWARE.OpenSpecification.Data.CEP),
+      and a [detailed API description](http://htmlpreview.github.io/?https://github.com/ishkin/Proton/blob/master/documentation/apiary/CEP-apiary-blueprint.html).
   - **Custom** – The producer's events are read using a custom mechanism defined by the user. In this case, a new type of adapter needs to be added to the adapter framework, as described in the Proton programmer guide.
 
 Additional parameters common to all producer types are:
