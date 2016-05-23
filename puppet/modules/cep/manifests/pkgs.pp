@@ -55,7 +55,7 @@ class cep::pkgs {
 	}
 
 	package { ['zip','unzip','curl','ksh','xmlstarlet']:
-		ensure => latest
+		ensure => latest,
 		require => Exec['apt-get update'],
 	}
 
