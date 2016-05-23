@@ -52,10 +52,9 @@ update_ProtonOnWebServerAdmin_war(){
 	cd "$tmp_folder"
 	unzip "$destination_folder/ProtonOnWebServerAdmin.war"
 
-	sed -i -e 's/
-$//'	-e 's|^\(definitions-repository\)=.*|\1=/var/lib/cep/ProtonDefinitions|' ProtonAdmin.properties
+	sed -i -e 's/$//'	-e 's|^\(definitions-repository\)=.*|\1=/var/lib/cep/ProtonDefinitions|' ProtonAdmin.properties
 
-	sed -i -e 's/^M$//' -e "s|^\(manager-password\)=.*|\1=$manager_password|" ProtonAdmin.properties
+	sed -i -e 's/$//' -e "s|^\(manager-password\)=.*|\1=$manager_password|" ProtonAdmin.properties
 
 	zip "$destination_folder/ProtonOnWebServerAdmin.war" * 
 	cd -
