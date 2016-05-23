@@ -8,8 +8,14 @@ class cep::pkgs {
 		unless  => '/usr/bin/debconf-get-selections | /bin/egrep "oracle-java7-installer.*shared/accepted-oracle-license-v1-1.*boolean.*true"',
 	}
 
+	exec { 'apt-get update':
+		command     => '/usr/bin/apt-get update',
+		refreshonly => true,
+	}
+
 	package { 'oracle-java7-installer':
-		ensure => latest,
+		ensure  => latest,
+		require => Exec['apt-get update'],
 	}
 
 	Apt::Ppa['ppa:webupd8team/java'] ->  Exec['set-licence-oracle-java7'] ->  Package['oracle-java7-installer']
@@ -50,6 +56,7 @@ class cep::pkgs {
 
 	package { ['zip','unzip','curl','ksh','xmlstarlet']:
 		ensure => latest
+		require => Exec['apt-get update'],
 	}
 
 	if "$serverversion" == "" {
