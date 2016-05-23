@@ -9,8 +9,8 @@ class cep::pkgs {
 	}
 
 	exec { 'apt-get update':
-		command     => '/usr/bin/apt-get update',
-		refreshonly => true,
+		command => '/usr/bin/apt-get update',
+		onlyif  => "/usr/bin/awk -v last_updat=`/usr/bin/stat -c '%Y' /var/lib/apt/periodic/update-success-stamp` -v date=`date '+%s'` 'END{if ( date - last_updat > 1*24*60*60 ){exit 0}else{exit 1}}' /dev/null",
 	}
 
 	package { 'oracle-java7-installer':
