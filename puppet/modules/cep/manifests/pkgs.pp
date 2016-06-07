@@ -15,10 +15,9 @@ class cep::pkgs {
 
 	package { 'oracle-java7-installer':
 		ensure  => latest,
-		require => Exec['apt-get update'],
 	}
 
-	Apt::Ppa['ppa:webupd8team/java'] ->  Exec['set-licence-oracle-java7'] ->  Package['oracle-java7-installer']
+	Apt::Ppa['ppa:webupd8team/java'] ->  Exec['set-licence-oracle-java7'] ->  Exec['apt-get update'] -> Package['oracle-java7-installer']
 
 	host { "$fqdn":
 		ensure  => present,
