@@ -8,7 +8,7 @@ Licensed Materials – Property of IBM
 
 
 
-Version 4.4.1: May 2016
+Version 4.4.2: June 2016
 
 ###Table of Contents
 
@@ -363,8 +363,8 @@ The operator type defines the pattern above the input events that are required f
 - All – the pattern is detected if all its listed participant events arrive in any order.
 - Sequence – the pattern is detected if all its listed participant events arrive in exactly the order of the operands.
 **Absence operator** - none of the listed events have arrived during the context.
-**Aggregation operator** –  an Aggregate EPA is a transformation EPA that takes as input a collection of events and computes values by applying functions over the input events. Those computed values can used for the EPA condition and for its derived events.
-**Trend operator** – Trend patterns are patterns that trace the value of a specific attribute over time. A Trend EPA detects increment, decrement, or stable patterns among a series of input events. For example, the rise / fall of a stock share price. The Trend operator operates only on a single event type, and detects trends among a minimum specified number of event instances (for example, an increment in value for five event instances in a row).
+**Aggregation operator** –  an Aggregate EPA is a transformation EPA that takes as input a collection of events and computes values by applying functions over the input events. These computed values can be used in the EPA condition and in its derived events.
+**Trend operator** – Trend patterns are patterns that trace the value of a specific attribute over time. A Trend EPA detects increment, decrement, or stable patterns among a series of input events. For example, the rise / fall of a stock share price. The Trend operator operates only on a single event type, and detects trends among a minimum specified number of event instances (for example, an increment in the value of five event instances in a row).
 
 Different sets of properties and operands are applicable for each operator.
 
@@ -425,9 +425,9 @@ Each computed variable has the following parameters:
 
 ######Operand and EPA Properties for Trend Operands 
 
-In a trend operand, the user declares which value will be measured for trends, based on the operand attributes.  The user specifies which operand attribute or calculated expression to use for this, in the operand attribute **Expression**.
+In a trend operand, the user declares which attribute value will be measured for the trend, based on the operand attributes.  The user specifies which operand attribute or calculated expression to use for this, in the operand attribute **Expression**.
 
-Furthermore, the user must specify the number of events to satisfy the trend pattern. This is indicated by **Trend Count**. In addition, the user is required to specify the trend direction, under **Trend Relation**. The options for this are **Increase**, **Decrease**, and **Stable**.
+Furthermore, the user must specify the number of events to satisfy the trend pattern. This is indicated by **Trend Count**. In addition, the user can specify the ratio he seeks for in the trend, indicated by **Trend Ratio**. This number indicates the gradient in the trend and is calculated as the proportion between the last and first participant events. Finally, the user is required to specify the trend direction, under **Trend Relation**. The options for this are **Increase**, **Decrease**, and **Stable**.
 
 #####Segmentation Contexts
 
@@ -445,7 +445,7 @@ When an EPA detects a pattern, it can generate derived events. An EPA can genera
 
 - **Event** – the name of the event (one of the already defined events).
 - **Condition** – condition for this event derivation. When no condition is specified, the default is to derive the event. 
-- For each derived event's attribute, an **expression** defines how to calculate the attribute value. The expression may include attributes of events participating in this pattern. For aggregation operators, the expression may include the computed variables. 
+- For each derived event's attribute, an **expression** defines how to calculate the attribute value. The expression may include attributes of events participating in this pattern. For example: if derived event E2 has attribute A2  we can write an expression whereas A2 content is attribute A1 of the input event E1. For join operators (sequence and all), A2 will be a single value (as each operand is composed of  a single value) while for aggregators and trend operators A2 will be of type array (as the matching set is composed of a set of events). In the latter case, array operations supported by EEP (Expandable Expression Parser) in Proton (see section Expressions in proton) are allowed. In addition, for aggregation operators, the expression may include the computed variables. 
 
 ####<a name="templates"></a>Templates
 
@@ -469,7 +469,7 @@ Specify the name for the template. The created template will be added to the pro
 ![Authoring Tool – Created Template](UG-images/AuthoringToolCreatedTemplate.jpg "Authoring Tool – Created Template")<br>
 *Figure 2: Authoring Tool – Created Template*
 - Choose the template type from the drop down box. Fill in the appropriate values in the  template parameters:<br> 
-![Authoring Tool – Type Selection](UG-images/AuthoringToolTypeSelection.jpg "Authoring Tool – Type Selection")<br> 
+![Authoring Tool – Type Selection](UG-images/AuthoringToolTypeSelection.png "Authoring Tool – Type Selection")<br> 
 *Figure 3: Authoring Tool – Type Selection*
 
 The following values are relevant for the different template types:
