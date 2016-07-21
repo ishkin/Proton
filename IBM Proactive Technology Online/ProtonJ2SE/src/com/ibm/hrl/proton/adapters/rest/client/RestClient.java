@@ -190,6 +190,105 @@ public class RestClient {
 
 	}
 
+	protected static void patchEventToConsumer(String url, String urlExtension, String eventInstance, String contentType,String authToken) throws  RESTException {
+		// Prepare HTTP PUT
+		String consumer = url+"/"+urlExtension;
+	
+		PostMethod postMethod = new PostMethod(consumer)
+		{
+			 @Override public String getName() { return "PATCH"; }
+			 };
 
+        
+        if(eventInstance != null) {
+
+        	RequestEntity requestEntity = new ByteArrayRequestEntity(eventInstance.getBytes());
+        	postMethod.setRequestEntity(requestEntity);
+
+        
+	        // Specify content type and encoding
+	        // If content encoding is not explicitly specified
+	        // ISO-8859-1 is assumed
+        	// postMethod.setRequestHeader("Content-Type", contentType+"; charset=ISO-8859-1");
+        	postMethod.setRequestHeader("Content-Type", contentType);
+        	
+        	if (null != authToken && !authToken.isEmpty()){
+        		postMethod.setRequestHeader("X-Auth-Token", authToken);
+        	}
+        	
+	        // Get HTTP client
+	        HttpClient httpclient = new HttpClient();
+	        
+	        // Execute request
+	        try {
+	            
+	            int result = httpclient.executeMethod(postMethod);
+	            	            
+	            if (result < 200 || result >= 300)
+	            {
+	            	Header [] reqHeaders = postMethod.getRequestHeaders();
+	            	StringBuffer headers = new StringBuffer();
+	            	for (int i=0; i<reqHeaders.length; i++ ){
+	            		headers.append(reqHeaders[i].toString());
+	            		headers.append("\n");
+	            	}
+	            	throw new RESTException("Could not perform PATCH of event instance: \n"+eventInstance+ "\nwith request headers:\n" +
+	            			headers + "to consumer "+ url+", responce result: "+result);
+	            }
+	           
+	        } catch(Exception e)
+	        {
+	        	throw new RESTException(e);
+	        }
+	        finally {
+	            // Release current connection to the connection pool 
+	            // once you are done
+	            postMethod.releaseConnection();
+	        }
+        } else
+        {
+        	System.out.println ("Invalid request");
+        }
+//        PutMethod putMethod = new PutMethod(url);        
+// 
+//        if(eventInstance != null) {
+//        	RequestEntity requestEntity = new ByteArrayRequestEntity(eventInstance.getBytes());
+//        	putMethod.setRequestEntity(requestEntity);
+//
+//        
+//	        // Specify content type and encoding
+//	        // If content encoding is not explicitly specified
+//	        // ISO-8859-1 is assumed
+//	        putMethod.setRequestHeader(
+//	                "Content-type", contentType+"; charset=ISO-8859-1");
+//	        
+//	        // Get HTTP client
+//	        HttpClient httpclient = new HttpClient();
+//	        
+//	        // Execute request
+//	        try {
+//	            
+//	            int result = httpclient.executeMethod(putMethod);
+//	            	            
+//	            if (result < 200 || result >= 300)
+//	            {
+//	            	throw new RESTException("Could not perform PUT of event instance "+eventInstance+" to consumer "+ url+", responce result: "+result);
+//	            }
+//	           
+//	        } catch(Exception e)
+//	        {
+//	        	throw new RESTException(e);
+//	        }
+//	        finally {
+//	            // Release current connection to the connection pool 
+//	            // once you are done
+//	            putMethod.releaseConnection();
+//	        }
+//        } else
+//        {
+//        	System.out.println ("Invalid request");
+//        }
+
+	}
 	
 }

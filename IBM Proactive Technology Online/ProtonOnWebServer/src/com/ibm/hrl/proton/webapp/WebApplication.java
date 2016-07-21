@@ -22,6 +22,7 @@ import javax.ws.rs.core.Application;
 
 import com.ibm.hrl.proton.webapp.exceptions.ResponseExceptionMapper;
 import com.ibm.hrl.proton.webapp.providers.EventJSONMessageReader;
+import com.ibm.hrl.proton.webapp.providers.EventJSONNgsiMessageReader;
 import com.ibm.hrl.proton.webapp.providers.EventPlainTextMessageReader;
 import com.ibm.hrl.proton.webapp.providers.EventXmlNgsiMessageReader;
 import com.ibm.hrl.proton.webapp.resources.EventResource;
@@ -39,8 +40,9 @@ public class WebApplication extends Application {
 		classes.add(EventResourceJSONDeprecated.class);
 		classes.add(EventResourcePlainTextDeprecated.class);
 		classes.add(EventPlainTextMessageReader.class);
-		classes.add(EventJSONMessageReader.class);
+		//classes.add(EventJSONMessageReader.class);
 		classes.add(EventXmlNgsiMessageReader.class);
+		classes.add(EventJSONNgsiMessageReader.class);
 		classes.add(ResponseExceptionMapper.class);
 		
 		return classes;

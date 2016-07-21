@@ -21,6 +21,7 @@ import com.ibm.hrl.proton.adapters.formatters.CSVTextFormatter;
 import com.ibm.hrl.proton.adapters.formatters.ITextFormatter;
 import com.ibm.hrl.proton.adapters.formatters.ITextFormatter.TextFormatterType;
 import com.ibm.hrl.proton.adapters.formatters.JSONFormatter;
+import com.ibm.hrl.proton.adapters.formatters.JSONNgsiFormatter;
 import com.ibm.hrl.proton.adapters.formatters.TagTextFormatter;
 import com.ibm.hrl.proton.adapters.formatters.XmlNgsiFormatter;
 import com.ibm.hrl.proton.adapters.interfaces.AbstractOutputAdapter;
@@ -30,6 +31,7 @@ import com.ibm.hrl.proton.metadata.epa.basic.IDataObject;
 import com.ibm.hrl.proton.metadata.inout.ConsumerMetadata;
 import com.ibm.hrl.proton.metadata.parser.MetadataParser;
 import com.ibm.hrl.proton.runtime.metadata.EventMetadataFacade;
+import com.ibm.hrl.proton.utilities.containers.Pair;
 
 public class RESTOutputAdapter extends AbstractOutputAdapter {
 
@@ -58,7 +60,7 @@ public class RESTOutputAdapter extends AbstractOutputAdapter {
 		case CSV:			
 			textFormatter = new CSVTextFormatter(consumerMetadata.getConsumerProperties(),eventMetadata,eep);
 		case JSON:
-			textFormatter = new JSONFormatter(consumerMetadata.getConsumerProperties(),eventMetadata,eep);
+			textFormatter = new JSONNgsiFormatter(consumerMetadata.getConsumerProperties(),eventMetadata,eep);
 			break;
 		case TAG:
 			textFormatter = new TagTextFormatter(consumerMetadata.getConsumerProperties(),eventMetadata,eep);
@@ -71,8 +73,16 @@ public class RESTOutputAdapter extends AbstractOutputAdapter {
 	@Override
 	public void writeObject(IDataObject instance) throws AdapterException {
 		try {
-			//out.write(eventInstance.toString()+LINE_SEPARATOR);			
-			RestClient.putEventToConsumer(url, textFormatter.formatInstance(instance), contentType,authToken);
+			//out.write(eventInstance.toString()+LINE_SEPARATOR);
+			if (textFormatter instanceof JSONNgsiFormatter)
+			{
+				//format the instance and extract the url
+				Pair<String,String> formattedInstance = ((JSONNgsiFormatter)textFormatter).formatInstance(instance);
+				String urlExtension = formattedInstance.getFirstValue();
+				String eventInstance = formattedInstance.getSecondValue();
+				RestClient.patchEventToConsumer(url,urlExtension, eventInstance, contentType,authToken);
+			}
+			RestClient.putEventToConsumer(url, (String)textFormatter.formatInstance(instance), contentType,authToken);
 			
 		} catch (RESTException e) {			
 			throw new AdapterException(e);

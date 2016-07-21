@@ -30,7 +30,7 @@ public interface ITextFormatter
 	 * @return
 	 * @throws AdapterException 
 	 */
-	public String formatInstance(IDataObject instance) throws AdapterException;
+	public Object formatInstance(IDataObject instance) throws AdapterException;
 	
 	/**
 	 * Parse the given text line , representing event instance, according to this formatter's type and properties
