@@ -61,9 +61,11 @@ Version 5.4.1: July 2016
 [Integration with the Context Broker JSON Format](#integrate)<br>
 - [Getting Events from the Context Broker](#getevents)<br>
 - [Sending Output Events to the Context Broker](#sendevents_)<br>
+
 [Depracated: Integration with the Context Broker XML Format](#integrate_D)<br>
 - [Getting Events from the Context Broker](#getevents_D)<br>
 - [Sending Output Events to the Context Broker](#sendevents_D)<br>
+
 [Live Demo Design<br>](#livedemo)
 
 
