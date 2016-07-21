@@ -60,7 +60,7 @@ Version 5.4.1: July 2016
 [Appendix A: Integration with NGSI in the FIWARE project](#appendix)<br>
 [Integration with the Context Broker JSON Format](#integrate)<br>
 - [Getting Events from the Context Broker](#getevents)<br>
-- [Sending Output Events to the Context Broker](#sendevents_)<br>
+- [Sending Output Events to the Context Broker](#sendevents)<br>
 
 [Depracated: Integration with the Context Broker XML Format](#integrate_D)<br>
 - [Getting Events from the Context Broker](#getevents_D)<br>
