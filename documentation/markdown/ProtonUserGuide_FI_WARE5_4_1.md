@@ -950,8 +950,8 @@ The IBM Proactive Technology Online application should include a REST type consu
 
 Below is an example of such a consumer:
 
-![REST type consumer](UG-images/RESTTypeConsumer_JSON.jpg "REST type consumer")<br>
-*Figure 10: REST type consumer*
+![REST type consumer](UG-images/Figure10.user.guide.new.png "REST type consumer")<br>
+*Figure 10: REST type consumer of JSON payload*
 
 Note that the content type of this consumer is application/json and its formatter is json.
 
@@ -1090,7 +1090,7 @@ The IBM Proactive Technology Online application should include a REST type consu
 Below is an example of such a consumer:
 
 ![REST type consumer D](UG-images/RESTTypeConsumer.jpg "REST type consumer")<br>
-*Figure 11: REST type consumer*
+*Figure 11: REST type consumer of deprecated xml payload*
 
 Note that the content type of this consumer is application/xml and its formatter is xml.
  
