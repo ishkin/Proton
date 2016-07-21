@@ -58,7 +58,8 @@ Version 5.4.1: July 2016
 **APPENDIX**
 
 [Appendix A: Integration with NGSI in the FIWARE project](#appendix)<br>
-[Integration with the Context Broker](#integrate)<br>
+[Integration with the Context Broker JSON Format](#integrate)<br>
+[Depracated: Integration with the Context Broker XML Format](#integrate_D)<br>
 [Getting Events from the Context Broker](#getevents)<br>
 [Sending Output Events to the Context Broker](#sendevents)<br>
 [Live Demo Design<br>](#livedemo)
@@ -852,7 +853,145 @@ To delete a resource:
  
 ##<a name="appendix"></a>Appendix A: Integration with NGSI in the FIWARE project
 
-###<a name="integrate"></a>Integration with the Context Broker 
+###<a name="integrate"></a>Integration with Context Broker JSON Format 
+
+The integration is based on the NGSI/JSON  v1 and v2 (normalized ) format supported by the Context Broker. There are two directions to this integration. The IBM Proactive Technology Online can get input events from the Context Broker, and it can also send output events to the context broker. A specific solution can use both directions or just one of them. 
+
+Although the support of IBM Proactive Technology Online in the NGSI/JSON format was designed as part of the integration with the Context Broker, any other application can use it and communicate with the IBM Proactive Technology Online in this manner. 
+
+####<a name="getevents"></a>Getting Events from the Context Broker 
+
+An external application should subscribe the IBM Proactive Technology Online to changes in some entities managed by the Context Broker. This subscription should include the REST service URL of the IBM Proactive Technology Online (see the CEP open specification document). Whenever the subscription conditions are met, the Context Broker activates a POST REST of notifyContextRequest, in NGSI JSON format, to the IBM Proactive Technology Online. This REST call is treated as an input event by the IBM Proactive Technology Online. 
+
+Below is an example of such a notifyContextRequest notification sent by the Context Broker:
+ 
+**NGSI JSON v1 format:**
+    POST http://cep.lab.fi-ware.eu:8089/ProtonOnWebServer/rest/events
+    Content-Type: application/json
+    Data:
+      {
+      "subscriptionId" : "51c04a21d714fb3b37d7d5a7",
+      "originator" : "localhost",
+      "contextResponses" : [
+        {
+          "contextElement" : {
+            "attributes" : [
+              {
+                "name" : "temperature",
+                "type" : "tempType",
+                "value" : 26.5
+              },
+              {
+                "name" : "occupancy",
+                "type" : "occType",
+                "value" : "low"
+              }        ],
+            "type" : "Room",
+            "isPattern" : "false",
+            "id" : "Room1"
+          },
+          "statusCode" : {
+            "code" : "200",
+            "reasonPhrase" : "OK"
+          }
+        }
+      ]
+    }
+
+**NGSI JSON v2 normalized format:**
+
+    POST http://cep.lab.fi-ware.eu:8089/ProtonOnWebServer/rest/events
+    Content-Type: application/json
+    Data:
+    {
+      "subscriptionId": "51c04a21d714fb3b37d7d5a7",
+      "data": [
+        {
+          "id": "Room1",
+          "type": "Room",
+          "temperature": {
+            "value": 26.5,
+            "type": "tempType",
+            "metadata": {}
+          },
+          "occupancy": {
+            "value": "low",
+            "type": "occType",
+            "metadata": {}
+          }
+        }
+      ]
+    }
+
+The IBM Proactive Technology Online transforms this message to an input event of type: 
+ <type>ContextUpdate  (the entity type is concatenated with the string “ContextUpdate”)
+
+In the example above, the entity type is "Room", hence the generated event is of type:
+RoomContextUpdate 
+
+In the IBM Proactive Technology Online  application, such an event type must be defined. This event must have all the context attributes defined in the subscription, and two additional mandatory attributes:
+
+- entityId – of type String. This attribute holds the entity id value provided in the message ("Room1" in the examples above)
+- entityType – of type String. This attributes holds the entity type provided in the message ("Room" in the example above) 
+
+####<a name="sendevents"></a>Sending Output Events to the Context Broker 
+
+Every output event targeted to be sent to the Context Broker must have the following attributes:
+- entityId – of type String
+- entityType – of type String.
+
+All the other attributes defined in the event should be attributes defined as context attributes in the corresponding Context Broker entity. 
+
+At runtime, the Context Broker should have a predefined entity with the entityId and entityType listed in IBM Proactive Technology Online event.
+
+The Context Broker entity should also have the IBM Proactive Technology Online built-in attributes (see the [Built-in Attributes list](#eventclasses)).
+
+The IBM Proactive Technology Online application should include a REST type consumer that sends the IBM Proactive Technology Online output events to the Context Broker.
+
+Below is an example of such a consumer:
+
+![REST type consumer](UG-images/RESTTypeConsumer_JSON.jpg "REST type consumer")<br>
+*Figure 10: REST type consumer*
+
+Note that the content type of this consumer is application/json and its formatter is json.
+
+Whenever the IBM Proactive Technology Online detects an event listed in such a consumer definition, the IBM Proactive Technology Online generates a message and sends it via REST PATCH to the Context Broker.
+
+Below is an example for such message data. Note that the entityType and entity id are given as part of the PATCH request URL, while the other event attributes are given as message elements. 
+The request URL is built by concatenating the URL specified in the consumer definition with the entity id and type as provided in the output event. For example, for the consumer defined above the URL would be: 
+
+    http://localhost:8080//v2/entities/CEPEventReporter_singleton/attrs?=type=CEPEventReporter
+
+where “CEPEventReporter_singleton” is the entity id and “CEPEventReporter” is the entity type. Those attributes are populated from the event ,and an entity with such id and type should already exist in Context Broker. 
+The IBM Proactive Technology Online filters out event attributes with empty values (since this has special meaning in the Context Broker). The IBM Proactive Technology Online does not send the type of the context attributes (this means that if the Context Broker entity has more than one attribute with the same name, all of those attributes are updated). 
+
+Example of output event data generated by the IBM Proactive Technology Online:
+
+    { 
+    "EventId" : { 
+        "value" : "9e4f7289-b57e-49ca-a980-de634d442f4f" 
+      }, 
+    "DetectionTime" : { 
+        "value" : "1468925471568" 
+      }, 
+    "Cost" : { 
+        "value" : "0.0" 
+      }, 
+    "Certainty" : { 
+        "value" : "0.0" 
+      }, 
+    "Name" : { 
+        "value" : "LowBatteryAlert" 
+      }, 
+    "temperature" : { 
+        "value" : "25.6" 
+      } 
+    }
+
+
+###<a name="integrate_D"></a>Deprecated: Integration with Deprecated Context Broker XML Format 
+
+**Disclaimer:** While this older format has been deprecated officially, it is still supported in this version for safer transition from old versions of both Context Broker and Proton.
 
 The integration is based on the NGSI/XML format supported by the Context Broker. There are two directions to this integration. The IBM Proactive Technology Online can get input events from the Context Broker, and it can also send output events to the context broker. A specific solution can use both directions or just one of them. 
 
@@ -864,7 +1003,7 @@ Currently IBM Proactive Technology Online do not support JSON format for integra
 
 Additionally,  currently it is not possible to add the Fiware-Service and Fiware-ServicePath information to the header of the HTTP request sent to Context Broker by CEP, therefore it is not possible to work with entities in context broker requiring this information.
 
-####<a name="getevents"></a>Getting Events from the Context Broker 
+####<a name="getevents_D"></a>Getting Events from the Context Broker 
 
 An external application should subscribe the IBM Proactive Technology Online to changes in some entities managed by the Context Broker. This subscription should include the REST service URL of the IBM Proactive Technology Online (see the CEP open specification document). Whenever the subscription conditions are met, the Context Broker activates a POST REST of notifyContextRequest, in NGSI XML format, to the IBM Proactive Technology Online. This REST call is treated as an input event by the IBM Proactive Technology Online. 
 
@@ -933,7 +1072,7 @@ In the IBM Proactive Technology Online  application, such an event type must be 
 - entityId – of type String. This attribute holds the entityId value provided in the message ("OUTSMART.NODE_3505" in the example above)
 - entityType – of type String. This attributes holds the entity type provided in the message ("Node" in the example above) 
 
-####<a name="sendevents"></a>Sending Output Events to the Context Broker 
+####<a name="sendevents_D"></a>Sending Output Events to the Context Broker 
 
 Every output event targeted to be sent to the Context Broker must have the following attributes:
 
@@ -950,8 +1089,8 @@ The IBM Proactive Technology Online application should include a REST type consu
 
 Below is an example of such a consumer:
 
-![REST type consumer](UG-images/RESTTypeConsumer.jpg "REST type consumer")<br>
-*Figure 10: REST type consumer*
+![REST type consumer D](UG-images/RESTTypeConsumer.jpg "REST type consumer")<br>
+*Figure 11: REST type consumer*
 
 Note that the content type of this consumer is application/xml and its formatter is xml.
  
