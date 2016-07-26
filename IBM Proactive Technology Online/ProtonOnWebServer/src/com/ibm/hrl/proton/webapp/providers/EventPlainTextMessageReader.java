@@ -72,8 +72,8 @@ public class EventPlainTextMessageReader implements MessageBodyReader<IEventInst
 		// we should parse the event text, create IEventInstance and return it -
 		// the resource's put/post function will be invoked
 		
-		//String eventString = getEventString(eventStream);
-		String eventString = "Name=StockBuy;id=111;amount=100;price=5000";
+		String eventString = getEventString(eventStream);
+		//String eventString = "Name=StockBuy;id=111;amount=100;price=5000";
 		logger.info("extracted event string: " + eventString);
 		
 		// the eventString consists of name=value pairs separated by delimiter		

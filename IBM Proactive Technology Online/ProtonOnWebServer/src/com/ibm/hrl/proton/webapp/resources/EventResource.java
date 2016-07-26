@@ -44,8 +44,8 @@ public class EventResource {
 	private static final IEventRouter eventRouter = WebFacadesManager.getInstance().getEventRouter();
 	
 	@POST
-	@Consumes("application/json, application/xml")
-	@Produces("application/json, application/xml")
+	@Consumes("application/json, application/xml, text/plain")
+	@Produces("application/json, application/xml, text/plain")
 	public Response submitNewEvent(EventInstance event) {
 		
 		logger.info("starting submitNewEvent");		
