@@ -1,4 +1,5 @@
 
+
 # IBM Proactive Technology Online User Guide
 IBM Research – Haifa
 
@@ -8,7 +9,7 @@ Licensed Materials – Property of IBM
 
 
 
-Version 4.4.1: May 2016
+Version 5.4.1: July 2016
 
 ###Table of Contents
 
@@ -57,9 +58,14 @@ Version 4.4.1: May 2016
 **APPENDIX**
 
 [Appendix A: Integration with NGSI in the FIWARE project](#appendix)<br>
-[Integration with the Context Broker](#integrate)<br>
-[Getting Events from the Context Broker](#getevents)<br>
-[Sending Output Events to the Context Broker](#sendevents)<br>
+[Integration with the Context Broker JSON Format](#integrate)<br>
+- [Getting Events from the Context Broker](#getevents)<br>
+- [Sending Output Events to the Context Broker](#sendevents)<br>
+
+[Depracated: Integration with the Context Broker XML Format](#integrate_D)<br>
+- [Getting Events from the Context Broker](#getevents_D)<br>
+- [Sending Output Events to the Context Broker](#sendevents_D)<br>
+
 [Live Demo Design<br>](#livedemo)
 
 
@@ -362,9 +368,12 @@ The operator type defines the pattern above the input events that are required f
 **Join operators:**
 - All – the pattern is detected if all its listed participant events arrive in any order.
 - Sequence – the pattern is detected if all its listed participant events arrive in exactly the order of the operands.
+
 **Absence operator** - none of the listed events have arrived during the context.
-**Aggregation operator** –  an Aggregate EPA is a transformation EPA that takes as input a collection of events and computes values by applying functions over the input events. Those computed values can used for the EPA condition and for its derived events.
-**Trend operator** – Trend patterns are patterns that trace the value of a specific attribute over time. A Trend EPA detects increment, decrement, or stable patterns among a series of input events. For example, the rise / fall of a stock share price. The Trend operator operates only on a single event type, and detects trends among a minimum specified number of event instances (for example, an increment in value for five event instances in a row).
+
+**Aggregation operator** –  an Aggregate EPA is a transformation EPA that takes as input a collection of events and computes values by applying functions over the input events. These computed values can be used in the EPA condition and in its derived events.
+
+**Trend operator** – Trend patterns are patterns that trace the value of a specific attribute over time. A Trend EPA detects increment, decrement, or stable patterns among a series of input events. For example, the rise / fall of a stock share price. The Trend operator operates only on a single event type, and detects trends among a minimum specified number of event instances (for example, an increment in the value of five event instances in a row).
 
 Different sets of properties and operands are applicable for each operator.
 
@@ -425,9 +434,9 @@ Each computed variable has the following parameters:
 
 ######Operand and EPA Properties for Trend Operands 
 
-In a trend operand, the user declares which value will be measured for trends, based on the operand attributes.  The user specifies which operand attribute or calculated expression to use for this, in the operand attribute **Expression**.
+In a trend operand, the user declares which attribute value will be measured for the trend, based on the operand attributes.  The user specifies which operand attribute or calculated expression to use for this, in the operand attribute **Expression**.
 
-Furthermore, the user must specify the number of events to satisfy the trend pattern. This is indicated by **Trend Count**. In addition, the user is required to specify the trend direction, under **Trend Relation**. The options for this are **Increase**, **Decrease**, and **Stable**.
+Furthermore, the user must specify the number of events to satisfy the trend pattern. This is indicated by **Trend Count**. In addition, the user can specify the ratio he seeks for in the trend, indicated by **Trend Ratio**. This number indicates the gradient in the trend and is calculated as the proportion between the last and first participant events. Finally, the user is required to specify the trend direction, under **Trend Relation**. The options for this are **Increase**, **Decrease**, and **Stable**.
 
 #####Segmentation Contexts
 
@@ -445,7 +454,7 @@ When an EPA detects a pattern, it can generate derived events. An EPA can genera
 
 - **Event** – the name of the event (one of the already defined events).
 - **Condition** – condition for this event derivation. When no condition is specified, the default is to derive the event. 
-- For each derived event's attribute, an **expression** defines how to calculate the attribute value. The expression may include attributes of events participating in this pattern. For aggregation operators, the expression may include the computed variables. 
+- For each derived event's attribute, an **expression** defines how to calculate the attribute value. The expression may include attributes of events participating in this pattern. For example: if derived event E2 has attribute A2  we can write an expression whereas A2 content is attribute A1 of the input event E1. For join operators (sequence and all), A2 will be a single value (as each operand is composed of  a single value) while for aggregators and trend operators A2 will be of type array (as the matching set is composed of a set of events). In the latter case, array operations supported by EEP (Expandable Expression Parser) in Proton (see section Expressions in proton) are allowed. In addition, for aggregation operators, the expression may include the computed variables. 
 
 ####<a name="templates"></a>Templates
 
@@ -469,7 +478,7 @@ Specify the name for the template. The created template will be added to the pro
 ![Authoring Tool – Created Template](UG-images/AuthoringToolCreatedTemplate.jpg "Authoring Tool – Created Template")<br>
 *Figure 2: Authoring Tool – Created Template*
 - Choose the template type from the drop down box. Fill in the appropriate values in the  template parameters:<br> 
-![Authoring Tool – Type Selection](UG-images/AuthoringToolTypeSelection.jpg "Authoring Tool – Type Selection")<br> 
+![Authoring Tool – Type Selection](UG-images/AuthoringToolTypeSelection.png "Authoring Tool – Type Selection")<br> 
 *Figure 3: Authoring Tool – Type Selection*
 
 The following values are relevant for the different template types:
@@ -848,19 +857,154 @@ To delete a resource:
  
 ##<a name="appendix"></a>Appendix A: Integration with NGSI in the FIWARE project
 
-###<a name="integrate"></a>Integration with the Context Broker 
+###<a name="integrate"></a>Integration with Context Broker JSON Format 
+
+The integration is based on the NGSI/JSON  v1 and v2 (normalized ) format supported by the Context Broker. There are two directions to this integration. The IBM Proactive Technology Online can get input events from the Context Broker, and it can also send output events to the context broker. A specific solution can use both directions or just one of them. 
+
+Although the support of IBM Proactive Technology Online in the NGSI/JSON format was designed as part of the integration with the Context Broker, any other application can use it and communicate with the IBM Proactive Technology Online in this manner. 
+
+####<a name="getevents"></a>Getting Events from the Context Broker 
+
+An external application should subscribe the IBM Proactive Technology Online to changes in some entities managed by the Context Broker. This subscription should include the REST service URL of the IBM Proactive Technology Online (see the CEP open specification document). Whenever the subscription conditions are met, the Context Broker activates a POST REST of notifyContextRequest, in NGSI JSON format, to the IBM Proactive Technology Online. This REST call is treated as an input event by the IBM Proactive Technology Online. 
+
+Below is an example of such a notifyContextRequest notification sent by the Context Broker:
+ 
+**NGSI JSON v1 format:**
+
+    POST http://cep.lab.fi-ware.eu:8089/ProtonOnWebServer/rest/events
+    Content-Type: application/json
+    Data:
+      {
+      "subscriptionId" : "51c04a21d714fb3b37d7d5a7",
+      "originator" : "localhost",
+      "contextResponses" : [
+        {
+          "contextElement" : {
+            "attributes" : [
+              {
+                "name" : "temperature",
+                "type" : "tempType",
+                "value" : 26.5
+              },
+              {
+                "name" : "occupancy",
+                "type" : "occType",
+                "value" : "low"
+              }        ],
+            "type" : "Room",
+            "isPattern" : "false",
+            "id" : "Room1"
+          },
+          "statusCode" : {
+            "code" : "200",
+            "reasonPhrase" : "OK"
+          }
+        }
+      ]
+    }
+
+**NGSI JSON v2 normalized format:**
+
+    POST http://cep.lab.fi-ware.eu:8089/ProtonOnWebServer/rest/events
+    Content-Type: application/json
+    Data:
+    {
+      "subscriptionId": "51c04a21d714fb3b37d7d5a7",
+      "data": [
+        {
+          "id": "Room1",
+          "type": "Room",
+          "temperature": {
+            "value": 26.5,
+            "type": "tempType",
+            "metadata": {}
+          },
+          "occupancy": {
+            "value": "low",
+            "type": "occType",
+            "metadata": {}
+          }
+        }
+      ]
+    }
+
+The IBM Proactive Technology Online transforms this message to an input event of type: 
+ <type>ContextUpdate  (the entity type is concatenated with the string “ContextUpdate”)
+
+In the example above, the entity type is "Room", hence the generated event is of type:
+RoomContextUpdate 
+
+In the IBM Proactive Technology Online  application, such an event type must be defined. This event must have all the context attributes defined in the subscription, and two additional mandatory attributes:
+
+- entityId – of type String. This attribute holds the entity id value provided in the message ("Room1" in the examples above)
+- entityType – of type String. This attributes holds the entity type provided in the message ("Room" in the example above) 
+
+####<a name="sendevents"></a>Sending Output Events to the Context Broker 
+
+Every output event targeted to be sent to the Context Broker must have the following attributes:
+- entityId – of type String
+- entityType – of type String.
+
+All the other attributes defined in the event should be attributes defined as context attributes in the corresponding Context Broker entity. 
+
+At runtime, the Context Broker should have a predefined entity with the entityId and entityType listed in IBM Proactive Technology Online event.
+
+The Context Broker entity should also have the IBM Proactive Technology Online built-in attributes (see the [Built-in Attributes list](#eventclasses)).
+
+The IBM Proactive Technology Online application should include a REST type consumer that sends the IBM Proactive Technology Online output events to the Context Broker.
+
+Below is an example of such a consumer:
+
+![REST type consumer](UG-images/Figure10.user.guide.new.png "REST type consumer")<br>
+*Figure 10: REST type consumer of JSON payload*
+
+Note that the content type of this consumer is application/json and its formatter is json.
+
+Whenever the IBM Proactive Technology Online detects an event listed in such a consumer definition, the IBM Proactive Technology Online generates a message and sends it via REST PATCH to the Context Broker.
+
+Below is an example for such message data. Note that the entityType and entity id are given as part of the PATCH request URL, while the other event attributes are given as message elements. 
+The request URL is built by concatenating the URL specified in the consumer definition with the entity id and type as provided in the output event. For example, for the consumer defined above the URL would be: 
+
+    http://localhost:8080//v2/entities/CEPEventReporter_singleton/attrs?=type=CEPEventReporter
+
+where “CEPEventReporter_singleton” is the entity id and “CEPEventReporter” is the entity type. Those attributes are populated from the event ,and an entity with such id and type should already exist in Context Broker. 
+The IBM Proactive Technology Online filters out event attributes with empty values (since this has special meaning in the Context Broker). The IBM Proactive Technology Online does not send the type of the context attributes (this means that if the Context Broker entity has more than one attribute with the same name, all of those attributes are updated). 
+
+Example of output event data generated by the IBM Proactive Technology Online:
+
+    { 
+    "EventId" : { 
+        "value" : "9e4f7289-b57e-49ca-a980-de634d442f4f" 
+      }, 
+    "DetectionTime" : { 
+        "value" : "1468925471568" 
+      }, 
+    "Cost" : { 
+        "value" : "0.0" 
+      }, 
+    "Certainty" : { 
+        "value" : "0.0" 
+      }, 
+    "Name" : { 
+        "value" : "LowBatteryAlert" 
+      }, 
+    "temperature" : { 
+        "value" : "25.6" 
+      } 
+    }
+
+
+###<a name="integrate_D"></a>Deprecated: Integration with Deprecated Context Broker XML Format 
+
+    **Disclaimer:** While this older XML format has been deprecated officially, it is still supported in this version for safer transition from old versions of both Context Broker and Proton.
 
 The integration is based on the NGSI/XML format supported by the Context Broker. There are two directions to this integration. The IBM Proactive Technology Online can get input events from the Context Broker, and it can also send output events to the context broker. A specific solution can use both directions or just one of them. 
 
 Although the support of IBM Proactive Technology Online in the NGSI/XL format was designed as part of the integration with the Context Broker, any other application can use it and communicate with the IBM Proactive Technology Online in this manner. 
 
-**Note of Limitation**:
-
-Currently IBM Proactive Technology Online do not support JSON format for integration with the Context Broker. Therefore integration with the latest Orion Context Broker version , where the NGSI/XML format is deprecated will not be possible until a version of IBM Proactive Technology Online supporting the JSON format is published. 
-
 Additionally,  currently it is not possible to add the Fiware-Service and Fiware-ServicePath information to the header of the HTTP request sent to Context Broker by CEP, therefore it is not possible to work with entities in context broker requiring this information.
 
-####<a name="getevents"></a>Getting Events from the Context Broker 
+####<a name="getevents_D"></a>Getting Events from the Context Broker 
 
 An external application should subscribe the IBM Proactive Technology Online to changes in some entities managed by the Context Broker. This subscription should include the REST service URL of the IBM Proactive Technology Online (see the CEP open specification document). Whenever the subscription conditions are met, the Context Broker activates a POST REST of notifyContextRequest, in NGSI XML format, to the IBM Proactive Technology Online. This REST call is treated as an input event by the IBM Proactive Technology Online. 
 
@@ -929,7 +1073,7 @@ In the IBM Proactive Technology Online  application, such an event type must be 
 - entityId – of type String. This attribute holds the entityId value provided in the message ("OUTSMART.NODE_3505" in the example above)
 - entityType – of type String. This attributes holds the entity type provided in the message ("Node" in the example above) 
 
-####<a name="sendevents"></a>Sending Output Events to the Context Broker 
+####<a name="sendevents_D"></a>Sending Output Events to the Context Broker 
 
 Every output event targeted to be sent to the Context Broker must have the following attributes:
 
@@ -946,8 +1090,8 @@ The IBM Proactive Technology Online application should include a REST type consu
 
 Below is an example of such a consumer:
 
-![REST type consumer](UG-images/RESTTypeConsumer.jpg "REST type consumer")<br>
-*Figure 10: REST type consumer*
+![REST type consumer D](UG-images/RESTTypeConsumer.jpg "REST type consumer")<br>
+*Figure 11: REST type consumer of deprecated XML payload*
 
 Note that the content type of this consumer is application/xml and its formatter is xml.
  
@@ -1026,3 +1170,4 @@ The FI-WARE live demo application  demonstrates an application that integrates t
 In the live demo, the IBM Proactive Technology Online is used to detect alerts regarding the status of various entities managed by the Context Broker. Whenever a status of monitored entity is changed, the IBM Proactive Technology Online is notified. The IBM Proactive Technology Online processes those events and generates alerts when some patterns are detected. To manage the alerts generated by the IBM Proactive Technology Online, a singleton entity of entity type CEPEventReporter and entity id CEPEventReporter was defined in the Context Broker. This entity was updated with all the updateContextRequest events generated by the IBM Proactive Technology Online.
 
 This CEPEventReporter entity has the attributes given in the example above. In particular, it has an attribute called EventType that holds the actual alert type detected by the IBM Proactive Technology Online, and an EventSeverity attribute that holds the alert severity. In addition, this singleton entity has the attributes AffectedEntityType and AffectedEntity  to enable identification of the entity that caused the alert.
+
