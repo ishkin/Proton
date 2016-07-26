@@ -17,7 +17,11 @@ class cep::pkgs {
 		ensure  => latest,
 	}
 
-	Apt::Ppa['ppa:webupd8team/java'] ->  Exec['set-licence-oracle-java7'] ->  Exec['apt-get update'] -> Package['oracle-java7-installer']
+	package { 'puppet-module-puppetlabs-apt':
+		ensure  => latest,
+	}
+
+	Package['puppet-module-puppetlabs-apt'] -> Apt::Ppa['ppa:webupd8team/java'] ->  Exec['set-licence-oracle-java7'] ->  Exec['apt-get update'] -> Package['oracle-java7-installer']
 
 	host { "$fqdn":
 		ensure  => present,
