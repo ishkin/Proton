@@ -5,6 +5,7 @@ DEBUG='yes'
 
 base_name=$(basename $0 .sh)
 base_dir=$(cd `dirname $0` ; pwd)
+local_modules_folder="$base_dir/puppet/modules"
 
 log_file=/tmp/$base_name.$$.log
 
@@ -55,7 +56,7 @@ sudo_test(){
 download_puppet_cep_module(){
   git_base_url="https://raw.githubusercontent.com/ishkin/Proton/master/puppet/modules/cep"
 
-  local_cep_folder="$base_dir/puppet/modules/cep"
+  local_cep_folder="$local_modules_folder/cep"
   sudo_run mkdir -p "$local_cep_folder"
   sudo_run mkdir -p "$local_cep_folder/manifests"
   sudo_run mkdir -p "$local_cep_folder/files"
@@ -69,6 +70,7 @@ download_puppet_cep_module(){
     "manifests/download.pp" \
     "manifests/config.pp" \
     "manifests/validation.pp" \
+    "manifests/install.pp" \
     ; do
         sudo_run /usr/bin/curl --silent --show-error --fail --tlsv1 --connect-timeout 30 --location  "$git_base_url/$FILE" --output "$local_cep_folder/$FILE"
         if [[ $FILE = *'.ksh' ]] || [[ $FILE = *'.sh' ]] ; then
@@ -100,16 +102,20 @@ handle_hostname_changes(){
 # Update Ubuntu
 sudo_run apt-get update
 
-#Install puppet
-sudo_run apt-get -y install puppet-module-puppetlabs-apt
+#Install puppet and git
+sudo_run apt-get -y install puppet git
 
+#Download our puppet module from github
 download_puppet_cep_module
+
+#install the apt and stdlib puppet modules from the puppetlabs github
+sudo_run git clone "https://github.com/puppetlabs/puppetlabs-apt.git" "$local_modules_folder/apt/"
+sudo_run git clone "https://github.com/puppetlabs/puppetlabs-stdlib.git" "$local_modules_folder/stdlib/"
 
 handle_hostname_changes
 
 #Install the cep module using puppet
-#sudo_run /usr/bin/puppet apply --parser future --modulepath=$base_dir/puppet/modules:/etc/puppet/modules:/usr/share/puppet/modules -e 'include cep' --debug
-sudo_run /usr/bin/puppet apply --modulepath=$base_dir/puppet/modules:/etc/puppet/modules:/usr/share/puppet/modules -e 'include cep'
+sudo_run /usr/bin/puppet apply  --parser future --modulepath=$local_modules_folder:/etc/puppet/modules:/usr/share/puppet/modules -e 'include cep'
 
 print_to_log 'INFO' "The log file is saved as: $log_file"
 
