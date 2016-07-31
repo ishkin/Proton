@@ -12,4 +12,5 @@ EXPOSE 8080
 # smoketest bash script
 RUN mkdir -p /root/Proton/
 ADD https://raw.githubusercontent.com/ishkin/Proton/master/docker/docker_smoketest.sh /root/Proton/docker_smoketest.sh
+RUN chmod +x /root/Proton/docker_smoretest.sh
 ENTRYPOINT ["/usr/local/tomcat/bin/catalina.sh", "run"]
