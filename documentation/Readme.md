@@ -11,5 +11,5 @@ The user and programmer's manuals are processed for easy browsing on ReadTheDocs
 http://proactive-technology-online.readthedocs.io/en/latest/index.html
 
 ## Updates
-* June, 2016: Latest revision of the user guide is at 4.4.2, programmer's guide did not change.
+* July, 2016: Latest revision of the user guide is at 5.4.1, programmer's guide did not change.
 
