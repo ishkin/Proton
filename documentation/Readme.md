@@ -7,7 +7,7 @@ http://htmlpreview.github.io/?https://github.com/ishkin/Proton/blob/master/docum
 
 ## User and Programmer Guides
 
-## On github
+### On github
 User guide pdf: https://github.com/ishkin/Proton/blob/master/documentation/ProtonUserGuidev5.4.1.pdf
 Programmers guide pdf: https://github.com/ishkin/Proton/blob/master/documentation/ProtonProgrammerGuidev5.4.1.pdf
 
