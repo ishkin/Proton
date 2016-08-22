@@ -2,4 +2,5 @@
 
 The Proactive Technology Online (Proton) is the a reference implementation of the Complex Event Processing (CEP) Generic Enabler of FIWARE.
 
-See [Top CEP Documentation Readme] (https://github.com/ishkin/Proton/blob/master/documentation/Readme.md)
+For the Top CEP Documentation Readme: https://github.com/ishkin/Proton/blob/master/documentation/Readme.md
+
