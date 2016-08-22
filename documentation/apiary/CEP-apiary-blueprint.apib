@@ -26,7 +26,7 @@ Note:
 * The data in the tag format should be given with no blanks.
 * In the JSON format, all the attributes values are given as strings, the CEP processes each attribute value according to its defined type (in the event definition).
 
-### Receive a new input event in json, tag, NGSI xml, or NGSI json formats [POST /events]
+### Receive a new input event in json, tag, NGSI xml or NGSI json formats [POST /events]
    
 
 + Request (application/json)
@@ -102,7 +102,7 @@ Note:
 # Sending output events [POST /application-name/consumer]
 The CEP GE activates a REST client for sending output events (in a push mode) to an external application REST service
 
-The following is what the REST consumer will generate as a request to an external REST service called /application-name/consumer. This external REST service is expected to be able to interpret either the tag-delimited, JSON or XML/NGSI data format sent via the POST method.
+The following is what the REST consumer will generate as a request to an external REST service called /application-name/consumer. This external REST service is expected to be able to interpret either the tag-delimited, JSON, XML/NGSI or JSON/NGSI data formats sent via the POST method.
 Note: ’Name’ is a built-in attribute used to represent the event type being reported. Please consult the user guide for event representation and built-in attributes. 
 
 Note: that this is an external REST service of another application that is activated by the CEP consumer, according to the defined consumer in the CEP application. The URI of the service, the format, and the event types to be sent to this service are defined as part of the Consumer definition as part of the CEP application definition. Although this is not a CEP api, it is described here to show what is the data the CEP posts to an external service, when such a consumer is defined.
