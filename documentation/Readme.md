@@ -27,6 +27,9 @@ Programmers guide:
 The user, programmer's and installation manuals are processed for easy browsing on ReadTheDocs:
 http://proactive-technology-online.readthedocs.io/en/latest/index.html
 
+## Proton on STORM
+This special version of the CEP engine that operates over the distributed high performance STORM platform is documented separately: https://github.com/ishkin/Proton/blob/master/documentation/IBM%20Proactive%20Technology%20Online%20on%20STORM/Proton%20and%20Proton%20on%20top%20of%20STORM.pdf
+
 ## Updates
 * July, 2016: Latest revision of the user guide is at 5.4.1, programmer's guide did not change.
 
