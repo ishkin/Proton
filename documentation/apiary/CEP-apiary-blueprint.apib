@@ -26,17 +26,7 @@ Note:
 * The data in the tag format should be given with no blanks.
 * In the JSON format, all the attributes values are given as strings, the CEP processes each attribute value according to its defined type (in the event definition).
 
-### Receive a new input event in json, tag, NGSI xml or NGSI json formats [POST /events]
-   
-
-+ Request (application/json)
-
-        {
-            "Name":"TrafficReport", 
-            "volume":"1000"
-        }
-+ Response 201
-
+### Receive a new input event in json, tag, NGSI xml or NGSI json formats (v1/v2) [POST /events]
 
 + Request (text/plain)
 
@@ -99,29 +89,101 @@ Note:
 
 + Response 201
 
++ Request (application/json)
+POST http://cep.lab.fi-ware.eu:8089/ProtonOnWebServer/rest/events
+Content-Type: application/json
+Data:
+  {
+  "subscriptionId" : "51c04a21d714fb3b37d7d5a7",
+  "originator" : "localhost",
+  "contextResponses" : [
+    {
+      "contextElement" : {
+        "attributes" : [
+          {
+            "name" : "temperature",
+            "type" : "tempType",
+            "value" : 26.5
+          },
+          {
+            "name" : "occupancy",
+            "type" : "occType",
+            "value" : "low"
+          }        ],
+        "type" : "Room",
+        "isPattern" : "false",
+        "id" : "Room1"
+      },
+      "statusCode" : {
+        "code" : "200",
+        "reasonPhrase" : "OK"
+      }
+    }
+  ]
+}
++ Response 201 
+
++ Request (application/json)
+POST http://cep.lab.fi-ware.eu:8089/ProtonOnWebServer/rest/events
+Content-Type: application/json
+Data:
+{
+  "subscriptionId": "51c04a21d714fb3b37d7d5a7",
+  "data": [
+    {
+      "id": "Room1",
+      "type": "Room",
+      "temperature": {
+        "value": 26.5,
+        "type": "tempType",
+        "metadata": {}
+      },
+      "occupancy": {
+        "value": "low",
+        "type": "occType",
+        "metadata": {}
+      }
+    }
+  ]
+}
++ Response 201
+
 # Sending output events [POST /application-name/consumer]
-The CEP GE activates a REST client for sending output events (in a push mode) to an external application REST service
+The CEP GE uses a REST client for sending output events (in a push mode) to an external application REST service
 
 The following is what the REST consumer will generate as a request to an external REST service called /application-name/consumer. This external REST service is expected to be able to interpret either the tag-delimited, JSON, XML/NGSI or JSON/NGSI data formats sent via the POST method.
 Note: ’Name’ is a built-in attribute used to represent the event type being reported. Please consult the user guide for event representation and built-in attributes. 
 
 Note: that this is an external REST service of another application that is activated by the CEP consumer, according to the defined consumer in the CEP application. The URI of the service, the format, and the event types to be sent to this service are defined as part of the Consumer definition as part of the CEP application definition. Although this is not a CEP api, it is described here to show what is the data the CEP posts to an external service, when such a consumer is defined.
 
+Note: for the NGSI JSON support use "application/json" as content type of this consumer is and its formatter is json. 
+Note that the entityType and entity id are given as part of the PATCH request URL, while the other event attributes are given as message elements. The request URL is built by concatenating the URL specified in the consumer definition with the entity id and type as provided in the output event. 
+For example, for a simple JSON NGSI consumer with URL http://localhost:8080//v2/entities/, and output event where entityId is "where “CEPEventReporter_singleton”  and “CEPEventReporter” is the entity type
+the URL will be: 
+http://localhost:8080//v2/entities/CEPEventReporter_singleton/attrs?=type=CEPEventReporter
+
 
 + Request (application/json)
-
-        {
-            "Cost":"0.0",
-            "Certainty":"0.0",
-            "Name":"TrafficReport",
-            "EventSource":"",
-            "Duration":"0.0",
-            "Annotation":"",
-            "volume":"1000",
-            "EventId":"e206b5e8-9f3a-4711-9f46-d0e9431fe215",
-            "DetectionTime":"1350311378034"
-        }
-
+     { 
+"EventId" : { 
+    "value" : "9e4f7289-b57e-49ca-a980-de634d442f4f" 
+  }, 
+"DetectionTime" : { 
+    "value" : "1468925471568" 
+  }, 
+"Cost" : { 
+    "value" : "0.0" 
+  }, 
+"Certainty" : { 
+    "value" : "0.0" 
+  }, 
+"Name" : { 
+    "value" : "LowBatteryAlert" 
+  }, 
+"temperature" : { 
+    "value" : "25.6" 
+  } 
+}
 + Response 201
 
 + Request (text/plain)
