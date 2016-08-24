@@ -16,13 +16,10 @@
     <link rel="stylesheet" href="css/idea.css">
     <script src="js/highlight.pack.js"></script>
     <script>hljs.initHighlightingOnLoad();</script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="js/jquery.min.js"></script>
     <script src="js/toc-resize.js"></script>
 
-    <link rel="stylesheet" type="text/css" href="css/api-specification.css"> 
-    
-
-
+    <link rel="stylesheet" type="text/css" href="css/api-specification.css">
     
 </head>
 <body id="respecDocument" class="h-entry">
@@ -42,6 +39,24 @@
         
 	        
         
+	        
+        
+	        
+		        <li><a href="#API-content">FIWARE-CEP v5.4.1 Specification</a></li>
+	        
+        
+	        
+        
+	        
+        
+	        
+        
+	        
+        
+	        
+        
+	        
+        
 
 
 <li><a href="#api-summary">API Summary</a></li>
@@ -49,6 +64,32 @@
 
     
     
+
+    
+    
+    <li>
+        
+        <a href="#specification" title = "specification" > specification </a>
+        
+    <ul class="toc">
+    
+    
+    
+   
+
+
+
+    
+        <li class="tocline"> <a href="#cep_api_cookbook" title = "CEP API Cookbook"> CEP API Cookbook </a>
+
+    
+</li>
+    
+
+
+ </ul>
+</li>
+
 
 
 
@@ -81,7 +122,7 @@
                                         <ul class="toc  ">
                                         
                                             
-                                                <li><a href="#action_receive-a-new-input-event-in-json-tag-or-ngsi-xml-formats" title ="POST - Receive a new input event in json, tag, NGSI xml or NGSI json formats">POST - Receive a new input event in json, tag, NGSI xml or NGSI json formats</a></li>
+                                                <li><a href="#action_receive-a-new-input-event-in-json-tag-ngsi-xml-or-ngsi-json-formats" title ="POST - Receive a new input event in json, tag, NGSI xml or NGSI json formats">POST - Receive a new input event in json, tag, NGSI xml or NGSI json formats</a></li>
                                             
 
                                         
@@ -158,10 +199,12 @@
                               
                             </ul>
                         </li>
-                      
-    <li><a href="#examples">Examples</a></li>
-    </ul>
+                      <li><a href="#examples">Examples</a></li></ul>
 </li>
+    
+    
+    
+    
     
     
     
@@ -177,10 +220,51 @@
   <div id="API-content">
   
     
+
+	
+
+	
+
+	
+		
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
 	
 
 
 
+	<h1>FIWARE-CEP v5.4.1 Specification </h1>
+
+
+
+	
+
+	
+
+	
+
+	
+		<span class="dateLabel">DATE:</span> <span class="dateValue"> 30 July 2016 </span>
+	
+
+	
+
+	
+
+	
+
+	
+
 	
 
 
@@ -191,7 +275,65 @@
 	
 	
 
+	
+	
+	
 
+	
+	
+	
+
+	
+	
+	
+
+	
+	
+		
+	
+	
+
+	
+	
+	
+		
+	
+
+	
+	
+	
+
+	
+	
+	
+
+	
+		
+	
+	
+	
+
+
+
+	<dl>
+	
+		<dt class="versionLabel">This version:</dt> 
+		<dd class="versionValue"> <a href="http://sample.comv5.4.1">
+			http://sample.comv5.4.1
+		</a> </dd>
+	
+
+	
+		<dt class="versionLabel">Previous version:</dt> 
+		<dd class="versionValue"> <a href="http://sample.comv4.4.1">
+			http://sample.comv4.4.1
+		</a> </dd>
+	
+
+	<dt class="versionLabel">Latest version:</dt> 
+	<dd class="versionValue"> <a href="http://sample.comlatest">http://sample.comlatest</a> </dd>
+
+	</dl>
 
 
 
@@ -200,34 +342,81 @@
   
   
 
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+    
+  
+  
+
+  
+  
+    
+  
+
+  
+  
 
 
 
+  <div id="top-source-buttons">
+  	
+    	<a target="_blank" href="http://docs.na.apiary.io/#reference">View in Apiary</a>
+    
+    
+    	<a target="_blank" href="http://github.com/ishkin/Proton.git">View in Github</a>
+    
+  </div>
 
 
+
+	
+
+	
+
+
+
+    
+        <h2 id="copyright">Copyright</h2>
+        <p>Copyright: IBM (C) 2012-2016</p>
+    
+
+    
+
+
+
+	
+
+	
+		<h2 id="license">License</h2>
+		<p>This specification is licensed under the <a href="http://forge.fiware.org/plugins/mediawiki/wiki/fiware/index.php/FI-WARE_Open_Specification_Legal_Notice_(implicit_patents_license)">FIWARE Open Specification License (implicit patents license)</a>.</p>
+	
 
 
 <hr>
 
 
-	<h2 id="abstract">Abstract</h2>
-	<p>CEP API Cookbook</p>
-<p>As described in the <a href="http://forge.fiware.org/plugins/mediawiki/wiki/fiware/index.php?title=FIWARE.OpenSpecification.Data.CEP">CEP GE open specification document</a>, CEP has three main interfaces: </p>
-<ul>
-<li>
-<p>Receiving raw events from event producers using a RESTful service</p>
-</li>
-<li>
-<p>Sending output events to event consumers using an output REST client adapter</p>
-</li>
-<li>
-<p>Administrating the CEP engine state, and its definition repository</p>
-</li>
-</ul>
-<p>Please check the following <a href="http://forge.fiware.org/plugins/mediawiki/wiki/fiware/index.php/FI-WARE_Open_Specification_Legal_Notice_(implicit_patents_license)">FI-WARE Open Specification Legal Notice</a> to understand the rights to use this specification.</p>
+	
 
 
 
+
+	
+
+	
 
 <hr>
   
@@ -272,7 +461,7 @@
                         
                             
                                 <li>
-                                    <a href="#action_receive-a-new-input-event-in-json-tag-or-ngsi-xml-formats" title ="POST - Receive a new input event in json, tag, NGSI xml or NGSI json formats"><span class="actionMethod">POST</span> - Receive a new input event in json, tag, NGSI xml or NGSI json formats
+                                    <a href="#action_receive-a-new-input-event-in-json-tag-ngsi-xml-or-ngsi-json-formats" title ="POST - Receive a new input event in json, tag, NGSI xml or NGSI json formats"><span class="actionMethod">POST</span> - Receive a new input event in json, tag, NGSI xml or NGSI json formats
                                     
                                         [/events]
                                     
@@ -436,11 +625,52 @@
 		
 	
 	
+		
+	
+		
+	
 
 
 
 
 
+	
+		
+	
+		
+	
+
+
+		
+            <section>
+			    <h1 id="specification">specification</h1>
+			     
+            </section>
+		
+	
+	
+		
+	
+
+
+
+
+
+	
+		
+			<section>
+				<h2 id="cep_api_cookbook"> CEP API Cookbook</h2>
+<p>As described in the <a href="http://forge.fiware.org/plugins/mediawiki/wiki/fiware/index.php?title=FIWARE.OpenSpecification.Data.CEP">CEP GE open specification document</a>, CEP has three main interfaces: </p>
+<ul>
+<li>Receiving raw events from event producers using a RESTful service</li>
+<li>Sending output events to event consumers using an output REST client adapter</li>
+<li>Administrating the CEP engine state, and its definition repository</li>
+</ul>
+<p>Please check the following <a href="http://forge.fiware.org/plugins/mediawiki/wiki/fiware/index.php/FI-WARE_Open_Specification_Legal_Notice_(implicit_patents_license)">FI-WARE Open Specification Legal Notice</a> to understand the rights to use this specification.</p>
+
+
+			</section>
+		
 	
 
 
@@ -490,10 +720,10 @@
 	<dl>
 		
 			<dt>
-				<span class="parameter-name">instance_name</span> <span class="parameter-attributes">(Required, string)</span>
+				<span class="parameter-name">instance_name</span> <span class="parameter-attributes">(required, string)</span>
 			</dt>
 			<dd>
-				the name of the CEP instance. The default name is ProtonOnWebServer. Used to support multiple CEP instances running on the same server.
+				<p>the name of the CEP instance. The default name is ProtonOnWebServer. Used to support multiple CEP instances running on the same server.</p>
 				
 			</dd>
 		
@@ -541,12 +771,12 @@
 
 
                     
-                        <div id="action_receive-a-new-input-event-in-json-tag-or-ngsi-xml-formats" class="action POST">
+                        <div id="action_receive-a-new-input-event-in-json-tag-ngsi-xml-or-ngsi-json-formats" class="action POST">
 
                         
     <div class="header">
         
-            <h4 id="h-action_receive-a-new-input-event-in-json,-tag,-or-ngsi-xml-formats">Receive a new input event in json, tag, NGSI xml or NGSI json formats </h4>
+            <h4 id="h-action_receive-a-new-input-event-in-json,-tag,-ngsi-xml-or-ngsi-json-formats">Receive a new input event in json, tag, NGSI xml or NGSI json formats </h4>
             <span class="extra-header">
 		POST 
                 
@@ -558,7 +788,7 @@
     </div>
 
         
-                            <div id="receive-a-new-input-event-in-json,-tag,-or-ngsi-xml-formats_body" class="">
+                            <div id="receive-a-new-input-event-in-json,-tag,-ngsi-xml-or-ngsi-json-formats_body" class="">
                                 
                                 
                                 
@@ -566,124 +796,70 @@
 			
                                 
                                 
+
+
+
       
+
+                                
+
                                     
-        	                            
-                                            
-                                            
-                                            
-                                            
-
-<div class="rest-packet-div">
-
-            <span class="packetType">Request </span> 
-        
-            (application/json)
-        
-    
-            
-            
-     
-</div>
-        	                            
-    
-        	                            
-        		                            
                                         
                                         
                                         
+                                
 
-<div class="rest-packet-div">
-
-            <span class="packetType">Response 201</span> 
-            
-            
-     
-</div>
-        	                            
                                     
-        	                            
-                                            
-                                            
-                                            
-                                            
-
-<div class="rest-packet-div">
-
-            <span class="packetType">Request </span> 
-        
-            (text/plain)
-        
-    
-            
-            
-     
-</div>
-        	                            
-    
-        	                            
-        		                            
                                         
                                         
                                         
+                                
 
-<div class="rest-packet-div">
-
-            <span class="packetType">Response 201</span> 
-            
-            
-     
-</div>
-        	                            
                                     
-        	                            
-                                            
-                                            
-                                            
-                                            
-
-<div class="rest-packet-div">
-
-            <span class="packetType">Request </span> 
-        
-            (application/xml)
-        
-    
-            
-            
-     
-</div>
-        	                            
-    
-        	                            
-        		                            
                                         
                                         
                                         
-
-<div class="rest-packet-div">
-
-            <span class="packetType">Response 201</span> 
-            
-            
-     
-</div>
-        	                            
-                                    
-                                    <div>
-                                    <div class="goExample">
-                                        <a href="#action_receive-a-new-input-event-in-json-tag-or-ngsi-xml-formats_examples">Go to example</a>
+                                
+                                <div><div class="goExample">
+                                        <a href="#action_receive-a-new-input-event-in-json-tag-ngsi-xml-or-ngsi-json-formats_examples">Go to example</a>
                                     </div>
                                     
-                                        
     <div class="goApiary">
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+            
+                
+            
+            
+
+            
+                
+            
+            
+                <a target="_blank" href="http://docs.na.apiary.io/#reference/default/receiving-input-events/receive-a-new-input-event-in-json,-tag,-ngsi-xml-or-ngsi-json-formats">View in Apiary</a>
+            
+        
+    
+        
     
         
     
     </div>
 
-                                    
-                                    </div>
+                                
+                                </div>
                                 
                             </div>
                         </div>
@@ -716,124 +892,70 @@ Note: ’Name’ is a built-in attribute used to represent the event type being 
 			
                                 
                                 
+
+
+
       
+
+                                
+
                                     
-        	                            
-                                            
-                                            
-                                            
-                                            
-
-<div class="rest-packet-div">
-
-            <span class="packetType">Request </span> 
-        
-            (application/json)
-        
-    
-            
-            
-     
-</div>
-        	                            
-    
-        	                            
-        		                            
                                         
                                         
                                         
+                                
 
-<div class="rest-packet-div">
-
-            <span class="packetType">Response 201</span> 
-            
-            
-     
-</div>
-        	                            
                                     
-        	                            
-                                            
-                                            
-                                            
-                                            
-
-<div class="rest-packet-div">
-
-            <span class="packetType">Request </span> 
-        
-            (text/plain)
-        
-    
-            
-            
-     
-</div>
-        	                            
-    
-        	                            
-        		                            
                                         
                                         
                                         
+                                
 
-<div class="rest-packet-div">
-
-            <span class="packetType">Response 201</span> 
-            
-            
-     
-</div>
-        	                            
                                     
-        	                            
-                                            
-                                            
-                                            
-                                            
-
-<div class="rest-packet-div">
-
-            <span class="packetType">Request </span> 
-        
-            (application/xml)
-        
-    
-            
-            
-     
-</div>
-        	                            
-    
-        	                            
-        		                            
                                         
                                         
                                         
-
-<div class="rest-packet-div">
-
-            <span class="packetType">Response 201</span> 
-            
-            
-     
-</div>
-        	                            
-                                    
-                                    <div>
-                                    <div class="goExample">
+                                
+                                <div><div class="goExample">
                                         <a href="#action_sending-output-events_examples">Go to example</a>
                                     </div>
                                     
-                                        
     <div class="goApiary">
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+            
+                
+            
+            
+
+            
+                
+            
+            
+                <a target="_blank" href="http://docs.na.apiary.io/#reference/default/receiving-input-events/sending-output-events">View in Apiary</a>
+            
+        
+    
+        
     
         
     
     </div>
 
-                                    
-                                    </div>
+                                
+                                </div>
                                 
                             </div>
                         </div>
@@ -869,10 +991,10 @@ Note: ’Name’ is a built-in attribute used to represent the event type being 
 	<dl>
 		
 			<dt>
-				<span class="parameter-name">CEP_Admin</span> <span class="parameter-attributes">(Required, string)</span>
+				<span class="parameter-name">CEP_Admin</span> <span class="parameter-attributes">(required, string)</span>
 			</dt>
 			<dd>
-				the name of the CEP administration service. The default name is ProtonOnWebServerAdmin.
+				<p>the name of the CEP administration service. The default name is ProtonOnWebServerAdmin.</p>
 				
 			</dd>
 		
@@ -934,39 +1056,53 @@ Note: ’Name’ is a built-in attribute used to represent the event type being 
 			
                                 
                                 
+
+
+
       
-                                    
-        	                            
-    
-        	                            
-        		                            
-                                        
-                                        
-                                        
 
-<div class="rest-packet-div">
+                                
 
-            <span class="packetType">Response 200</span> 
-            
-            
-     
-</div>
-        	                            
                                     
-                                    <div>
-                                    <div class="goExample">
-                                        <a href="#action_retrieve-all-the-existing-definitions-in-the-repository_examples">Go to example</a>
-                                    </div>
+                                
+                                <div>
                                     
-                                        
     <div class="goApiary">
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+            
+                
+            
+            
+
+            
+                
+            
+            
+                <a target="_blank" href="http://docs.na.apiary.io/#reference/default/definitions/retrieve-all-the-existing-definitions-in-the-repository">View in Apiary</a>
+            
+        
+    
+        
     
         
     
     </div>
 
-                                    
-                                    </div>
+                                
+                                </div>
                                 
                             </div>
                         </div>
@@ -996,52 +1132,58 @@ Note: ’Name’ is a built-in attribute used to represent the event type being 
 			
                                 
                                 
+
+
+
       
+
+                                
+
                                     
-        	                            
-                                            
-                                            
-                                            
-                                            
-
-<div class="rest-packet-div">
-
-            <span class="packetType">Request </span> 
-            
-            
-     
-</div>
-        	                            
-    
-        	                            
-        		                            
                                         
                                         
                                         
-
-<div class="rest-packet-div">
-
-            <span class="packetType">Response 201</span> 
-            
-            
-     
-</div>
-        	                            
-                                    
-                                    <div>
-                                    <div class="goExample">
+                                
+                                <div><div class="goExample">
                                         <a href="#action_creating-a-new-definition_examples">Go to example</a>
                                     </div>
                                     
-                                        
     <div class="goApiary">
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+            
+                
+            
+            
+
+            
+                
+            
+            
+                <a target="_blank" href="http://docs.na.apiary.io/#reference/default/definitions/creating-a-new-definition">View in Apiary</a>
+            
+        
+    
+        
     
         
     
     </div>
 
-                                    
-                                    </div>
+                                
+                                </div>
                                 
                             </div>
                         </div>
@@ -1073,10 +1215,10 @@ Note: ’Name’ is a built-in attribute used to represent the event type being 
 	<dl>
 		
 			<dt>
-				<span class="parameter-name">definition_name</span> <span class="parameter-attributes">(Required, string)</span>
+				<span class="parameter-name">definition_name</span> <span class="parameter-attributes">(required, string)</span>
 			</dt>
 			<dd>
-				the name of the CEP definition e.g., DoSAttack
+				<p>the name of the CEP definition e.g., DoSAttack</p>
 				
 			</dd>
 		
@@ -1084,39 +1226,53 @@ Note: ’Name’ is a built-in attribute used to represent the event type being 
 			
                                 
                                 
+
+
+
       
-                                    
-        	                            
-    
-        	                            
-        		                            
-                                        
-                                        
-                                        
 
-<div class="rest-packet-div">
+                                
 
-            <span class="packetType">Response 200</span> 
-            
-            
-     
-</div>
-        	                            
                                     
-                                    <div>
-                                    <div class="goExample">
-                                        <a href="#action_retrieve-an-application-definition-in-json-format_examples">Go to example</a>
-                                    </div>
+                                
+                                <div>
                                     
-                                        
     <div class="goApiary">
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+            
+                
+            
+            
+
+            
+                
+            
+            
+                <a target="_blank" href="http://docs.na.apiary.io/#reference/default/definitions/retrieve-an-application-definition-in-json-format">View in Apiary</a>
+            
+        
+    
+        
     
         
     
     </div>
 
-                                    
-                                    </div>
+                                
+                                </div>
                                 
                             </div>
                         </div>
@@ -1148,10 +1304,10 @@ Note: ’Name’ is a built-in attribute used to represent the event type being 
 	<dl>
 		
 			<dt>
-				<span class="parameter-name">definition_name</span> <span class="parameter-attributes">(Required, string)</span>
+				<span class="parameter-name">definition_name</span> <span class="parameter-attributes">(required, string)</span>
 			</dt>
 			<dd>
-				the name of the CEP definition
+				<p>the name of the CEP definition</p>
 				
 			</dd>
 		
@@ -1159,52 +1315,58 @@ Note: ’Name’ is a built-in attribute used to represent the event type being 
 			
                                 
                                 
+
+
+
       
+
+                                
+
                                     
-        	                            
-                                            
-                                            
-                                            
-                                            
-
-<div class="rest-packet-div">
-
-            <span class="packetType">Request </span> 
-            
-            
-     
-</div>
-        	                            
-    
-        	                            
-        		                            
                                         
                                         
                                         
-
-<div class="rest-packet-div">
-
-            <span class="packetType">Response 200</span> 
-            
-            
-     
-</div>
-        	                            
-                                    
-                                    <div>
-                                    <div class="goExample">
+                                
+                                <div><div class="goExample">
                                         <a href="#action_replace-content-of-an-existing-definition-with-new-content_examples">Go to example</a>
                                     </div>
                                     
-                                        
     <div class="goApiary">
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+            
+                
+            
+            
+
+            
+                
+            
+            
+                <a target="_blank" href="http://docs.na.apiary.io/#reference/default/definitions/replace-content-of-an-existing-definition-with-new-content">View in Apiary</a>
+            
+        
+    
+        
     
         
     
     </div>
 
-                                    
-                                    </div>
+                                
+                                </div>
                                 
                             </div>
                         </div>
@@ -1236,10 +1398,10 @@ Note: ’Name’ is a built-in attribute used to represent the event type being 
 	<dl>
 		
 			<dt>
-				<span class="parameter-name">definition_name</span> <span class="parameter-attributes">(Required, string)</span>
+				<span class="parameter-name">definition_name</span> <span class="parameter-attributes">(required, string)</span>
 			</dt>
 			<dd>
-				the name of the CEP definition
+				<p>the name of the CEP definition</p>
 				
 			</dd>
 		
@@ -1247,39 +1409,53 @@ Note: ’Name’ is a built-in attribute used to represent the event type being 
 			
                                 
                                 
+
+
+
       
-                                    
-        	                            
-    
-        	                            
-        		                            
-                                        
-                                        
-                                        
 
-<div class="rest-packet-div">
+                                
 
-            <span class="packetType">Response 200</span> 
-            
-            
-     
-</div>
-        	                            
                                     
-                                    <div>
-                                    <div class="goExample">
-                                        <a href="#action_delete-a-definition_examples">Go to example</a>
-                                    </div>
+                                
+                                <div>
                                     
-                                        
     <div class="goApiary">
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+            
+                
+            
+            
+
+            
+                
+            
+            
+                <a target="_blank" href="http://docs.na.apiary.io/#reference/default/definitions/delete-a-definition">View in Apiary</a>
+            
+        
+    
+        
     
         
     
     </div>
 
-                                    
-                                    </div>
+                                
+                                </div>
                                 
                             </div>
                         </div>
@@ -1316,10 +1492,10 @@ Note: ’Name’ is a built-in attribute used to represent the event type being 
 	<dl>
 		
 			<dt>
-				<span class="parameter-name">instance_name</span> <span class="parameter-attributes">(Required, string)</span>
+				<span class="parameter-name">instance_name</span> <span class="parameter-attributes">(required, string)</span>
 			</dt>
 			<dd>
-				the name of the CEP instance. The default value is ProtonOnWebServerAdmin
+				<p>the name of the CEP instance. The default value is ProtonOnWebServerAdmin</p>
 				
 			</dd>
 		
@@ -1352,39 +1528,53 @@ Note: ’Name’ is a built-in attribute used to represent the event type being 
 			
                                 
                                 
+
+
+
       
-                                    
-        	                            
-    
-        	                            
-        		                            
-                                        
-                                        
-                                        
 
-<div class="rest-packet-div">
+                                
 
-            <span class="packetType">Response 200</span> 
-            
-            
-     
-</div>
-        	                            
                                     
-                                    <div>
-                                    <div class="goExample">
-                                        <a href="#action_get-instance-status_examples">Go to example</a>
-                                    </div>
+                                
+                                <div>
                                     
-                                        
     <div class="goApiary">
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+            
+                
+            
+            
+
+            
+                
+            
+            
+                <a target="_blank" href="http://docs.na.apiary.io/#reference/default/administrating-run-time-instances/get-instance-status">View in Apiary</a>
+            
+        
+    
+        
     
         
     
     </div>
 
-                                    
-                                    </div>
+                                
+                                </div>
                                 
                             </div>
                         </div>
@@ -1415,112 +1605,70 @@ The second action is to change the run status of the engine. To start a run or t
 			
                                 
                                 
+
+
+
       
+
+                                
+
                                     
-        	                            
-                                            
-                                            
-                                            
-                                            
-
-<div class="rest-packet-div">
-
-            <span class="packetType">Request </span> 
-            
-            
-     
-</div>
-        	                            
-    
-        	                            
-        		                            
                                         
                                         
                                         
+                                
 
-<div class="rest-packet-div">
-
-            <span class="packetType">Response 200</span> 
-            
-            
-     
-</div>
-        	                            
                                     
-        	                            
-                                            
-                                            
-                                            
-                                            
-
-<div class="rest-packet-div">
-
-            <span class="packetType">Request </span> 
-            
-            
-     
-</div>
-        	                            
-    
-        	                            
-        		                            
                                         
                                         
                                         
+                                
 
-<div class="rest-packet-div">
-
-            <span class="packetType">Response 200</span> 
-            
-            
-     
-</div>
-        	                            
                                     
-        	                            
-                                            
-                                            
-                                            
-                                            
-
-<div class="rest-packet-div">
-
-            <span class="packetType">Request </span> 
-            
-            
-     
-</div>
-        	                            
-    
-        	                            
-        		                            
                                         
                                         
                                         
-
-<div class="rest-packet-div">
-
-            <span class="packetType">Response 200</span> 
-            
-            
-     
-</div>
-        	                            
-                                    
-                                    <div>
-                                    <div class="goExample">
+                                
+                                <div><div class="goExample">
                                         <a href="#action_configuringchanging-a-definition-for-an-instance_examples">Go to example</a>
                                     </div>
                                     
-                                        
     <div class="goApiary">
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+            
+                
+            
+            
+
+            
+                
+            
+            
+                <a target="_blank" href="http://docs.na.apiary.io/#reference/default/administrating-run-time-instances/configuring/changing-a-definition-for-an-instance">View in Apiary</a>
+            
+        
+    
+        
     
         
     
     </div>
 
-                                    
-                                    </div>
+                                
+                                </div>
                                 
                             </div>
                         </div>
@@ -1529,61 +1677,45 @@ The second action is to change the run status of the engine. To start a run or t
         
     </section>
 
+
 <section id="examples">
     <div class= "header" ><h2>Examples</h2> </div>
     
+
         
+                
+            
+
             <section id="resource_group__example" class="resourceGroupExample">
                 <div class= "header" ><h3 id="h-resource_group__example">Default</h3> </div>
-        
-
                 
-                    <section id="resource_cep-instance-api-root_example" class="resourceExample">
-                         <div class= "header" >
-                         
-                            <h4 id="h-resource_cep-instance-api-root_example">CEP Instance API Root</h4>
-                            <span class="extra-header">[/{instance_name}/rest]</span>
-                         
-                         </div>
-
-                            
-                            
-                            
-
-                            
-                            
-                            
-
-                           
-
-                            
-                    </section>
-            
+                
+                    
+                
                     <section id="resource_receiving-input-events_example" class="resourceExample">
-                         <div class= "header" >
-                         
-                            <h4 id="h-resource_receiving-input-events_example">Receiving input events</h4>
-                            <span class="extra-header">[/events]</span>
-                         
-                         </div>
+                            <div class= "header" >
+                            
+                                <h4 id="h-resource_receiving-input-events_example">Receiving input events</h4>
+                                <span class="extra-header">[/events]</span>
+                            
+                            </div>
+
+                            
+                            
 
                             
                             
                             
 
                             
-                            
-                            
-
-                           
 
                             
-                                <div id="action_receive-a-new-input-event-in-json-tag-or-ngsi-xml-formats_examples" class="actionExample POST">
+                                <div id="action_receive-a-new-input-event-in-json-tag-ngsi-xml-or-ngsi-json-formats_examples" class="actionExample POST">
 
                                     
     <div class="header">
         
-            <h5 id="h-action_receive-a-new-input-event-in-json,-tag,-or-ngsi-xml-formats_examples">Receive a new input event in json, tag, NGSI xml or NGSI json formats </h5>
+            <h5 id="h-action_receive-a-new-input-event-in-json,-tag,-ngsi-xml-or-ngsi-json-formats_examples">Receive a new input event in json, tag, NGSI xml or NGSI json formats </h5>
             <span class="extra-header">
 		POST 
                 
@@ -1594,215 +1726,213 @@ The second action is to change the run status of the engine. To start a run or t
 
     </div>
 
-                
-                                    <div id="action_receive-a-new-input-event-in-json,-tag,-or-ngsi-xml-formats_body" class=""> 
-                                        
-                                        
-                                        
-                                                 
-                                        
+                                
+                                        <div id="action_receive-a-new-input-event-in-json,-tag,-ngsi-xml-or-ngsi-json-formats_body" class=""> 
                                             
                                             
+                                            
+                                                     
+                                            
+                                                
+                                            
+
                                                 
                                                     
                                                     
                                                     
+
                                                     
+                                                        
+
 
 <div class="rest-packet-div">
-
-            <span class="packetType">Request </span> 
+    
+    <span class="packetType">Request  /events</span> 
         
             (application/json)
         
     
-            
-            
-            
-            
+    
+    
+    
+    
+   
 
 
 
- 
-            <div id="action_receive-a-new-input-event-in-json,-tag,-or-ngsi-xml-formats_Request_1_body" class=" action-div-body">
-                <p></p>
+    <div id="action_receive-a-new-input-event-in-json,-tag,-ngsi-xml-or-ngsi-json-formats_Request_1_body" class=" action-div-body">
+        <p></p>
 
+        
+	         <div class= "header"><p>Headers</p></div>
+            
+            
                 
-        	         <div class= "header"><p>Headers</p></div>
-                    
-                    
-                        
-                    
+            
 
-        	        <pre><code>Content-Type: application/json</code></pre>
-                
+	        <pre><code>Content-Type: application/json</code></pre>
+        
 
-                
-                    <div class= "header"><p>Body</p></div>
-                    <pre><code>{
+        
+            <div class= "header"><p>Body</p></div>
+            <pre><code>{
     "Name":"TrafficReport", 
     "volume":"1000"
 }
 </code></pre>
-                
+        
 
-                
-            </div>
-            
-            
-     
+        
+    </div>   
 </div>
-                                                
-            
-                                                
-                                                    
-                                                
-                                                
-                                                
+
+                                                        
+                                                            
+                                                            
+                                                            
+
 
 <div class="rest-packet-div">
+    
+    <span class="packetType">Response 201</span> 
+    
+    
+    
+    
+   
 
-            <span class="packetType">Response 201</span> 
-            
-            
-            
-            
 
 
+    <div id="action_receive-a-new-input-event-in-json,-tag,-ngsi-xml-or-ngsi-json-formats_Response_1_body" class=" action-div-body">
+        <p></p>
 
- 
-            <div id="action_receive-a-new-input-event-in-json,-tag,-or-ngsi-xml-formats_Response_1_body" class=" action-div-body">
-                <p></p>
+        
 
-                
+        
 
-                
-
-                
-            </div>
-            
-            
-     
+        
+    </div>   
 </div>
                                                 
                                             
+
                                                 
                                                     
                                                     
                                                     
+
                                                     
+                                                        
+
 
 <div class="rest-packet-div">
-
-            <span class="packetType">Request </span> 
+    
+    <span class="packetType">Request  /events</span> 
         
             (text/plain)
         
     
-            
-            
-            
-            
+    
+    
+    
+    
+   
 
 
 
- 
-            <div id="action_receive-a-new-input-event-in-json,-tag,-or-ngsi-xml-formats_Request_1_body" class=" action-div-body">
-                <p></p>
+    <div id="action_receive-a-new-input-event-in-json,-tag,-ngsi-xml-or-ngsi-json-formats_Request_1_body" class=" action-div-body">
+        <p></p>
 
+        
+	         <div class= "header"><p>Headers</p></div>
+            
+            
                 
-        	         <div class= "header"><p>Headers</p></div>
-                    
-                    
-                        
-                    
+            
 
-        	        <pre><code>Content-Type: text/plain</code></pre>
-                
+	        <pre><code>Content-Type: text/plain</code></pre>
+        
 
-                
-                    <div class= "header"><p>Body</p></div>
-                    <pre><code>Name=TrafficReport;volume=1000;
+        
+            <div class= "header"><p>Body</p></div>
+            <pre><code>Name=TrafficReport;volume=1000;
 </code></pre>
-                
+        
 
-                
-            </div>
-            
-            
-     
+        
+    </div>   
 </div>
-                                                
-            
-                                                
-                                                    
-                                                
-                                                
-                                                
+
+                                                        
+                                                            
+                                                            
+                                                            
+
 
 <div class="rest-packet-div">
+    
+    <span class="packetType">Response 201</span> 
+    
+    
+    
+    
+   
 
-            <span class="packetType">Response 201</span> 
-            
-            
-            
-            
 
 
+    <div id="action_receive-a-new-input-event-in-json,-tag,-ngsi-xml-or-ngsi-json-formats_Response_1_body" class=" action-div-body">
+        <p></p>
 
- 
-            <div id="action_receive-a-new-input-event-in-json,-tag,-or-ngsi-xml-formats_Response_1_body" class=" action-div-body">
-                <p></p>
+        
 
-                
+        
 
-                
-
-                
-            </div>
-            
-            
-     
+        
+    </div>   
 </div>
                                                 
                                             
+
                                                 
                                                     
                                                     
                                                     
+
                                                     
+                                                        
+
 
 <div class="rest-packet-div">
-
-            <span class="packetType">Request </span> 
+    
+    <span class="packetType">Request  /events</span> 
         
             (application/xml)
         
     
-            
-            
-            
-            
+    
+    
+    
+    
+   
 
 
 
- 
-            <div id="action_receive-a-new-input-event-in-json,-tag,-or-ngsi-xml-formats_Request_1_body" class=" action-div-body">
-                <p></p>
+    <div id="action_receive-a-new-input-event-in-json,-tag,-ngsi-xml-or-ngsi-json-formats_Request_1_body" class=" action-div-body">
+        <p></p>
 
+        
+	         <div class= "header"><p>Headers</p></div>
+            
+            
                 
-        	         <div class= "header"><p>Headers</p></div>
-                    
-                    
-                        
-                    
+            
 
-        	        <pre><code>Content-Type: application/xml</code></pre>
-                
+	        <pre><code>Content-Type: application/xml</code></pre>
+        
 
-                
-                    <div class= "header"><p>Body</p></div>
-                    <pre><code>&lt;notifyContextRequest>
+        
+            <div class= "header"><p>Body</p></div>
+            <pre><code>&lt;notifyContextRequest>
 &lt;subscriptionId>51a60c7a286043f73ce9606c&lt;/subscriptionId>
 &lt;originator>localhost&lt;/originator>
 &lt;contextResponseList>
@@ -1852,54 +1982,46 @@ The second action is to change the run status of the engine. To start a run or t
 &lt;/contextResponseList>
 &lt;/notifyContextRequest>
 </code></pre>
-                
+        
 
-                
-            </div>
-            
-            
-     
+        
+    </div>   
 </div>
-                                                
-            
-                                                
-                                                    
-                                                
-                                                
-                                                
+
+                                                        
+                                                            
+                                                            
+                                                            
+
 
 <div class="rest-packet-div">
+    
+    <span class="packetType">Response 201</span> 
+    
+    
+    
+    
+   
 
-            <span class="packetType">Response 201</span> 
-            
-            
-            
-            
 
 
+    <div id="action_receive-a-new-input-event-in-json,-tag,-ngsi-xml-or-ngsi-json-formats_Response_1_body" class=" action-div-body">
+        <p></p>
 
- 
-            <div id="action_receive-a-new-input-event-in-json,-tag,-or-ngsi-xml-formats_Response_1_body" class=" action-div-body">
-                <p></p>
+        
 
-                
+        
 
-                
-
-                
-            </div>
-            
-            
-     
+        
+    </div>   
 </div>
                                                 
                                             
                                             <div class="goActions">
-                                                <a href="#action_receive-a-new-input-event-in-json-tag-or-ngsi-xml-formats">Go to specification</a>
+                                                <a href="#action_receive-a-new-input-event-in-json-tag-ngsi-xml-or-ngsi-json-formats">Go to specification</a>
                                             </div>
+                                        </div>
                                     </div>
-                                </div>
-                            
                                 <div id="action_sending-output-events_examples" class="actionExample POST">
 
                                     
@@ -1916,52 +2038,56 @@ The second action is to change the run status of the engine. To start a run or t
 
     </div>
 
-                
-                                    <div id="action_sending-output-events_body" class=""> 
-                                        
-                                        
-                                        
-                                                 
-                                        
+                                
+                                        <div id="action_sending-output-events_body" class=""> 
                                             
                                             
+                                            
+                                                     
+                                            
+                                                
+                                            
+
                                                 
                                                     
                                                     
                                                     
+
                                                     
+                                                        
+
 
 <div class="rest-packet-div">
-
-            <span class="packetType">Request </span> 
+    
+    <span class="packetType">Request  /application-name/consumer</span> 
         
             (application/json)
         
     
-            
-            
-            
-            
+    
+    
+    
+    
+   
 
 
 
- 
-            <div id="action_sending-output-events_Request_1_body" class=" action-div-body">
-                <p></p>
+    <div id="action_sending-output-events_Request_1_body" class=" action-div-body">
+        <p></p>
 
+        
+	         <div class= "header"><p>Headers</p></div>
+            
+            
                 
-        	         <div class= "header"><p>Headers</p></div>
-                    
-                    
-                        
-                    
+            
 
-        	        <pre><code>Content-Type: application/json</code></pre>
-                
+	        <pre><code>Content-Type: application/json</code></pre>
+        
 
-                
-                    <div class= "header"><p>Body</p></div>
-                    <pre><code>{
+        
+            <div class= "header"><p>Body</p></div>
+            <pre><code>{
     "Cost":"0.0",
     "Certainty":"0.0",
     "Name":"TrafficReport",
@@ -1973,165 +2099,159 @@ The second action is to change the run status of the engine. To start a run or t
     "DetectionTime":"1350311378034"
 }
 </code></pre>
-                
+        
 
-                
-            </div>
-            
-            
-     
+        
+    </div>   
 </div>
-                                                
-            
-                                                
-                                                    
-                                                
-                                                
-                                                
+
+                                                        
+                                                            
+                                                            
+                                                            
+
 
 <div class="rest-packet-div">
+    
+    <span class="packetType">Response 201</span> 
+    
+    
+    
+    
+   
 
-            <span class="packetType">Response 201</span> 
-            
-            
-            
-            
 
 
+    <div id="action_sending-output-events_Response_1_body" class=" action-div-body">
+        <p></p>
 
- 
-            <div id="action_sending-output-events_Response_1_body" class=" action-div-body">
-                <p></p>
+        
 
-                
+        
 
-                
-
-                
-            </div>
-            
-            
-     
+        
+    </div>   
 </div>
                                                 
                                             
+
                                                 
                                                     
                                                     
                                                     
+
                                                     
+                                                        
+
 
 <div class="rest-packet-div">
-
-            <span class="packetType">Request </span> 
+    
+    <span class="packetType">Request  /application-name/consumer</span> 
         
             (text/plain)
         
     
-            
-            
-            
-            
+    
+    
+    
+    
+   
 
 
 
- 
-            <div id="action_sending-output-events_Request_1_body" class=" action-div-body">
-                <p></p>
+    <div id="action_sending-output-events_Request_1_body" class=" action-div-body">
+        <p></p>
 
+        
+	         <div class= "header"><p>Headers</p></div>
+            
+            
                 
-        	         <div class= "header"><p>Headers</p></div>
-                    
-                    
-                        
-                    
+            
 
-        	        <pre><code>Content-Type: text/plain</code></pre>
-                
+	        <pre><code>Content-Type: text/plain</code></pre>
+        
 
-                
-                    <div class= "header"><p>Body</p></div>
-                    <pre><code>Name=TrafficReport;Certainty=0.0;Cost=0.0;EventSource=;OccurrenceTime=null;Annotation=;Duration=0.0;volume=1000;EventId=40f68052-3c7c-4245ae5a-6e20def2e618;ExpirationTime=null;Chronon=null;DetectionTime=1349181899221;
+        
+            <div class= "header"><p>Body</p></div>
+            <pre><code>Name=TrafficReport;Certainty=0.0;Cost=0.0;EventSource=;OccurrenceTime=null;Annotation=;Duration=0.0;volume=1000;EventId=40f68052-3c7c-4245ae5a-6e20def2e618;ExpirationTime=null;Chronon=null;DetectionTime=1349181899221;
 </code></pre>
-                
+        
 
-                
-            </div>
-            
-            
-     
+        
+    </div>   
 </div>
-                                                
-            
-                                                
-                                                    
-                                                
-                                                
-                                                
+
+                                                        
+                                                            
+                                                            
+                                                            
+
 
 <div class="rest-packet-div">
+    
+    <span class="packetType">Response 201</span> 
+    
+    
+    
+    
+   
 
-            <span class="packetType">Response 201</span> 
-            
-            
-            
-            
 
 
+    <div id="action_sending-output-events_Response_1_body" class=" action-div-body">
+        <p></p>
 
- 
-            <div id="action_sending-output-events_Response_1_body" class=" action-div-body">
-                <p></p>
+        
 
-                
+        
 
-                
-
-                
-            </div>
-            
-            
-     
+        
+    </div>   
 </div>
                                                 
                                             
+
                                                 
                                                     
                                                     
                                                     
+
                                                     
+                                                        
+
 
 <div class="rest-packet-div">
-
-            <span class="packetType">Request </span> 
+    
+    <span class="packetType">Request  /application-name/consumer</span> 
         
             (application/xml)
         
     
-            
-            
-            
-            
+    
+    
+    
+    
+   
 
 
 
- 
-            <div id="action_sending-output-events_Request_1_body" class=" action-div-body">
-                <p></p>
+    <div id="action_sending-output-events_Request_1_body" class=" action-div-body">
+        <p></p>
 
+        
+	         <div class= "header"><p>Headers</p></div>
+            
+            
                 
-        	         <div class= "header"><p>Headers</p></div>
-                    
-                    
-                        
-                    
+            
 
-        	        <pre><code>Content-Type: application/xml</code></pre>
-                
+	        <pre><code>Content-Type: application/xml</code></pre>
+        
 
-                
-                    <div class= "header"><p>Body</p></div>
-                    <pre><code>&lt;updateContextRequest>
+        
+            <div class= "header"><p>Body</p></div>
+            <pre><code>&lt;updateContextRequest>
     &lt;contextElementList>
         &lt;contextElement>
             &lt;entityId type="CEPEventReporter" isPattern="false">
@@ -2192,174 +2312,70 @@ The second action is to change the run status of the engine. To start a run or t
     &lt;updateAction>UPDATE&lt;/updateAction>
 &lt;/updateContextRequest> 
 </code></pre>
-                
+        
 
-                
-            </div>
-            
-            
-     
+        
+    </div>   
 </div>
-                                                
-            
-                                                
-                                                    
-                                                
-                                                
-                                                
+
+                                                        
+                                                            
+                                                            
+                                                            
+
 
 <div class="rest-packet-div">
+    
+    <span class="packetType">Response 201</span> 
+    
+    
+    
+    
+   
 
-            <span class="packetType">Response 201</span> 
-            
-            
-            
-            
 
 
+    <div id="action_sending-output-events_Response_1_body" class=" action-div-body">
+        <p></p>
 
- 
-            <div id="action_sending-output-events_Response_1_body" class=" action-div-body">
-                <p></p>
+        
 
-                
+        
 
-                
-
-                
-            </div>
-            
-            
-     
+        
+    </div>   
 </div>
                                                 
                                             
                                             <div class="goActions">
                                                 <a href="#action_sending-output-events">Go to specification</a>
                                             </div>
+                                        </div>
                                     </div>
-                                </div>
-                            
-                    </section>
-            
-                    <section id="resource_cep-administration-api-root_example" class="resourceExample">
-                         <div class= "header" >
-                         
-                            <h4 id="h-resource_cep-administration-api-root_example">CEP Administration API Root</h4>
-                            <span class="extra-header">[/{CEP_Admin}/resources/]</span>
-                         
-                         </div>
-
-                            
-                            
-                            
-
-                            
-                            
-                            
-
-                           
-
-                            
-                    </section>
-            
+                        </section>
+                    
+                
+                    
+                
                     <section id="resource_definitions_example" class="resourceExample">
-                         <div class= "header" >
-                         
-                            <h4 id="h-resource_definitions_example">Definitions</h4>
-                            <span class="extra-header">[/definitions]</span>
-                         
-                         </div>
+                            <div class= "header" >
+                            
+                                <h4 id="h-resource_definitions_example">Definitions</h4>
+                                <span class="extra-header">[/definitions]</span>
+                            
+                            </div>
+
+                            
+                            
 
                             
                             
                             
 
                             
-                            
-                            
-
-                           
 
                             
-                                <div id="action_retrieve-all-the-existing-definitions-in-the-repository_examples" class="actionExample GET">
-
-                                    
-    <div class="header">
-        
-            <h5 id="h-action_retrieve-all-the-existing-definitions-in-the-repository_examples">Retrieve all the existing definitions in the repository </h5>
-            <span class="extra-header">
-		GET 
-                
-                    /definitions
-                
-            </span>
-        
-
-    </div>
-
-                
-                                    <div id="action_retrieve-all-the-existing-definitions-in-the-repository_body" class=""> 
-                                        
-                                        
-                                        
-                                                 
-                                        
-                                            
-                                            
-                                                
-            
-                                                
-                                                    
-                                                
-                                                
-                                                
-
-<div class="rest-packet-div">
-
-            <span class="packetType">Response 200</span> 
-            
-            
-            
-            
-
-
-
- 
-            <div id="action_retrieve-all-the-existing-definitions-in-the-repository_Response_1_body" class=" action-div-body">
-                <p></p>
-
-                
-
-                
-                    <div class= "header"><p>Body</p></div>
-                    <pre><code>[
-    {
-        "name": "/opt/repositories/tomcat10/DoSAttack.json”,
-        "url": "/ProtonOnWebServerAdmin/resources/definitions/DoSAttack"
-    },
-    {
-        "name": "/opt/repositories/tomcat10/DoSAttack2.json”,
-        "url": "/ProtonOnWebServerAdmin/resources/definitions/DoSAttack2”
-    }
-]
-</code></pre>
-                
-
-                
-            </div>
-            
-            
-     
-</div>
-                                                
-                                            
-                                            <div class="goActions">
-                                                <a href="#action_retrieve-all-the-existing-definitions-in-the-repository">Go to specification</a>
-                                            </div>
-                                    </div>
-                                </div>
-                            
+                                
                                 <div id="action_creating-a-new-definition_examples" class="actionExample POST">
 
                                     
@@ -2376,167 +2392,93 @@ The second action is to change the run status of the engine. To start a run or t
 
     </div>
 
-                
-                                    <div id="action_creating-a-new-definition_body" class=""> 
-                                        
-                                        
-                                        
-                                                 
-                                        
+                                
+                                        <div id="action_creating-a-new-definition_body" class=""> 
                                             
                                             
+                                            
+                                                     
+                                            
+                                                
+                                            
+
                                                 
                                                     
                                                     
                                                     
+
                                                     
+                                                        
+
 
 <div class="rest-packet-div">
+    
+    <span class="packetType">Request  /definitions</span> 
+    
+    
+    
+    
+   
 
-            <span class="packetType">Request </span> 
-            
-            
-            
-            
 
 
+    <div id="action_creating-a-new-definition_Request_1_body" class=" action-div-body">
+        <p></p>
 
- 
-            <div id="action_creating-a-new-definition_Request_1_body" class=" action-div-body">
-                <p></p>
+        
 
-                
-
-                
-                    <div class= "header"><p>Body</p></div>
-                    <pre><code>{
+        
+            <div class= "header"><p>Body</p></div>
+            <pre><code>{
     "name":"MyDefinition",
     "epn":{…}
 }
 </code></pre>
-                
+        
 
-                
-            </div>
-            
-            
-     
+        
+    </div>   
 </div>
-                                                
-            
-                                                
-                                                    
-                                                
-                                                
-                                                
+
+                                                        
+                                                            
+                                                            
+                                                            
+
 
 <div class="rest-packet-div">
+    
+    <span class="packetType">Response 201</span> 
+    
+    
+    
+    
+   
 
-            <span class="packetType">Response 201</span> 
-            
-            
-            
-            
 
 
+    <div id="action_creating-a-new-definition_Response_1_body" class=" action-div-body">
+        <p></p>
 
- 
-            <div id="action_creating-a-new-definition_Response_1_body" class=" action-div-body">
-                <p></p>
+        
 
-                
-
-                
-                    <div class= "header"><p>Body</p></div>
-                    <pre><code>/ProtonOnWebServerAdmin/resources/definitions/MyDefinition
+        
+            <div class= "header"><p>Body</p></div>
+            <pre><code>/ProtonOnWebServerAdmin/resources/definitions/MyDefinition
 </code></pre>
-                
+        
 
-                
-            </div>
-            
-            
-     
+        
+    </div>   
 </div>
                                                 
                                             
                                             <div class="goActions">
                                                 <a href="#action_creating-a-new-definition">Go to specification</a>
                                             </div>
+                                        </div>
                                     </div>
-                                </div>
-                            
-                                <div id="action_retrieve-an-application-definition-in-json-format_examples" class="actionExample GET">
-
-                                    
-    <div class="header">
-        
-            <h5 id="h-action_retrieve-an-application-definition-in-json-format_examples">Retrieve an application definition in JSON format </h5>
-            <span class="extra-header">
-		GET 
-                
-                    /{definition_name}
-                
-            </span>
-        
-
-    </div>
-
-                
-                                    <div id="action_retrieve-an-application-definition-in-json-format_body" class=""> 
-                                        
-                                        
-                                        
-                                                 
-                                        
-                                            
-                                            
-                                                
-            
-                                                
-                                                    
-                                                
-                                                
-                                                
-
-<div class="rest-packet-div">
-
-            <span class="packetType">Response 200</span> 
-            
-            
-            
-            
-
-
-
- 
-            <div id="action_retrieve-an-application-definition-in-json-format_Response_1_body" class=" action-div-body">
-                <p></p>
-
-                
-
-                
-                    <div class= "header"><p>Body</p></div>
-                    <pre><code>{
-    "epn": {…}
-}
-</code></pre>
-                
-
-                
-            </div>
-            
-            
-     
-</div>
-                                                
-                                            
-                                            <div class="goActions">
-                                                <a href="#action_retrieve-an-application-definition-in-json-format">Go to specification</a>
-                                            </div>
-                                    </div>
-                                </div>
-                            
+                                
                                 <div id="action_replace-content-of-an-existing-definition-with-new-content_examples" class="actionExample PUT">
 
                                     
@@ -2553,257 +2495,114 @@ The second action is to change the run status of the engine. To start a run or t
 
     </div>
 
-                
-                                    <div id="action_replace-content-of-an-existing-definition-with-new-content_body" class=""> 
-                                        
-                                        
-                                        
-                                                 
-                                        
+                                
+                                        <div id="action_replace-content-of-an-existing-definition-with-new-content_body" class=""> 
                                             
                                             
+                                            
+                                                     
+                                            
+                                                
+                                            
+
                                                 
                                                     
                                                     
                                                     
+
                                                     
+                                                        
+
 
 <div class="rest-packet-div">
+    
+    <span class="packetType">Request  /{definition_name}</span> 
+    
+    
+    
+    
+   
 
-            <span class="packetType">Request </span> 
-            
-            
-            
-            
 
 
+    <div id="action_replace-content-of-an-existing-definition-with-new-content_Request_1_body" class=" action-div-body">
+        <p></p>
 
- 
-            <div id="action_replace-content-of-an-existing-definition-with-new-content_Request_1_body" class=" action-div-body">
-                <p></p>
+        
 
-                
-
-                
-                    <div class= "header"><p>Body</p></div>
-                    <pre><code>{
+        
+            <div class= "header"><p>Body</p></div>
+            <pre><code>{
     "epn": {…}
 }
 </code></pre>
-                
+        
 
-                
-            </div>
-            
-            
-     
+        
+    </div>   
 </div>
-                                                
-            
-                                                
-                                                    
-                                                
-                                                
-                                                
+
+                                                        
+                                                            
+                                                            
+                                                            
+
 
 <div class="rest-packet-div">
+    
+    <span class="packetType">Response 200</span> 
+    
+    
+    
+    
+   
 
-            <span class="packetType">Response 200</span> 
-            
-            
-            
-            
 
 
+    <div id="action_replace-content-of-an-existing-definition-with-new-content_Response_1_body" class=" action-div-body">
+        <p></p>
 
- 
-            <div id="action_replace-content-of-an-existing-definition-with-new-content_Response_1_body" class=" action-div-body">
-                <p></p>
+        
 
-                
-
-                
-                    <div class= "header"><p>Body</p></div>
-                    <pre><code>/ProtonOnWebServerAdmin/resources/definitions/MyDefinition
+        
+            <div class= "header"><p>Body</p></div>
+            <pre><code>/ProtonOnWebServerAdmin/resources/definitions/MyDefinition
 </code></pre>
-                
+        
 
-                
-            </div>
-            
-            
-     
+        
+    </div>   
 </div>
                                                 
                                             
                                             <div class="goActions">
                                                 <a href="#action_replace-content-of-an-existing-definition-with-new-content">Go to specification</a>
                                             </div>
+                                        </div>
                                     </div>
-                                </div>
-                            
-                                <div id="action_delete-a-definition_examples" class="actionExample DELETE">
-
-                                    
-    <div class="header">
-        
-            <h5 id="h-action_delete-a-definition_examples">Delete a definition </h5>
-            <span class="extra-header">
-		DELETE 
+                                
+                        </section>
+                    
                 
-                    /{definition_name}
-                
-            </span>
-        
-
-    </div>
-
-                
-                                    <div id="action_delete-a-definition_body" class=""> 
-                                        
-                                        
-                                        
-                                                 
-                                        
-                                            
-                                            
-                                                
-            
-                                                
-                                                    
-                                                
-                                                
-                                                
-
-<div class="rest-packet-div">
-
-            <span class="packetType">Response 200</span> 
-            
-            
-            
-            
-
-
-
- 
-            <div id="action_delete-a-definition_Response_1_body" class=" action-div-body">
-                <p></p>
-
-                
-
-                
-                    <div class= "header"><p>Body</p></div>
-                    <pre><code>true
-</code></pre>
-                
-
-                
-            </div>
-            
-            
-     
-</div>
-                                                
-                                            
-                                            <div class="goActions">
-                                                <a href="#action_delete-a-definition">Go to specification</a>
-                                            </div>
-                                    </div>
-                                </div>
-                            
-                    </section>
-            
                     <section id="resource_administrating-run-time-instances_example" class="resourceExample">
-                         <div class= "header" >
-                         
-                            <h4 id="h-resource_administrating-run-time-instances_example">Administrating run-time instances</h4>
-                            <span class="extra-header">[/instances/{instance_name}]</span>
-                         
-                         </div>
+                            <div class= "header" >
+                            
+                                <h4 id="h-resource_administrating-run-time-instances_example">Administrating run-time instances</h4>
+                                <span class="extra-header">[/instances/{instance_name}]</span>
+                            
+                            </div>
+
+                            
+                            
 
                             
                             
                             
 
                             
-                            
-                            
-
-                           
 
                             
-                                <div id="action_get-instance-status_examples" class="actionExample GET">
-
-                                    
-    <div class="header">
-        
-            <h5 id="h-action_get-instance-status_examples">Get instance status </h5>
-            <span class="extra-header">
-		GET 
-                
-                    /instances/{instance_name}
-                
-            </span>
-        
-
-    </div>
-
-                
-                                    <div id="action_get-instance-status_body" class=""> 
-                                        
-                                        
-                                        
-                                                 
-                                        
-                                            
-                                            
-                                                
-            
-                                                
-                                                    
-                                                
-                                                
-                                                
-
-<div class="rest-packet-div">
-
-            <span class="packetType">Response 200</span> 
-            
-            
-            
-            
-
-
-
- 
-            <div id="action_get-instance-status_Response_1_body" class=" action-div-body">
-                <p></p>
-
-                
-
-                
-                    <div class= "header"><p>Body</p></div>
-                    <pre><code>{
-    "state":"started",
-    "definitions-url":"/ProtonOnWebServerAdmin/resources/definitions/DoSAttack"
-}
-</code></pre>
-                
-
-                
-            </div>
-            
-            
-     
-</div>
-                                                
-                                            
-                                            <div class="goActions">
-                                                <a href="#action_get-instance-status">Go to specification</a>
-                                            </div>
-                                    </div>
-                                </div>
-                            
+                                
                                 <div id="action_configuringchanging-a-definition-for-an-instance_examples" class="actionExample PUT">
 
                                     
@@ -2820,247 +2619,241 @@ The second action is to change the run status of the engine. To start a run or t
 
     </div>
 
-                
-                                    <div id="action_configuring/changing-a-definition-for-an-instance_body" class=""> 
-                                        
-                                        
-                                        
-                                                 
-                                        
+                                
+                                        <div id="action_configuring/changing-a-definition-for-an-instance_body" class=""> 
                                             
                                             
+                                            
+                                                     
+                                            
+                                                
+                                            
+
                                                 
                                                     
                                                     
                                                     
+
                                                     
+                                                        
+
 
 <div class="rest-packet-div">
+    
+    <span class="packetType">Request  /instances/{instance_name}</span> 
+    
+    
+    
+    
+   
 
-            <span class="packetType">Request </span> 
-            
-            
-            
-            
 
 
+    <div id="action_configuring/changing-a-definition-for-an-instance_Request_1_body" class=" action-div-body">
+        <p></p>
 
- 
-            <div id="action_configuring/changing-a-definition-for-an-instance_Request_1_body" class=" action-div-body">
-                <p></p>
+        
 
-                
-
-                
-                    <div class= "header"><p>Body</p></div>
-                    <pre><code>{
+        
+            <div class= "header"><p>Body</p></div>
+            <pre><code>{
     "action":"ChangeDefinitions",
     "definitions-url":"/ProtonOnWebServerAdmin/resources/definitions/DoSAttack"
 }
 </code></pre>
-                
+        
 
-                
-            </div>
-            
-            
-     
+        
+    </div>   
 </div>
-                                                
-            
-                                                
-                                                    
-                                                
-                                                
-                                                
+
+                                                        
+                                                            
+                                                            
+                                                            
+
 
 <div class="rest-packet-div">
+    
+    <span class="packetType">Response 200</span> 
+    
+    
+    
+    
+   
 
-            <span class="packetType">Response 200</span> 
-            
-            
-            
-            
 
 
+    <div id="action_configuring/changing-a-definition-for-an-instance_Response_1_body" class=" action-div-body">
+        <p></p>
 
- 
-            <div id="action_configuring/changing-a-definition-for-an-instance_Response_1_body" class=" action-div-body">
-                <p></p>
+        
 
-                
+        
 
-                
-
-                
-            </div>
-            
-            
-     
+        
+    </div>   
 </div>
                                                 
                                             
+
                                                 
                                                     
                                                     
                                                     
+
                                                     
+                                                        
+
 
 <div class="rest-packet-div">
+    
+    <span class="packetType">Request  /instances/{instance_name}</span> 
+    
+    
+    
+    
+   
 
-            <span class="packetType">Request </span> 
-            
-            
-            
-            
 
 
+    <div id="action_configuring/changing-a-definition-for-an-instance_Request_1_body" class=" action-div-body">
+        <p></p>
 
- 
-            <div id="action_configuring/changing-a-definition-for-an-instance_Request_1_body" class=" action-div-body">
-                <p></p>
+        
 
-                
-
-                
-                    <div class= "header"><p>Body</p></div>
-                    <pre><code>{
+        
+            <div class= "header"><p>Body</p></div>
+            <pre><code>{
     "action":"ChangeState",
     "state":"start"
 }
 </code></pre>
-                
+        
 
-                
-            </div>
-            
-            
-     
+        
+    </div>   
 </div>
-                                                
-            
-                                                
-                                                    
-                                                
-                                                
-                                                
+
+                                                        
+                                                            
+                                                            
+                                                            
+
 
 <div class="rest-packet-div">
+    
+    <span class="packetType">Response 200</span> 
+    
+    
+    
+    
+   
 
-            <span class="packetType">Response 200</span> 
-            
-            
-            
-            
 
 
+    <div id="action_configuring/changing-a-definition-for-an-instance_Response_1_body" class=" action-div-body">
+        <p></p>
 
- 
-            <div id="action_configuring/changing-a-definition-for-an-instance_Response_1_body" class=" action-div-body">
-                <p></p>
+        
 
-                
+        
 
-                
-
-                
-            </div>
-            
-            
-     
+        
+    </div>   
 </div>
                                                 
                                             
+
                                                 
                                                     
                                                     
                                                     
+
                                                     
+                                                        
+
 
 <div class="rest-packet-div">
+    
+    <span class="packetType">Request  /instances/{instance_name}</span> 
+    
+    
+    
+    
+   
 
-            <span class="packetType">Request </span> 
-            
-            
-            
-            
 
 
+    <div id="action_configuring/changing-a-definition-for-an-instance_Request_1_body" class=" action-div-body">
+        <p></p>
 
- 
-            <div id="action_configuring/changing-a-definition-for-an-instance_Request_1_body" class=" action-div-body">
-                <p></p>
+        
 
-                
-
-                
-                    <div class= "header"><p>Body</p></div>
-                    <pre><code>{
+        
+            <div class= "header"><p>Body</p></div>
+            <pre><code>{
     "action":"ChangeState",
     "state”:”stop”
 }
 </code></pre>
-                
+        
 
-                
-            </div>
-            
-            
-     
+        
+    </div>   
 </div>
-                                                
-            
-                                                
-                                                    
-                                                
-                                                
-                                                
+
+                                                        
+                                                            
+                                                            
+                                                            
+
 
 <div class="rest-packet-div">
+    
+    <span class="packetType">Response 200</span> 
+    
+    
+    
+    
+   
 
-            <span class="packetType">Response 200</span> 
-            
-            
-            
-            
 
 
+    <div id="action_configuring/changing-a-definition-for-an-instance_Response_1_body" class=" action-div-body">
+        <p></p>
 
- 
-            <div id="action_configuring/changing-a-definition-for-an-instance_Response_1_body" class=" action-div-body">
-                <p></p>
+        
 
-                
+        
 
-                
-
-                
-            </div>
-            
-            
-     
+        
+    </div>   
 </div>
                                                 
                                             
                                             <div class="goActions">
                                                 <a href="#action_configuringchanging-a-definition-for-an-instance">Go to specification</a>
                                             </div>
+                                        </div>
                                     </div>
-                                </div>
-                            
-                    </section>
-            
-        </section>
+                        </section>
+                    
+                
+            </section>
+        
     
-
-
-
 </section>
+
   </section>
   
    
 
 
+
+	
+
+	
 
     
     
@@ -3069,11 +2862,19 @@ The second action is to change the run status of the engine. To start a run or t
       <h1>References</h1>
           <ul>
               
+                  <li><a href="http://docs.na.apiary.io/#reference">Apiary project</a></li>
+              
+                  <li><a href="http://github.com/ishkin/Proton.git">Github source</a></li>
+              
+                  <li><a href="http://forge.fiware.org/plugins/mediawiki/wiki/fiware/index.php/FI-WARE_Open_Specification_Legal_Notice_(implicit_patents_license)">FIWARE Open Specification License (implicit patents license)</a></li>
+              
                   <li><a href="http://forge.fiware.org/plugins/mediawiki/wiki/fiware/index.php?title=FIWARE.OpenSpecification.Data.CEP">CEP GE open specification document</a></li>
               
                   <li><a href="http://forge.fiware.org/plugins/mediawiki/wiki/fiware/index.php/FI-WARE_Open_Specification_Legal_Notice_(implicit_patents_license)">FI-WARE Open Specification Legal Notice</a></li>
               
-                  <li><a href="https://forge.fi-ware.eu/docman/view.php/9/2732/CEP_EPN_Schema_FI_WARE.json">https://forge.fi-ware.eu/docman/view.php/9/2732/CEP_EPN_Schema_FI_WARE.json</a>) while the semantics of the various elements in this schema are described in a user guide. Examples for definitions can be found in the <a href="https://forge.fiware.org/plugins/mediawiki/wiki/fiware/index.php/CEP_GE_-_IBM_Proactive_Technology_Online_Unit_Testing_Plan">CEP test plan</a></li>
+                  <li><a href="https://forge.fi-ware.eu/docman/view.php/9/2732/CEP_EPN_Schema_FI_WARE.json">https://forge.fi-ware.eu/docman/view.php/9/2732/CEP_EPN_Schema_FI_WARE.json</a></li>
+              
+                  <li><a href="https://forge.fiware.org/plugins/mediawiki/wiki/fiware/index.php/CEP_GE_-_IBM_Proactive_Technology_Online_Unit_Testing_Plan">CEP test plan</a></li>
               
           </ul>
       </section>
