@@ -73,7 +73,7 @@ public class ProtonTopologyBuilder {
 	        
 			topologyBuilder.setSpout(ProtonTopologyBuilder.INPUT_NAME, inputSpout);		   
 			topologyBuilder.setBolt(ProtonTopologyBuilder.ROUTING_BOLT_NAME, new RoutingBolt(facadesManager,facade)).shuffleGrouping(ProtonTopologyBuilder.INPUT_NAME).shuffleGrouping(ProtonTopologyBuilder.EPA_MANAGER_BOLT_NAME, STORMMetadataFacade.EVENT_STREAM);
-			topologyBuilder.setBolt(ProtonTopologyBuilder.CONTEXT_BOLT_NAME, new ContextBolt(facadesManager,facade)).fieldsGrouping(ProtonTopologyBuilder.ROUTING_BOLT_NAME, STORMMetadataFacade.EVENT_STREAM,new Fields(STORMMetadataFacade.AGENT_NAME_FIELD,STORMMetadataFacade.CONTEXT_NAME_FIELD));
+			topologyBuilder.setBolt(ProtonTopologyBuilder.CONTEXT_BOLT_NAME, new ContextBolt(facadesManager,facade)).fieldsGrouping(ProtonTopologyBuilder.ROUTING_BOLT_NAME, STORMMetadataFacade.EVENT_STREAM,new Fields(STORMMetadataFacade.AGENT_NAME_FIELD,STORMMetadataFacade.CONTEXT_NAME_FIELD, STORMMetadataFacade.CONTEXT_SEGMENTATION_VALUES));
 			topologyBuilder.setBolt(ProtonTopologyBuilder.EPA_MANAGER_BOLT_NAME, new EPAManagerBolt(facadesManager,facade)).fieldsGrouping(ProtonTopologyBuilder.CONTEXT_BOLT_NAME, STORMMetadataFacade.EVENT_STREAM, new Fields(STORMMetadataFacade.AGENT_NAME_FIELD,STORMMetadataFacade.CONTEXT_PARTITION_FIELD));
 			topologyBuilder.setBolt(outputBoltName, outputBolt).shuffleGrouping(ProtonTopologyBuilder.ROUTING_BOLT_NAME,STORMMetadataFacade.CONSUMER_EVENTS_STREAM);
 			

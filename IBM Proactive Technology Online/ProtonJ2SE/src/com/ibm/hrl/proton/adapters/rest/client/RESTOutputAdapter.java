@@ -60,6 +60,9 @@ public class RESTOutputAdapter extends AbstractOutputAdapter {
 		case CSV:			
 			textFormatter = new CSVTextFormatter(consumerMetadata.getConsumerProperties(),eventMetadata,eep);
 		case JSON:
+			textFormatter = new JSONFormatter(consumerMetadata.getConsumerProperties(),eventMetadata,eep);
+			break;
+		case JSON_NGSI:
 			textFormatter = new JSONNgsiFormatter(consumerMetadata.getConsumerProperties(),eventMetadata,eep);
 			break;
 		case TAG:

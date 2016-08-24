@@ -21,6 +21,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,6 +33,11 @@ import backtype.storm.topology.base.BaseRichBolt;
 import backtype.storm.tuple.Fields;
 import backtype.storm.tuple.Tuple;
 
+import com.ibm.hrl.proton.context.metadata.ComposedSegmentation;
+import com.ibm.hrl.proton.expression.eep.EepExpression;
+import com.ibm.hrl.proton.metadata.context.CompositeContextType;
+import com.ibm.hrl.proton.metadata.context.SegmentationContextType;
+import com.ibm.hrl.proton.metadata.context.interfaces.IContextType;
 import com.ibm.hrl.proton.metadata.event.EventHeader;
 import com.ibm.hrl.proton.metadata.event.IEventType;
 import com.ibm.hrl.proton.runtime.event.EventInstance;
@@ -45,6 +51,7 @@ public class RoutingBolt extends BaseRichBolt {
 	private static final Logger logger = LoggerFactory.getLogger(RoutingBolt.class.getName());	 
 	FacadesManager facadesManager;
 	STORMMetadataFacade metadataFacade;
+	Map<String, ComposedSegmentation> contextInfo = new ConcurrentHashMap<String,ComposedSegmentation>();
 	
 		
 	public RoutingBolt(FacadesManager facadesManager,STORMMetadataFacade metadataFacade) {
@@ -89,6 +96,10 @@ public class RoutingBolt extends BaseRichBolt {
 					Pair<String,String> routingEntry = (Pair<String,String>) iterator.next();			
 					eventTuple.add(routingEntry.getFirstValue());
 					eventTuple.add(routingEntry.getSecondValue());
+					
+					//extract the context information and calculate composed segmentation value
+					String segmentationValue = calculateSegmentationValue(routingEntry.getSecondValue(), input);
+					eventTuple.add(segmentationValue);
 					logger.debug("RoutingBolt: execute : emitting tuple on stream: "+eventTypeName+" with values: "+tuple);
 					_collector.emit(STORMMetadataFacade.EVENT_STREAM,eventTuple);
 				
@@ -97,6 +108,74 @@ public class RoutingBolt extends BaseRichBolt {
 	     	      
 	      _collector.ack(input);
 
+	}
+
+	/**
+	 * Get the relevant context metadata, retrieve the composed segmentation value and calculate
+	 * @param secondValue
+	 * @return
+	 */
+	private String calculateSegmentationValue(String contextName, Tuple input) 
+	{
+		IContextType contextType = metadataFacade.getMetadataFacade().getContextMetadataFacade().getContext(contextName);
+		ComposedSegmentation globalSegmentation = new ComposedSegmentation();
+		if (contextInfo.containsKey(contextName))
+		{
+			return evaluateSegmentation(contextInfo.get(contextName), input);
+		}else
+			
+		{
+			if (contextType instanceof CompositeContextType) {
+				List<IContextType> members = ((CompositeContextType)contextType).getMemberContexts();
+				for (IContextType context: members) {
+					if (context instanceof SegmentationContextType) {
+						globalSegmentation.add((SegmentationContextType)context);
+					}
+				}
+			}
+			// for single context - create a composite one
+			if (!(contextType instanceof CompositeContextType)) { // temporal or segmentation
+				if (contextType instanceof SegmentationContextType) {					
+					globalSegmentation.add((SegmentationContextType)contextType);
+				}			
+			}
+			
+			contextInfo.put(contextName, globalSegmentation);
+			return  evaluateSegmentation(globalSegmentation, input);
+		}
+
+		
+		
+	}
+
+	private String evaluateSegmentation(
+			ComposedSegmentation composedSegmentation, Tuple input) {
+		String composedSegmentationValue = "";
+		IEventInstance eventInstance = metadataFacade.createEventFromTuple(input);
+		if (composedSegmentation.getSegments().size() != 0)
+		{
+			// evaluate value of this segment for the given event
+			// if event does not contain attributes complying with the composite context
+			// return an empty SegmentationValue
+			//logger.debug("getSegmentationValue: for event"+event);
+			// we assume that event attributes comply with given segment (defs parsing check)
+			
+			for (SegmentationContextType segment: composedSegmentation.getSegments()) {
+				//logger.debug("getSegmentationValue: iterating over segments"+segment);
+				//logger.debug("getSegmentationValue: getting parsed expression for event type"+ event.getEventType());
+				EepExpression expression = (EepExpression)segment.getParsedSegmentationExpression(eventInstance.getEventType());
+				
+				if (expression != null) { // event can either participate in this segment or not
+					// invoke eep to evaluate expression for the given event instance
+					Object expressionResult = expression.copyAndEvaluate(eventInstance);
+					String expressionValue = expressionResult.toString();
+					composedSegmentationValue = composedSegmentationValue.concat(expressionValue+",");
+				}
+			}				
+			
+		}
+		
+		return composedSegmentationValue;
 	}
 
 	private boolean isConsumerEvent(String eventTypeName) {
@@ -115,6 +194,7 @@ public class RoutingBolt extends BaseRichBolt {
 		eventFieldNames.addAll(fieldNames);
 		eventFieldNames.add(STORMMetadataFacade.AGENT_NAME_FIELD);
 		eventFieldNames.add(STORMMetadataFacade.CONTEXT_NAME_FIELD);
+		eventFieldNames.add(STORMMetadataFacade.CONTEXT_SEGMENTATION_VALUES);
 
 		logger.debug("RoutingBolt: declareOutputFields:declaring stream for RoutingBolt: stream name: " +STORMMetadataFacade.EVENT_STREAM+ "with fields "+fieldNames);
 		declarer.declareStream(STORMMetadataFacade.EVENT_STREAM, new Fields(eventFieldNames));
@@ -149,7 +229,8 @@ public class RoutingBolt extends BaseRichBolt {
 				//name				
 				IEventInstance eventInstance = new EventInstance(eventType, attributes);						
 				//determine routing 
-				routingInfo= metadataFacade.getMetadataFacade().getRoutingMetadataFacade().determineRouting(eventInstance);
+				routingInfo= metadataFacade.getMetadataFacade().getRoutingMetadataFacade().determineRouting(eventInstance);								
+				
 			}
 			
 		}

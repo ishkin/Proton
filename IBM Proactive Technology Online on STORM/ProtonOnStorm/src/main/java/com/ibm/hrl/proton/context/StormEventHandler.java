@@ -87,7 +87,10 @@ public class StormEventHandler implements IEventHandler {
                 	{
 						//emit the termination tuples
                 		logger.info("StormEventHandler: received termination notification, created respective output tuple: with fields "+tupleFields+" ,passing for processing to EPAManagerBolt");
-                		_collector.emit(STORMMetadataFacade.EVENT_STREAM, tupleFields);
+                		synchronized (_collector) {
+                			_collector.emit(STORMMetadataFacade.EVENT_STREAM, tupleFields);
+						}
+                		
 					}                    
                     return;
                
@@ -108,7 +111,9 @@ public class StormEventHandler implements IEventHandler {
                     Set<List<Object>> tuples = createParticipationTuples(event, agentName, participatingPartitions);
                     for (List<Object> tuplesFields : tuples) {
                     	logger.info("StormEventHandler: participation notification, created respective output tuple: event name" + event.getEventType().getName()+" with field values "+tuplesFields+" ,passing for processing to EPAManagerBolt");
-                    	_collector.emit(STORMMetadataFacade.EVENT_STREAM, tuplesFields);
+                    	synchronized(_collector){
+                    		_collector.emit(STORMMetadataFacade.EVENT_STREAM, tuplesFields);
+                    	}
 					}
                     
                     
@@ -125,7 +130,10 @@ public class StormEventHandler implements IEventHandler {
         	{
 				//emit the termination tuples
         		logger.info("StormEventHandler: received termination notification, created respective output tuple: with fields "+tupleFields+" ,passing for processing to EPAManagerBolt");
-        		_collector.emit(STORMMetadataFacade.EVENT_STREAM, tupleFields);
+        		synchronized (_collector) {
+        			_collector.emit(STORMMetadataFacade.EVENT_STREAM, tupleFields);
+				}
+        		
 			}     
         }
 

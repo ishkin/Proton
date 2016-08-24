@@ -71,16 +71,21 @@ public abstract class BaseTextFormatter extends AbstractTextFormatter {
 		for (String tagValue : tagValuePairs) 
 		{
 			//separate the tag from the value using the tagDataSeparator
-			String[] separatedPair = tagValue.split(tagDataSeparator);
+			String[] separatedPair = tagValue.split(tagDataSeparator);			
 			String attrName = separatedPair[0].trim(); //the tag is always the first in the pair
-			String attrStringValue = separatedPair[1].trim();
+			String attrStringValue = null;
+			if (separatedPair.length == 2)
+			{				
+				 attrStringValue = separatedPair[1].trim();
+			}
+			
 
 			if (attrName.equals(NULL_STRING) || attrName.equals("")) {
 				// the attribute doesn't have a value
 				throw new AdapterException("Could not parse the event string " + eventText + ", reason: Attribute name not specified");
 			}
 			
-			if (attrStringValue.equals(NULL_STRING) || attrStringValue.equals(""))
+			if (attrStringValue == null || attrStringValue.equals(NULL_STRING) || attrStringValue.equals("") )
 	        {
 	        	//the attribute has a value of null, or no value at all (';name=;')
 	        	attrValues.put(attrName, null);

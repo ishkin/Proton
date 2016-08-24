@@ -101,6 +101,7 @@ public class ContextBolt extends BaseRichBolt {
 			e.printStackTrace();
 			logger.error("Could not pass event for processing of context service, reason: " +e.getMessage());
 			throw new RuntimeException(e.getMessage());
+			
 		}
 		logger.debug("ContextBolt: execute : done processing tuple "+input);
 		 _collector.ack(input);
