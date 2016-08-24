@@ -6,5 +6,5 @@ class cep {
 	include cep::config
 	include cep::validation
 
-	Class['cep::pkgs'] -> Class['cep::deploy'] -> Class['cep::config'] -> Class['cep::validation']
+	Class['apt'] -> Class['cep::pkgs'] -> Class['cep::deploy'] -> Class['cep::config'] -> Class['cep::validation']
 }

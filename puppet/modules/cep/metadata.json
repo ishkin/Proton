@@ -1,0 +1,22 @@
+{
+  "name": "cep",
+  "version": "5.4.1",
+  "author": "puppetlabs",
+  "summary": "Installs IBM Proactive Technology Online for Ubuntu",
+  "license": "Apache-2.0",
+  "source": "https://github.com/ishkin/Proton/tree/master/puppet/modules/cep",
+  "project_page": "https://github.com/ishkin/Proton",
+  "issues_url": "https://github.com/ishkin/Proton/issues",
+  "operatingsystem_support": [
+    {
+      "operatingsystem": "Ubuntu",
+      "operatingsystemrelease": [
+        "14.04"
+      ]
+    }
+  ],
+  "dependencies": [
+    {"name":"puppetlabs/apt","version_requirement":">= 1.4.0 <3.0.0"},
+    {"name":"puppetlabs/stdlib","version_requirement":">= 2.2.0 <5.0.0"}
+  ]
+}
