@@ -85,7 +85,7 @@ public abstract class BaseTextFormatter extends AbstractTextFormatter {
 				throw new AdapterException("Could not parse the event string " + eventText + ", reason: Attribute name not specified");
 			}
 			
-			if (attrStringValue == null || attrStringValue.equals(NULL_STRING) || attrStringValue.equals("") )
+			if (attrStringValue == null || attrStringValue.equals(NULL_STRING) || attrStringValue.equals("") || attrStringValue.equals("''") )
 	        {
 	        	//the attribute has a value of null, or no value at all (';name=;')
 	        	attrValues.put(attrName, null);
