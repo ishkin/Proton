@@ -1,6 +1,7 @@
 site_name: Proactive-Technology-Online
 site_url: https://proactive-technology-online.readthedocs.org
 repo_url: https://github.com/ishkin/Proton.git
+google_analytics: ['UA-83719121-1', 'proactive-technology-online.readthedocs.io']
 site_description: Proactive Technology Online Documentation
 docs_dir: documentation/markdown
 site_dir: html
