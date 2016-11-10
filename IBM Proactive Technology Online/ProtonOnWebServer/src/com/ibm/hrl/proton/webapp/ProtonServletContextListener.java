@@ -253,6 +253,7 @@ public class ProtonServletContextListener implements ServletContextListener {
 			}		
 		 	} catch(Exception e) {
 			 e.printStackTrace();
+			 logger.severe("Failded in parsing of metadata, reason: "+e.getMessage()+", cause: "+ e.getCause());
 		 	} finally {
 			 try {
 				in.close();

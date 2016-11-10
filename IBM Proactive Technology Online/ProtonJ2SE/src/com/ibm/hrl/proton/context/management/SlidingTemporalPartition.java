@@ -17,12 +17,13 @@ package com.ibm.hrl.proton.context.management;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
-
-
-
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -53,7 +54,7 @@ public class SlidingTemporalPartition extends TemporalPartition implements ITime
 	public static final Logger logger = LoggerFactory.getLogger(SlidingTemporalPartition.class);
 	protected long duration; // sliding window length	
 	protected long period;   // sliding window repeating period
-	protected ArrayList<SlidingTemporalInternalPartition> slidingInternalPartitions;
+	protected Set<SlidingTemporalInternalPartition> slidingInternalPartitions;
 	protected String contextName;
 	protected String agentName;
 	protected String compositeContextName;
@@ -71,7 +72,7 @@ public class SlidingTemporalPartition extends TemporalPartition implements ITime
 		this.contextName = contextName;
 		this.compositeContextName = compositeContextName;
 		this.agentName = agentName;
-		slidingInternalPartitions = new ArrayList<SlidingTemporalInternalPartition>();
+		slidingInternalPartitions = Collections.newSetFromMap(new ConcurrentHashMap<SlidingTemporalInternalPartition, Boolean>());
 		logger.debug("Creating new SlidingTemporalPartition");
 		
 		try {
@@ -114,7 +115,7 @@ public class SlidingTemporalPartition extends TemporalPartition implements ITime
 		return false;
 	}
 
-	public ArrayList<SlidingTemporalInternalPartition> getSlidingInternalPartitions() {				
+	public Set<SlidingTemporalInternalPartition> getSlidingInternalPartitions() {				
 		 return slidingInternalPartitions;
 	}
 	
@@ -153,7 +154,7 @@ public class SlidingTemporalPartition extends TemporalPartition implements ITime
 		// basically for each existing sliding partition there should be relevant internal one
 		for (SlidingTemporalInternalPartition partition: slidingInternalPartitions) {
 			logger.debug("findInternalPartition: search for matching internal partitions for event "+event+ "inside sliding partition: "+partition.getId().toString());
-			Collection participatingInsideSliding = partition.findInternalPartition(eSegmentation);
+			Collection<Pair<String, Map<String, Object>>> participatingInsideSliding = partition.findInternalPartition(eSegmentation);
 			
 			//if we cannot find any - means no such internal partition for this segmentation - create one
 			if (participatingInsideSliding.isEmpty()){
