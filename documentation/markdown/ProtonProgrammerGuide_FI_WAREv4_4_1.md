@@ -203,7 +203,7 @@ An input adapter needs to implement a few interfaces:
 
 The adapter that represents the consumer is configured, upon startup it is supplied with a server connector that handles all communication of Proton runtime with the adapter (see Figure 12 for initialization sequence diagram). 
 
-![Adapter initialization sequence - establishing connection to Proton server](PG-images/AdapterInitializationSequenceEstablishingConnectionToProtonServer.jpg "Adapter initialization sequence - establishing connection to Proton server")<br> 
+![Adapter initialization sequence - establishing connection to Proton server](PG-images/AdapterInitializationSequence-EstablishingConnectionToProtonServer.jpg "Adapter initialization sequence - establishing connection to Proton server")<br> 
 Figure 12: Adapter initialization sequence - establishing connection to Proton server
 
 The Proton runtime pushes all published events for the specific consumer to the consumer's connector object, where it is stored in the queue (see Figure 13 step 1a).  The output adapter accesses the queue and pulls the event objects from the queue. 

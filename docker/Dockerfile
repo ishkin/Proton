@@ -13,4 +13,6 @@ EXPOSE 8080
 RUN mkdir -p /root/Proton/
 ADD https://raw.githubusercontent.com/ishkin/Proton/master/docker/docker_smoketest.sh /root/Proton/docker_smoketest.sh
 RUN chmod +x /root/Proton/docker_smoketest.sh
+# add the defs folder in the default /tmp folder
+RUN mkdir -p /tmp/defs
 ENTRYPOINT ["/usr/local/tomcat/bin/catalina.sh", "run"]

@@ -41,6 +41,8 @@ Follow these steps:
 
 ## Notes for working with MacOs.
 
+With the latest Docker tools for MacOS, we do not need boot2docker as in the example below.
+
 Docker should start with boot2docker:
  
             boot2docker up          # startup the docker daemon
