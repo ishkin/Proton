@@ -2,6 +2,7 @@
 *{
 	overflow: visible !important;
 }
+
 section h1{
   page-break-before:always;
 }
