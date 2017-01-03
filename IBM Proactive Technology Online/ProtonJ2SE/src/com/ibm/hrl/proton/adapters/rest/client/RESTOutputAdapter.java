@@ -84,8 +84,11 @@ public class RESTOutputAdapter extends AbstractOutputAdapter {
 				String urlExtension = formattedInstance.getFirstValue();
 				String eventInstance = formattedInstance.getSecondValue();
 				RestClient.patchEventToConsumer(url,urlExtension, eventInstance, contentType,authToken);
+			}else
+			{
+				RestClient.putEventToConsumer(url, (String)textFormatter.formatInstance(instance), contentType,authToken);
 			}
-			RestClient.putEventToConsumer(url, (String)textFormatter.formatInstance(instance), contentType,authToken);
+			
 			
 		} catch (RESTException e) {			
 			throw new AdapterException(e);
