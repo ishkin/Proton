@@ -1,10 +1,10 @@
 FORMAT: 1A
-HOST: http://github.com/ishkin/Proton/api/v5.4.1/
+HOST: http://localhost
 TITLE: FIWARE-CEP v5.4.1 Specification
 DATE: 30 July 2016
 VERSION: v5.4.1
 PREVIOUS_VERSION: v4.4.1
-APIARY_PROJECT: na
+APIARY_PROJECT: complexeventprocessingcepapicookbook
 GITHUB_SOURCE: http://github.com/ishkin/Proton.git
 SPEC_URL: http://sample.com/Proton/api/
 
@@ -15,7 +15,7 @@ Copyright: IBM (C) 2012-2016
 
 ## License
 This specification is licensed under the 
-[Apache License, Version 2.0](https://opensource.org/licenses/Apache-2.0).
+[FIWARE Open Specification License](http://forge.fiware.org/plugins/mediawiki/wiki/fiware/index.php/FI-WARE_Open_Specification_Legal_Notice_(implicit_patents_license)) to understand the rights to use this specification.
 
 ## CEP API Cookbook
 
@@ -25,7 +25,6 @@ As described in the [CEP GE open specification document](http://forge.fiware.org
 * Sending output events to event consumers using an output REST client adapter
 * Administrating the CEP engine state, and its definition repository
 
-Please check the following [FI-WARE Open Specification Legal Notice](http://forge.fiware.org/plugins/mediawiki/wiki/fiware/index.php/FI-WARE_Open_Specification_Legal_Notice_(implicit_patents_license)) to understand the rights to use this specification.
 
 ## CEP Instance API Root [/{instance_name}/rest]
 
@@ -41,7 +40,8 @@ Note:
 * In the JSON format, all the attributes values are given as strings, the CEP processes each attribute value according to its defined type (in the event definition).
 
 ### Receive a new input event in json, tag, NGSI xml or NGSI json formats [POST /events]
-   
+* Note that the NGSI format is deisgnated to work with the ORION context broker, which as of May 2016 has deprecated the NGSI xml format,
+and is working only with the NGSI json format. Yet, PROTON CEP General Enabler of FIWARE continues to support both NGSI formats.
 
 + Request (application/json)
 
@@ -338,4 +338,3 @@ The second action is to change the run status of the engine. To start a run or t
         }
 
 + Response 200
-

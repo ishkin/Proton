@@ -350,7 +350,7 @@
 
   <div id="top-source-buttons">
   	
-    	<a target="_blank" href="http://docs.na.apiary.io/#reference">View in Apiary</a>
+    	<a target="_blank" href="http://docs.complexeventprocessingcepapicookbook.apiary.io/#reference">View in Apiary</a>
     
     
     	<a target="_blank" href="http://github.com/ishkin/Proton.git">View in Github</a>
@@ -382,8 +382,8 @@
 
 	
 		<h2 id="license">License</h2>
-		<p>This specification is licensed under the 
-<a href="https://opensource.org/licenses/Apache-2.0">Apache License, Version 2.0</a>.</p>
+		<p>This specification is licensed under the
+<a href="http://forge.fiware.org/plugins/mediawiki/wiki/fiware/index.php/FI-WARE_Open_Specification_Legal_Notice_(implicit_patents_license)">FIWARE Open Specification License</a> to understand the rights to use this specification.</p>
 	
 
 	
@@ -629,13 +629,12 @@
 		
 			<section>
 				<h2 id="cep_api_cookbook"> CEP API Cookbook</h2>
-<p>As described in the <a href="http://forge.fiware.org/plugins/mediawiki/wiki/fiware/index.php?title=FIWARE.OpenSpecification.Data.CEP">CEP GE open specification document</a>, CEP has three main interfaces: </p>
+<p>As described in the <a href="http://forge.fiware.org/plugins/mediawiki/wiki/fiware/index.php?title=FIWARE.OpenSpecification.Data.CEP">CEP GE open specification document</a>, CEP has three main interfaces:</p>
 <ul>
 <li>Receiving raw events from event producers using a RESTful service</li>
 <li>Sending output events to event consumers using an output REST client adapter</li>
 <li>Administrating the CEP engine state, and its definition repository</li>
 </ul>
-<p>Please check the following <a href="http://forge.fiware.org/plugins/mediawiki/wiki/fiware/index.php/FI-WARE_Open_Specification_Legal_Notice_(implicit_patents_license)">FI-WARE Open Specification Legal Notice</a> to understand the rights to use this specification.</p>
 
 
 			</section>
@@ -758,7 +757,10 @@
 
         
                             <div id="receive-a-new-input-event-in-json,-tag,-ngsi-xml-or-ngsi-json-formats_body" class="">
-                                
+                                <ul>
+<li>Note that the NGSI format is deisgnated to work with the ORION context broker, which as of May 2016 has deprecated the NGSI xml format,
+and is working only with the NGSI json format. Yet, PROTON CEP General Enabler of FIWARE continues to support both NGSI formats.</li>
+</ul>
                                 
                                 
                                 
@@ -817,7 +819,7 @@
                 
             
             
-                <a target="_blank" href="http://docs.na.apiary.io/#reference/default/receiving-input-events/receive-a-new-input-event-in-json,-tag,-ngsi-xml-or-ngsi-json-formats">View in Apiary</a>
+                <a target="_blank" href="http://docs.complexeventprocessingcepapicookbook.apiary.io/#reference/default/receiving-input-events/receive-a-new-input-event-in-json,-tag,-ngsi-xml-or-ngsi-json-formats">View in Apiary</a>
             
         
     
@@ -853,7 +855,7 @@
                             <div id="sending-output-events_body" class="">
                                 <p>The CEP GE activates a REST client for sending output events (in a push mode) to an external application REST service</p>
 <p>The following is what the REST consumer will generate as a request to an external REST service called /application-name/consumer. This external REST service is expected to be able to interpret either the tag-delimited, JSON, XML/NGSI or JSON/NGSI data formats sent via the POST method.
-Note: ’Name’ is a built-in attribute used to represent the event type being reported. Please consult the user guide for event representation and built-in attributes. </p>
+Note: ’Name’ is a built-in attribute used to represent the event type being reported. Please consult the user guide for event representation and built-in attributes.</p>
 <p>Note: that this is an external REST service of another application that is activated by the CEP consumer, according to the defined consumer in the CEP application. The URI of the service, the format, and the event types to be sent to this service are defined as part of the Consumer definition as part of the CEP application definition. Although this is not a CEP api, it is described here to show what is the data the CEP posts to an external service, when such a consumer is defined.</p>
                                 
                                 
@@ -913,7 +915,7 @@ Note: ’Name’ is a built-in attribute used to represent the event type being 
                 
             
             
-                <a target="_blank" href="http://docs.na.apiary.io/#reference/default/receiving-input-events/sending-output-events">View in Apiary</a>
+                <a target="_blank" href="http://docs.complexeventprocessingcepapicookbook.apiary.io/#reference/default/receiving-input-events/sending-output-events">View in Apiary</a>
             
         
     
@@ -1060,7 +1062,7 @@ Note: ’Name’ is a built-in attribute used to represent the event type being 
                 
             
             
-                <a target="_blank" href="http://docs.na.apiary.io/#reference/default/definitions/retrieve-all-the-existing-definitions-in-the-repository">View in Apiary</a>
+                <a target="_blank" href="http://docs.complexeventprocessingcepapicookbook.apiary.io/#reference/default/definitions/retrieve-all-the-existing-definitions-in-the-repository">View in Apiary</a>
             
         
     
@@ -1141,7 +1143,7 @@ Note: ’Name’ is a built-in attribute used to represent the event type being 
                 
             
             
-                <a target="_blank" href="http://docs.na.apiary.io/#reference/default/definitions/creating-a-new-definition">View in Apiary</a>
+                <a target="_blank" href="http://docs.complexeventprocessingcepapicookbook.apiary.io/#reference/default/definitions/creating-a-new-definition">View in Apiary</a>
             
         
     
@@ -1230,7 +1232,7 @@ Note: ’Name’ is a built-in attribute used to represent the event type being 
                 
             
             
-                <a target="_blank" href="http://docs.na.apiary.io/#reference/default/definitions/retrieve-an-application-definition-in-json-format">View in Apiary</a>
+                <a target="_blank" href="http://docs.complexeventprocessingcepapicookbook.apiary.io/#reference/default/definitions/retrieve-an-application-definition-in-json-format">View in Apiary</a>
             
         
     
@@ -1324,7 +1326,7 @@ Note: ’Name’ is a built-in attribute used to represent the event type being 
                 
             
             
-                <a target="_blank" href="http://docs.na.apiary.io/#reference/default/definitions/replace-content-of-an-existing-definition-with-new-content">View in Apiary</a>
+                <a target="_blank" href="http://docs.complexeventprocessingcepapicookbook.apiary.io/#reference/default/definitions/replace-content-of-an-existing-definition-with-new-content">View in Apiary</a>
             
         
     
@@ -1413,7 +1415,7 @@ Note: ’Name’ is a built-in attribute used to represent the event type being 
                 
             
             
-                <a target="_blank" href="http://docs.na.apiary.io/#reference/default/definitions/delete-a-definition">View in Apiary</a>
+                <a target="_blank" href="http://docs.complexeventprocessingcepapicookbook.apiary.io/#reference/default/definitions/delete-a-definition">View in Apiary</a>
             
         
     
@@ -1438,8 +1440,8 @@ Note: ’Name’ is a built-in attribute used to represent the event type being 
                     <span class="extra-header">[/instances/{instance_name}]</span>
                  
                  </div>
-                <p>There are two administration actions that can be performed on a run-time instance. The first is changing the definition (epn) for the instance to work with on its next activation. This will define the types of events the instance will accept for processing and the type of patterns it will be computing. The second action is to start or stop the run time engine. </p>
-<p>Note: When you change the definition file of the engine, it has no affect on the current run. You need to stop and start the engine to make it run with the updated definition. </p>
+                <p>There are two administration actions that can be performed on a run-time instance. The first is changing the definition (epn) for the instance to work with on its next activation. This will define the types of events the instance will accept for processing and the type of patterns it will be computing. The second action is to start or stop the run time engine.</p>
+<p>Note: When you change the definition file of the engine, it has no affect on the current run. You need to stop and start the engine to make it run with the updated definition.</p>
                 
                 
 
@@ -1532,7 +1534,7 @@ Note: ’Name’ is a built-in attribute used to represent the event type being 
                 
             
             
-                <a target="_blank" href="http://docs.na.apiary.io/#reference/default/administrating-run-time-instances/get-instance-status">View in Apiary</a>
+                <a target="_blank" href="http://docs.complexeventprocessingcepapicookbook.apiary.io/#reference/default/administrating-run-time-instances/get-instance-status">View in Apiary</a>
             
         
     
@@ -1626,7 +1628,7 @@ The second action is to change the run status of the engine. To start a run or t
                 
             
             
-                <a target="_blank" href="http://docs.na.apiary.io/#reference/default/administrating-run-time-instances/configuring/changing-a-definition-for-an-instance">View in Apiary</a>
+                <a target="_blank" href="http://docs.complexeventprocessingcepapicookbook.apiary.io/#reference/default/administrating-run-time-instances/configuring/changing-a-definition-for-an-instance">View in Apiary</a>
             
         
     
@@ -1745,7 +1747,7 @@ The second action is to change the run status of the engine. To start a run or t
         
             <div class= "header"><p>Body</p></div>
             <pre><code>{
-    "Name":"TrafficReport", 
+    "Name":"TrafficReport",
     "volume":"1000"
 }
 </code></pre>
@@ -2279,7 +2281,7 @@ The second action is to change the run status of the engine. To start a run or t
         &lt;/contextElement>
     &lt;/contextElementList>
     &lt;updateAction>UPDATE&lt;/updateAction>
-&lt;/updateContextRequest> 
+&lt;/updateContextRequest>
 </code></pre>
         
 
@@ -2833,15 +2835,13 @@ The second action is to change the run status of the engine. To start a run or t
       <h1>References</h1>
           <ul>
               
-                  <li><a href="http://docs.na.apiary.io/#reference">Apiary project</a></li>
+                  <li><a href="http://docs.complexeventprocessingcepapicookbook.apiary.io/#reference">Apiary project</a></li>
               
                   <li><a href="http://github.com/ishkin/Proton.git">Github source</a></li>
               
-                  <li><a href="https://opensource.org/licenses/Apache-2.0">Apache License, Version 2.0</a></li>
+                  <li><a href="http://forge.fiware.org/plugins/mediawiki/wiki/fiware/index.php/FI-WARE_Open_Specification_Legal_Notice_(implicit_patents_license)">FIWARE Open Specification License</a></li>
               
                   <li><a href="http://forge.fiware.org/plugins/mediawiki/wiki/fiware/index.php?title=FIWARE.OpenSpecification.Data.CEP">CEP GE open specification document</a></li>
-              
-                  <li><a href="http://forge.fiware.org/plugins/mediawiki/wiki/fiware/index.php/FI-WARE_Open_Specification_Legal_Notice_(implicit_patents_license)">FI-WARE Open Specification Legal Notice</a></li>
               
                   <li><a href="https://forge.fi-ware.eu/docman/view.php/9/2732/CEP_EPN_Schema_FI_WARE.json">https://forge.fi-ware.eu/docman/view.php/9/2732/CEP_EPN_Schema_FI_WARE.json</a></li>
               
