@@ -103,14 +103,16 @@ public class JSONNgsiFormatter extends AbstractTextFormatter {
 					{
 						String attrValue = String.valueOf(value);
 						if (attrValue != null && !attrValue.isEmpty()){
-							if ((value instanceof Long) && (instance.getFieldMetaData(attrName).getType().equals(AttributeTypesEnum.DATE.toString())))
+							boolean isDate = ((value instanceof Long) && (instance.getFieldMetaData(attrName).getType().equals(AttributeTypesEnum.DATE.toString())));
+							if (isDate)
 							{
 								//convert this long to Date using formatter's date format
 								attrValue = formatTimestamp((Long)value);
 							}
 							if (firstAttribute == false) jsonString = jsonString.concat(", \n");
+							boolean isNumber = value instanceof Number && !isDate;
 							String jsonAttr = "\""+attrName + "\" : { \n"
-									+         "\"value\" : \""+value+"\" \n"
+									+         "\"value\" : " + (isNumber?"":"\"") + attrValue + (isNumber?"":"\"") + "\n"
 									+		  "} \n";
 							jsonString = jsonString.concat(jsonAttr);
 							firstAttribute = false;
