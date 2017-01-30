@@ -107,6 +107,7 @@ public class EventJSONNgsiMessageReader implements MessageBodyReader<EventInstan
 		}
 	
 		logger.info("finished event message body reader");
+		logger.info("EventJSONNgsiMessageReader: read event "+ event +" from broker...");
        	
        	return event;
 		
