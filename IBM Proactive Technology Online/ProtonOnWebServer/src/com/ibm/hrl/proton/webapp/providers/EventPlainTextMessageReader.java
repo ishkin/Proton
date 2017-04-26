@@ -80,7 +80,7 @@ public class EventPlainTextMessageReader implements MessageBodyReader<IEventInst
 		int nameAttrIndex = eventString.indexOf(EventHeader.NAME_ATTRIBUTE);
 		String nameSubstring = eventString.substring(nameAttrIndex);
 		
-		int delimiterIndex = nameSubstring.indexOf(DELIMITER);
+		int delimiterIndex = (nameSubstring.indexOf(DELIMITER) != -1)? nameSubstring.indexOf(DELIMITER) : nameSubstring.length() ;
 		int tagDataSeparatorIndex = nameSubstring.indexOf(TAG_DATA_SEPARATOR);
 		String nameValue = nameSubstring.substring(tagDataSeparatorIndex+1,delimiterIndex);		
 		IEventType eventType= WebMetadataFacade.getInstance().getEventMetadataFacade().getEventType(nameValue);
