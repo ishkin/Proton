@@ -33,6 +33,7 @@ This project is part of [FIWARE](https://www.fiware.org/).
 * [A high level description of the technology and an api overview can be found included in this comprehensive documentation] (https://www.fiware.org/devguides/real-time-processing-of-context-events/) - FIWARE developers’ tour guide.
 * [A complete set of the REST api] (http://forge.fiware.org/plugins/mediawiki/wiki/fiware/index.php/Complex_Event_Processing_Open_RESTful_API_Specification), or in [apiary format] (http://htmlpreview.github.io/?https://github.com/ishkin/Proton/blob/master/documentation/apiary/CEP-apiary-blueprint.html).
 * [Online documents] (http://proactive-technology-online.readthedocs.org/en/latest/index.html) - Proactive Technology Online documents are published at [ReadTheDocs] (http://proactive-technology-online.readthedocs.org/en/latest/ProtonUserGuide_FI_WARE5_4_1/index.html) - User Guide, and the [Programmer Guide] (http://proactive-technology-online.readthedocs.org/en/latest/ProtonProgrammerGuide_FI_WAREv4_4_1/index.html). 
+* [A webinar introducing CEP concepts in general and Proactive Technology Online] https://github.com/ishkin/Proton/blob/master/CEP-FI-WARE-3.2-Tutorial.mp4
 * More documentation is provided under the documentation folder, as described below. 
   * [Education material] (https://edu.fiware.org/course/view.php?id=58) - FIWARE academy.
 
