@@ -13,7 +13,7 @@
 * [Support](#support)
 
 ## Introduction
-IBM Proactive Technology Online is an open source complex event processing engine developed at IBM Research - Haifa. Proton was developed as a research project and extended in the scope of EU projects: FINEST, FISPACE, FIWARE, SPEEDD, FERRARI, PSYMBIOSYS and DATABIO. It provides language primitives for defining,
+IBM Proactive Technology Online (PROTON) is an open source complex event processing engine developed at IBM Research - Haifa. PROTON was developed as a research project and extended in the scope of the following EU projects: FINEST, FISPACE, FIWARE, SPEEDD, FERRARI, PSYMBIOSYS and DATABIO. It provides language primitives for defining,
 submitting, and executing event processing networks. The goal of the system is to respond to raw events and identify meaningful events within contexts. 
 The system comes with a set of built-in operators (such as sequence, all, etc.) for determining CEP patterns. 
 It also has extendable APIs for adding additional custom operators. The system comes with existing source/sink adapters, allowing it to extract raw events from files or pull 
