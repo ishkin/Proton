@@ -465,7 +465,7 @@ public abstract class BaseMetadataParser {
 			if (trendRatioChecker.checkElementParsed(trendRatio)) {
 				try {
 					Double trendRatioValue = Double.valueOf(trendRatio);
-					if (trendRelation == TrendRelationEnum.INCREASE && trendRatioValue < 1.0) {
+					/*if (trendRelation == TrendRelationEnum.INCREASE && trendRatioValue < 1.0) {
 						exceptions.add(new ProtonParseException(ParseErrorEnum.BAD_VALUE, epaName, DefinitionType.EPA, ErrorType.ERROR,
 								ErrorElement.TREND_RATIO, ProtonParseException.DEFAULT_INDEX, ProtonParseException.DEFAULT_INDEX,
 								"Trend relation is Increase but trend ratio lesser than 1"));
@@ -473,13 +473,15 @@ public abstract class BaseMetadataParser {
 						exceptions.add(new ProtonParseException(ParseErrorEnum.BAD_VALUE, epaName, DefinitionType.EPA, ErrorType.ERROR,
 								ErrorElement.TREND_RATIO, ProtonParseException.DEFAULT_INDEX, ProtonParseException.DEFAULT_INDEX,
 								"Trend relation is Decrease but trend ratio is greater than 1 or lesser than or equal to 0"));
-					} else {
+					} else {*/
 						trendSchema.setTrendRatio(trendRatioValue);
-					}
+					//}
 				} catch(NumberFormatException e){
 					exceptions.add(new ProtonParseException(ParseErrorEnum.BAD_VALUE, epaName, DefinitionType.EPA, ErrorType.ERROR,
 							ErrorElement.TREND_RATIO, ProtonParseException.DEFAULT_INDEX, ProtonParseException.DEFAULT_INDEX, e.getMessage()));
 				}
+			}else{
+				trendSchema.setTrendRatio(1.0);
 			}
 			
 								
@@ -768,6 +770,8 @@ public abstract class BaseMetadataParser {
 		
 		return aliasAttributes;
 	}
+	
+		
 
 	/**
 	 * For aggregation - take the expressions defined for calculated variables and convert them

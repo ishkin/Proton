@@ -22,7 +22,7 @@ import com.ibm.hrl.proton.runtime.event.interfaces.IEventInstance;
 
 public interface ITextFormatter 
 {
-	public enum TextFormatterType {CSV, TAG,XML,JSON,JSON_NGSI};
+	public enum TextFormatterType {CSV, TAG,XML,JSON,JSON_NGSI,JSON_COMPOSER};
 	/**
 	 * Format the given instance into text message given this formatter's type and properties
 	 * The instance might represent both events or actions

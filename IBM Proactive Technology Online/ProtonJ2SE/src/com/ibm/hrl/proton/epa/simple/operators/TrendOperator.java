@@ -96,6 +96,8 @@ public class TrendOperator extends AbstractStandardOperator {
     			getMatchingSchema()).getTrendRelation();
     	Integer trendTreshold = ((TrendMatchingSchema)agentType.
     			getMatchingSchema()).getTrendTreshold();
+    	Double trendRatio = ((TrendMatchingSchema)agentType.
+    			getMatchingSchema()).getTrendRatio();
     	
     	
     	for (IEventInstance candidate: candidates) {
@@ -122,7 +124,7 @@ public class TrendOperator extends AbstractStandardOperator {
     			// check if trend is satisfied according to trend relation
     			switch (relation) {
     				case INCREASE: { // we are looking for increasing values
-    					if (value <= currentTrendValue) {
+    					if (value <= currentTrendValue*trendRatio) {
     						currentTrendValue = value;
     						trendCount =1;
     						participantsArray.clear();
@@ -134,7 +136,7 @@ public class TrendOperator extends AbstractStandardOperator {
     					break;
     				}
     				case DECREASE: { // we are looking for decreasing values
-    					if (value >= currentTrendValue) {
+    					if (value >= currentTrendValue*trendRatio) {
     						currentTrendValue = value;
     						trendCount =1;
     						participantsArray.clear();

@@ -20,6 +20,7 @@ import com.ibm.hrl.proton.adapters.connector.IOutputConnector;
 import com.ibm.hrl.proton.adapters.formatters.CSVTextFormatter;
 import com.ibm.hrl.proton.adapters.formatters.ITextFormatter;
 import com.ibm.hrl.proton.adapters.formatters.ITextFormatter.TextFormatterType;
+import com.ibm.hrl.proton.adapters.formatters.JSONComposerFormatter;
 import com.ibm.hrl.proton.adapters.formatters.JSONFormatter;
 import com.ibm.hrl.proton.adapters.formatters.JSONNgsiFormatter;
 import com.ibm.hrl.proton.adapters.formatters.TagTextFormatter;
@@ -65,6 +66,9 @@ public class RESTOutputAdapter extends AbstractOutputAdapter {
 		case JSON_NGSI:
 			textFormatter = new JSONNgsiFormatter(consumerMetadata.getConsumerProperties(),eventMetadata,eep);
 			break;
+		case JSON_COMPOSER:
+			textFormatter = new JSONComposerFormatter(consumerMetadata.getConsumerProperties(),eventMetadata,eep);
+			break;
 		case TAG:
 			textFormatter = new TagTextFormatter(consumerMetadata.getConsumerProperties(),eventMetadata,eep);
 			break;
@@ -84,7 +88,14 @@ public class RESTOutputAdapter extends AbstractOutputAdapter {
 				String urlExtension = formattedInstance.getFirstValue();
 				String eventInstance = formattedInstance.getSecondValue();
 				RestClient.patchEventToConsumer(url,urlExtension, eventInstance, contentType,authToken);
-			}else
+			}else if (textFormatter instanceof JSONComposerFormatter)
+			{
+				Pair<String,String> formattedInstance = ((JSONComposerFormatter)textFormatter).formatInstance(instance);
+				String urlExtension = formattedInstance.getFirstValue();
+				String eventInstance = formattedInstance.getSecondValue();
+				RestClient.putEventToConsumer(url+"/"+urlExtension, eventInstance, contentType,authToken);
+			}
+			else
 			{
 				RestClient.putEventToConsumer(url, (String)textFormatter.formatInstance(instance), contentType,authToken);
 			}

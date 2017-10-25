@@ -233,7 +233,7 @@ public class RestClient {
 	            		headers.append("\n");
 	            	}
 	            	throw new RESTException("Could not perform PATCH of event instance: \n"+eventInstance+ "\nwith request headers:\n" +
-	            			headers + "to consumer "+ url+", responce result: "+result);
+	            			headers + "to consumer "+ consumer+", responce result: "+result);
 	            }
 	           
 	        } catch(Exception e)

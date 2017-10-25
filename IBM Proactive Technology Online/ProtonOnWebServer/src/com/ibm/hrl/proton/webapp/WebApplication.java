@@ -40,9 +40,9 @@ public class WebApplication extends Application {
 		classes.add(EventResourceJSONDeprecated.class);
 		classes.add(EventResourcePlainTextDeprecated.class);
 		classes.add(EventPlainTextMessageReader.class);
-		//classes.add(EventJSONMessageReader.class);
+		classes.add(EventJSONMessageReader.class);
 		classes.add(EventXmlNgsiMessageReader.class);
-		classes.add(EventJSONNgsiMessageReader.class);
+		//classes.add(EventJSONNgsiMessageReader.class);
 		classes.add(ResponseExceptionMapper.class);
 		
 		return classes;

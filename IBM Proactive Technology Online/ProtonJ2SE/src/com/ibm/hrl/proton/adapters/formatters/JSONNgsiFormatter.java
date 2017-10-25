@@ -48,9 +48,9 @@ import com.ibm.hrl.proton.utilities.containers.Pair;
  */
 public class JSONNgsiFormatter extends AbstractTextFormatter {
 	private static final String DEFAULT_DATE_FORMAT = "dd/MM/yyyy-HH:mm:ss";
-	static final String EVENT_NAME_SUFFIX = "ContextUpdate"; 
-	static final String ENTITY_ID_ATTRIBUTE = "entityId";
-	static final String ENTITY_TYPE_ATTRIBUTE = "entityType";
+	static public final String EVENT_NAME_SUFFIX = "ContextUpdate"; 
+	static public final String ENTITY_ID_ATTRIBUTE = "entityId";
+	static public final String ENTITY_TYPE_ATTRIBUTE = "entityType";
 	private static final Logger logger = Logger.getLogger(JSONNgsiFormatter.class.getName());
 
 
