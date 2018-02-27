@@ -12,6 +12,13 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ * 
+ * IBM-Review-Requirement: Art30.3 - DO NOT TRANSFER OR EXCLUSIVELY LICENSE THE FOLLOWING CODE UNTIL Jan 31, 2022!
+ * Please note that the code in this file in several places 
+ * was developed for the PSYMBIOSYS project in HRL funded by the European Union  under the Horizon 2020 Program.
+ * The project started on Feb 1, 2015 until Jan 31, 2018. Thus, in accordance with article 30.3 of the Multi-Beneficiary General Model Grant Agreement of the Program, 
+ * the above limitations are in force until Jan 31, 2022.
+ * For further details please contact the developers lead Inna Skarbovsky (inna@il.ibm.com), or IP attorney Udi Einhorn (UDIE@il.ibm.com).
  ******************************************************************************/
 package com.ibm.hrl.proton;
 
