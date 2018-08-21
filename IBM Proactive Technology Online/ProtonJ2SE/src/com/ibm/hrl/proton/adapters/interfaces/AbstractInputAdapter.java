@@ -90,6 +90,7 @@ public abstract class AbstractInputAdapter implements IInputAdapter{
 		{
 			try {
 				Thread.sleep(configuration.getPollingDelay());
+				logger.info("woke up");
 				if (configuration.getPollMode().equals(InputAdapterPullModeEnum.BATCH))
 				{					
 					processBatchedInput();
@@ -106,6 +107,7 @@ public abstract class AbstractInputAdapter implements IInputAdapter{
 			} catch (InterruptedException e) {
 				if (running){
 					// TODO Auto-generated catch block
+					logger.severe("Could not read from input, reason:"+e.getMessage());
 					e.printStackTrace();
 					throw new RuntimeException(e.getMessage());
 				}

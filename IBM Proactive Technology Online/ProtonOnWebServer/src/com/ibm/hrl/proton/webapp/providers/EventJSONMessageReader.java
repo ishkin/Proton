@@ -34,8 +34,6 @@ import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.ext.MessageBodyReader;
 import javax.ws.rs.ext.Provider;
 
-import json.java.JSON;
-
 import org.apache.wink.json4j.JSONArray;
 import org.apache.wink.json4j.JSONException;
 import org.apache.wink.json4j.JSONObject;
@@ -130,11 +128,13 @@ public class EventJSONMessageReader implements MessageBodyReader<EventInstance> 
 			Map<String,Object> attrValues = new HashMap<String,Object>();
 			for (Object key: eventJson.keySet()) {
 				String attrName = (String)key; 
-				String attrStringValue = (String)eventJson.get(attrName);
+				
 				TypeAttribute eventTypeAttribute = eventType.getTypeAttributeSet().getAttribute(attrName);
 				if (eventTypeAttribute == null){
 					continue;
 				}
+				
+				String attrStringValue = (String)eventJson.get(attrName);
 				AttributeTypesEnum attrType = eventTypeAttribute.getTypeEnum();
 				if (attrType.equals(AttributeTypesEnum.STRING) || eventTypeAttribute.getDimension()>0) {
 					attrStringValue = "'"+attrStringValue+"'";

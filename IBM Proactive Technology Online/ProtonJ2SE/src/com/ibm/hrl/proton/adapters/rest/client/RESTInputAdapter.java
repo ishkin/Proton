@@ -161,10 +161,22 @@ public class RESTInputAdapter extends AbstractInputAdapter {
 			eventsList = RestClient.getEventsFromProducer(httpClient,getMethod,producerURL, contentType);					
 			if (eventsList == null || eventsList.isEmpty()) return eventInstances;
 			for (String eventInstanceText : eventsList) {
-				IEventInstance eventInstance = textFormatter.parseText(eventInstanceText);
-				eventInstance.setDetectionTime(Calendar.getInstance().getTimeInMillis());
-				
-				eventInstances.add(eventInstance);
+				if (textFormatter.isArray(eventInstanceText)){
+					List<String> eventStringList = textFormatter.returnInstances(eventInstanceText);
+					for (String eventString : eventStringList) {
+						IEventInstance eventInstance = textFormatter.parseText(eventString);
+						eventInstance.setDetectionTime(Calendar.getInstance().getTimeInMillis());
+						
+						eventInstances.add(eventInstance);
+
+					}
+				}else{
+					IEventInstance eventInstance = textFormatter.parseText(eventInstanceText);
+					eventInstance.setDetectionTime(Calendar.getInstance().getTimeInMillis());
+					
+					eventInstances.add(eventInstance);
+
+				}
 			}
 				
 			

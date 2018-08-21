@@ -11,6 +11,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
 
+import javax.mail.MethodNotSupportedException;
+
 import com.ibm.hrl.proton.adapters.interfaces.AdapterException;
 import com.ibm.hrl.proton.expression.facade.EepFacade;
 import com.ibm.hrl.proton.metadata.epa.basic.IDataObject;
@@ -177,5 +179,16 @@ public class CSVTextFormatter extends AbstractTextFormatter {
 			return "'"+attrStringValue+"'";
 		}
 		return attrStringValue;
+	}
+
+	@Override
+	public boolean isArray(String eventInstanceText) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public List<String> returnInstances(String eventInstanceText)  {
+		return new ArrayList<String>();
 	}
 }

@@ -20,7 +20,9 @@ package com.ibm.hrl.proton.adapters.formatters;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
@@ -213,6 +215,17 @@ public class XmlNgsiFormatter extends AbstractTextFormatter {
 			return null;
 		}
 		return internalTextNode.getNodeValue();
+	}
+	
+	@Override
+	public boolean isArray(String eventInstanceText) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public List<String> returnInstances(String eventInstanceText)  {
+		return new ArrayList<String>();
 	}
 }
 

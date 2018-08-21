@@ -16,10 +16,13 @@
 package com.ibm.hrl.proton.adapters.formatters;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import json.java.JSON;
+import json.java.JSONArray;
 import json.java.JSONObject;
 
 import com.ibm.hrl.proton.adapters.interfaces.AdapterException;
@@ -97,5 +100,34 @@ public abstract class BaseJsonFormatter extends AbstractTextFormatter{
        	event.setDetectionTime(System.currentTimeMillis());
        	
        	return event;
+	}
+	
+	@Override
+	public boolean isArray(String eventInstanceText) throws AdapterException {
+		try {
+			Object eventJson =JSON.parse(eventInstanceText);
+			if (eventJson instanceof JSONArray) return true;
+			else return false;
+			
+		} catch (Exception e) {
+			throw new AdapterException("Could not convert JSON string to event object, reason: "+e.getMessage());
+		}
+		
+	}
+
+	@Override
+	public List<String> returnInstances(String eventInstanceText)
+			throws AdapterException {
+		JSONArray eventJson;
+		ArrayList<String> resultArray = new ArrayList<String>();
+		try {
+			eventJson = (JSONArray)JSON.parse(eventInstanceText);
+			for (Object object : eventJson) {
+				resultArray.add(object.toString());
+			}
+
+			return resultArray;
+		} catch (Exception e) {
+			throw new AdapterException("Could not convert JSON string to event object, reason: "+e.getMessage());		} 
 	}
 }

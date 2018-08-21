@@ -18,6 +18,7 @@
  */
 package com.ibm.hrl.proton.adapters.formatters;
 
+import java.util.List;
 import java.util.Map;
 
 import json.java.JSONObject;
@@ -85,6 +86,8 @@ public class JSONFormatter extends BaseJsonFormatter {
 		
 		return json.toString();
 	}
+
+	
 
 	
 

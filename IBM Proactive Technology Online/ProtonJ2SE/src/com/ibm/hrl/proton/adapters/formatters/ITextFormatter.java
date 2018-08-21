@@ -15,6 +15,10 @@
  ******************************************************************************/
 package com.ibm.hrl.proton.adapters.formatters;
 
+import java.util.List;
+
+import javax.mail.MethodNotSupportedException;
+
 import com.ibm.hrl.proton.adapters.interfaces.AdapterException;
 import com.ibm.hrl.proton.metadata.epa.basic.IDataObject;
 import com.ibm.hrl.proton.runtime.event.interfaces.IEventInstance;
@@ -54,6 +58,10 @@ public interface ITextFormatter
 	 * @throws AdapterException 
 	 */
 	public long parseDate(String dateString) throws AdapterException;
+
+	public boolean isArray(String eventInstanceText) throws AdapterException;
+
+	public List<String> returnInstances(String eventInstanceText) throws AdapterException;
 	
 	
 }

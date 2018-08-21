@@ -15,6 +15,8 @@
  ******************************************************************************/
 package com.ibm.hrl.proton.adapters.formatters;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import com.ibm.hrl.proton.adapters.interfaces.AdapterException;
@@ -82,6 +84,17 @@ public class TagTextFormatter extends BaseTextFormatter {
 			return "'"+attrStringValue+"'";
 		}
 		return attrStringValue;
+	}
+	
+	@Override
+	public boolean isArray(String eventInstanceText) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public List<String> returnInstances(String eventInstanceText)  {
+		return new ArrayList<String>();
 	}
 
 	

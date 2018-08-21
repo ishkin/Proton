@@ -66,8 +66,15 @@ public class JSONComposerFormatter extends AbstractTextFormatter {
 				String typeName = instance.getMetadata().getName();
 				
 				//put the class name
-				String urlExtension = namespace+NAMESPACE_DELIMETER+typeName;
-				json.put(CLASS_ATTRIBUTE_VALUE,urlExtension );							
+				String urlExtension;
+				if (namespace.equals("")){
+					urlExtension = typeName;
+				}else{
+					urlExtension = namespace+NAMESPACE_DELIMETER+typeName;
+					json.put(CLASS_ATTRIBUTE_VALUE,urlExtension );	
+				}
+				
+										
 				
 				//fetch the list of relevant attributes and iterate over attributes to build the list
 				Map<String,Object> instanceAttrs = instance.getFieldValues();
@@ -91,7 +98,7 @@ public class JSONComposerFormatter extends AbstractTextFormatter {
 				}
 				
 				String jsonString = json.toString();
-				
+				System.out.println("Created event: "+jsonString);
 				Pair<String,String> returnedResults = new Pair<String,String>(urlExtension,jsonString);
 				return returnedResults;
 	}
@@ -119,12 +126,12 @@ public class JSONComposerFormatter extends AbstractTextFormatter {
 						
 			Map<String,Object> attrValues = new HashMap<String,Object>();
 			for (Object key: eventJson.keySet()) {
-				String attrName = (String)key; 
-				String attrStringValue = (String)eventJson.get(attrName);
+				String attrName = (String)key; 				
 				TypeAttribute eventTypeAttribute = eventType.getTypeAttributeSet().getAttribute(attrName);
 				if (eventTypeAttribute == null){
 					continue;
 				}
+				String attrStringValue = eventJson.get(attrName).toString();
 				AttributeTypesEnum attrType = eventTypeAttribute.getTypeEnum();
 				if (attrType.equals(AttributeTypesEnum.STRING) || eventTypeAttribute.getDimension()>0) {
 					attrStringValue = "'"+attrStringValue+"'";
@@ -145,6 +152,17 @@ public class JSONComposerFormatter extends AbstractTextFormatter {
 	       	return event;
 	
 
+	}
+	
+	@Override
+	public boolean isArray(String eventInstanceText) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public List<String> returnInstances(String eventInstanceText)  {
+		return new ArrayList<String>();
 	}
 
 }

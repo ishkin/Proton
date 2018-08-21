@@ -20,8 +20,10 @@ package com.ibm.hrl.proton.adapters.formatters;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
@@ -268,6 +270,18 @@ public class JSONNgsiFormatter extends AbstractTextFormatter {
 		event.setDetectionTime(System.currentTimeMillis());
 
 		return event;
+	}
+	
+	
+	@Override
+	public boolean isArray(String eventInstanceText) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public List<String> returnInstances(String eventInstanceText)  {
+		return new ArrayList<String>();
 	}
 }
 

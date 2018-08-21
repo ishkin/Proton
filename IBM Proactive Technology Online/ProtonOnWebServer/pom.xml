@@ -45,6 +45,11 @@
 			<artifactId>JSON</artifactId>
 			<version>0.1.0</version>
 		</dependency>
+		 <dependency>
+			<groupId>com.ibm.hrl.proton</groupId>
+			<artifactId>ProtonJ2SE</artifactId>
+			<version>0.0.1</version>
+		</dependency>
 		<dependency>
   			<groupId>org.slf4j</groupId>
   			<artifactId>slf4j-api</artifactId>
@@ -77,11 +82,7 @@
       	   <version>3.8.1</version>
            <scope>test</scope>
        </dependency>
-       <dependency>
-			<groupId>com.ibm.hrl.proton</groupId>
-			<artifactId>ProtonJ2SE</artifactId>
-			<version>0.0.1</version>
-		</dependency>
+      
 		<dependency>
 			<groupId>org.apache.wink</groupId>
 			<artifactId>wink-json4j</artifactId>
@@ -107,7 +108,7 @@
 			<artifactId>javax.servlet-api</artifactId>
 			<version>3.1.0</version>
 			 <scope>provided</scope>
-		</dependency>
+		</dependency>		 
   </dependencies>
   
   <build>
@@ -133,6 +134,7 @@
         <configuration>
           <source>1.7</source>
           <target>1.7</target>
+          <useIncrementalCompilation>true</useIncrementalCompilation>
         </configuration>
       </plugin>
     </plugins>
