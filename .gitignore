@@ -218,3 +218,10 @@ pip-log.txt
 
 #Mr Developer
 .mr.developer.cfg
+*.txt
+IBM Proactive Technology Online/AuthoringToolWebServer/WebContent/SavedProjects/SuspiciousAccount.json
+*.json
+IBM Proactive Technology Online/ProtonJ2SE/docs/ProtonUserGuidev4.4.2.docx
+IBM Proactive Technology Online/ProtonJ2SE/testConfigurations/cent1_Synthetic_data
+*.csv
+IBM Proactive Technology Online/ProtonOnWebServer/testConfigurations/Orion.out

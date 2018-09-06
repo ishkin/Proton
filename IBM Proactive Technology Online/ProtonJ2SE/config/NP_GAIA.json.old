@@ -1,0 +1,1387 @@
+{
+  "epn": {
+    "events": [
+      {
+        "name": "SensorReading",
+        "createdDate": "Tue Dec 22 2015",
+        "attributes": [
+          {
+            "name": "Certainty",
+            "type": "Double",
+            "defaultValue": "1",
+            "dimension": 0,
+            "description": "The certainty that this event happen (value between 0 to 1)"
+          },
+          {
+            "name": "OccurrenceTime",
+            "type": "Date",
+            "dimension": 0,
+            "description": "No value means it equals the event detection time, other option is to use one of the defined distribution functions with parameters"
+          },
+          {
+            "name": "ExpirationTime",
+            "type": "Date",
+            "dimension": 0
+          },
+          {
+            "name": "Cost",
+            "type": "Double",
+            "dimension": 0,
+            "description": "The cost of this event occurrence. Negative if this is an opportunity"
+          },
+          {
+            "name": "Duration",
+            "type": "Double",
+            "defaultValue": "0",
+            "dimension": 0,
+            "description": "Used in case the this event occur within an interval"
+          },                           
+           {
+            "name": "index",
+            "type": "Integer",
+            "dimension": 0
+          },
+           {
+            "name": "engine_speed",
+            "type": "Double",
+            "dimension": 0
+          },
+          {
+            "name": "lbr_oil_eng_inlet_prsure",
+            "type": "Double",
+            "dimension": 0
+          },
+           {
+            "name": "lbr_oil_eng_inlet_temp",
+            "type": "Double",
+            "dimension": 0
+          },
+           {
+            "name": "exhst_gat_tmp_cdr_1",
+            "type": "Double",
+            "dimension": 0
+          },
+           {
+            "name": "exhst_gat_dev_cdr_1",
+            "type": "Double",
+            "dimension": 0
+          },
+          {
+            "name": "exhst_gat_tmp_cdr_2",
+            "type": "Double",
+            "dimension": 0
+          },
+           {
+            "name": "exhst_gat_dev_cdr_2",
+            "type": "Double",
+            "dimension": 0
+          },
+          {
+            "name": "exhst_gat_tmp_cdr_3",
+            "type": "Double",
+            "dimension": 0
+          },
+           {
+            "name": "exhst_gat_dev_cdr_3",
+            "type": "Double",
+            "dimension": 0
+          },
+           {
+            "name": "exhst_gat_tmp_cdr_4",
+            "type": "Double",
+            "dimension": 0
+          },
+           {
+            "name": "exhst_gat_dev_cdr_4",
+            "type": "Double",
+            "dimension": 0
+          },
+          {
+            "name": "exhst_gat_tmp_cdr_5",
+            "type": "Double",
+            "dimension": 0
+          },
+           {
+            "name": "exhst_gat_dev_cdr_5",
+            "type": "Double",
+            "dimension": 0
+          },
+          {
+            "name": "exhst_gat_tmp_cdr_6",
+            "type": "Double",
+            "dimension": 0
+          },
+           {
+            "name": "exhst_gat_dev_cdr_6",
+            "type": "Double",
+            "dimension": 0
+          },
+           {
+            "name": "exhst_gat_tmp_cdr_7",
+            "type": "Double",
+            "dimension": 0
+          },
+           {
+            "name": "exhst_gat_dev_cdr_7",
+            "type": "Double",
+            "dimension": 0
+          },
+          {
+            "name": "exhst_gat_tmp_cdr_8",
+            "type": "Double",
+            "dimension": 0
+          },
+          {
+            "name": "exhst_gat_dev_cdr_8",
+            "type": "Double",
+            "dimension": 0
+          },
+           {
+            "name": "exhst_gat_tmp_cdr_9",
+            "type": "Double",
+            "dimension": 0
+          },
+          {
+            "name": "exhst_gat_dev_cdr_9",
+            "type": "Double",
+            "dimension": 0
+          },
+           {
+            "name": "propeller_pitch",
+            "type": "Double",
+            "dimension": 0
+          },
+          {
+            "name": "engine_rpm",
+            "type": "Double",
+            "dimension": 0
+          }
+          
+          
+        ]
+      },
+      {
+        "name": "EngineStatistics",
+        "createdDate": "Tue Dec 22 2015",
+        "attributes": [
+          {
+            "name": "Certainty",
+            "type": "Double",
+            "defaultValue": "1",
+            "dimension": 0,
+            "description": "The certainty that this event happen (value between 0 to 1)"
+          },
+          {
+            "name": "OccurrenceTime",
+            "type": "Date",
+            "dimension": 0,
+            "description": "No value means it equals the event detection time, other option is to use one of the defined distribution functions with parameters"
+          },
+          {
+            "name": "ExpirationTime",
+            "type": "Date",
+            "dimension": 0
+          },
+          {
+            "name": "Cost",
+            "type": "Double",
+            "dimension": 0,
+            "description": "The cost of this event occurrence. Negative if this is an opportunity"
+          },
+          {
+            "name": "Duration",
+            "type": "Double",
+            "defaultValue": "0",
+            "dimension": 0,
+            "description": "Used in case the this event occur within an interval"
+          },
+          
+           {
+            "name": "propeller_pitch_dev",
+            "type": "Double",
+            "dimension": 0
+          },
+           {
+            "name": "engine_rpm_dev",
+            "type": "Double",
+            "dimension": 0
+          },
+          {
+            "name": "propeller_pitch_avg",
+            "type": "Double",
+            "dimension": 0
+          },
+           {
+            "name": "engine_rpm_avg",
+            "type": "Double",
+            "dimension": 0
+          }
+        
+        ]
+      },
+      
+      
+{
+        "name": "LubricatingOilEngineInletPressureWarning",
+        "createdDate": "Tue Dec 22 2015",
+        "attributes": [
+          {
+            "name": "Certainty",
+            "type": "Double",
+            "defaultValue": "1",
+            "dimension": 0,
+            "description": "The certainty that this event happen (value between 0 to 1)"
+          },
+          {
+            "name": "OccurrenceTime",
+            "type": "Date",
+            "dimension": 0,
+            "description": "No value means it equals the event detection time, other option is to use one of the defined distribution functions with parameters"
+          },
+          {
+            "name": "ExpirationTime",
+            "type": "Date",
+            "dimension": 0
+          },
+          {
+            "name": "Cost",
+            "type": "Double",
+            "dimension": 0,
+            "description": "The cost of this event occurrence. Negative if this is an opportunity"
+          },
+          {
+            "name": "Duration",
+            "type": "Double",
+            "defaultValue": "0",
+            "dimension": 0,
+            "description": "Used in case the this event occur within an interval"
+          },
+          
+           {
+            "name": "lowestValue",
+            "type": "Double",
+            "dimension": 0
+          }
+        ]
+      },
+      
+{
+        "name": "LubricatingOilEngineInletPressureAlarm",
+        "createdDate": "Tue Dec 22 2015",
+        "attributes": [
+          {
+            "name": "Certainty",
+            "type": "Double",
+            "defaultValue": "1",
+            "dimension": 0,
+            "description": "The certainty that this event happen (value between 0 to 1)"
+          },
+          {
+            "name": "OccurrenceTime",
+            "type": "Date",
+            "dimension": 0,
+            "description": "No value means it equals the event detection time, other option is to use one of the defined distribution functions with parameters"
+          },
+          {
+            "name": "ExpirationTime",
+            "type": "Date",
+            "dimension": 0
+          },
+          {
+            "name": "Cost",
+            "type": "Double",
+            "dimension": 0,
+            "description": "The cost of this event occurrence. Negative if this is an opportunity"
+          },
+          {
+            "name": "Duration",
+            "type": "Double",
+            "defaultValue": "0",
+            "dimension": 0,
+            "description": "Used in case the this event occur within an interval"
+          },
+          
+           {
+            "name": "lbr_oil_eng_inlet_prsure",
+            "type": "Double",
+            "dimension": 0
+          }
+        ]
+      },
+
+
+{
+        "name": "LubricatingOilEngineInletTemperatureWarning",
+        "createdDate": "Tue Dec 22 2015",
+        "attributes": [
+          {
+            "name": "Certainty",
+            "type": "Double",
+            "defaultValue": "1",
+            "dimension": 0,
+            "description": "The certainty that this event happen (value between 0 to 1)"
+          },
+          {
+            "name": "OccurrenceTime",
+            "type": "Date",
+            "dimension": 0,
+            "description": "No value means it equals the event detection time, other option is to use one of the defined distribution functions with parameters"
+          },
+          {
+            "name": "ExpirationTime",
+            "type": "Date",
+            "dimension": 0
+          },
+          {
+            "name": "Cost",
+            "type": "Double",
+            "dimension": 0,
+            "description": "The cost of this event occurrence. Negative if this is an opportunity"
+          },
+          {
+            "name": "Duration",
+            "type": "Double",
+            "defaultValue": "0",
+            "dimension": 0,
+            "description": "Used in case the this event occur within an interval"
+          },
+          
+           {
+            "name": "highestValue",
+            "type": "Double",
+            "dimension": 0
+          }
+        ]
+      },
+      
+{
+        "name": "LubricatingOilEngineInletTemperatureAlarm",
+        "createdDate": "Tue Dec 22 2015",
+        "attributes": [
+          {
+            "name": "Certainty",
+            "type": "Double",
+            "defaultValue": "1",
+            "dimension": 0,
+            "description": "The certainty that this event happen (value between 0 to 1)"
+          },
+          {
+            "name": "OccurrenceTime",
+            "type": "Date",
+            "dimension": 0,
+            "description": "No value means it equals the event detection time, other option is to use one of the defined distribution functions with parameters"
+          },
+          {
+            "name": "ExpirationTime",
+            "type": "Date",
+            "dimension": 0
+          },
+          {
+            "name": "Cost",
+            "type": "Double",
+            "dimension": 0,
+            "description": "The cost of this event occurrence. Negative if this is an opportunity"
+          },
+          {
+            "name": "Duration",
+            "type": "Double",
+            "defaultValue": "0",
+            "dimension": 0,
+            "description": "Used in case the this event occur within an interval"
+          },
+          
+           {
+            "name": "lbr_oil_eng_inlet_temp",
+            "type": "Double",
+            "dimension": 0
+          }
+        ]
+      },
+            
+            
+            {
+        "name": "EngineLubricatingOilConditionWarning",
+        "createdDate": "Tue Dec 22 2015",
+        "attributes": [
+          {
+            "name": "Certainty",
+            "type": "Double",
+            "defaultValue": "1",
+            "dimension": 0,
+            "description": "The certainty that this event happen (value between 0 to 1)"
+          },
+          {
+            "name": "OccurrenceTime",
+            "type": "Date",
+            "dimension": 0,
+            "description": "No value means it equals the event detection time, other option is to use one of the defined distribution functions with parameters"
+          },
+          {
+            "name": "ExpirationTime",
+            "type": "Date",
+            "dimension": 0
+          },
+          {
+            "name": "Cost",
+            "type": "Double",
+            "dimension": 0,
+            "description": "The cost of this event occurrence. Negative if this is an opportunity"
+          },
+          {
+            "name": "Duration",
+            "type": "Double",
+            "defaultValue": "0",
+            "dimension": 0,
+            "description": "Used in case the this event occur within an interval"
+          },
+          
+           {
+            "name": "temperatureValue",
+            "type": "Double",
+            "dimension": 0
+          },
+          {
+            "name": "pressureValue",
+            "type": "Double",
+            "dimension": 0
+          }
+          
+        ]
+      },
+            
+            
+              
+      {
+        "name": "EngineSteadyState",
+        "createdDate": "Tue Dec 22 2015",
+        "attributes": [
+          {
+            "name": "Certainty",
+            "type": "Double",
+            "defaultValue": "1",
+            "dimension": 0,
+            "description": "The certainty that this event happen (value between 0 to 1)"
+          },
+          {
+            "name": "OccurrenceTime",
+            "type": "Date",
+            "dimension": 0,
+            "description": "No value means it equals the event detection time, other option is to use one of the defined distribution functions with parameters"
+          },
+          {
+            "name": "ExpirationTime",
+            "type": "Date",
+            "dimension": 0
+          },
+          {
+            "name": "Cost",
+            "type": "Double",
+            "dimension": 0,
+            "description": "The cost of this event occurrence. Negative if this is an opportunity"
+          },
+          {
+            "name": "Duration",
+            "type": "Double",
+            "defaultValue": "0",
+            "dimension": 0,
+            "description": "Used in case the this event occur within an interval"
+          }
+          
+        
+        ]
+      },
+         {
+        "name": "EngineNotSteadyState",
+        "createdDate": "Tue Dec 22 2015",
+        "attributes": [
+          {
+            "name": "Certainty",
+            "type": "Double",
+            "defaultValue": "1",
+            "dimension": 0,
+            "description": "The certainty that this event happen (value between 0 to 1)"
+          },
+          {
+            "name": "OccurrenceTime",
+            "type": "Date",
+            "dimension": 0,
+            "description": "No value means it equals the event detection time, other option is to use one of the defined distribution functions with parameters"
+          },
+          {
+            "name": "ExpirationTime",
+            "type": "Date",
+            "dimension": 0
+          },
+          {
+            "name": "Cost",
+            "type": "Double",
+            "dimension": 0,
+            "description": "The cost of this event occurrence. Negative if this is an opportunity"
+          },
+          {
+            "name": "Duration",
+            "type": "Double",
+            "defaultValue": "0",
+            "dimension": 0,
+            "description": "Used in case the this event occur within an interval"
+          }
+        
+        
+        ]
+      },
+      
+      {
+        "name": "ExhaustGasTemperatureAlarm",
+        "createdDate": "Tue Dec 22 2015",
+        "attributes": [
+          {
+            "name": "Certainty",
+            "type": "Double",
+            "defaultValue": "1",
+            "dimension": 0,
+            "description": "The certainty that this event happen (value between 0 to 1)"
+          },
+          {
+            "name": "OccurrenceTime",
+            "type": "Date",
+            "dimension": 0,
+            "description": "No value means it equals the event detection time, other option is to use one of the defined distribution functions with parameters"
+          },
+          {
+            "name": "ExpirationTime",
+            "type": "Date",
+            "dimension": 0
+          },
+          {
+            "name": "Cost",
+            "type": "Double",
+            "dimension": 0,
+            "description": "The cost of this event occurrence. Negative if this is an opportunity"
+          },
+          {
+            "name": "Duration",
+            "type": "Double",
+            "defaultValue": "0",
+            "dimension": 0,
+            "description": "Used in case the this event occur within an interval"
+          },
+          
+           {
+            "name": "cylinderNumber",
+            "type": "String",
+            "dimension": 0
+          },
+          {
+            "name": "exhaustGasTemperature",
+            "type": "Double",
+            "dimension": 0
+          }
+        
+        
+        
+        ]
+      },
+      
+            {
+        "name": "ExhaustGasDeviation",
+        "createdDate": "Tue Dec 22 2015",
+        "attributes": [
+          {
+            "name": "Certainty",
+            "type": "Double",
+            "defaultValue": "1",
+            "dimension": 0,
+            "description": "The certainty that this event happen (value between 0 to 1)"
+          },
+          {
+            "name": "OccurrenceTime",
+            "type": "Date",
+            "dimension": 0,
+            "description": "No value means it equals the event detection time, other option is to use one of the defined distribution functions with parameters"
+          },
+          {
+            "name": "ExpirationTime",
+            "type": "Date",
+            "dimension": 0
+          },
+          {
+            "name": "Cost",
+            "type": "Double",
+            "dimension": 0,
+            "description": "The cost of this event occurrence. Negative if this is an opportunity"
+          },
+          {
+            "name": "Duration",
+            "type": "Double",
+            "defaultValue": "0",
+            "dimension": 0,
+            "description": "Used in case the this event occur within an interval"
+          }
+          
+          
+          
+           
+        
+        
+        
+        ]
+      },
+      
+                  {
+        "name": "ExhaustGasDeviationAlarm",
+        "createdDate": "Tue Dec 22 2015",
+        "attributes": [
+          {
+            "name": "Certainty",
+            "type": "Double",
+            "defaultValue": "1",
+            "dimension": 0,
+            "description": "The certainty that this event happen (value between 0 to 1)"
+          },
+          {
+            "name": "OccurrenceTime",
+            "type": "Date",
+            "dimension": 0,
+            "description": "No value means it equals the event detection time, other option is to use one of the defined distribution functions with parameters"
+          },
+          {
+            "name": "ExpirationTime",
+            "type": "Date",
+            "dimension": 0
+          },
+          {
+            "name": "Cost",
+            "type": "Double",
+            "dimension": 0,
+            "description": "The cost of this event occurrence. Negative if this is an opportunity"
+          },
+          {
+            "name": "Duration",
+            "type": "Double",
+            "defaultValue": "0",
+            "dimension": 0,
+            "description": "Used in case the this event occur within an interval"
+          }
+          
+          
+          
+           
+        
+        
+        
+        ]
+      }
+      
+      
+      
+    ],
+    "epas": [
+     
+        {
+        "name": "EngineStatisticsEPA",
+        "createdDate": "Tue Dec 22 2015",
+        "epaType": "Aggregate",
+        "context": "EngineRunning",
+        "inputEvents": [
+          {
+            "name": "SensorReading",            
+            "consumptionPolicy": "Consume",
+            "instanceSelectionPolicy": "First"
+          }
+        ],
+        "computedVariables": [
+           {
+            "name": "AverageRPM",
+            "aggregationType": "Average",
+            "SensorReading": "SensorReading.engine_rpm"
+          },
+          {
+            "name": "AveragePitch",
+            "aggregationType": "Average",
+            "SensorReading": "SensorReading.propeller_pitch"
+          }
+        ],       
+        "evaluationPolicy": "Deferred",
+        "cardinalityPolicy": "Single",
+        "internalSegmentation": [],
+        "derivedEvents": [
+          {
+            "name": "EngineStatistics",
+            "reportParticipants": false,           
+            "expressions": {
+              "engine_rpm_dev": "ArrayStandardDev(SensorReading.engine_rpm)",
+              "propeller_pitch_dev": "ArrayStandardDev(SensorReading.propeller_pitch)",
+               "engine_rpm_avg": "AverageRPM",
+              "propeller_pitch_avg": "AveragePitch"
+            }
+          }
+        ]
+      },
+      
+       {
+        "name": "EngineSteadyStateEPA",
+        "createdDate": "Tue Dec 22 2015",
+        "epaType": "Aggregate",
+        "context": "EngineCalculateSteadyState",
+        "inputEvents": [
+          {
+            "name": "EngineStatistics",            
+            "consumptionPolicy": "Consume",
+            "instanceSelectionPolicy": "First",
+            "filterExpression":"(EngineStatistics.engine_rpm_dev/EngineStatistics.engine_rpm_avg) <= 0.1 && (EngineStatistics.propeller_pitch_dev/EngineStatistics.propeller_pitch_avg) <= 0.1"
+          }
+        ],
+        "computedVariables": [
+           {
+            "name": "Count",
+            "aggregationType": "Count",
+            "EngineStatistics": "1"
+          }
+        ],       
+        "evaluationPolicy": "Immediate",
+        "cardinalityPolicy": "Single",
+        "internalSegmentation": [],
+        "assertion": "Count>=15",
+        "derivedEvents": [
+          {
+            "name": "EngineSteadyState",
+            "reportParticipants": false,           
+            "expressions": {
+            }
+          }
+        ]
+      },
+      
+      {
+        "name": "EngineNotSteadyStateEPA",
+        "createdDate": "Tue Dec 22 2015",
+        "epaType": "Aggregate",
+        "context": "EngineCalculateSteadyState",
+        "inputEvents": [
+          {
+            "name": "EngineStatistics",            
+            "consumptionPolicy": "Consume",
+            "instanceSelectionPolicy": "First",
+            "filterExpression":"(EngineStatistics.engine_rpm_dev/EngineStatistics.engine_rpm_avg) > 0.1 || (EngineStatistics.propeller_pitch_dev/EngineStatistics.propeller_pitch_avg) > 0.1"
+          }
+        ],
+        "computedVariables": [
+           {
+            "name": "Count",
+            "aggregationType": "Count",
+            "EngineStatistics": "1"
+          }
+        ],       
+        "evaluationPolicy": "Immediate",
+        "cardinalityPolicy": "Single",
+        "internalSegmentation": [],
+        "assertion": "Count>=3",
+        "derivedEvents": [
+          {
+            "name": "EngineNotSteadyState",
+            "reportParticipants": false,           
+            "expressions": {
+            }
+          }
+        ]
+      },
+      
+      {
+        "name": "DecreasingTrendOilEnginePressureEPA",
+        "createdDate": "Tue Dec 22 2015",
+        "epaType": "Trend",
+        "context": "SteadyStateContext",
+        "inputEvents": [
+          {
+            "name": "SensorReading",            
+            "expression": "SensorReading.lbr_oil_eng_inlet_prsure",
+            "consumptionPolicy": "Consume",
+            "instanceSelectionPolicy": "First"
+          }
+        ],
+        "computedVariables": [],
+        "evaluationPolicy": "Immediate",
+        "cardinalityPolicy": "Unrestricted",
+        "trendN": "5",
+        "trendRelation": "Decrease",
+        "internalSegmentation": [],
+        "derivedEvents": [
+          {
+            "name": "LubricatingOilEngineInletPressureWarning",
+            "reportParticipants": false,
+            "condition" : "GetAttribute(ArrayGet(trend.participants,ArraySize(trend.participants)-1),\"lbr_oil_eng_inlet_prsure\") <= 4",
+            "expressions": {
+              "Duration": "0",
+              "lowestValue": "GetAttribute(ArrayGet(trend.participants,ArraySize(trend.participants)-1),\"lbr_oil_eng_inlet_prsure\")"              
+            }
+          }
+        ]
+      },
+      
+       {
+        "name": "LowOilEnginePressureEPA",
+        "createdDate": "Tue Dec 22 2015",
+        "epaType": "Basic",
+        "context": "Always",
+        "inputEvents": [
+          {
+            "name": "SensorReading",            
+            "filterExpression": "SensorReading.lbr_oil_eng_inlet_prsure <= 3",
+            "consumptionPolicy": "Consume",
+            "instanceSelectionPolicy": "First"
+          }
+        ],
+       "internalSegmentation": [],			
+		"computedVariables": [],
+		"evaluationPolicy": "Immediate",
+		"derivedEvents": [{
+				"name": "LubricatingOilEngineInletPressureAlarm",
+				"reportParticipants": false,
+				"expressions": {
+					"lbr_oil_eng_inlet_prsure": "SensorReading.lbr_oil_eng_inlet_prsure"
+				}
+			}]
+      },
+      
+        {
+        "name": "IncreasingTrendOilEngineTempEPA",
+        "createdDate": "Tue Dec 22 2015",
+        "epaType": "Trend",
+        "context": "SteadyStateContext",
+        "inputEvents": [
+          {
+            "name": "SensorReading",            
+            "expression": "SensorReading.lbr_oil_eng_inlet_temp",
+            "consumptionPolicy": "Consume",
+            "instanceSelectionPolicy": "First"
+          }
+        ],
+        "computedVariables": [],
+        "evaluationPolicy": "Immediate",
+        "cardinalityPolicy": "Unrestricted",
+        "trendN": "4",
+        "trendRelation": "Increase",
+        "internalSegmentation": [],
+        "derivedEvents": [
+          {
+            "name": "LubricatingOilEngineInletTemperatureWarning",
+            "reportParticipants": false,
+            "condition" : "GetAttribute(ArrayGet(trend.participants,ArraySize(trend.participants)-1),\"lbr_oil_eng_inlet_temp\") >= 60",
+            "expressions": {
+              "Duration": "0",
+              "highestValue": "GetAttribute(ArrayGet(trend.participants,ArraySize(trend.participants)-1),\"lbr_oil_eng_inlet_temp\")"              
+            }
+          }
+        ]
+      },
+      
+       {
+        "name": "HighOilEngineTemperatureEPA",
+        "createdDate": "Tue Dec 22 2015",
+        "epaType": "Basic",
+        "context": "Always",
+        "inputEvents": [
+          {
+            "name": "SensorReading",            
+            "filterExpression": "SensorReading.lbr_oil_eng_inlet_temp >= 70",
+            "consumptionPolicy": "Consume",
+            "instanceSelectionPolicy": "First"
+          }
+        ],
+       "internalSegmentation": [],			
+		"computedVariables": [],
+		"evaluationPolicy": "Immediate",
+		"derivedEvents": [{
+				"name": "LubricatingOilEngineInletTemperatureAlarm",
+				"reportParticipants": false,
+				"expressions": {
+					"lbr_oil_eng_inlet_temp": "SensorReading.lbr_oil_eng_inlet_temp"
+				}
+			}]
+      },
+      
+      {
+      		"name": "MonitorEngingeLubricatingOilEPA",
+			"context": "MonitorEngineLubricatingOil",
+			"createdDate": "Thu Jun 02 2016",
+			"epaType": "All",
+			"inputEvents": [{
+				"consumptionPolicy": "Consume",
+				"name": "LubricatingOilEngineInletTemperatureWarning",
+				"instanceSelectionPolicy": "First"
+			},
+			{
+				"consumptionPolicy": "Consume",
+				"name": "LubricatingOilEngineInletPressureWarning",
+				"instanceSelectionPolicy": "First"
+			}
+			],
+			"internalSegmentation": [],
+			"cardinalityPolicy": "Single",
+			
+			"computedVariables": [],
+			"evaluationPolicy": "Immediate",
+			"derivedEvents": [{
+				"name": "EngineLubricatingOilConditionWarning",
+				"reportParticipants": false,
+				"expressions": {
+					"temperatureValue": "LubricatingOilEngineInletTemperatureWarning.highestValue",					
+					"pressureValue": "LubricatingOilEngineInletPressureWarning.lowestValue"
+				}
+			}]
+		},
+		
+		{
+        "name": "ExhaustGasTemperatureEPA",
+        "createdDate": "Tue Dec 22 2015",
+        "epaType": "Basic",
+        "context": "Always",
+        "inputEvents": [
+          {
+            "name": "SensorReading",            
+            "filterExpression": "SensorReading.exhst_gat_tmp_cdr_1 >= 500 || SensorReading.exhst_gat_tmp_cdr_2 >= 500 || SensorReading.exhst_gat_tmp_cdr_3 >= 500 || SensorReading.exhst_gat_tmp_cdr_4 >= 500 || SensorReading.exhst_gat_tmp_cdr_5 >= 500 || SensorReading.exhst_gat_tmp_cdr_6 >= 500 || SensorReading.exhst_gat_tmp_cdr_7 >= 500 ||SensorReading.exhst_gat_tmp_cdr_8 >= 500 ||SensorReading.exhst_gat_tmp_cdr_9 >= 500"  ,
+            "consumptionPolicy": "Consume",
+            "instanceSelectionPolicy": "First"
+          }
+        ],
+       "internalSegmentation": [],			
+		"computedVariables": [],
+		"evaluationPolicy": "Immediate",
+		"derivedEvents": [{
+				"name": "ExhaustGasTemperatureAlarm",
+				"reportParticipants": false,
+				"expressions": {
+					"cylinderNumber": "if (SensorReading.exhst_gat_tmp_cdr_1 >= 500) then (1) else ( if (SensorReading.exhst_gat_tmp_cdr_2 >= 500) then (2) else (if (SensorReading.exhst_gat_tmp_cdr_3 >= 500) then (3) else ( if (SensorReading.exhst_gat_tmp_cdr_4 >= 500) then (4) else (if (SensorReading.exhst_gat_tmp_cdr_5 >= 500) then (5) else (if (SensorReading.exhst_gat_tmp_cdr_6 >= 500) then (6) else ( if (SensorReading.exhst_gat_tmp_cdr_7 >= 500) then (7) else ( if (SensorReading.exhst_gat_tmp_cdr_8 >= 500) then (8) else (9) endif ) endif ) endif  ) endif  ) endif ) endif  ) endif) endif",
+					"exhaustGasTemperature":"if (SensorReading.exhst_gat_tmp_cdr_1 >= 500) then (SensorReading.exhst_gat_tmp_cdr_1) else ( if (SensorReading.exhst_gat_tmp_cdr_2 >= 500) then (SensorReading.exhst_gat_tmp_cdr_2) else (if (SensorReading.exhst_gat_tmp_cdr_3 >= 500) then (SensorReading.exhst_gat_tmp_cdr_3) else ( if (SensorReading.exhst_gat_tmp_cdr_4 >= 500) then (SensorReading.exhst_gat_tmp_cdr_4) else (if (SensorReading.exhst_gat_tmp_cdr_5 >= 500) then (SensorReading.exhst_gat_tmp_cdr_5) else (if (SensorReading.exhst_gat_tmp_cdr_6 >= 500) then (SensorReading.exhst_gat_tmp_cdr_6) else ( if (SensorReading.exhst_gat_tmp_cdr_7 >= 500) then (SensorReading.exhst_gat_tmp_cdr_7) else ( if (SensorReading.exhst_gat_tmp_cdr_8 >= 500) then (SensorReading.exhst_gat_tmp_cdr_8) else (SensorReading.exhst_gat_tmp_cdr_9) endif ) endif ) endif  ) endif  ) endif ) endif  ) endif) endif"
+				}
+			}]
+      },
+      
+      {
+        "name": "ExhaustGasDeviationEPA",
+        "createdDate": "Tue Dec 22 2015",
+        "epaType": "Basic",
+        "context": "SteadyStateContext",
+        "inputEvents": [
+          {
+            "name": "SensorReading",            
+            "filterExpression": "Abs(SensorReading.exhst_gat_dev_cdr_1) >= 40 || Abs(SensorReading.exhst_gat_dev_cdr_2) >= 40 || Abs(SensorReading.exhst_gat_dev_cdr_3) >= 40 || Abs(SensorReading.exhst_gat_dev_cdr_4) >= 40 || Abs(SensorReading.exhst_gat_dev_cdr_5) >= 40 || Abs(SensorReading.exhst_gat_dev_cdr_6) >= 40 || Abs(SensorReading.exhst_gat_dev_cdr_7) >= 40 ||Abs(SensorReading.exhst_gat_dev_cdr_8) >= 40 ||Abs(SensorReading.exhst_gat_dev_cdr_9) >= 40"  ,
+            "consumptionPolicy": "Consume",
+            "instanceSelectionPolicy": "First"
+          }
+        ],
+       "internalSegmentation": [],			
+		"computedVariables": [],
+		"evaluationPolicy": "Immediate",
+		"derivedEvents": [{
+				"name": "ExhaustGasDeviation",
+				"reportParticipants": false,
+				"expressions": {
+				}
+			}]
+      },
+      
+      
+      {
+        "name": "MonitorExhaustGasDeviationEPA",
+        "createdDate": "Tue Dec 22 2015",
+        "epaType": "Aggregate",
+        "context": "MonitorExhaustGasDeviation",
+        "inputEvents": [
+          {
+            "name": "ExhaustGasDeviation",            
+            "consumptionPolicy": "Consume",
+            "instanceSelectionPolicy": "First"
+            
+          }
+        ],
+        "computedVariables": [
+           {
+            "name": "Count",
+            "aggregationType": "Count",
+            "ExhaustGasDeviation": "1"
+          }
+        ],       
+        "evaluationPolicy": "Immediate",
+        "cardinalityPolicy": "Single",
+        "internalSegmentation": [],
+        "assertion": "Count>=10",
+        "derivedEvents": [
+          {
+            "name": "ExhaustGasDeviationAlarm",
+            "reportParticipants": false,           
+            "expressions": {
+            }
+          }
+        ]
+      }
+      
+
+      
+
+      
+      
+       
+      
+    ],
+    "contexts": {
+      "temporal": [
+        {
+          "name": "EngineRunning",
+          "createdDate": "Tue Dec 22 2015",
+          "type": "TemporalInterval",
+          "atStartup": false,
+          "neverEnding": false,
+          "initiators": [
+            {
+              "initiatorType": "Event",
+              "initiatorPolicy": "Add",
+              "name": "SensorReading",
+              "condition": "SensorReading.engine_speed >= 400 "
+            }
+          ],
+          "terminators": [                          
+            {
+                            "terminatorType": "RelativeTime",
+                            "terminationType": "Terminate",
+                            "terminatorPolicy": "First",
+                            "relativeTime": "180000"
+            },
+            {
+                            "terminatorType": "Event",
+                            "terminationType": "Discard",
+                            "terminatorPolicy":"Each",
+                            "name": "SensorReading",
+              				"condition": "SensorReading.engine_speed < 400 "
+            }
+            
+          ]
+        },
+        
+         {
+          "name": "Always",
+          "createdDate": "Tue Dec 22 2015",
+          "type": "TemporalInterval",
+          "atStartup": false,
+          "neverEnding": false,
+          "initiators": [
+            {
+              "initiatorType": "Event",
+              "initiatorPolicy": "Ignore",
+              "name": "SensorReading",
+              "condition": "SensorReading.engine_speed >= 400 "
+            }
+          ],
+          "terminators": [                                     
+            {
+                            "terminatorType": "Event",
+                            "terminationType": "Terminate",
+                            "terminatorPolicy":"Each",
+                            "name": "SensorReading",
+              				"condition": "SensorReading.engine_speed < 400 "
+            }
+            
+          ]
+        },
+        
+        
+        
+          {
+          "name": "EngineCalculateSteadyState",
+          "createdDate": "Tue Dec 22 2015",
+          "type": "TemporalInterval",
+          "atStartup": false,
+          "neverEnding": false,
+          "initiators": [
+            {
+              "initiatorType": "Event",
+              "initiatorPolicy": "Ignore",
+              "name": "EngineStatistics",
+              "condition": "(EngineStatistics.engine_rpm_dev/EngineStatistics.engine_rpm_avg) <= 0.1 && (EngineStatistics.propeller_pitch_dev/EngineStatistics.propeller_pitch_avg) <= 0.1"
+            }
+          ],
+          "terminators": [                          
+            {
+                            "terminatorType": "RelativeTime",
+                            "terminationType": "Terminate",
+                            "terminatorPolicy": "First",
+                            "relativeTime": "180000"
+            },
+            {
+                            "terminatorType": "Event",
+                            "terminationType": "Discard",
+                            "terminatorPolicy":"Each",
+                            "name": "EngineNotSteadyState"
+              				
+            },
+               {
+                            "terminatorType": "Event",
+                            "terminationType": "Discard",
+                            "terminatorPolicy":"Each",
+                            "name": "SensorReading",
+                            "condition": "SensorReading.engine_speed < 400 "
+              				
+            }
+            
+          ]
+        },
+        
+              {
+          "name": "SteadyStateContext",
+          "createdDate": "Tue Dec 22 2015",
+          "type": "TemporalInterval",
+          "atStartup": false,
+          "neverEnding": false,
+          "initiators": [
+            {
+              "initiatorType": "Event",
+              "initiatorPolicy": "Ignore",
+              "name": "EngineSteadyState"              
+            }
+          ],
+          "terminators": [                          
+           
+            {
+                            "terminatorType": "Event",
+                            "terminationType": "Discard",
+                            "terminatorPolicy":"Each",
+                            "name": "EngineNotSteadyState"
+              				
+            },
+               {
+                            "terminatorType": "Event",
+                            "terminationType": "Discard",
+                            "terminatorPolicy":"Each",
+                            "name": "SensorReading",
+                            "condition": "SensorReading.engine_speed < 400 "
+              				
+            }
+            
+          ]
+        },
+        
+        {
+          "name": "MonitorEngineLubricatingOil",
+          "createdDate": "Tue Dec 22 2015",
+          "type": "TemporalInterval",
+          "atStartup": false,
+          "neverEnding": false,
+          "initiators": [
+            {
+              "initiatorType": "Event",
+              "initiatorPolicy": "Ignore",
+              "name": "LubricatingOilEngineInletPressureWarning"              
+            },
+            {
+              "initiatorType": "Event",
+              "initiatorPolicy": "Ignore",
+              "name": "LubricatingOilEngineInletTemperatureWarning"              
+            }
+          ],
+          "terminators": [                          
+            {
+                            "terminatorType": "RelativeTime",
+                            "terminationType": "Terminate",
+                            "terminatorPolicy": "First",
+                            "relativeTime": "300000"
+            },
+            {
+                            "terminatorType": "Event",
+                            "terminationType": "Discard",
+                            "terminatorPolicy":"Each",
+                            "name": "SensorReading",
+              				"condition": "SensorReading.engine_speed < 400 "
+            },
+             {
+                            "terminatorType": "Event",
+                            "terminationType": "Discard",
+                            "terminatorPolicy":"Each",
+                            "name": "EngineNotSteadyState"
+              				
+            }
+            
+          ]
+        },
+        
+         {
+          "name": "MonitorExhaustGasDeviation",
+          "createdDate": "Tue Dec 22 2015",
+          "type": "TemporalInterval",
+          "atStartup": false,
+          "neverEnding": false,
+          "initiators": [
+            {
+              "initiatorType": "Event",
+              "initiatorPolicy": "Ignore",
+              "name": "ExhaustGasDeviation"              
+            }
+          ],
+          "terminators": [                          
+            {
+                            "terminatorType": "RelativeTime",
+                            "terminationType": "Terminate",
+                            "terminatorPolicy": "First",
+                            "relativeTime": "300000"
+            },
+            {
+                            "terminatorType": "Event",
+                            "terminationType": "Discard",
+                            "terminatorPolicy":"Each",
+                            "name": "SensorReading",
+              				"condition": "SensorReading.engine_speed < 400 "
+            },
+             {
+                            "terminatorType": "Event",
+                            "terminationType": "Discard",
+                            "terminatorPolicy":"Each",
+                            "name": "EngineNotSteadyState"
+              				
+            }
+            
+          ]
+        }
+        
+           
+     
+        
+      ],
+      "composite": [
+        
+      ],
+       "segmentation": [
+        
+      ]
+    },
+    "consumers": 
+    [
+    
+      {
+        "events": [
+          {
+            "name": "SensorReading"
+          },
+          {
+            "name": "EngineSteadyState"
+          },
+          {
+            "name": "EngineNotSteadyState"
+          },
+          {
+            "name": "LubricatingOilEngineInletPressureAlarm"
+          },
+                    {
+            "name": "EngineStatistics"
+          },
+          {
+            "name": "LubricatingOilEngineInletPressureWarning"
+          },
+           {
+            "name": "LubricatingOilEngineInletTemperatureAlarm"
+          },
+           {
+            "name": "LubricatingOilEngineInletTemperatureWarning"
+          },
+                     {
+            "name": "EngineLubricatingOilConditionWarning"
+          },
+           {
+            "name": "ExhaustGasTemperatureAlarm"
+          },
+          
+          {
+            "name": "ExhaustGasDeviation"
+          },
+          
+           {
+            "name": "ExhaustGasDeviationAlarm"
+          }
+         
+          
+          
+          
+         
+         
+        ],
+        "name": "Consumer",
+        "properties": [
+          {
+            "name": "filename",
+            "value": "D:\\EP\\Projects\\Proton\\OpenSourceWorkspace\\ProtonEU\\Databio\\GIATrons\\output.txt"
+          },
+          {
+            "name": "formatter",
+            "value": "tag"
+          },
+          {
+            "name": "delimiter",
+            "value": ";"
+          },
+          {
+            "name": "tagDataSeparator",
+            "value": "="
+          },
+          {
+            "name": "SendingDelay",
+            "value": "1000"
+          },
+          {
+            "name": "dateFormat",
+            "value": "dd/MM/yyyy-HH:mm:ss"
+          }
+        ],
+        "type": "File",
+        "createdDate": "Tue Sep 23 2014"
+      }
+    
+   
+    ],
+    "producers": 
+    [
+   {
+        "events": [],
+        "name": "Producer",       
+        "properties": [
+          {
+            "name": "filename",
+            "value": "D:\\EP\\Projects\\Proton\\OpenSourceWorkspace\\ProtonEU\\Databio\\GIATrons\\IZ_20170429_00000019-partial.CSV"
+          },
+          {
+            "name": "pollingInterval",
+            "value": "2000"
+          },
+          {
+            "name": "sendingDelay",
+            "value": "1000"
+          },
+          {
+            "name": "formatter",
+            "value": "csv"
+          },
+          {
+            "name": "delimiter",
+            "value": ","
+          },
+          {
+            "name": "csvEventType",
+            "value": "SensorReading"
+          },
+          {
+            "name": "csvAttributeNames",
+            "value": "OccurrenceTime,index,engine_speed,lbr_oil_eng_inlet_prsure,lbr_oil_eng_inlet_temp,exhst_gat_tmp_cdr_1,exhst_gat_dev_cdr_1,exhst_gat_tmp_cdr_2,exhst_gat_dev_cdr_2,exhst_gat_tmp_cdr_3,exhst_gat_dev_cdr_3,exhst_gat_tmp_cdr_4,exhst_gat_dev_cdr_4,exhst_gat_tmp_cdr_5,exhst_gat_dev_cdr_5,exhst_gat_tmp_cdr_6,exhst_gat_dev_cdr_6,exhst_gat_tmp_cdr_7,exhst_gat_dev_cdr_7,exhst_gat_tmp_cdr_8,exhst_gat_dev_cdr_8,exhst_gat_tmp_cdr_9,exhst_gat_dev_cdr_9,propeller_pitch,engine_rpm"
+          },
+          {
+            "name": "tagDataSeparator",
+            "value": "="
+          },
+          {
+            "name": "dateFormat",
+            "value": "dd/MM/yyyy HH:mm:ss"                     
+          }
+        ],
+        "type": "Timed",
+        "createdDate": "Tue Sep 23 2014"
+      }
+    ],
+    "name": "Psymbiosys"
+  }
+}

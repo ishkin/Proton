@@ -17,8 +17,6 @@ package com.ibm.hrl.proton.adapters.formatters;
 
 import java.util.List;
 
-import javax.mail.MethodNotSupportedException;
-
 import com.ibm.hrl.proton.adapters.interfaces.AdapterException;
 import com.ibm.hrl.proton.metadata.epa.basic.IDataObject;
 import com.ibm.hrl.proton.runtime.event.interfaces.IEventInstance;
