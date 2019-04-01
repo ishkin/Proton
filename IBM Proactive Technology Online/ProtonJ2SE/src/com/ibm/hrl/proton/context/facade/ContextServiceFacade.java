@@ -19,13 +19,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-
-
-
-
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.util.logging.Logger;
 
 import com.ibm.hrl.proton.context.exceptions.ContextCreationException;
 import com.ibm.hrl.proton.context.exceptions.ContextServiceException;
@@ -64,7 +58,7 @@ public class ContextServiceFacade implements IContextService
     ContextMetadataFacade contextMetadata;
     ContextStateManager contextStateManager;
     
-    private static Logger logger = LoggerFactory.getLogger(ContextServiceFacade.class);
+    private static Logger logger = Logger.getLogger("ContextServiceFacade");
     
     public ContextServiceFacade(ITimerServices timerService, IEventHandler eventHandler,ContextMetadataFacade contextMetadata) 
     	throws ContextCreationException {       
@@ -87,24 +81,24 @@ public class ContextServiceFacade implements IContextService
     	
         // create CompositeContextInstance(s) for all context-agent pairs
  
-    	logger.debug("initializeCompositeContextInstances: getting context definitions from context metadata facade...");
+    	logger.fine("initializeCompositeContextInstances: getting context definitions from context metadata facade...");
     	Map<String,Collection<IEventProcessingAgent>> contexts =
     		contextMetadata.getContextDefinitions();
     	
-    	logger.debug("initializeCompositeContextInstances:  context definitions from context metadata facade: "+contexts);
+    	logger.fine("initializeCompositeContextInstances:  context definitions from context metadata facade: "+contexts);
     	ContextStateManager stateManager = this.contextStateManager;
-    	logger.debug("initializeCompositeContextInstances: the context state manager is: "+contextStateManager);
+    	logger.fine("initializeCompositeContextInstances: the context state manager is: "+contextStateManager);
 
     	try {
 	    	for (String contextName: contexts.keySet()) {	    			    		
 	    		IContextType contextType = contextMetadata.getContext(contextName);
 	    		Collection<IEventProcessingAgent> agents = contexts.get(contextName);
 	    		for (IEventProcessingAgent agentType: agents) {
-	    			logger.debug("initializeCompositeContextInstances: creating new context instance for context"+contextName+" and agent"+agentType);
+	    			logger.fine("initializeCompositeContextInstances: creating new context instance for context"+contextName+" and agent"+agentType);
 		    		CompositeContextInstance context = new CompositeContextInstance(
 		    				contextType,agentType,this);	    		
 		    		stateManager.addContextInstance(context);
-		    		logger.debug("initializeCompositeContextInstances: created new context instance for context"+contextName+" and agent"+agentType+" and added to state");
+		    		logger.fine("initializeCompositeContextInstances: created new context instance for context"+contextName+" and agent"+agentType+" and added to state");
 		    		// make unique initiation arrangements (startup and absolute time start)
 		    		
 		    		// if starts at systems startup - create notification and call processInstance
@@ -114,14 +108,14 @@ public class ContextServiceFacade implements IContextService
 		    					contextType.getName(), System.currentTimeMillis(),System.currentTimeMillis(),
 		    					TemporalContextType.atStartupId,agentType.getName());
 		    		
-		    			logger.debug("initializeCompositeContextInstances: the context"+contextType.getName()+" has system startup initiator: creating initiation notification: "+notification);
+		    			logger.fine("initializeCompositeContextInstances: the context"+contextType.getName()+" has system startup initiator: creating initiation notification: "+notification);
 		    			processEventInstance(notification,contextType.getName(),agentType.getName());
-		    			logger.debug("initializeCompositeContextInstances: submitted context initiation notification for context: "+contextType.getName()+", "+notification);
+		    			logger.fine("initializeCompositeContextInstances: submitted context initiation notification for context: "+contextType.getName()+", "+notification);
 		    		}
 		    		
 		    		// if there is absolute time initiator we create a timer
 		    		if (context.hasAbsoluteTimeInitiator()) {
-		    			logger.debug("initializeCompositeContextInstances: the context"+contextType.getName()+" has absolute time initiator, creating new timer");
+		    			logger.fine("initializeCompositeContextInstances: the context"+contextType.getName()+" has absolute time initiator, creating new timer");
 		    			Collection<ContextAbsoluteTimeInitiator> initiators =
 		    				context.getAbsoluteTimeInitiators();
 		
@@ -138,17 +132,17 @@ public class ContextServiceFacade implements IContextService
 		    				
 		    				timerServices.createTimer(context,info,isRepetitive,
 		    						duration,repetitionPeriod);	
-		    				logger.debug("initializeCompositeContextInstances: created new timer for absolute time initiator for context"+context);
+		    				logger.fine("initializeCompositeContextInstances: created new timer for absolute time initiator for context"+context);
 		    			}
 		    		}
 		    	}  
 	    	}
     	}
     	catch (Exception e) {
-    		logger.error("Error initializing Context");
+    		logger.warning("Error initializing Context");
     		throw (new ContextCreationException(e.getMessage(),e.getCause()));
     	}
-    	logger.debug("initializeCompositeContextInstance: exit");
+    	logger.fine("initializeCompositeContextInstance: exit");
     }
 
    
@@ -174,7 +168,7 @@ public class ContextServiceFacade implements IContextService
     public Pair<Collection<Pair<String,Map<String,Object>>>,Collection<Pair<String,Map<String,Object>>>> processEventInstance(ITimedObject timedObject,
     		String contextName, String agentName) throws ContextServiceException {
            	
-    	logger.debug("processEventInstance: "+timedObject+" for context: "+
+    	logger.fine("processEventInstance: "+timedObject+" for context: "+
     			contextName+" agent name: "+agentName);
     	    	
     	Collection<Pair<String,Map<String,Object>>> terminatedPartitions = new HashSet<Pair<String,Map<String,Object>>>();
@@ -196,29 +190,30 @@ public class ContextServiceFacade implements IContextService
     	}    	
     	
     	ContextStateManager stateManager = this.contextStateManager;
-    	logger.debug("processEventInstance: getting context instnace for context: "+
+    	logger.fine("processEventInstance: getting context instnace for context: "+
     			contextName+" agent name: "+agentName);
     	CompositeContextInstance cInstance = stateManager.getContextInstance(
     			contextName,agentName);
     	
     	// we currently enforce processing order: terminate, initiate, participate
     	if (roles.contains(EventRoleInContextEnum.TERMINATOR)) {
-    		logger.info("processEventInstance: the role of the event is terminator, terminating partitions...");
+    		logger.fine("processEventInstance: the role of the event is terminator, terminating partitions...");
     		terminatedPartitions = cInstance.processContextTerminator(timedObject);
-    		logger.info("processEventInstance: terminated partitions: "+terminatedPartitions);
+    		logger.fine("processEventInstance: terminated partitions: "+terminatedPartitions);
     	}
 
     	if (roles.contains(EventRoleInContextEnum.INITIATOR)) {
-    		logger.debug("processEventInstance: the role of the event is initiator, initiating partitions...");
+    		logger.fine("processEventInstance: the role of the event is initiator, initiating partitions...");
     		// we only return terminated and participating partitions
+    		logger.fine("Event"+timedObject+" serving as initiaitor of context...");
     		cInstance.processContextInititiator(timedObject);    	
     	}
     	
     	if (roles.contains(EventRoleInContextEnum.PARTICIPANT)) {
-    		logger.debug("processEventInstance: the role of the event is participant");
+    		logger.fine("processEventInstance: the role of the event is participant");
     		participatingPartitions = cInstance.processContextParticipant(
     				(IEventInstance)timedObject);
-    		logger.debug("processEventInstance: the object"+timedObject+" participates in partitions: "+participatingPartitions);
+    		logger.fine("processEventInstance: the object"+timedObject+" participates in partitions: "+participatingPartitions);
     	}    	
     	
     	return new Pair<Collection<Pair<String,Map<String,Object>>>,Collection<Pair<String,Map<String,Object>>>>(terminatedPartitions,

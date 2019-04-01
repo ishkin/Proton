@@ -23,6 +23,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Logger;
 
+import com.ibm.hrl.proton.adapters.email.GmailOutputAdapter;
 import com.ibm.hrl.proton.adapters.files.FileOutputAdapter;
 import com.ibm.hrl.proton.adapters.interfaces.AdapterException;
 import com.ibm.hrl.proton.adapters.interfaces.IAdapter;
@@ -109,7 +110,9 @@ public class OutputServer extends AbstractServer
 				//TODO - the parsing of the properties should be done by the specific adapter implementation in static method, return the appropriate configuration object				
 				outputAdapter = new FileOutputAdapter(consumerMetadata, new ServerOutputConnector(this.port),metadataFacade.getEventMetadataFacade(),eep);
 				break;
-
+			case MAIL:
+				outputAdapter = new GmailOutputAdapter(consumerMetadata, new ServerOutputConnector(this.port), metadataFacade.getEventMetadataFacade(),eep);
+				break;
 			case DB:
 				break;
 			

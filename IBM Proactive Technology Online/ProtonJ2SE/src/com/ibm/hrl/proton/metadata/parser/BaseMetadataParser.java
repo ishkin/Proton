@@ -96,6 +96,12 @@ public abstract class BaseMetadataParser {
 	public static final String TIME_WINDOW = "windowSize";
 	public static final String DATE_FORMAT = "dateFormat";
 	public static final String CSV_ATTRIBUTES = "csvAttributeNames";
+	public static final String EMAIL ="email";
+	public static final String EMAIL_USERNAME="senderUsername";
+	public static final String EMAIL_PASSWORD="senderPassword";
+	public static final String HEADER = "headerText";
+	public static final String MESSAGE_ATTRIBUTE_NAME = "messageAttribute";
+	
 	
 	protected final IParser<String>		stringParser	= new StringParser();
 	protected final IParser<JSONArray>	jsonArrayParser	= new JSONArrayParser();

@@ -74,14 +74,15 @@ public class EventJSONMessageReader implements MessageBodyReader<EventInstance> 
 			MediaType media, MultivaluedMap<String, String> map, InputStream eventStream)
 					throws IOException, WebApplicationException {
 
-		logger.info("started event message body reader");
+		
 
 		EventInstance event = null;
 		String eventString = new Scanner(eventStream).useDelimiter("\\A").next();
 		// the InputStream event contains event in JSON format
 		// we should parse the object, create IEventInstance and return it -
 		// the resource's put/post function will be invoked
-
+		logger.info("started event message body reader for message: "+eventString);
+		
 		try {
 			// the below trick is from here -
 			// http://stackoverflow.com/questions/309424/read-convert-an-inputstream-to-a-string			
@@ -175,8 +176,9 @@ public class EventJSONMessageReader implements MessageBodyReader<EventInstance> 
 		// the resource's put/post function will be invoked
 
 		try {
+			logger.info("Receive message" +eventString);
 			JSONObject eventJson = new JSONObject(eventString);
-
+			logger.info("Parsed JSON: "+ eventJson.toString());
 			String nameValue = (String)eventJson.get(EventHeader.NAME_ATTRIBUTE);			
 			logger.info("name value: " + nameValue + " looking for: " + EventHeader.NAME_ATTRIBUTE);						
 			IEventType eventType= WebMetadataFacade.getInstance().getEventMetadataFacade().getEventType(nameValue);
