@@ -1,0 +1,788 @@
+{
+	"epn": {
+		"name": "TRAGSA",
+		"events": [
+			{
+				"name": "GreenHouseContextUpdate",
+				"attributes": [
+					{
+						"dimension": 0,
+						"description": "The certainty that this event happen (value between 0 to 1)",
+						"name": "Certainty",
+						"type": "Double",
+						"defaultValue": "1"
+					},
+					{
+						"dimension": 0,
+						"description": "No value means it equals the event detection time, other option is to use one of the defined distribution functions with parameters",
+						"name": "OccurrenceTime",
+						"type": "Date"
+					},
+					{
+						"dimension": 0,
+						"description": "Only till this time the cost and certainty parameters of the event are valid, and only till this time a proactive action is considered",
+						"name": "ExpirationTime",
+						"type": "Date"
+					},
+					{
+						"dimension": 0,
+						"description": "The cost of this event occurrence. Negative if this is an opportunity",
+						"name": "Cost",
+						"type": "Double"
+					},
+					{
+						"dimension": 0,
+						"description": "Used in case the this event occur within an interval",
+						"name": "Duration",
+						"type": "Double",
+						"defaultValue": "0"
+					},
+					{
+						"dimension": 0,
+						"name": "entityId",
+						"type": "String"
+					},
+					{
+						"dimension": 0,
+						"name": "leaf_water_condesation",
+						"type": "boolean"
+					},
+					{
+						"dimension": 0,
+						"name": "temperature",
+						"type": "Double"
+					},
+					{
+						"dimension": 0,
+						"name": "temperature_leaf_air",
+						"type": "Double"
+					},
+					{
+						"dimension": 0,
+						"name": "dendrometer",
+						"type": "Double"
+					},
+					{
+						"dimension": 0,
+						"name": "humidity",
+						"type": "Integer"
+					},
+					{
+						"dimension": 0,
+						"name": "entityType",
+						"type": "String"
+					}
+				],
+				"createdDate": "Thu May 23 2013"
+			},
+			{
+				"name": "StakeDiameterAlarm",
+				"attributes": [
+					{
+						"dimension": 0,
+						"description": "The certainty that this event happen (value between 0 to 1)",
+						"name": "Certainty",
+						"type": "Double",
+						"defaultValue": "1"
+					},
+					{
+						"dimension": 0,
+						"description": "No value means it equals the event detection time, other option is to use one of the defined distribution functions with parameters",
+						"name": "OccurrenceTime",
+						"type": "Date"
+					},
+					{
+						"dimension": 0,
+						"description": "Only till this time the cost and certainty parameters of the event are valid, and only till this time a proactive action is considered",
+						"name": "ExpirationTime",
+						"type": "Date"
+					},
+					{
+						"dimension": 0,
+						"description": "The cost of this event occurrence. Negative if this is an opportunity",
+						"name": "Cost",
+						"type": "Double"
+					},
+					{
+						"dimension": 0,
+						"description": "Used in case the this event occur within an interval",
+						"name": "Duration",
+						"type": "Double",
+						"defaultValue": "0"
+					},
+					{
+						"dimension": 0,
+						"name": "entityId",
+						"type": "String"
+					},
+					{
+						"dimension": 0,
+						"name": "dendrometerLastValue",
+						"type": "Double"
+					},
+					{
+						"dimension": 0,
+						"name": "dendrometerFirstValue",
+						"type": "Double"
+					},
+					{
+						"dimension": 0,
+						"name": "entityType",
+						"type": "String"
+					},
+					
+					{
+						"dimension": 0,
+						"name": "message",
+						"type": "String"
+					}
+				],
+				"createdDate": "Thu May 23 2013"
+			},
+			
+			{
+				"name": "LeafAirTemperatureDifferenceAlarm",
+				"attributes": [
+					{
+						"dimension": 0,
+						"description": "The certainty that this event happen (value between 0 to 1)",
+						"name": "Certainty",
+						"type": "Double",
+						"defaultValue": "1"
+					},
+					{
+						"dimension": 0,
+						"description": "No value means it equals the event detection time, other option is to use one of the defined distribution functions with parameters",
+						"name": "OccurrenceTime",
+						"type": "Date"
+					},
+					{
+						"dimension": 0,
+						"description": "Only till this time the cost and certainty parameters of the event are valid, and only till this time a proactive action is considered",
+						"name": "ExpirationTime",
+						"type": "Date"
+					},
+					{
+						"dimension": 0,
+						"description": "The cost of this event occurrence. Negative if this is an opportunity",
+						"name": "Cost",
+						"type": "Double"
+					},
+					{
+						"dimension": 0,
+						"description": "Used in case the this event occur within an interval",
+						"name": "Duration",
+						"type": "Double",
+						"defaultValue": "0"
+					},
+					{
+						"dimension": 0,
+						"name": "entityId",
+						"type": "String"
+					},
+					{
+						"dimension": 0,
+						"name": "tempDiffLastValue",
+						"type": "Double"
+					},
+					{
+						"dimension": 0,
+						"name": "tempDiffFirstValue",
+						"type": "Double"
+					},
+					{
+						"dimension": 0,
+						"name": "entityType",
+						"type": "String"
+					},
+					{
+						"dimension": 0,
+						"name": "message",
+						"type": "String"
+					}
+				],
+				"createdDate": "Thu May 23 2013"
+			},
+			
+						{
+				"name": "LeafWaterCondesationAlarm",
+				"attributes": [
+					{
+						"dimension": 0,
+						"description": "The certainty that this event happen (value between 0 to 1)",
+						"name": "Certainty",
+						"type": "Double",
+						"defaultValue": "1"
+					},
+					{
+						"dimension": 0,
+						"description": "No value means it equals the event detection time, other option is to use one of the defined distribution functions with parameters",
+						"name": "OccurrenceTime",
+						"type": "Date"
+					},
+					{
+						"dimension": 0,
+						"description": "Only till this time the cost and certainty parameters of the event are valid, and only till this time a proactive action is considered",
+						"name": "ExpirationTime",
+						"type": "Date"
+					},
+					{
+						"dimension": 0,
+						"description": "The cost of this event occurrence. Negative if this is an opportunity",
+						"name": "Cost",
+						"type": "Double"
+					},
+					{
+						"dimension": 0,
+						"description": "Used in case the this event occur within an interval",
+						"name": "Duration",
+						"type": "Double",
+						"defaultValue": "0"
+					},
+					{
+						"dimension": 0,
+						"name": "entityId",
+						"type": "String"
+					},
+					
+					{
+						"dimension": 0,
+						"name": "entityType",
+						"type": "String"
+					},
+					{
+						"dimension": 0,
+						"name": "message",
+						"type": "String"
+					}
+				],
+				"createdDate": "Thu May 23 2013"
+			},
+			{
+				"name": "GreenHouseHumidityAlarm",
+				"attributes": [
+					{
+						"dimension": 0,
+						"description": "The certainty that this event happen (value between 0 to 1)",
+						"name": "Certainty",
+						"type": "Double",
+						"defaultValue": "1"
+					},
+					{
+						"dimension": 0,
+						"description": "No value means it equals the event detection time, other option is to use one of the defined distribution functions with parameters",
+						"name": "OccurrenceTime",
+						"type": "Date"
+					},
+					{
+						"dimension": 0,
+						"description": "Only till this time the cost and certainty parameters of the event are valid, and only till this time a proactive action is considered",
+						"name": "ExpirationTime",
+						"type": "Date"
+					},
+					{
+						"dimension": 0,
+						"description": "The cost of this event occurrence. Negative if this is an opportunity",
+						"name": "Cost",
+						"type": "Double"
+					},
+					{
+						"dimension": 0,
+						"description": "Used in case the this event occur within an interval",
+						"name": "Duration",
+						"type": "Double",
+						"defaultValue": "0"
+					},
+					{
+						"dimension": 0,
+						"name": "entityId",
+						"type": "String"
+					},
+					
+					{
+						"dimension": 0,
+						"name": "entityType",
+						"type": "String"
+					},
+					{
+						"dimension": 0,
+						"name": "message",
+						"type": "String"
+					}
+				],
+				"createdDate": "Thu May 23 2013"
+			},
+			
+			{
+				"name": "GreenHouseTemperatureAlarm",
+				"attributes": [
+					{
+						"dimension": 0,
+						"description": "The certainty that this event happen (value between 0 to 1)",
+						"name": "Certainty",
+						"type": "Double",
+						"defaultValue": "1"
+					},
+					{
+						"dimension": 0,
+						"description": "No value means it equals the event detection time, other option is to use one of the defined distribution functions with parameters",
+						"name": "OccurrenceTime",
+						"type": "Date"
+					},
+					{
+						"dimension": 0,
+						"description": "Only till this time the cost and certainty parameters of the event are valid, and only till this time a proactive action is considered",
+						"name": "ExpirationTime",
+						"type": "Date"
+					},
+					{
+						"dimension": 0,
+						"description": "The cost of this event occurrence. Negative if this is an opportunity",
+						"name": "Cost",
+						"type": "Double"
+					},
+					{
+						"dimension": 0,
+						"description": "Used in case the this event occur within an interval",
+						"name": "Duration",
+						"type": "Double",
+						"defaultValue": "0"
+					},
+					{
+						"dimension": 0,
+						"name": "entityId",
+						"type": "String"
+					},
+					
+					{
+						"dimension": 0,
+						"name": "entityType",
+						"type": "String"
+					},
+					{
+						"dimension": 0,
+						"name": "message",
+						"type": "String"
+					}
+				],
+				"createdDate": "Thu May 23 2013"
+			}
+			
+			
+			
+		],
+		"consumers": [
+			
+			
+			{
+				"events": [
+					
+					{
+						"name": "StakeDiameterAlarm"
+					},
+					{
+						"name": "LeafAirTemperatureDifferenceAlarm"
+					},
+					{
+						"name": "LeafWaterCondesationAlarm"
+					},
+					{
+						"name": "GreenHouseHumidityAlarm"
+					},
+					{
+						"name": "GreenHouseTemperatureAlarm"
+					}
+				],
+				"name": "Mail",
+				"properties": [
+					{
+						"name": "email",
+						"value": "ishkin@gmail.com"
+					},
+					{
+						"name": "senderUsername",
+						"value": "proton.databio@gmail.com"
+					},
+					{
+						"name": "senderPassword",
+						"value": "2019stranik12"
+					},
+					{
+						"name": "headerText",
+						"value": "TRAGSA greenhouse alarm"
+					},
+					{
+						"name": "messageAttribute",
+						"value": "message"
+					}					
+				],
+				"type": "Mail",
+				"createdDate": "Thu May 23 2013",
+				"actions": []
+			}
+		],
+		"epas": [
+			{
+				"name": "DecreasingTrendDendrometerEPA",
+				"createdDate": "Tue Dec 22 2015",
+				"epaType": "Trend",
+				"context": "Composite24hours",
+				"inputEvents": [
+					{
+						"name": "GreenHouseContextUpdate",
+						"expression": "GreenHouseContextUpdate.dendrometer",
+						"consumptionPolicy": "Consume",
+						"instanceSelectionPolicy": "First"
+					}
+				],
+				"computedVariables": [],
+				"evaluationPolicy": "Immediate",
+				"cardinalityPolicy": "Single",
+				"trendN": "24",
+				"trendRelation": "Decrease",
+				"internalSegmentation": [],
+				"derivedEvents": [
+					{
+						"name": "StakeDiameterAlarm",
+						"reportParticipants": false,
+						"expressions": {
+							"Duration": "0",
+							"dendrometerLastValue": "GetAttribute(ArrayGet(trend.participants,ArraySize(trend.participants)-1),\"dendrometer\")",
+							"dendrometerFirstValue": "GetAttribute(ArrayGet(trend.participants,0),\"dendrometer\")",
+							"entityType": "GetAttribute(ArrayGet(trend.participants,0),\"entityType\")",
+							"entityId": "GetAttribute(ArrayGet(trend.participants,0),\"entityId\")",
+							"message": "Concat('Dendrometer diameter continous decrease - activate irrigation for entityType: GreenHouse, entityId: ',context.SegmentationByGreenhouse)"
+						}
+					}
+				]
+			},
+			{
+				"name": "IncreasingTrendLeafAirTempEPA",
+				"createdDate": "Tue Dec 22 2015",
+				"epaType": "Trend",
+				"context": "Composite24hours",
+				"inputEvents": [
+					{
+						"name": "GreenHouseContextUpdate",
+						"expression": "GreenHouseContextUpdate.temperature_leaf_air",
+						"consumptionPolicy": "Consume",
+						"instanceSelectionPolicy": "First"
+					}
+				],
+				"computedVariables": [],
+				"evaluationPolicy": "Immediate",
+				"cardinalityPolicy": "Single",
+				"trendN": "24",
+				"trendRelation": "Increase",
+				"internalSegmentation": [],
+				"derivedEvents": [
+					{
+						"name": "LeafAirTemperatureDifferenceAlarm",
+						"reportParticipants": false,
+						"expressions": {
+							"Duration": "0",
+							"tempDiffLastValue": "GetAttribute(ArrayGet(trend.participants,ArraySize(trend.participants)-1),\"temperature_leaf_air\")",
+							"tempDiffFirstValue": "GetAttribute(ArrayGet(trend.participants,0),\"temperature_leaf_air\")",
+							"entityType": "GetAttribute(ArrayGet(trend.participants,0),\"entityType\")",
+							"entityId": "GetAttribute(ArrayGet(trend.participants,0),\"entityId\")",
+							"message": "Concat('Temperature leaf-air difference continous increase - activate irrigation for entityType: GreenHouse, entityId: ',context.SegmentationByGreenhouse)"
+						}
+					}
+				]
+			},
+			{
+				"name": "MonitorWaterLeafCondensationEPA",
+				"description": "",
+				"createdDate": "Mon Jul 22 2013",
+				"createdBy": "",
+				"epaType": "Aggregate",
+				"context": "CompositeLeafWaterCondensation",
+				"inputEvents": [
+					{
+						"name": "StakeDiameterAlarm",
+						"consumptionPolicy": "Consume",
+						"instanceSelectionPolicy": "First"
+					},
+					{
+						"name": "LeafAirTemperatureDifferenceAlarm",
+						"consumptionPolicy": "Consume",
+						"instanceSelectionPolicy": "First"
+					}
+				],
+				"computedVariables": 
+				[
+					{
+           				 "name": "CountStakeDiameter",
+            		  	"aggregationType": "Count",
+            			"StakeDiameterAlarm": "1",
+            			"LeafAirTemperatureDifferenceAlarm": "0"
+          			},
+          			{
+           				 "name": "CountLeafAir",
+            		  	"aggregationType": "Count",
+            			"LeafAirTemperatureDifferenceAlarm": "1",
+            			"StakeDiameterAlarm": "0"
+          			}
+				],
+				 "assertion": "CountStakeDiameter < 1 && CountLeafAir < 1",
+				"evaluationPolicy": "Deferred",
+				"cardinalityPolicy": "Single",
+				"internalSegmentation": [],
+				"derivedEvents": [
+					{
+						"name": "LeafWaterCondesationAlarm",
+						"reportParticipants": false,
+						"expressions": {
+							"Duration": "0",
+							"entityType": "'GreenHouse'",
+							"entityId": "context.SegmentationByGreenhouse",
+							"message": "Concat('Leaf moisture present - de-activate irrigation for: entityType: GreenHouse,entityID: ',context.SegmentationByGreenhouse)"
+						}
+					}
+				],
+				"derivedActions": []
+			},
+			
+			{
+				"name": "Monitor4hourHumidityEPA",
+				"description": "",
+				"createdDate": "Mon Jul 22 2013",
+				"createdBy": "",
+				"epaType": "Absence",
+				"context": "Composite4HoursHumidity",
+				"inputEvents": [
+					{
+						"name": "GreenHouseContextUpdate",
+						"consumptionPolicy": "Consume",
+						"instanceSelectionPolicy": "First",
+						"filterExpression":"GreenHouseContextUpdate.humidity > 60"
+					}
+				],
+				"computedVariables": [],
+				"evaluationPolicy": "Deferred",
+				"cardinalityPolicy": "Single",
+				"internalSegmentation": [],
+				"derivedEvents": [
+					{
+						"name": "GreenHouseHumidityAlarm",
+						"reportParticipants": false,
+						"expressions": {
+							"Duration": "0",
+							"entityType": "'GreenHouse'",
+							"entityId": "context.SegmentationByGreenhouse",
+							"message": "Concat('Greenhouse humidity < 60% for more than 4 hours for entityType: GreenHouse, entityId: ', context.SegmentationByGreenhouse)"
+						}
+					}
+				],
+				"derivedActions": []
+			}
+			,
+			
+			{
+				"name": "Monitor4hourTemperatureEPA",
+				"description": "",
+				"createdDate": "Mon Jul 22 2013",
+				"createdBy": "",
+				"epaType": "Absence",
+				"context": "Composite4HoursTemperature",
+				"inputEvents": [
+					{
+						"name": "GreenHouseContextUpdate",
+						"consumptionPolicy": "Consume",
+						"instanceSelectionPolicy": "First",
+						"filterExpression":"GreenHouseContextUpdate.temperature < 25"
+					}
+				],
+				"computedVariables": [],
+				"evaluationPolicy": "Deferred",
+				"cardinalityPolicy": "Single",
+				"internalSegmentation": [],
+				"derivedEvents": [
+					{
+						"name": "GreenHouseTemperatureAlarm",
+						"reportParticipants": false,
+						"expressions": {
+							"Duration": "0",
+							"entityType": "'GreenHouse'",
+							"entityId": "context.SegmentationByGreenhouse",
+							"message": "Concat('Greenhouse temperature > 25 for more than 4 hours for entityType: GreenHouse,entityId: ', context.SegmentationByGreenhouse)"
+						}
+					}
+				],
+				"derivedActions": []
+			}
+		],
+		"contexts": {
+			"temporal": [
+				{
+					"name": "24hoursReadings",
+					"createdDate": "Tue Dec 22 2015",
+					"type": "TemporalInterval",
+					"atStartup": false,
+					"neverEnding": false,
+					"initiators": [
+						{
+							"initiatorType": "Event",
+							"initiatorPolicy": "Add",
+							"name": "GreenHouseContextUpdate"
+						}
+					],
+					"terminators": [
+						{
+							"terminatorType": "RelativeTime",
+							"terminationType": "Terminate",
+							"relativeTime": "86405000"
+						}
+					]
+				},
+				{
+					"name": "4hoursHumidityTemporal",
+					"createdDate": "Tue Dec 22 2015",
+					"type": "TemporalInterval",
+					"atStartup": false,
+					"neverEnding": false,
+					"initiators": [
+						{
+							"initiatorType": "Event",
+							"initiatorPolicy": "Ignore",
+							"name": "GreenHouseContextUpdate",
+							"condition": "GreenHouseContextUpdate.humidity < 60 "
+						}
+					],
+					"terminators": [
+						{
+							"terminatorType": "RelativeTime",
+							"terminationType": "Terminate",
+							"relativeTime": "14405000"
+						}
+					]
+				},
+				
+					{
+					"name": "4hoursTemperatureTemporal",
+					"createdDate": "Tue Dec 22 2015",
+					"type": "TemporalInterval",
+					"atStartup": false,
+					"neverEnding": false,
+					"initiators": [
+						{
+							"initiatorType": "Event",
+							"initiatorPolicy": "Ignore",
+							"name": "GreenHouseContextUpdate",
+							"condition": "GreenHouseContextUpdate.temperature > 25 "
+						}
+					],
+					"terminators": [
+						{
+							"terminatorType": "RelativeTime",
+							"terminationType": "Terminate",
+							"relativeTime": "14405000"
+						}
+					]
+				},
+				{
+					"name": "MonitorWaterLeafCondensationTemporal",
+					"createdDate": "Tue Dec 22 2015",
+					"type": "TemporalInterval",
+					"atStartup": false,
+					"neverEnding": false,
+					"initiators": [
+						{
+							"initiatorType": "Event",
+							"initiatorPolicy": "Ignore",
+							"name": "GreenHouseContextUpdate",
+							"condition": "GreenHouseContextUpdate.leaf_water_condesation == true  "
+						}
+					],
+					"terminators": [
+						{
+							"terminatorType": "RelativeTime",
+							"terminationType": "Terminate",
+							"relativeTime": "3605000"
+						}
+					]
+				}
+			],
+			"segmentation": [
+				{
+					"name": "SegmentationByGreenhouse",
+					"createdDate": "Tue Dec 22 2015",
+					"participantEvents": [
+						{
+							"name": "GreenHouseContextUpdate",
+							"expression": "GreenHouseContextUpdate.entityId"
+						}
+					]
+				}
+			],
+			"composite": [
+				{
+					"name": "Composite24hours",
+					"createdDate": "Tue Dec 22 2015",
+					"temporalContexts": [
+						{
+							"name": "24hoursReadings"
+						}
+					],
+					"segmentationContexts": [
+						{
+							"name": "SegmentationByGreenhouse"
+						}
+					]
+				},
+				
+				{
+					"name": "CompositeLeafWaterCondensation",
+					"createdDate": "Tue Dec 22 2015",
+					"temporalContexts": [
+						{
+							"name": "MonitorWaterLeafCondensationTemporal"
+						}
+					],
+					"segmentationContexts": [
+						{
+							"name": "SegmentationByGreenhouse"
+						}
+					]
+				},
+				
+				{
+					"name": "Composite4HoursHumidity",
+					"createdDate": "Tue Dec 22 2015",
+					"temporalContexts": [
+						{
+							"name": "4hoursHumidityTemporal"
+						}
+					],
+					"segmentationContexts": [
+						{
+							"name": "SegmentationByGreenhouse"
+						}
+					]
+				}
+				,
+				{
+					"name": "Composite4HoursTemperature",
+					"createdDate": "Tue Dec 22 2015",
+					"temporalContexts": [
+						{
+							"name": "4hoursTemperatureTemporal"
+						}
+					],
+					"segmentationContexts": [
+						{
+							"name": "SegmentationByGreenhouse"
+						}
+					]
+				}
+				
+				
+				
+				
+				
+			]
+		},
+		"producers": [],
+		"actions": []
+	}
+}

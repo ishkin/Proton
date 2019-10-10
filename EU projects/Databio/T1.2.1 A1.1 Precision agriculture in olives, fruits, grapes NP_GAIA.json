@@ -1,0 +1,1740 @@
+{
+  "epn": {
+    "events": [
+      {
+        "name": "RiskIndex",
+        "createdDate": "Tue Dec 22 2015",
+        "attributes": [
+          {
+            "name": "Certainty",
+            "type": "Double",
+            "defaultValue": "1",
+            "dimension": 0,
+            "description": "The certainty that this event happen (value between 0 to 1)"
+          },
+          {
+            "name": "OccurrenceTime",
+            "type": "Date",
+            "dimension": 0,
+            "description": "No value means it equals the event detection time, other option is to use one of the defined distribution functions with parameters"
+          },
+          {
+            "name": "ExpirationTime",
+            "type": "Date",
+            "dimension": 0
+          },
+          {
+            "name": "Cost",
+            "type": "Double",
+            "dimension": 0,
+            "description": "The cost of this event occurrence. Negative if this is an opportunity"
+          },
+          {
+            "name": "Duration",
+            "type": "Double",
+            "defaultValue": "0",
+            "dimension": 0,
+            "description": "Used in case the this event occur within an interval"
+          },                    
+          {
+            "name": "station_id",
+            "type": "Integer",
+            "dimension": 0
+          },
+           {
+            "name": "risk_type",
+            "type": "Integer",
+            "dimension": 0
+          },
+           {
+            "name": "value",
+            "type": "Double",
+            "dimension": 0
+          },
+           {
+            "name": "date",
+            "type": "Date",
+            "dimension": 0
+          }
+          
+        ]
+      },
+       
+      {
+        "name": "DiseaseAlert",
+        "createdDate": "Tue Dec 22 2015",
+        "attributes": [
+          {
+            "name": "Certainty",
+            "type": "Double",
+            "defaultValue": "1",
+            "dimension": 0,
+            "description": "The certainty that this event happen (value between 0 to 1)"
+          },
+          {
+            "name": "OccurrenceTime",
+            "type": "Date",
+            "dimension": 0,
+            "description": "No value means it equals the event detection time, other option is to use one of the defined distribution functions with parameters"
+          },
+          {
+            "name": "ExpirationTime",
+            "type": "Date",
+            "dimension": 0
+          },
+          {
+            "name": "Cost",
+            "type": "Double",
+            "dimension": 0,
+            "description": "The cost of this event occurrence. Negative if this is an opportunity"
+          },
+          {
+            "name": "Duration",
+            "type": "Double",
+            "defaultValue": "0",
+            "dimension": 0,
+            "description": "Used in case the this event occur within an interval"
+          },
+         
+          {
+            "name": "rate",
+            "type": "Double",
+            "dimension": 0
+          },
+             {
+            "name": "risk_type",
+            "type": "Integer",
+            "dimension": 0
+          },
+            {
+            "name": "station_id",
+            "type": "Integer",
+            "dimension": 0
+          },
+           {
+            "name": "date",
+            "type": "Date",
+            "dimension": 0
+          }
+        
+        ]
+      },
+          {
+        "name": "DiseasePreliminaryAlert",
+        "createdDate": "Tue Dec 22 2015",
+        "attributes": [
+          {
+            "name": "Certainty",
+            "type": "Double",
+            "defaultValue": "1",
+            "dimension": 0,
+            "description": "The certainty that this event happen (value between 0 to 1)"
+          },
+          {
+            "name": "OccurrenceTime",
+            "type": "Date",
+            "dimension": 0,
+            "description": "No value means it equals the event detection time, other option is to use one of the defined distribution functions with parameters"
+          },
+          {
+            "name": "ExpirationTime",
+            "type": "Date",
+            "dimension": 0
+          },
+          {
+            "name": "Cost",
+            "type": "Double",
+            "dimension": 0,
+            "description": "The cost of this event occurrence. Negative if this is an opportunity"
+          },
+          {
+            "name": "Duration",
+            "type": "Double",
+            "defaultValue": "0",
+            "dimension": 0,
+            "description": "Used in case the this event occur within an interval"
+          },
+           {
+            "name": "station_id",
+            "type": "Integer",
+            "dimension": 0
+          },
+           {
+            "name": "risk_type",
+            "type": "Integer",
+            "dimension": 0
+          },
+           {
+            "name": "rate",
+            "type": "Double",
+            "dimension": 0
+          }
+                   
+        
+        ]
+      },
+     
+     
+      {
+        "name": "DegreeDaysFirstGenerationAlarm",
+        "attributes": [
+          {
+            "dimension": 0,
+            "description": "The certainty that this event happen (value between 0 to 1)",
+            "name": "Certainty",
+            "defaultValue": "1",
+            "type": "Double"
+          },
+          {
+            "dimension": 0,
+            "description": "No value means it equals the event detection time, other option is to use one of the defined distribution functions with parameters",
+            "name": "OccurrenceTime",
+            "type": "Date"
+          },
+          {
+            "dimension": 0,
+            "name": "ExpirationTime",
+            "type": "Date"
+          },
+          {
+            "dimension": 0,
+            "description": "The cost of this event occurrence. Negative if this is an opportunity",
+            "name": "Cost",
+            "type": "Double"
+          },
+          {
+            "dimension": 0,
+            "description": "Used in case the this event occur within an interval",
+            "name": "Duration",
+            "defaultValue": "0",
+            "type": "Double"
+          },
+          {
+            "dimension": 0,
+            "name": "rate",
+            "type": "Double"
+          },
+          {
+            "dimension": 0,
+            "name": "date",
+            "type": "Date"
+          },
+           {
+            "name": "station_id",
+            "type": "Integer",
+            "dimension": 0
+          },
+           {
+            "name": "risk_type",
+            "type": "Integer",
+            "dimension": 0
+          }
+        ],
+        "createdDate": "Tue Dec 22 2015"
+      },
+      {
+        "name": "DegreeDaysSecondGenerationAlarm",
+        "attributes": [
+          {
+            "dimension": 0,
+            "description": "The certainty that this event happen (value between 0 to 1)",
+            "name": "Certainty",
+            "defaultValue": "1",
+            "type": "Double"
+          },
+          {
+            "dimension": 0,
+            "description": "No value means it equals the event detection time, other option is to use one of the defined distribution functions with parameters",
+            "name": "OccurrenceTime",
+            "type": "Date"
+          },
+          {
+            "dimension": 0,
+            "name": "ExpirationTime",
+            "type": "Date"
+          },
+          {
+            "dimension": 0,
+            "description": "The cost of this event occurrence. Negative if this is an opportunity",
+            "name": "Cost",
+            "type": "Double"
+          },
+          {
+            "dimension": 0,
+            "description": "Used in case the this event occur within an interval",
+            "name": "Duration",
+            "defaultValue": "0",
+            "type": "Double"
+          },
+           {
+            "dimension": 0,
+            "name": "rate",
+            "type": "Double"
+          },
+          {
+            "dimension": 0,
+            "name": "date",
+            "type": "Date"
+          },
+           {
+            "name": "station_id",
+            "type": "Integer",
+            "dimension": 0
+          },
+           {
+            "name": "risk_type",
+            "type": "Integer",
+            "dimension": 0
+          }
+        ],
+        "createdDate": "Tue Dec 22 2015"
+      },
+      {
+        "name": "DegreeDaysThirdGenerationAlarm",
+        "attributes": [
+          {
+            "dimension": 0,
+            "description": "The certainty that this event happen (value between 0 to 1)",
+            "name": "Certainty",
+            "defaultValue": "1",
+            "type": "Double"
+          },
+          {
+            "dimension": 0,
+            "description": "No value means it equals the event detection time, other option is to use one of the defined distribution functions with parameters",
+            "name": "OccurrenceTime",
+            "type": "Date"
+          },
+          {
+            "dimension": 0,
+            "name": "ExpirationTime",
+            "type": "Date"
+          },
+          {
+            "dimension": 0,
+            "description": "The cost of this event occurrence. Negative if this is an opportunity",
+            "name": "Cost",
+            "type": "Double"
+          },
+          {
+            "dimension": 0,
+            "description": "Used in case the this event occur within an interval",
+            "name": "Duration",
+            "defaultValue": "0",
+            "type": "Double"
+          },
+          {
+            "dimension": 0,
+            "name": "rate",
+            "type": "Double"
+          },
+          {
+            "dimension": 0,
+            "name": "date",
+            "type": "Date"
+          },
+           {
+            "name": "station_id",
+            "type": "Integer",
+            "dimension": 0
+          },
+           {
+            "name": "risk_type",
+            "type": "Integer",
+            "dimension": 0
+          }
+        ],
+        "createdDate": "Tue Dec 22 2015"
+      },
+       {
+        "name": "DegreeDaysFourthGenerationAlarm",
+        "attributes": [
+          {
+            "dimension": 0,
+            "description": "The certainty that this event happen (value between 0 to 1)",
+            "name": "Certainty",
+            "defaultValue": "1",
+            "type": "Double"
+          },
+          {
+            "dimension": 0,
+            "description": "No value means it equals the event detection time, other option is to use one of the defined distribution functions with parameters",
+            "name": "OccurrenceTime",
+            "type": "Date"
+          },
+          {
+            "dimension": 0,
+            "name": "ExpirationTime",
+            "type": "Date"
+          },
+          {
+            "dimension": 0,
+            "description": "The cost of this event occurrence. Negative if this is an opportunity",
+            "name": "Cost",
+            "type": "Double"
+          },
+          {
+            "dimension": 0,
+            "description": "Used in case the this event occur within an interval",
+            "name": "Duration",
+            "defaultValue": "0",
+            "type": "Double"
+          },
+           {
+            "dimension": 0,
+            "name": "rate",
+            "type": "Double"
+          },
+          {
+            "dimension": 0,
+            "name": "date",
+            "type": "Date"
+          },
+           {
+            "name": "station_id",
+            "type": "Integer",
+            "dimension": 0
+          },
+           {
+            "name": "risk_type",
+            "type": "Integer",
+            "dimension": 0
+          }
+        ],
+        "createdDate": "Tue Dec 22 2015"
+      },
+      {
+        "name": "DegreeDaysFirstGenerationWarning",
+        "attributes": [
+          {
+            "dimension": 0,
+            "description": "The certainty that this event happen (value between 0 to 1)",
+            "name": "Certainty",
+            "defaultValue": "1",
+            "type": "Double"
+          },
+          {
+            "dimension": 0,
+            "description": "No value means it equals the event detection time, other option is to use one of the defined distribution functions with parameters",
+            "name": "OccurrenceTime",
+            "type": "Date"
+          },
+          {
+            "dimension": 0,
+            "name": "ExpirationTime",
+            "type": "Date"
+          },
+          {
+            "dimension": 0,
+            "description": "The cost of this event occurrence. Negative if this is an opportunity",
+            "name": "Cost",
+            "type": "Double"
+          },
+          {
+            "dimension": 0,
+            "description": "Used in case the this event occur within an interval",
+            "name": "Duration",
+            "defaultValue": "0",
+            "type": "Double"
+          },
+        {
+            "dimension": 0,
+            "name": "rate",
+            "type": "Double"
+          },
+          {
+            "dimension": 0,
+            "name": "date",
+            "type": "Date"
+          },
+           {
+            "name": "station_id",
+            "type": "Integer",
+            "dimension": 0
+          },
+           {
+            "name": "risk_type",
+            "type": "Integer",
+            "dimension": 0
+          }
+        ],
+        "createdDate": "Tue Dec 22 2015"
+      },
+      {
+        "name": "DegreeDaysSecondGenerationWarning",
+        "attributes": [
+          {
+            "dimension": 0,
+            "description": "The certainty that this event happen (value between 0 to 1)",
+            "name": "Certainty",
+            "defaultValue": "1",
+            "type": "Double"
+          },
+          {
+            "dimension": 0,
+            "description": "No value means it equals the event detection time, other option is to use one of the defined distribution functions with parameters",
+            "name": "OccurrenceTime",
+            "type": "Date"
+          },
+          {
+            "dimension": 0,
+            "name": "ExpirationTime",
+            "type": "Date"
+          },
+          {
+            "dimension": 0,
+            "description": "The cost of this event occurrence. Negative if this is an opportunity",
+            "name": "Cost",
+            "type": "Double"
+          },
+          {
+            "dimension": 0,
+            "description": "Used in case the this event occur within an interval",
+            "name": "Duration",
+            "defaultValue": "0",
+            "type": "Double"
+          },
+          {
+            "dimension": 0,
+            "name": "rate",
+            "type": "Double"
+          },
+          {
+            "dimension": 0,
+            "name": "date",
+            "type": "Date"
+          },
+           {
+            "name": "station_id",
+            "type": "Integer",
+            "dimension": 0
+          },
+           {
+            "name": "risk_type",
+            "type": "Integer",
+            "dimension": 0
+          }
+        ],
+        "createdDate": "Tue Dec 22 2015"
+      },
+      {
+        "name": "DegreeDaysThirdGenerationWarning",
+        "attributes": [
+          {
+            "dimension": 0,
+            "description": "The certainty that this event happen (value between 0 to 1)",
+            "name": "Certainty",
+            "defaultValue": "1",
+            "type": "Double"
+          },
+          {
+            "dimension": 0,
+            "description": "No value means it equals the event detection time, other option is to use one of the defined distribution functions with parameters",
+            "name": "OccurrenceTime",
+            "type": "Date"
+          },
+          {
+            "dimension": 0,
+            "name": "ExpirationTime",
+            "type": "Date"
+          },
+          {
+            "dimension": 0,
+            "description": "The cost of this event occurrence. Negative if this is an opportunity",
+            "name": "Cost",
+            "type": "Double"
+          },
+          {
+            "dimension": 0,
+            "description": "Used in case the this event occur within an interval",
+            "name": "Duration",
+            "defaultValue": "0",
+            "type": "Double"
+          },
+         {
+            "dimension": 0,
+            "name": "rate",
+            "type": "Double"
+          },
+          {
+            "dimension": 0,
+            "name": "date",
+            "type": "Date"
+          },
+           {
+            "name": "station_id",
+            "type": "Integer",
+            "dimension": 0
+          },
+           {
+            "name": "risk_type",
+            "type": "Integer",
+            "dimension": 0
+          }
+        ],
+        "createdDate": "Tue Dec 22 2015"
+      }
+     ,
+          {
+        "name": "DegreeDaysFourthGenerationWarning",
+        "attributes": [
+          {
+            "dimension": 0,
+            "description": "The certainty that this event happen (value between 0 to 1)",
+            "name": "Certainty",
+            "defaultValue": "1",
+            "type": "Double"
+          },
+          {
+            "dimension": 0,
+            "description": "No value means it equals the event detection time, other option is to use one of the defined distribution functions with parameters",
+            "name": "OccurrenceTime",
+            "type": "Date"
+          },
+          {
+            "dimension": 0,
+            "name": "ExpirationTime",
+            "type": "Date"
+          },
+          {
+            "dimension": 0,
+            "description": "The cost of this event occurrence. Negative if this is an opportunity",
+            "name": "Cost",
+            "type": "Double"
+          },
+          {
+            "dimension": 0,
+            "description": "Used in case the this event occur within an interval",
+            "name": "Duration",
+            "defaultValue": "0",
+            "type": "Double"
+          },
+         {
+            "dimension": 0,
+            "name": "rate",
+            "type": "Double"
+          },
+          {
+            "dimension": 0,
+            "name": "date",
+            "type": "Date"
+          },
+           {
+            "name": "station_id",
+            "type": "Integer",
+            "dimension": 0
+          },
+           {
+            "name": "risk_type",
+            "type": "Integer",
+            "dimension": 0
+          }
+        ],
+        "createdDate": "Tue Dec 22 2015"
+      }
+      
+    ],
+    "epas": [
+     
+      
+      
+            {
+        "inputEvents": [
+          {
+            "instanceSelectionPolicy": "First",            
+            "name": "RiskIndex",
+            "consumptionPolicy": "Consume",
+            "filterExpression":"RiskIndex.risk_type = 32"
+          }
+        ],
+        "derivedEvents": [
+          {
+            "name": "DiseaseAlert",
+            "reportParticipants": false,
+             "condition": "RiskIndex.value >= 30",
+            "expressions": {            	
+            	"rate": "RiskIndex.value",
+            	"date": "RiskIndex.date",
+            	"station_id": "RiskIndex.station_id",
+            	"risk_type": "RiskIndex.risk_type"            	
+            }
+          }
+        ],
+        "evaluationPolicy": "Immediate",
+        "name": "DiseaseSpilocaeaEPA",
+        "internalSegmentation": [],
+        "context": "Always",
+        "epaType": "Basic",
+        "createdDate": "Tue Dec 22 2015",
+        "computedVariables": []
+      },
+      
+         
+         {
+        "name": "DiseaseSpilocaeaPreliminaryAlertEPA",
+        "createdDate": "Tue Dec 22 2015",
+        "epaType": "Trend",
+        "context": "24HoursDiseaseTrendComposite",
+        "inputEvents": [
+          {
+            "name": "RiskIndex",            
+            "expression": "RiskIndex.value",
+            "filterExpression":"RiskIndex.risk_type = 32",
+            "consumptionPolicy": "Reuse",
+            "instanceSelectionPolicy": "First"
+          }
+        ],
+        "computedVariables": [],
+        "evaluationPolicy": "Immediate",
+        "cardinalityPolicy": "Single",
+        "trendN": "5",
+        "trendRelation": "Increase",
+        "internalSegmentation": [],
+        "derivedEvents": [
+          {
+            "name": "DiseasePreliminaryAlert",
+            "reportParticipants": false,
+            "condition": "GetAttribute(ArrayGet(trend.participants,ArraySize(trend.participants)-1),\"value\") < 30 && GetAttribute(ArrayGet(trend.participants,ArraySize(trend.participants)-1),\"value\") > 20",
+            "expressions": {
+              "Duration": "0",            	              
+                "risk_type": "GetAttribute(ArrayGet(trend.participants,ArraySize(trend.participants)-1),\"risk_type\")",
+              	"station_id": "GetAttribute(ArrayGet(trend.participants,ArraySize(trend.participants)-1),\"station_id\")",
+              	"rate": "GetAttribute(ArrayGet(trend.participants,ArraySize(trend.participants)-1),\"value\")",
+              	"date":"GetAttribute(ArrayGet(trend.participants,ArraySize(trend.participants)-1),\"date\")"
+              	
+            }
+          }
+        ]
+      },
+      
+
+
+      {
+        "inputEvents": [
+          {
+            "instanceSelectionPolicy": "Override",
+            "alias": "SR1",
+            "name": "RiskIndex",
+            "filterExpression": "SR1.value >= 96 && (SR1.risk_type = 47 || SR1.risk_type = 42 || SR1.risk_type = 44)",
+            "consumptionPolicy": "Consume"
+          },
+          
+           {
+            "instanceSelectionPolicy": "First",
+            "alias": "SR2",
+            "name": "RiskIndex",
+            "filterExpression": "SR2.value < 10 && (SR2.risk_type = 47 || SR2.risk_type = 42 || SR2.risk_type = 44)",
+            "consumptionPolicy": "Consume"
+          }
+        ],
+        "derivedEvents": [
+          {
+            "name": "DegreeDaysFirstGenerationAlarm",
+            "reportParticipants": false,
+            "expressions": {
+              "rate": "SR1.value",
+              "risk_type": "SR1.risk_type",
+              "station_id": "SR1.station_id",
+              "date": "SR1.date"
+            }
+          }
+        ],
+        "evaluationPolicy": "Immediate",
+        "name": "MonitorDegreeDaysLevel1",
+        "internalSegmentation": [],
+        "context": "DegreeDaysSumTemporal1Composite",
+        "epaType": "Sequence",
+        "cardinalityPolicy": "Single",
+        "createdDate": "Thu Jun 02 2016",
+        "computedVariables": []
+      },
+      
+      {
+        "inputEvents": [
+          {
+            "expression": "RiskIndex.value",
+            "instanceSelectionPolicy": "First",
+            "name": "RiskIndex",
+            "consumptionPolicy": "Reuse",
+            "filterExpression": "RiskIndex.risk_type = 47 || RiskIndex.risk_type = 42 || RiskIndex.risk_type = 44"
+          }
+        ],
+        "derivedEvents": [
+          {            
+            "name": "DegreeDaysFirstGenerationWarning",
+            "reportParticipants": false,
+            "condition": "GetAttribute(ArrayGet(trend.participants,ArraySize(trend.participants)-1),\"value\") < 100 && GetAttribute(ArrayGet(trend.participants,ArraySize(trend.participants)-1),\"value\") > 75",
+            "expressions": {
+              "station_id": "GetAttribute(ArrayGet(trend.participants,ArraySize(trend.participants)-1),\"station_id\")",
+              "rate": "GetAttribute(ArrayGet(trend.participants,ArraySize(trend.participants)-1),\"value\")",
+              "risk_type": "GetAttribute(ArrayGet(trend.participants,ArraySize(trend.participants)-1),\"risk_type\")",
+              "date": "GetAttribute(ArrayGet(trend.participants,ArraySize(trend.participants)-1),\"date\")"
+            }
+          }
+        ],
+        "evaluationPolicy": "Immediate",
+        "trendN": "5",
+        "name": "MonitorDegreeDaysLevel1Trend",
+        "internalSegmentation": [],
+        "context": "DegreeDaysSumTemporal1TrendComposite",
+        "epaType": "Trend",
+        "cardinalityPolicy": "Single",
+        "trendRelation": "Increase",
+        "createdDate": "Thu Jun 02 2016",
+        "computedVariables": []
+      },
+            {
+        "inputEvents": [
+          {
+            "expression": "RiskIndex.value",
+            "instanceSelectionPolicy": "First",
+            "name": "RiskIndex",
+            "consumptionPolicy": "Reuse",
+            "filterExpression": "RiskIndex.risk_type = 47 || RiskIndex.risk_type = 42 || RiskIndex.risk_type = 44"
+          }
+        ],
+        "derivedEvents": [
+          {            
+            "name": "DegreeDaysSecondGenerationWarning",
+            "reportParticipants": false,
+            "condition": "GetAttribute(ArrayGet(trend.participants,ArraySize(trend.participants)-1),\"value\") < 100 && GetAttribute(ArrayGet(trend.participants,ArraySize(trend.participants)-1),\"value\") > 75",
+            "expressions": {
+              "station_id": "GetAttribute(ArrayGet(trend.participants,ArraySize(trend.participants)-1),\"station_id\")",
+              "rate": "GetAttribute(ArrayGet(trend.participants,ArraySize(trend.participants)-1),\"value\")",
+              "risk_type": "GetAttribute(ArrayGet(trend.participants,ArraySize(trend.participants)-1),\"risk_type\")",
+              "date": "GetAttribute(ArrayGet(trend.participants,ArraySize(trend.participants)-1),\"date\")"
+            }
+          }
+        ],
+        "evaluationPolicy": "Immediate",
+        "trendN": "5",
+        "name": "MonitorDegreeDaysLevel2Trend",
+        "internalSegmentation": [],
+        "context": "DegreeDaysSumTemporal2TrendComposite",
+        "epaType": "Trend",
+        "cardinalityPolicy": "Unrestricted",
+        "trendRelation": "Increase",
+        "createdDate": "Thu Jun 02 2016",
+        "computedVariables": []
+      },
+            {
+        "inputEvents": [
+          {
+            "expression": "RiskIndex.value",
+            "instanceSelectionPolicy": "First",
+            "name": "RiskIndex",
+            "consumptionPolicy": "Reuse",
+            "filterExpression": "RiskIndex.risk_type = 47 || RiskIndex.risk_type = 42 || RiskIndex.risk_type = 44"
+          }
+        ],
+        "derivedEvents": [
+          {            
+            "name": "DegreeDaysThirdGenerationWarning",
+            "reportParticipants": false,
+            "condition": "GetAttribute(ArrayGet(trend.participants,ArraySize(trend.participants)-1),\"value\") < 100 && GetAttribute(ArrayGet(trend.participants,ArraySize(trend.participants)-1),\"value\") > 75",
+            "expressions": {
+              "station_id": "GetAttribute(ArrayGet(trend.participants,ArraySize(trend.participants)-1),\"station_id\")",
+              "rate": "GetAttribute(ArrayGet(trend.participants,ArraySize(trend.participants)-1),\"value\")",
+              "risk_type": "GetAttribute(ArrayGet(trend.participants,ArraySize(trend.participants)-1),\"risk_type\")",
+              "date": "GetAttribute(ArrayGet(trend.participants,ArraySize(trend.participants)-1),\"date\")"
+            }
+          }
+        ],
+        "evaluationPolicy": "Immediate",
+        "trendN": "5",
+        "name": "MonitorDegreeDaysLevel3Trend",
+        "internalSegmentation": [],
+        "context": "DegreeDaysSumTemporal3TrendComposite",
+        "epaType": "Trend",
+        "cardinalityPolicy": "Unrestricted",
+        "trendRelation": "Increase",
+        "createdDate": "Thu Jun 02 2016",
+        "computedVariables": []
+      },
+            {
+        "inputEvents": [
+          {
+            "expression": "RiskIndex.value",
+            "instanceSelectionPolicy": "First",
+            "name": "RiskIndex",
+            "consumptionPolicy": "Reuse",
+            "filterExpression": "RiskIndex.risk_type = 47 || RiskIndex.risk_type = 42 || RiskIndex.risk_type = 44"
+          }
+        ],
+        "derivedEvents": [
+          {            
+            "name": "DegreeDaysFourthGenerationWarning",
+            "reportParticipants": false,
+            "condition": "GetAttribute(ArrayGet(trend.participants,ArraySize(trend.participants)-1),\"value\") < 100 && GetAttribute(ArrayGet(trend.participants,ArraySize(trend.participants)-1),\"value\") > 75",
+            "expressions": {
+              "station_id": "GetAttribute(ArrayGet(trend.participants,ArraySize(trend.participants)-1),\"station_id\")",
+              "rate": "GetAttribute(ArrayGet(trend.participants,ArraySize(trend.participants)-1),\"value\")",
+              "risk_type": "GetAttribute(ArrayGet(trend.participants,ArraySize(trend.participants)-1),\"risk_type\")",
+              "date": "GetAttribute(ArrayGet(trend.participants,ArraySize(trend.participants)-1),\"date\")"
+            }
+          }
+        ],
+        "evaluationPolicy": "Immediate",
+        "trendN": "5",
+        "name": "MonitorDegreeDaysLevel4Trend",
+        "internalSegmentation": [],
+        "context": "DegreeDaysSumTemporal4TrendComposite",
+        "epaType": "Trend",
+        "cardinalityPolicy": "Unrestricted",
+        "trendRelation": "Increase",
+        "createdDate": "Thu Jun 02 2016",
+        "computedVariables": []
+      },
+      {
+        "inputEvents": [
+         {
+            "instanceSelectionPolicy": "Override",
+            "alias": "SR1",
+            "name": "RiskIndex",
+            "filterExpression": "SR1.value >= 96 && (SR1.risk_type = 47 || SR1.risk_type = 42 || SR1.risk_type = 44)",
+            "consumptionPolicy": "Consume"
+          },
+          
+           {
+            "instanceSelectionPolicy": "First",
+            "alias": "SR2",
+            "name": "RiskIndex",
+            "filterExpression": "SR2.value < 10 && (SR2.risk_type = 47 || SR2.risk_type = 42 || SR2.risk_type = 44)",
+            "consumptionPolicy": "Consume"
+          }
+        ],
+        "derivedEvents": [
+          {
+            "name": "DegreeDaysSecondGenerationAlarm",
+            "reportParticipants": false,
+            "expressions": {
+             "rate": "SR1.value",
+              "risk_type": "SR1.risk_type",
+              "station_id": "SR1.station_id",
+              "date": "SR1.date"
+            }
+          }
+        ],
+        "evaluationPolicy": "Immediate",
+        "name": "MonitorDegreeDaysLevel2",
+        "internalSegmentation": [],
+        "context": "DegreeDaysSumTemporal2Composite",
+        "epaType": "Sequence",
+        "cardinalityPolicy": "Single",
+        "createdDate": "Thu Jun 02 2016",
+        "computedVariables": []
+      },
+      
+            {
+        "inputEvents": [
+           {
+            "instanceSelectionPolicy": "Override",
+            "alias": "SR1",
+            "name": "RiskIndex",
+            "filterExpression": "SR1.value >= 96 && (SR1.risk_type = 47 || SR1.risk_type = 42 || SR1.risk_type = 44)",
+            "consumptionPolicy": "Consume"
+          },
+          
+           {
+            "instanceSelectionPolicy": "First",
+            "alias": "SR2",
+            "name": "RiskIndex",
+            "filterExpression": "SR2.value < 10 && (SR2.risk_type = 47 || SR2.risk_type = 42 || SR2.risk_type = 44)",
+            "consumptionPolicy": "Consume"
+          }
+        ],
+        "derivedEvents": [
+          {
+            "name": "DegreeDaysThirdGenerationAlarm",
+            "reportParticipants": false,
+            "expressions": {
+              "rate": "SR1.value",
+              "risk_type": "SR1.risk_type",
+              "station_id": "SR1.station_id",
+              "date": "SR1.date"
+            }
+          }
+        ],
+        "evaluationPolicy": "Immediate",
+        "name": "MonitorDegreeDaysLevel3",
+        "internalSegmentation": [],
+        "context": "DegreeDaysSumTemporal3Composite",
+        "epaType": "Sequence",
+        "cardinalityPolicy": "Single",
+        "createdDate": "Thu Jun 02 2016",
+        "computedVariables": []
+      },
+      
+            {
+        "inputEvents": [
+          {
+            "instanceSelectionPolicy": "Override",
+            "alias": "SR1",
+            "name": "RiskIndex",
+            "filterExpression": "SR1.value >= 96 && (SR1.risk_type = 47 || SR1.risk_type = 42 || SR1.risk_type = 44)",
+            "consumptionPolicy": "Consume"
+          },
+          
+           {
+            "instanceSelectionPolicy": "First",
+            "alias": "SR2",
+            "name": "RiskIndex",
+            "filterExpression": "SR2.value < 10 && (SR2.risk_type = 47 || SR2.risk_type = 42 || SR2.risk_type = 44)",
+            "consumptionPolicy": "Consume"
+          }
+        ],
+        "derivedEvents": [
+          {
+            "name": "DegreeDaysFourthGenerationAlarm",
+            "reportParticipants": false,
+            "expressions": {
+             "rate": "SR1.value",
+              "risk_type": "SR1.risk_type",
+              "station_id": "SR1.station_id",
+              "date": "SR1.date"
+            }
+          }
+        ],
+        "evaluationPolicy": "Immediate",
+        "name": "MonitorDegreeDaysLevel4",
+        "internalSegmentation": [],
+        "context": "DegreeDaysSumTemporal4Composite",
+        "epaType": "Sequence",
+        "cardinalityPolicy": "Single",
+        "createdDate": "Thu Jun 02 2016",
+        "computedVariables": []
+      },                  
+      
+            {
+        "inputEvents": [
+          {
+            "instanceSelectionPolicy": "First",            
+            "name": "RiskIndex",
+            "filterExpression": "RiskIndex.risk_type = 34",
+            "consumptionPolicy": "Consume"
+          }
+        ],
+        "derivedEvents": [
+          {
+            "name": "DiseaseAlert",
+            "reportParticipants": false,
+            "condition": "RiskIndex.value >= 30",
+            "expressions": {            	
+            	"rate": "RiskIndex.value",
+            	"date": "RiskIndex.date",
+            	"station_id": "RiskIndex.station_id",
+            	"risk_type": "RiskIndex.risk_type"            	
+            }
+          
+          }
+        ],
+        "evaluationPolicy": "Immediate",
+        "name": "DiseaseDownyMildewEPA",
+        "internalSegmentation": [],
+        "context": "Always",
+        "epaType": "Basic",
+        "createdDate": "Tue Dec 22 2015",
+        "computedVariables": []
+      },
+      
+         
+         {
+        "name": "DiseaseDownyMildewPreliminaryAlertEPA",
+        "createdDate": "Tue Dec 22 2015",
+        "epaType": "Trend",
+        "context": "72HoursDiseaseTrendComposite",
+        "inputEvents": [
+          {
+            "name": "RiskIndex",            
+            "expression": "RiskIndex.value",
+            "filterExpression":"RiskIndex.risk_type = 34",
+            "consumptionPolicy": "Reuse",
+            "instanceSelectionPolicy": "First"
+          }
+        ],
+        "computedVariables": [],
+        "evaluationPolicy": "Immediate",
+        "cardinalityPolicy": "Single",
+        "trendN": "3",
+        "trendRatio": "1.3",
+        "trendRelation": "Increase",      
+        "internalSegmentation": [],
+        "derivedEvents": [
+           {
+            "name": "DiseasePreliminaryAlert",
+            "reportParticipants": false,
+            "condition": "GetAttribute(ArrayGet(trend.participants,ArraySize(trend.participants)-1),\"value\") < 30 && GetAttribute(ArrayGet(trend.participants,ArraySize(trend.participants)-1),\"value\") > 20",
+            "expressions": {
+              "Duration": "0",            	              
+                "risk_type": "GetAttribute(ArrayGet(trend.participants,ArraySize(trend.participants)-1),\"risk_type\")",
+              	"station_id": "GetAttribute(ArrayGet(trend.participants,ArraySize(trend.participants)-1),\"station_id\")",
+              	"rate": "GetAttribute(ArrayGet(trend.participants,ArraySize(trend.participants)-1),\"value\")",
+              	"date":"GetAttribute(ArrayGet(trend.participants,ArraySize(trend.participants)-1),\"date\")"
+              	
+            }
+          }
+        ]
+      }
+      
+      
+      
+      
+     
+      
+    ],
+    "contexts": {
+    
+      "temporal": [
+      
+           {
+          "name": "Always",
+          "createdDate": "Tue Dec 22 2015",
+          "type": "TemporalInterval",
+          "atStartup": true,
+          "neverEnding": true,
+          "initiators": [            
+          ],
+          "terminators": [            
+          ]
+        },
+        {
+          "name": "24HoursDiseaseTrend",
+          "createdDate": "Tue Dec 22 2015",
+          "type": "TemporalInterval",
+          "atStartup": false,
+          "neverEnding": false,
+          "initiators": [
+            {
+              "initiatorType": "Event",
+              "initiatorPolicy": "Add",
+              "name": "RiskIndex",
+              "condition": "RiskIndex.value >= 20 "
+            }
+          ],
+          "terminators": [            
+             {
+              "terminatorType": "RelativeTime",
+              "terminationType": "Terminate",
+              "relativeTime": "86400000"
+            }            
+            
+          ]
+        },
+        
+        
+        {
+          "terminators": [
+          ],
+          "neverEnding": true,
+          "atStartup": false,
+          "name": "DegreeDaysSumTemporal1",
+          "type": "TemporalInterval",
+          "createdDate": "Tue Dec 22 2015",
+          "initiators": [
+            {
+              "initiatorPolicy": "Ignore",
+              "condition": "RiskIndex.value >= 98",
+              "name": "RiskIndex",
+              "initiatorType": "Event"
+            }
+          ]
+        },
+        {
+          "terminators": [
+          ],
+          "neverEnding": true,
+          "atStartup": false,
+          "name": "DegreeDaysSumTemporal1Trend",
+          "type": "TemporalInterval",
+          "createdDate": "Tue Dec 22 2015",
+          "initiators": [
+            {
+              "initiatorPolicy": "Ignore",
+              "condition": "RiskIndex.value >= 70",
+              "name": "RiskIndex",
+              "initiatorType": "Event"
+            }
+          ]
+        },
+        {
+          "terminators": [
+           {
+                            "terminatorType": "Event",
+                            "terminationType": "Discard",
+                            "terminatorPolicy":"Each",
+                            "name": "DegreeDaysSecondGenerationAlarm"              				
+            }],
+          "neverEnding": true,
+          "atStartup": false,
+          "name": "DegreeDaysSumTemporal2Trend",
+          "type": "TemporalInterval",
+          "createdDate": "Tue Dec 22 2015",
+          "initiators": [
+            {
+              "initiatorPolicy": "Ignore",              
+              "name": "DegreeDaysFirstGenerationAlarm",
+              "initiatorType": "Event"
+            }
+          ]
+        },
+        {
+          "terminators": [
+           {
+                            "terminatorType": "Event",
+                            "terminationType": "Discard",
+                            "terminatorPolicy":"Each",
+                            "name": "DegreeDaysThirdGenerationAlarm"              				
+            }],
+          "neverEnding": true,
+          "atStartup": false,
+          "name": "DegreeDaysSumTemporal3Trend",
+          "type": "TemporalInterval",
+          "createdDate": "Tue Dec 22 2015",
+          "initiators": [
+            {
+              "initiatorPolicy": "Ignore",             
+              "name": "DegreeDaysSecondGenerationAlarm",
+              "initiatorType": "Event"
+            }
+          ]
+        },
+        
+        {
+          "terminators": [
+           {
+                            "terminatorType": "Event",
+                            "terminationType": "Discard",
+                            "terminatorPolicy":"Each",
+                            "name": "DegreeDaysFourthGenerationAlarm"              				
+            }
+          ],
+          "neverEnding": true,
+          "atStartup": false,
+          "name": "DegreeDaysSumTemporal4Trend",
+          "type": "TemporalInterval",
+          "createdDate": "Tue Dec 22 2015",
+          "initiators": [
+            {
+              "initiatorPolicy": "Ignore",             
+              "name": "DegreeDaysThirdGenerationAlarm",
+              "initiatorType": "Event"
+            }
+          ]
+        },
+        {
+          "terminators": [
+          {
+                            "terminatorType": "Event",
+                            "terminationType": "Discard",
+                            "terminatorPolicy":"Each",
+                            "name": "DegreeDaysSecondGenerationAlarm"              				
+            }
+          ],
+          "neverEnding": true,
+          "atStartup": false,
+          "name": "DegreeDaysSumTemporal2",
+          "type": "TemporalInterval",
+          "createdDate": "Tue Dec 22 2015",
+          "initiators": [
+            {
+              "initiatorPolicy": "Ignore",              
+              "name": "DegreeDaysFirstGenerationAlarm",
+              "initiatorType": "Event"
+            }
+          ]
+        },
+        {
+          "terminators": [
+          {
+                            "terminatorType": "Event",
+                            "terminationType": "Discard",
+                            "terminatorPolicy":"Each",
+                            "name": "DegreeDaysThirdGenerationAlarm"              				
+            }
+          ],
+          "neverEnding": true,
+          "atStartup": false,
+          "name": "DegreeDaysSumTemporal3",
+          "type": "TemporalInterval",
+          "createdDate": "Tue Dec 22 2015",
+          "initiators": [
+            {
+              "initiatorPolicy": "Ignore",              
+              "name": "DegreeDaysSecondGenerationAlarm",
+              "initiatorType": "Event"
+            }
+          ]
+        },
+        
+         {
+          "terminators": [
+           {
+                            "terminatorType": "Event",
+                            "terminationType": "Discard",
+                            "terminatorPolicy":"Each",
+                            "name": "DegreeDaysFourthGenerationAlarm"              				
+            }],
+          "neverEnding": true,
+          "atStartup": false,
+          "name": "DegreeDaysSumTemporal4",
+          "type": "TemporalInterval",
+          "createdDate": "Tue Dec 22 2015",
+          "initiators": [
+            {
+              "initiatorPolicy": "Ignore",              
+              "name": "DegreeDaysThirdGenerationAlarm",
+              "initiatorType": "Event"
+            }
+          ]
+        },
+        
+         
+           
+        {
+          "name": "72HoursDiseaseTrend",
+          "createdDate": "Tue Dec 22 2015",
+          "type": "TemporalInterval",
+          "atStartup": false,
+          "neverEnding": false,
+          "initiators": [
+            {
+              "initiatorType": "Event",
+              "initiatorPolicy": "Add",
+              "name": "RiskIndex",
+              "condition": "RiskIndex.value >= 20"
+            }
+          ],
+          "terminators": [            
+             {
+              "terminatorType": "RelativeTime",
+              "terminationType": "Terminate",
+              "relativeTime": "259200000"
+            }            
+            
+          ]
+        }
+       
+      
+        
+      ],
+      "composite": [
+         {
+          "name": "72HoursDiseaseTrendComposite",
+          "createdDate": "Wed Dec 23 2015",
+          "temporalContexts": [
+            {
+              "name": "72HoursDiseaseTrend"
+            }
+          ],
+          "segmentationContexts": [
+            {
+              "name": "SegmentationByStationId"
+            },
+            {
+              "name": "SegmentationByRiskType"
+            }
+          ]
+        },
+        
+         {
+          "name": "24HoursDiseaseTrendComposite",
+          "createdDate": "Wed Dec 23 2015",
+          "temporalContexts": [
+            {
+              "name": "24HoursDiseaseTrend"
+            }
+          ],
+          "segmentationContexts": [
+            {
+              "name": "SegmentationByStationId"
+            },
+            {
+              "name": "SegmentationByRiskType"
+            }
+          ]
+        },
+        
+        {
+          "name": "DegreeDaysSumTemporal1Composite",
+          "createdDate": "Wed Dec 23 2015",
+          "temporalContexts": [
+            {
+              "name": "DegreeDaysSumTemporal1"
+            }
+          ],
+          "segmentationContexts": [
+            {
+              "name": "SegmentationByStationId"
+            },
+            {
+              "name": "SegmentationByRiskType"
+            }
+          ]
+        },
+        
+         {
+          "name": "DegreeDaysSumTemporal2Composite",
+          "createdDate": "Wed Dec 23 2015",
+          "temporalContexts": [
+            {
+              "name": "DegreeDaysSumTemporal2"
+            }
+          ],
+          "segmentationContexts": [
+            {
+              "name": "SegmentationByStationId"
+            },
+            {
+              "name": "SegmentationByRiskType"
+            }
+          ]
+        },
+        
+         {
+          "name": "DegreeDaysSumTemporal3Composite",
+          "createdDate": "Wed Dec 23 2015",
+          "temporalContexts": [
+            {
+              "name": "DegreeDaysSumTemporal3"
+            }
+          ],
+          "segmentationContexts": [
+            {
+              "name": "SegmentationByStationId"
+            },
+            {
+              "name": "SegmentationByRiskType"
+            }
+          ]
+        },
+        
+         {
+          "name": "DegreeDaysSumTemporal4Composite",
+          "createdDate": "Wed Dec 23 2015",
+          "temporalContexts": [
+            {
+              "name": "DegreeDaysSumTemporal4"
+            }
+          ],
+          "segmentationContexts": [
+            {
+              "name": "SegmentationByStationId"
+            },
+            {
+              "name": "SegmentationByRiskType"
+            }
+          ]
+        },
+        
+        {
+          "name": "DegreeDaysSumTemporal1TrendComposite",
+          "createdDate": "Wed Dec 23 2015",
+          "temporalContexts": [
+            {
+              "name": "DegreeDaysSumTemporal1Trend"
+            }
+          ],
+          "segmentationContexts": [
+            {
+              "name": "SegmentationByStationId"
+            },
+            {
+              "name": "SegmentationByRiskType"
+            }
+          ]
+        },
+        
+         {
+          "name": "DegreeDaysSumTemporal2TrendComposite",
+          "createdDate": "Wed Dec 23 2015",
+          "temporalContexts": [
+            {
+              "name": "DegreeDaysSumTemporal2Trend"
+            }
+          ],
+          "segmentationContexts": [
+            {
+              "name": "SegmentationByStationId"
+            },
+            {
+              "name": "SegmentationByRiskType"
+            }
+          ]
+        },
+        
+          {
+          "name": "DegreeDaysSumTemporal3TrendComposite",
+          "createdDate": "Wed Dec 23 2015",
+          "temporalContexts": [
+            {
+              "name": "DegreeDaysSumTemporal3Trend"
+            }
+          ],
+          "segmentationContexts": [
+            {
+              "name": "SegmentationByStationId"
+            },
+            {
+              "name": "SegmentationByRiskType"
+            }
+          ]
+        },
+        
+         {
+          "name": "DegreeDaysSumTemporal4TrendComposite",
+          "createdDate": "Wed Dec 23 2015",
+          "temporalContexts": [
+            {
+              "name": "DegreeDaysSumTemporal4Trend"
+            }
+          ],
+          "segmentationContexts": [
+            {
+              "name": "SegmentationByStationId"
+            },
+            {
+              "name": "SegmentationByRiskType"
+            }
+          ]
+        }
+        
+        
+        
+        
+        
+        
+      ],
+       "segmentation": [
+        	 {
+          "name": "SegmentationByStationId",
+          "createdDate": "Tue Dec 22 2015",
+          "participantEvents": [
+            {
+              "name": "RiskIndex",
+              "expression": "RiskIndex.station_id"
+            },
+             {
+              "name": "DegreeDaysFirstGenerationAlarm",
+              "expression": "DegreeDaysFirstGenerationAlarm.station_id"
+            },
+             {
+              "name": "DegreeDaysSecondGenerationAlarm",
+              "expression": "DegreeDaysSecondGenerationAlarm.station_id"
+            },
+             {
+              "name": "DegreeDaysThirdGenerationAlarm",
+              "expression": "DegreeDaysThirdGenerationAlarm.station_id"
+            },
+             {
+              "name": "DegreeDaysFourthGenerationAlarm",
+              "expression": "DegreeDaysFourthGenerationAlarm.station_id"
+            }
+          ]
+        },
+        {
+          "name": "SegmentationByRiskType",
+          "createdDate": "Tue Dec 22 2015",
+          "participantEvents": [           
+            {
+              "name": "RiskIndex",
+              "expression": "RiskIndex.risk_type"
+            },
+             {
+              "name": "DegreeDaysFirstGenerationAlarm",
+              "expression": "DegreeDaysFirstGenerationAlarm.risk_type"
+            },
+             {
+              "name": "DegreeDaysSecondGenerationAlarm",
+              "expression": "DegreeDaysSecondGenerationAlarm.risk_type"
+            },
+             {
+              "name": "DegreeDaysThirdGenerationAlarm",
+              "expression": "DegreeDaysThirdGenerationAlarm.risk_type"
+            },
+             {
+              "name": "DegreeDaysFourthGenerationAlarm",
+              "expression": "DegreeDaysFourthGenerationAlarm.risk_type"
+            }
+          ]
+        }
+      ]
+    },
+    "consumers": 
+    [
+    {
+        "events": [
+		  {
+            "name": "RiskIndex"
+          },
+          {
+            "name": "DiseaseAlert"
+          },
+          {
+            "name": "DiseasePreliminaryAlert"
+          },
+        
+          {
+            "name": "DegreeDaysFirstGenerationAlarm"
+          },
+          {
+            "name": "DegreeDaysSecondGenerationAlarm"
+          },
+          {
+            "name": "DegreeDaysThirdGenerationAlarm"
+          },
+           {
+            "name": "DegreeDaysFourthGenerationAlarm"
+          },
+          {
+            "name": "DegreeDaysFirstGenerationWarning"
+          },
+          {
+            "name": "DegreeDaysSecondGenerationWarning"
+          },
+          {
+            "name": "DegreeDaysThirdGenerationWarning"
+          }
+          ,
+           {
+            "name": "DegreeDaysFourthGenerationWarning"
+          }
+        ],
+        "name": "EventDashboard",
+        "properties": [
+          {
+            "name": "URL",
+            "value": "http://localhost:8080/dashboard/events"
+          },
+          {
+            "name": "contentType",
+            "value": "text/json"
+          },
+          {
+            "name": "formatter",
+            "value": "json"
+          },
+          {
+            "name": "dateFormat",
+            "value": "dd/MM/yyyy-HH:mm:ss"
+          }
+        ],
+        "type": "Rest",
+        "createdDate": "Sun Nov 18 2012"
+      },
+      {
+        "events": [
+           {
+            "name": "RiskIndex"
+          },
+          {
+            "name": "DiseaseAlert"
+          },
+          {
+            "name": "DiseasePreliminaryAlert"
+          },
+        
+          {
+            "name": "DegreeDaysFirstGenerationAlarm"
+          },
+          {
+            "name": "DegreeDaysSecondGenerationAlarm"
+          },
+          {
+            "name": "DegreeDaysThirdGenerationAlarm"
+          },
+           {
+            "name": "DegreeDaysFourthGenerationAlarm"
+          },
+          {
+            "name": "DegreeDaysFirstGenerationWarning"
+          },
+          {
+            "name": "DegreeDaysSecondGenerationWarning"
+          },
+          {
+            "name": "DegreeDaysThirdGenerationWarning"
+          }
+          ,
+           {
+            "name": "DegreeDaysFourthGenerationWarning"
+          }
+          
+          
+         
+        ],
+        "name": "Consumer",
+        "properties": [
+          {
+            "name": "filename",
+            "value": "D:\\EP\\Projects\\Proton\\OpenSourceWorkspace\\ProtonEU\\Databio\\NP GAIA\\version2\\output.txt"
+          },
+          {
+            "name": "formatter",
+            "value": "tag"
+          },
+          {
+            "name": "delimiter",
+            "value": ";"
+          },
+          {
+            "name": "tagDataSeparator",
+            "value": "="
+          },
+          {
+            "name": "SendingDelay",
+            "value": "1000"
+          },
+          {
+            "name": "dateFormat",
+            "value": "dd/MM/yyyy-HH:mm:ss"
+          }
+        ],
+        "type": "File",
+        "createdDate": "Tue Sep 23 2014"
+      }
+    
+   
+    ],
+    "producers": 
+    [
+  {
+        "events": [],
+        "name": "Producer",       
+        "properties": [
+          {
+ 			"name": "URL",
+            "value": "https://gaiasense.neuropublic.gr/np/ibm_dws/ws.php?u=ibm&ext=e7cf66de-da23-40ad-8091-407856563dbf"          
+            },
+          {
+            "name": "pollingInterval",
+            "value": "1000"
+          },
+          {
+            "name": "sendingDelay",
+            "value": "1000"
+          },
+         {
+            "name": "contentType",
+            "value": "text/json"
+          },
+          {
+            "name": "formatter",
+            "value": "json"
+          },
+          {
+            "name": "pollingMode",
+            "value": "batch"
+          },
+         
+          {
+            "name": "dateFormat",
+            "value": "yyyy-MM-dd HH:mm:ss"                     
+          }
+        ],
+        "type": "REST",
+        "createdDate": "Tue Sep 23 2014"
+      }
+    ],
+    "name": "OliveTrees"
+  }
+}
