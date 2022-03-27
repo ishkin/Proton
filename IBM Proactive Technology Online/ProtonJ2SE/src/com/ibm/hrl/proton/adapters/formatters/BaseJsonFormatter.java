@@ -77,10 +77,11 @@ public abstract class BaseJsonFormatter extends AbstractTextFormatter{
 		Map<String,Object> attrValues = new HashMap<String,Object>();
 		for (Object key: eventJson.keySet()) {
 			String attrName = (String)key; 
-			String attrStringValue = (String)eventJson.get(attrName);
+			String attrStringValue = eventJson.get(attrName).toString();
 			TypeAttribute eventTypeAttribute = eventType.getTypeAttributeSet().getAttribute(attrName);
 			if (eventTypeAttribute == null){
-				throw new AdapterException("Attibute ".concat(attrName).concat(" of event ").concat(nameValue).concat(" is not defined"));
+				//throw new AdapterException("Attibute ".concat(attrName).concat(" of event ").concat(nameValue).concat(" is not defined"));
+				continue;
 			}
 			AttributeTypesEnum attrType = eventTypeAttribute.getTypeEnum();
 			if (attrType.equals(AttributeTypesEnum.STRING) || eventTypeAttribute.getDimension()>0) {

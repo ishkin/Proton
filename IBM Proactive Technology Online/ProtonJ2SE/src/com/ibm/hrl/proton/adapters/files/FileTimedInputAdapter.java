@@ -25,6 +25,7 @@ import com.ibm.hrl.proton.adapters.configuration.IInputAdapterConfiguration;
 import com.ibm.hrl.proton.adapters.connector.IInputConnector;
 import com.ibm.hrl.proton.adapters.formatters.ITextFormatter;
 import com.ibm.hrl.proton.adapters.formatters.ITextFormatter.TextFormatterType;
+import com.ibm.hrl.proton.adapters.formatters.CSVMultipleEventsTextFormatter;
 import com.ibm.hrl.proton.adapters.formatters.CSVTextFormatter;
 import com.ibm.hrl.proton.adapters.formatters.JSONFormatter;
 import com.ibm.hrl.proton.adapters.formatters.TagTextFormatter;
@@ -64,6 +65,9 @@ public class FileTimedInputAdapter extends AbstractInputTimedAdapter {
 			break;
 		case CSV:
 			fileFormatter = new CSVTextFormatter(producerMetadata.getProducerProperties(),eventMetadata,eep);
+			break;
+		case MULTI_CSV:
+			fileFormatter = new CSVMultipleEventsTextFormatter(producerMetadata.getProducerProperties(),eventMetadata,eep);
 			break;
 		case TAG:
 			fileFormatter = new TagTextFormatter(producerMetadata.getProducerProperties(),eventMetadata,eep);

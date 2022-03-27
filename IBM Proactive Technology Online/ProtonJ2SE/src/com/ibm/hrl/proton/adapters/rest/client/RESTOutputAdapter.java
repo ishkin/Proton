@@ -17,6 +17,7 @@ package com.ibm.hrl.proton.adapters.rest.client;
 
 import com.ibm.hrl.proton.adapters.configuration.IOutputAdapterConfiguration;
 import com.ibm.hrl.proton.adapters.connector.IOutputConnector;
+import com.ibm.hrl.proton.adapters.formatters.CSVMultipleEventsTextFormatter;
 import com.ibm.hrl.proton.adapters.formatters.CSVTextFormatter;
 import com.ibm.hrl.proton.adapters.formatters.ITextFormatter;
 import com.ibm.hrl.proton.adapters.formatters.ITextFormatter.TextFormatterType;
@@ -60,6 +61,10 @@ public class RESTOutputAdapter extends AbstractOutputAdapter {
 			break;
 		case CSV:			
 			textFormatter = new CSVTextFormatter(consumerMetadata.getConsumerProperties(),eventMetadata,eep);
+			break;
+		case MULTI_CSV:
+			textFormatter = new CSVMultipleEventsTextFormatter(consumerMetadata.getConsumerProperties(),eventMetadata,eep);
+			break;
 		case JSON:
 			textFormatter = new JSONFormatter(consumerMetadata.getConsumerProperties(),eventMetadata,eep);
 			break;

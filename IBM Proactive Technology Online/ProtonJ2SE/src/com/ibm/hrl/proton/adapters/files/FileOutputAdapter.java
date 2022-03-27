@@ -24,6 +24,7 @@ import com.ibm.hrl.proton.adapters.configuration.IOutputAdapterConfiguration;
 import com.ibm.hrl.proton.adapters.connector.IOutputConnector;
 import com.ibm.hrl.proton.adapters.formatters.ITextFormatter;
 import com.ibm.hrl.proton.adapters.formatters.ITextFormatter.TextFormatterType;
+import com.ibm.hrl.proton.adapters.formatters.CSVMultipleEventsTextFormatter;
 import com.ibm.hrl.proton.adapters.formatters.CSVTextFormatter;
 import com.ibm.hrl.proton.adapters.formatters.JSONFormatter;
 import com.ibm.hrl.proton.adapters.formatters.TagTextFormatter;
@@ -59,6 +60,10 @@ public class FileOutputAdapter extends AbstractOutputAdapter {
 			break;
 		case CSV:			
 			fileFormatter = new CSVTextFormatter(consumerMetadata.getConsumerProperties(),eventMetadata,eep);
+			break;
+		case MULTI_CSV:
+			fileFormatter = new CSVMultipleEventsTextFormatter(consumerMetadata.getConsumerProperties(),eventMetadata,eep);
+			break;
 		case TAG:
 			fileFormatter = new TagTextFormatter(consumerMetadata.getConsumerProperties(),eventMetadata,eep);
 			break;
