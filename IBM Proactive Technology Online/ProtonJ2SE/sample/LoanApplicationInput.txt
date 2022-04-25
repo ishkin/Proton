@@ -1,0 +1,3 @@
+Name=LoanApplicationReceived;amount=13000;applicationID=8093485kjfkjs;
+Name=ApplicationDecision;applicationID=8093485kjfkjs;decision=Accepted;agentType=Novice
+Name=LoanApplicationReceived;amount=24000;applicationID=80dfg3485kjfkjs;

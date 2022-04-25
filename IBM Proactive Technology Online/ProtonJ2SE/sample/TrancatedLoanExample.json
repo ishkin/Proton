@@ -1,0 +1,1743 @@
+{
+  "epn": {
+    "epas": [
+      {
+        "cardinalityPolicy": "Single",
+        "createdDate": "Tue Dec 22 2015",
+        "epaType": "Aggregate",
+        "inputEvents": [
+          {
+            "consumptionPolicy": "Consume",
+            "name": "ApplicationDecision",
+            "instanceSelectionPolicy": "First"
+          }
+        ],
+        "internalSegmentation": [],
+        "name": "TwoWeeksFromApplicationEPA",
+        "context": "TwoWeeksFromApplicationWithoutAnswerContext",
+        "assertion": "Count < 1",
+        "computedVariables": [
+          {
+            "aggregationType": "Count",
+            "ApplicationDecision": "1",
+            "name": "Count"
+          }
+          
+        ],
+        "evaluationPolicy": "Deferred",
+        "derivedEvents": [
+          {
+            "name": "TwoDaysWithoutDecision",
+            "reportParticipants": false,
+            "expressions": {
+              "applicationID": "context.ApplicationIDSegmentation"
+            }
+          }
+        ]
+      },
+      {
+        "name": "CountSubmittedApplicationsPerAgentEPA",
+        "createdDate": "Tue Aug 05 2014",
+        "epaType": "Aggregate",
+        "context": "AgentSubmissionsComposite",
+        "inputEvents": [
+          {
+            "name": "VerifiedRiskAssesment",           
+            "consumptionPolicy": "Reuse",
+            "instanceSelectionPolicy": "First"
+          },
+          {
+            "name": "VerifiedCreditCheck",           
+            "consumptionPolicy": "Reuse",
+            "instanceSelectionPolicy": "First"
+          }
+        ],
+        "computedVariables": [
+          {
+            "name": "Count",
+            "aggregationType": "Count",
+            "VerifiedRiskAssesment": "1",
+            "VerifiedCreditCheck": "1"
+          }
+        ],
+        "assertion": "Count >= 1",
+        "evaluationPolicy": "Immediate",
+        "cardinalityPolicy": "Unrestricted",
+        "internalSegmentation": [],
+        "derivedEvents": [
+          {
+            "name": "IncomingApplicationsPerAgent",
+            "reportParticipants": false,
+            "expressions": {             
+              "agentType": "context.SegmentationAgentType",
+              "submittedApplicationsCount": "Count"
+            }
+          }
+        ]
+      },
+       {
+        "name": "CountHandledApplicationsPerSkilledAgentEPA",
+        "createdDate": "Tue Aug 05 2014",
+        "epaType": "Aggregate",
+        "context": "AgentSubmissionsComposite",
+        "inputEvents": [
+          {
+            "name": "SkilledAgentDecision",           
+            "consumptionPolicy": "Reuse",
+            "instanceSelectionPolicy": "First"
+          }
+        ],
+        "computedVariables": [
+          {
+            "name": "Count",
+            "aggregationType": "Count",
+            "SkilledAgentDecision": "1"
+           
+          }
+        ],
+        "assertion": "Count >= 1",
+        "evaluationPolicy": "Immediate",
+        "cardinalityPolicy": "Unrestricted",
+        "internalSegmentation": [],
+        "derivedEvents": [
+          {
+            "name": "HandledApplicationsPerAgent",
+            "reportParticipants": false,
+            "expressions": {             
+              "agentType": "context.SegmentationAgentType",
+              "handledApplicationsCount": "Count"
+            }
+          }
+        ]
+      },
+      {
+        "name": "CountHandledApplicationsPerNoviceAgentEPA",
+        "createdDate": "Tue Aug 05 2014",
+        "epaType": "Aggregate",
+        "context": "AgentSubmissionsComposite",
+        "inputEvents": [
+          {
+            "name": "NoviceAgentDecision",           
+            "consumptionPolicy": "Reuse",
+            "instanceSelectionPolicy": "First"
+          }
+        ],
+        "computedVariables": [
+          {
+            "name": "Count",
+            "aggregationType": "Count",
+            "NoviceAgentDecision": "1"
+           
+          }
+        ],
+        "assertion": "Count >= 1",
+        "evaluationPolicy": "Immediate",
+        "cardinalityPolicy": "Unrestricted",
+        "internalSegmentation": [],
+        "derivedEvents": [
+          {
+            "name": "HandledApplicationsPerAgent",
+            "reportParticipants": false,
+            "expressions": {             
+              "agentType": "context.SegmentationAgentType",
+              "handledApplicationsCount": "Count"
+            }
+          }
+        ]
+      },
+       {
+      		"name": "CalculateCurrentApplicationsOnTableForAgentEPA",
+			"context": "AgentSubmissionsComposite",
+			"createdDate": "Thu Jun 02 2016",
+			"epaType": "All",
+			"inputEvents": [{
+				"consumptionPolicy": "Reuse",
+				"name": "IncomingApplicationsPerAgent",
+				"instanceSelectionPolicy": "Override"
+			},
+			{
+				"consumptionPolicy": "Reuse",
+				"name": "HandledApplicationsPerAgent",
+				"instanceSelectionPolicy": "Override"
+			}
+			],
+			"internalSegmentation": [],
+			"cardinalityPolicy": "Unrestricted",
+			"assertion":"(IncomingApplicationsPerAgent.submittedApplicationsCount-HandledApplicationsPerAgent.handledApplicationsCount) > 4",
+			"computedVariables": [],
+			"evaluationPolicy": "Immediate",
+			"derivedEvents": [{
+				"name": "TooManyApplicationsOnAgentsTable",
+				"reportParticipants": true,
+				"expressions": {
+					"agentType": "context.SegmentationAgentType",					
+					"numberApps": "IncomingApplicationsPerAgent.submittedApplicationsCount-HandledApplicationsPerAgent.handledApplicationsCount"										
+				}
+			}]
+		},
+		{
+      		"name": "CalculateCurrentApplicationsBellowThresholdEPA",
+			"context": "AgentSubmissionsComposite",
+			"createdDate": "Thu Jun 02 2016",
+			"epaType": "All",
+			"inputEvents": [{
+				"consumptionPolicy": "Reuse",
+				"name": "IncomingApplicationsPerAgent",
+				"instanceSelectionPolicy": "Override"
+			},
+			{
+				"consumptionPolicy": "Reuse",
+				"name": "HandledApplicationsPerAgent",
+				"instanceSelectionPolicy": "Override"
+			}
+			],
+			"internalSegmentation": [],
+			"cardinalityPolicy": "Unrestricted",
+			"assertion":"(IncomingApplicationsPerAgent.submittedApplicationsCount-HandledApplicationsPerAgent.handledApplicationsCount) <= 4",
+			"computedVariables": [],
+			"evaluationPolicy": "Immediate",
+			"derivedEvents": [{
+				"name": "AgentApplicationsBellowThreshold",
+				"reportParticipants": true,
+				"expressions": {
+					"agentType": "context.SegmentationAgentType",					
+					"currentNumberAppsForAgentToHandle": "IncomingApplicationsPerAgent.submittedApplicationsCount-HandledApplicationsPerAgent.handledApplicationsCount"										
+				}
+			}]
+		},
+		{
+        "name": "EmitAgentOverflowClearedEPA",
+        "createdDate": "Tue Dec 22 2015",
+        "epaType": "Basic",
+        "context": "MonitorAgentOverflowComposite",
+        "inputEvents": [
+          {
+            "name": "AgentApplicationsBellowThreshold",                        
+            "consumptionPolicy": "Consume",
+            "instanceSelectionPolicy": "First"
+          }
+        ],
+       "internalSegmentation": [],			
+		"computedVariables": [],
+		"evaluationPolicy": "Immediate",
+		"derivedEvents": [{
+				"name": "AgentOverflowCleared",
+				"reportParticipants": false,
+				"expressions": {
+					"agentType": "AgentApplicationsBellowThreshold.agentType",					
+					"numberApps": "AgentApplicationsBellowThreshold.currentNumberAppsForAgentToHandle"										
+				}
+			}]
+      },
+      	{
+        "name": "LockdownEPA",
+        "createdDate": "Tue Dec 22 2015",
+        "epaType": "Basic",
+        "context": "LockdownTemporal",        
+        "inputEvents": [
+          {
+            "name": "VerifiedAmount",                        
+            "consumptionPolicy": "Consume",
+            "instanceSelectionPolicy": "First",
+             "filterExpression":"VerifiedAmount.amount > 1000"
+          }
+        ],
+       "internalSegmentation": [],			
+		"computedVariables": [],
+		"evaluationPolicy": "Immediate",
+		"derivedEvents": [{
+				"name": "LockdownAndLargeAmount",
+				"reportParticipants": false,
+				"expressions": {									
+					"applicationID": "VerifiedAmount.applicationID",
+					"amount": "VerifiedAmount.amount"										
+				}
+			}]
+      }
+    ],
+    
+    "name": "LoanApplication",
+    "consumers": [
+        {
+        "events": [
+        
+		    {
+            "name": "LoanApplicationReceived"
+          },
+          {
+          	"name":"LoanApplicationSubmitted"
+          },          
+		  {
+            "name": "VerifiedAmount"
+          },
+          {
+            "name": "CreditCheck"
+          },
+          {
+            "name": "RiskAssesment"
+          },
+          {
+            "name": "VerifiedCreditCheck"
+          },
+          {
+            "name": "SkilledAgentDecision"
+          },
+                    {
+            "name": "NoviceAgentDecision"
+          },
+          
+          {
+            "name": "VerifiedRiskAssesment"
+          },
+           {
+            "name": "ApplicationDecision"
+          },
+          {
+            "name": "TwoDaysWithoutDecision"
+          },
+          
+           {
+            "name": "TooManyApplicationsOnAgentsTable"
+          },
+          {
+            "name": "AgentOverflowCleared"
+          },
+           {
+            "name": "LockdownInitiated"
+          },
+          {
+            "name": "LockdownTerminated"
+          },
+           {
+            "name": "LockdownAndLargeAmount"
+          }
+          
+        ],
+        "name": "ConsumerCSV",
+        "properties": [
+          {
+            "name": "filename",
+            "value": ".\\sample\\TrancatedLoanExampleOutput.csv"
+          },
+          {
+            "name": "formatter",
+            "value": "multi_csv"
+          },
+          {
+            "name": "delimiter",
+            "value": ","
+          },
+          {
+            "name": "tagDataSeparator",
+            "value": "="
+          },
+           {
+            "name": "eventTypeNameIndex",
+            "value": "0"
+          },
+          {
+            "name": "csvAttributeNames",
+            "value": "Name,applicationID,amount,credit_score,risk,agentType,decision,numberApps,originalOccurrenceTime,OccurrenceTime"
+          },          
+          {
+            "name": "SendingDelay",
+            "value": "1000"
+          },
+          {
+            "name": "dateFormat",
+            "value": "dd/MM/yyyy-HH:mm:ss.SSS"
+          }
+        ],
+        "type": "File",
+        "createdDate": "Tue Sep 23 2014"
+      },
+      
+              {
+        "events": [        
+		  
+          {
+            "name": "IncomingApplicationsPerAgent"
+          },
+           {
+            "name": "HandledApplicationsPerAgent"
+          },
+           {
+            "name": "TooManyApplicationsOnAgentsTable"
+          },
+                     {
+            "name": "AgentApplicationsBellowThreshold"
+          },
+           {
+            "name": "AgentOverflowCleared"
+          },
+            {
+            "name": "SystemStartup"
+          }
+          
+          
+          
+        ],
+        "name": "InternalConsumer",
+        "properties": [
+          {
+            "name": "filename",
+            "value": ".\\sample\\TrancatedLoanExampleInternalOutput.txt"
+          },
+          {
+            "name": "formatter",
+            "value": "tag"
+          },
+          {
+            "name": "delimiter",
+            "value": ";"
+          },
+          {
+            "name": "tagDataSeparator",
+            "value": "="
+          },
+               
+          {
+            "name": "SendingDelay",
+            "value": "1000"
+          },
+          {
+            "name": "dateFormat",
+            "value": "dd/MM/yyyy-HH:mm:ss.SSS"
+          }
+        ],
+        "type": "File",
+        "createdDate": "Tue Sep 23 2014"
+      }
+      
+    ],
+    "contexts": {
+      "composite": [
+        {
+          "temporalContexts": [
+            {
+              "name": "TwoWeeksFromApplicationWithoutAnswerTemporal"
+            }
+          ],
+          "createdDate": "Thu May 23 2019",
+          "segmentationContexts": [
+            {
+              "name": "ApplicationIDSegmentation"
+            }
+          ],
+          "name": "TwoWeeksFromApplicationWithoutAnswerContext"
+        },
+        {
+          "temporalContexts": [
+            {
+              "name": "AgentSubmissionsTemporal"
+            }
+          ],
+          "createdDate": "Thu May 23 2019",
+          "segmentationContexts": [
+            {
+              "name": "SegmentationAgentType"
+            }
+          ],
+          "name": "AgentSubmissionsComposite"
+        },
+         {
+          "temporalContexts": [
+            {
+              "name": "MonitorAgentOverflowTemporal"
+            }
+          ],
+          "createdDate": "Thu May 23 2019",
+          "segmentationContexts": [
+            {
+              "name": "SegmentationAgentType"
+            }
+          ],
+          "name": "MonitorAgentOverflowComposite"
+        }
+        
+      ],
+      "segmentation": [
+        {
+          "createdDate": "Wed May 22 2019",
+          "participantEvents": [
+            {
+              "expression": "LoanApplicationReceived.applicationID",
+              "name": "LoanApplicationReceived"
+            },
+            {
+              "expression": "ApplicationDecision.applicationID",
+              "name": "ApplicationDecision"
+            },
+            {
+              "expression": "TwoDaysWithoutDecision.applicationID",
+              "name": "TwoDaysWithoutDecision"
+            }
+          ],
+          "name": "ApplicationIDSegmentation"
+        },
+        {
+          "createdDate": "Wed May 22 2019",
+          "participantEvents": [
+            {
+              "expression": "VerifiedCreditCheck.agentType",
+              "name": "VerifiedCreditCheck"
+            },
+            {
+              "expression": "VerifiedRiskAssesment.agentType",
+              "name": "VerifiedRiskAssesment"
+            },
+            {
+              "expression": "SkilledAgentDecision.agentType",
+              "name": "SkilledAgentDecision"
+            },
+            {
+              "expression": "NoviceAgentDecision.agentType",
+              "name": "NoviceAgentDecision"
+            },
+             {
+              "expression": "IncomingApplicationsPerAgent.agentType",
+              "name": "IncomingApplicationsPerAgent"
+            },
+             {
+              "expression": "HandledApplicationsPerAgent.agentType",
+              "name": "HandledApplicationsPerAgent"
+            },
+              {
+              "expression": "TooManyApplicationsOnAgentsTable.agentType",
+              "name": "TooManyApplicationsOnAgentsTable"
+            },
+            {
+              "expression": "AgentOverflowCleared.agentType",
+              "name": "AgentOverflowCleared"
+            },
+              {
+              "expression": "AgentApplicationsBellowThreshold.agentType",
+              "name": "AgentApplicationsBellowThreshold"
+            }
+           
+          ],
+          "name": "SegmentationAgentType"
+        }
+      ],
+      "temporal": [
+        {
+          "atStartup": false,
+          "neverEnding": false,
+          "createdDate": "Tue Dec 22 2015",
+          "name": "TwoWeeksFromApplicationWithoutAnswerTemporal",
+          "terminators": [
+            {
+              "terminatorType": "RelativeTime",
+              "relativeTime": "113759",
+              "terminatorPolicy": "Each",
+              "terminationType": "Terminate"
+            },
+            {
+              "terminatorType": "Event",
+              "terminatorPolicy": "Each",
+              "terminationType": "Discard",
+              "name": "ApplicationDecision"
+            }
+          ],
+          "initiators": [
+            {
+              "initiatorPolicy": "Ignore",
+              "name": "LoanApplicationReceived",
+              "initiatorType": "Event"
+            }
+          ],
+          "type": "TemporalInterval"
+        },
+         {
+          "atStartup": false,
+          "neverEnding": false,
+          "createdDate": "Tue Dec 22 2015",
+          "name": "MonitorAgentOverflowTemporal",
+          "terminators": [            
+            {
+              "terminatorType": "Event",
+              "terminatorPolicy": "Each",
+              "terminationType": "Discard",
+              "name": "AgentOverflowCleared"
+            }
+          ],
+          "initiators": [
+            {
+              "initiatorPolicy": "Ignore",
+              "name": "TooManyApplicationsOnAgentsTable",
+              "initiatorType": "Event"
+            }
+          ],
+          "type": "TemporalInterval"
+        },
+        
+          {
+          "atStartup": false,
+          "neverEnding": true,
+          "createdDate": "Tue Dec 22 2015",
+          "name": "AgentSubmissionsTemporal",
+          "terminators": [           
+          ],
+          "initiators": [
+            {
+              "initiatorPolicy": "Ignore",
+              "name": "VerifiedCreditCheck",
+              "initiatorType": "Event"
+            },
+            {
+              "initiatorPolicy": "Ignore",
+              "name": "VerifiedRiskAssesment",
+              "initiatorType": "Event"
+            }
+          ],
+          "type": "TemporalInterval"
+        },
+          {
+          "atStartup": false,
+          "neverEnding": true,
+          "createdDate": "Tue Dec 22 2015",
+          "name": "LockdownTemporal",
+          "terminators": [  
+           {
+              "terminatorType": "Event",
+              "terminatorPolicy": "Each",
+              "terminationType": "Discard",
+              "name": "LockdownTerminated"
+            }         
+          ],
+          "initiators": [
+            {
+              "initiatorPolicy": "Ignore",
+              "name": "LockdownInitiated",
+              "initiatorType": "Event"
+            }           
+          ],
+          "type": "TemporalInterval"
+        }
+      ]
+    },
+    "events": [
+      {
+        "createdDate": "Tue Dec 22 2015",
+        "name": "LoanApplicationReceived",
+        "attributes": [
+          {
+            "defaultValue": "1",
+            "name": "Certainty",
+            "description": "The certainty that this event happen (value between 0 to 1)",
+            "type": "Double",
+            "dimension": 0
+          },
+          {
+            "name": "OccurrenceTime",
+            "description": "No value means it equals the event detection time, other option is to use one of the defined distribution functions with parameters",
+            "type": "Date",
+            "dimension": 0
+          },
+            {
+            "name": "originalOccurrenceTime",
+            "description": "No value means it equals the event detection time, other option is to use one of the defined distribution functions with parameters",
+            "type": "Date",
+            "dimension": 0
+          },
+          {
+            "name": "ExpirationTime",
+            "type": "Date",
+            "dimension": 0
+          },
+          {
+            "name": "Cost",
+            "description": "The cost of this event occurrence. Negative if this is an opportunity",
+            "type": "Double",
+            "dimension": 0
+          },
+          {
+            "defaultValue": "0",
+            "name": "Duration",
+            "description": "Used in case the this event occur within an interval",
+            "type": "Double",
+            "dimension": 0
+          },
+          {
+            "name": "applicationID",
+            "type": "String",
+            "dimension": 0
+          },
+          {
+            "name": "amount",
+            "type": "Double",
+            "dimension": 0
+          }
+        ]
+      },
+       {
+        "createdDate": "Tue Dec 22 2015",
+        "name": "LoanApplicationSubmitted",
+        "attributes": [
+          {
+            "defaultValue": "1",
+            "name": "Certainty",
+            "description": "The certainty that this event happen (value between 0 to 1)",
+            "type": "Double",
+            "dimension": 0
+          },
+          {
+            "name": "OccurrenceTime",
+            "description": "No value means it equals the event detection time, other option is to use one of the defined distribution functions with parameters",
+            "type": "Date",
+            "dimension": 0
+          },
+            {
+            "name": "originalOccurrenceTime",
+            "description": "No value means it equals the event detection time, other option is to use one of the defined distribution functions with parameters",
+            "type": "Date",
+            "dimension": 0
+          },
+          {
+            "name": "ExpirationTime",
+            "type": "Date",
+            "dimension": 0
+          },
+          {
+            "name": "Cost",
+            "description": "The cost of this event occurrence. Negative if this is an opportunity",
+            "type": "Double",
+            "dimension": 0
+          },
+          {
+            "defaultValue": "0",
+            "name": "Duration",
+            "description": "Used in case the this event occur within an interval",
+            "type": "Double",
+            "dimension": 0
+          },
+          {
+            "name": "applicationID",
+            "type": "String",
+            "dimension": 0
+          },
+          {
+            "name": "amount",
+            "type": "Double",
+            "dimension": 0
+          }
+        ]
+      },
+      {
+        "createdDate": "Tue Dec 22 2015",
+        "name": "VerifiedCreditCheck",
+        "attributes": [
+          {
+            "defaultValue": "1",
+            "name": "Certainty",
+            "description": "The certainty that this event happen (value between 0 to 1)",
+            "type": "Double",
+            "dimension": 0
+          },
+          {
+            "name": "OccurrenceTime",
+            "description": "No value means it equals the event detection time, other option is to use one of the defined distribution functions with parameters",
+            "type": "Date",
+            "dimension": 0
+          },
+             {
+            "name": "originalOccurrenceTime",
+            "description": "No value means it equals the event detection time, other option is to use one of the defined distribution functions with parameters",
+            "type": "Date",
+            "dimension": 0
+          },
+          {
+            "name": "ExpirationTime",
+            "type": "Date",
+            "dimension": 0
+          },
+          {
+            "name": "Cost",
+            "description": "The cost of this event occurrence. Negative if this is an opportunity",
+            "type": "Double",
+            "dimension": 0
+          },
+          {
+            "defaultValue": "0",
+            "name": "Duration",
+            "description": "Used in case the this event occur within an interval",
+            "type": "Double",
+            "dimension": 0
+          },
+          {
+            "name": "applicationID",
+            "type": "String",
+            "dimension": 0
+          },
+          {
+            "name": "amount",
+            "type": "Double",
+            "dimension": 0
+          },
+          {
+            "name": "credit_score",
+            "type": "Double",
+            "dimension": 0
+          },
+          {
+            "name": "agentType",
+            "type": "String",
+            "dimension": 0
+          }
+        ]
+      },
+       {
+        "createdDate": "Tue Dec 22 2015",
+        "name": "CreditCheck",
+        "attributes": [
+          {
+            "defaultValue": "1",
+            "name": "Certainty",
+            "description": "The certainty that this event happen (value between 0 to 1)",
+            "type": "Double",
+            "dimension": 0
+          },
+          {
+            "name": "OccurrenceTime",
+            "description": "No value means it equals the event detection time, other option is to use one of the defined distribution functions with parameters",
+            "type": "Date",
+            "dimension": 0
+          },
+             {
+            "name": "originalOccurrenceTime",
+            "description": "No value means it equals the event detection time, other option is to use one of the defined distribution functions with parameters",
+            "type": "Date",
+            "dimension": 0
+          },
+          {
+            "name": "ExpirationTime",
+            "type": "Date",
+            "dimension": 0
+          },
+          {
+            "name": "Cost",
+            "description": "The cost of this event occurrence. Negative if this is an opportunity",
+            "type": "Double",
+            "dimension": 0
+          },
+          {
+            "defaultValue": "0",
+            "name": "Duration",
+            "description": "Used in case the this event occur within an interval",
+            "type": "Double",
+            "dimension": 0
+          },
+          {
+            "name": "applicationID",
+            "type": "String",
+            "dimension": 0
+          },
+          {
+            "name": "amount",
+            "type": "Double",
+            "dimension": 0
+          },
+          {
+            "name": "credit_score",
+            "type": "Double",
+            "dimension": 0
+          }
+         
+        ]
+      },
+       {
+        "createdDate": "Tue Dec 22 2015",
+        "name": "VerifiedAmount",
+        "attributes": [
+          {
+            "defaultValue": "1",
+            "name": "Certainty",
+            "description": "The certainty that this event happen (value between 0 to 1)",
+            "type": "Double",
+            "dimension": 0
+          },
+          {
+            "name": "OccurrenceTime",
+            "description": "No value means it equals the event detection time, other option is to use one of the defined distribution functions with parameters",
+            "type": "Date",
+            "dimension": 0
+          },
+             {
+            "name": "originalOccurrenceTime",
+            "description": "No value means it equals the event detection time, other option is to use one of the defined distribution functions with parameters",
+            "type": "Date",
+            "dimension": 0
+          },
+          {
+            "name": "ExpirationTime",
+            "type": "Date",
+            "dimension": 0
+          },
+          {
+            "name": "Cost",
+            "description": "The cost of this event occurrence. Negative if this is an opportunity",
+            "type": "Double",
+            "dimension": 0
+          },
+          {
+            "defaultValue": "0",
+            "name": "Duration",
+            "description": "Used in case the this event occur within an interval",
+            "type": "Double",
+            "dimension": 0
+          },
+          {
+            "name": "applicationID",
+            "type": "String",
+            "dimension": 0
+          },
+          {
+            "name": "amount",
+            "type": "Double",
+            "dimension": 0
+          }
+          
+        ]
+      },
+      {
+        "createdDate": "Tue Dec 22 2015",
+        "name": "VerifiedRiskAssesment",
+        "attributes": [
+          {
+            "defaultValue": "1",
+            "name": "Certainty",
+            "description": "The certainty that this event happen (value between 0 to 1)",
+            "type": "Double",
+            "dimension": 0
+          },
+          {
+            "name": "OccurrenceTime",
+            "description": "No value means it equals the event detection time, other option is to use one of the defined distribution functions with parameters",
+            "type": "Date",
+            "dimension": 0
+          },
+             {
+            "name": "originalOccurrenceTime",
+            "description": "No value means it equals the event detection time, other option is to use one of the defined distribution functions with parameters",
+            "type": "Date",
+            "dimension": 0
+          },
+          {
+            "name": "ExpirationTime",
+            "type": "Date",
+            "dimension": 0
+          },
+          {
+            "name": "Cost",
+            "description": "The cost of this event occurrence. Negative if this is an opportunity",
+            "type": "Double",
+            "dimension": 0
+          },
+          {
+            "defaultValue": "0",
+            "name": "Duration",
+            "description": "Used in case the this event occur within an interval",
+            "type": "Double",
+            "dimension": 0
+          },
+          {
+            "name": "applicationID",
+            "type": "String",
+            "dimension": 0
+          },
+          {
+            "name": "amount",
+            "type": "Double",
+            "dimension": 0
+          },
+          {
+            "name": "risk",
+            "type": "Double",
+            "dimension": 0
+          },
+          {
+            "name": "agentType",
+            "type": "String",
+            "dimension": 0
+          }
+        ]
+      },
+        {
+        "createdDate": "Tue Dec 22 2015",
+        "name": "RiskAssesment",
+        "attributes": [
+          {
+            "defaultValue": "1",
+            "name": "Certainty",
+            "description": "The certainty that this event happen (value between 0 to 1)",
+            "type": "Double",
+            "dimension": 0
+          },
+          {
+            "name": "OccurrenceTime",
+            "description": "No value means it equals the event detection time, other option is to use one of the defined distribution functions with parameters",
+            "type": "Date",
+            "dimension": 0
+          },
+             {
+            "name": "originalOccurrenceTime",
+            "description": "No value means it equals the event detection time, other option is to use one of the defined distribution functions with parameters",
+            "type": "Date",
+            "dimension": 0
+          },
+          {
+            "name": "ExpirationTime",
+            "type": "Date",
+            "dimension": 0
+          },
+          {
+            "name": "Cost",
+            "description": "The cost of this event occurrence. Negative if this is an opportunity",
+            "type": "Double",
+            "dimension": 0
+          },
+          {
+            "defaultValue": "0",
+            "name": "Duration",
+            "description": "Used in case the this event occur within an interval",
+            "type": "Double",
+            "dimension": 0
+          },
+          {
+            "name": "applicationID",
+            "type": "String",
+            "dimension": 0
+          },
+          {
+            "name": "amount",
+            "type": "Double",
+            "dimension": 0
+          },
+          {
+            "name": "risk",
+            "type": "Double",
+            "dimension": 0
+          }
+         
+        ]
+      },
+      {
+        "createdDate": "Tue Dec 22 2015",
+        "name": "ApplicationDecision",
+        "attributes": [
+          {
+            "defaultValue": "1",
+            "name": "Certainty",
+            "description": "The certainty that this event happen (value between 0 to 1)",
+            "type": "Double",
+            "dimension": 0
+          },
+          {
+            "name": "OccurrenceTime",
+            "description": "No value means it equals the event detection time, other option is to use one of the defined distribution functions with parameters",
+            "type": "Date",
+            "dimension": 0
+          },
+             {
+            "name": "originalOccurrenceTime",
+            "description": "No value means it equals the event detection time, other option is to use one of the defined distribution functions with parameters",
+            "type": "Date",
+            "dimension": 0
+          },
+          {
+            "name": "ExpirationTime",
+            "type": "Date",
+            "dimension": 0
+          },
+          {
+            "name": "Cost",
+            "description": "The cost of this event occurrence. Negative if this is an opportunity",
+            "type": "Double",
+            "dimension": 0
+          },
+          {
+            "defaultValue": "0",
+            "name": "Duration",
+            "description": "Used in case the this event occur within an interval",
+            "type": "Double",
+            "dimension": 0
+          },
+          {
+            "name": "applicationID",
+            "type": "String",
+            "dimension": 0
+          },
+          {
+            "name": "amount",
+            "type": "Double",
+            "dimension": 0
+          },
+          {
+            "name": "agentType",
+            "type": "String",
+            "dimension": 0
+          },
+          {
+            "name": "decision",
+            "type": "String",
+            "dimension": 0
+          }
+        ]
+      },
+        {
+        "createdDate": "Tue Dec 22 2015",
+        "name": "SkilledAgentDecision",
+        "attributes": [
+          {
+            "defaultValue": "1",
+            "name": "Certainty",
+            "description": "The certainty that this event happen (value between 0 to 1)",
+            "type": "Double",
+            "dimension": 0
+          },
+          {
+            "name": "OccurrenceTime",
+            "description": "No value means it equals the event detection time, other option is to use one of the defined distribution functions with parameters",
+            "type": "Date",
+            "dimension": 0
+          },
+             {
+            "name": "originalOccurrenceTime",
+            "description": "No value means it equals the event detection time, other option is to use one of the defined distribution functions with parameters",
+            "type": "Date",
+            "dimension": 0
+          },
+          {
+            "name": "ExpirationTime",
+            "type": "Date",
+            "dimension": 0
+          },
+          {
+            "name": "Cost",
+            "description": "The cost of this event occurrence. Negative if this is an opportunity",
+            "type": "Double",
+            "dimension": 0
+          },
+          {
+            "defaultValue": "0",
+            "name": "Duration",
+            "description": "Used in case the this event occur within an interval",
+            "type": "Double",
+            "dimension": 0
+          },
+          {
+            "name": "applicationID",
+            "type": "String",
+            "dimension": 0
+          },
+          {
+            "name": "amount",
+            "type": "Double",
+            "dimension": 0
+          },
+          {
+            "name": "agentType",
+            "type": "String",
+            "dimension": 0
+          },
+          {
+            "name": "decision",
+            "type": "String",
+            "dimension": 0
+          }
+        ]
+      },
+      {
+        "createdDate": "Tue Dec 22 2015",
+        "name": "NoviceAgentDecision",
+        "attributes": [
+          {
+            "defaultValue": "1",
+            "name": "Certainty",
+            "description": "The certainty that this event happen (value between 0 to 1)",
+            "type": "Double",
+            "dimension": 0
+          },
+          {
+            "name": "OccurrenceTime",
+            "description": "No value means it equals the event detection time, other option is to use one of the defined distribution functions with parameters",
+            "type": "Date",
+            "dimension": 0
+          },
+             {
+            "name": "originalOccurrenceTime",
+            "description": "No value means it equals the event detection time, other option is to use one of the defined distribution functions with parameters",
+            "type": "Date",
+            "dimension": 0
+          },
+          {
+            "name": "ExpirationTime",
+            "type": "Date",
+            "dimension": 0
+          },
+          {
+            "name": "Cost",
+            "description": "The cost of this event occurrence. Negative if this is an opportunity",
+            "type": "Double",
+            "dimension": 0
+          },
+          {
+            "defaultValue": "0",
+            "name": "Duration",
+            "description": "Used in case the this event occur within an interval",
+            "type": "Double",
+            "dimension": 0
+          },
+          {
+            "name": "applicationID",
+            "type": "String",
+            "dimension": 0
+          },
+          {
+            "name": "amount",
+            "type": "Double",
+            "dimension": 0
+          },
+          {
+            "name": "agentType",
+            "type": "String",
+            "dimension": 0
+          },
+          {
+            "name": "decision",
+            "type": "String",
+            "dimension": 0
+          }
+        ]
+      },
+      {
+        "createdDate": "Tue Dec 22 2015",
+        "name": "TwoDaysWithoutDecision",
+        "attributes": [
+          {
+            "defaultValue": "1",
+            "name": "Certainty",
+            "description": "The certainty that this event happen (value between 0 to 1)",
+            "type": "Double",
+            "dimension": 0
+          },
+          {
+            "name": "OccurrenceTime",
+            "description": "No value means it equals the event detection time, other option is to use one of the defined distribution functions with parameters",
+            "type": "Date",
+            "dimension": 0
+          },
+          {
+            "name": "ExpirationTime",
+            "type": "Date",
+            "dimension": 0
+          },
+          {
+            "name": "Cost",
+            "description": "The cost of this event occurrence. Negative if this is an opportunity",
+            "type": "Double",
+            "dimension": 0
+          },
+          {
+            "defaultValue": "0",
+            "name": "Duration",
+            "description": "Used in case the this event occur within an interval",
+            "type": "Double",
+            "dimension": 0
+          },
+          {
+            "name": "applicationID",
+            "type": "String",
+            "dimension": 0
+          }
+        ]
+      },
+       {
+        "createdDate": "Tue Dec 22 2015",
+        "name": "IncomingApplicationsPerAgent",
+        "attributes": [
+          {
+            "defaultValue": "1",
+            "name": "Certainty",
+            "description": "The certainty that this event happen (value between 0 to 1)",
+            "type": "Double",
+            "dimension": 0
+          },
+          {
+            "name": "OccurrenceTime",
+            "description": "No value means it equals the event detection time, other option is to use one of the defined distribution functions with parameters",
+            "type": "Date",
+            "dimension": 0
+          },
+          {
+            "name": "ExpirationTime",
+            "type": "Date",
+            "dimension": 0
+          },
+          {
+            "name": "Cost",
+            "description": "The cost of this event occurrence. Negative if this is an opportunity",
+            "type": "Double",
+            "dimension": 0
+          },
+          {
+            "defaultValue": "0",
+            "name": "Duration",
+            "description": "Used in case the this event occur within an interval",
+            "type": "Double",
+            "dimension": 0
+          },
+          {
+            "name": "agentType",
+            "type": "String",
+            "dimension": 0
+          },
+          {
+            "name": "submittedApplicationsCount",
+            "type": "Integer",
+            "dimension": 0
+          }
+        ]
+      },
+      {
+        "createdDate": "Tue Dec 22 2015",
+        "name": "HandledApplicationsPerAgent",
+        "attributes": [
+          {
+            "defaultValue": "1",
+            "name": "Certainty",
+            "description": "The certainty that this event happen (value between 0 to 1)",
+            "type": "Double",
+            "dimension": 0
+          },
+          {
+            "name": "OccurrenceTime",
+            "description": "No value means it equals the event detection time, other option is to use one of the defined distribution functions with parameters",
+            "type": "Date",
+            "dimension": 0
+          },
+          {
+            "name": "ExpirationTime",
+            "type": "Date",
+            "dimension": 0
+          },
+          {
+            "name": "Cost",
+            "description": "The cost of this event occurrence. Negative if this is an opportunity",
+            "type": "Double",
+            "dimension": 0
+          },
+          {
+            "defaultValue": "0",
+            "name": "Duration",
+            "description": "Used in case the this event occur within an interval",
+            "type": "Double",
+            "dimension": 0
+          },
+          {
+            "name": "agentType",
+            "type": "String",
+            "dimension": 0
+          },
+          {
+            "name": "handledApplicationsCount",
+            "type": "Integer",
+            "dimension": 0
+          }
+        ]
+      },
+        {
+        "createdDate": "Tue Dec 22 2015",
+        "name": "TooManyApplicationsOnAgentsTable",
+        "attributes": [
+          {
+            "defaultValue": "1",
+            "name": "Certainty",
+            "description": "The certainty that this event happen (value between 0 to 1)",
+            "type": "Double",
+            "dimension": 0
+          },
+          {
+            "name": "OccurrenceTime",
+            "description": "No value means it equals the event detection time, other option is to use one of the defined distribution functions with parameters",
+            "type": "Date",
+            "dimension": 0
+          },
+          {
+            "name": "ExpirationTime",
+            "type": "Date",
+            "dimension": 0
+          },
+          {
+            "name": "Cost",
+            "description": "The cost of this event occurrence. Negative if this is an opportunity",
+            "type": "Double",
+            "dimension": 0
+          },
+          {
+            "defaultValue": "0",
+            "name": "Duration",
+            "description": "Used in case the this event occur within an interval",
+            "type": "Double",
+            "dimension": 0
+          },
+          {
+            "name": "agentType",
+            "type": "String",
+            "dimension": 0
+          },
+          {
+            "name": "numberApps",
+            "type": "Double",
+            "dimension": 0
+          }
+           
+        ]
+      },
+       {
+        "createdDate": "Tue Dec 22 2015",
+        "name": "AgentApplicationsBellowThreshold",
+        "attributes": [
+          {
+            "defaultValue": "1",
+            "name": "Certainty",
+            "description": "The certainty that this event happen (value between 0 to 1)",
+            "type": "Double",
+            "dimension": 0
+          },
+          {
+            "name": "OccurrenceTime",
+            "description": "No value means it equals the event detection time, other option is to use one of the defined distribution functions with parameters",
+            "type": "Date",
+            "dimension": 0
+          },
+          {
+            "name": "ExpirationTime",
+            "type": "Date",
+            "dimension": 0
+          },
+          {
+            "name": "Cost",
+            "description": "The cost of this event occurrence. Negative if this is an opportunity",
+            "type": "Double",
+            "dimension": 0
+          },
+          {
+            "defaultValue": "0",
+            "name": "Duration",
+            "description": "Used in case the this event occur within an interval",
+            "type": "Double",
+            "dimension": 0
+          },
+          {
+            "name": "agentType",
+            "type": "String",
+            "dimension": 0
+          },
+          {
+            "name": "currentNumberAppsForAgentToHandle",
+            "type": "Double",
+            "dimension": 0
+          }
+           
+        ]
+      },
+      {
+        "createdDate": "Tue Dec 22 2015",
+        "name": "AgentOverflowCleared",
+        "attributes": [
+          {
+            "defaultValue": "1",
+            "name": "Certainty",
+            "description": "The certainty that this event happen (value between 0 to 1)",
+            "type": "Double",
+            "dimension": 0
+          },
+          {
+            "name": "OccurrenceTime",
+            "description": "No value means it equals the event detection time, other option is to use one of the defined distribution functions with parameters",
+            "type": "Date",
+            "dimension": 0
+          },
+          {
+            "name": "ExpirationTime",
+            "type": "Date",
+            "dimension": 0
+          },
+          {
+            "name": "Cost",
+            "description": "The cost of this event occurrence. Negative if this is an opportunity",
+            "type": "Double",
+            "dimension": 0
+          },
+          {
+            "defaultValue": "0",
+            "name": "Duration",
+            "description": "Used in case the this event occur within an interval",
+            "type": "Double",
+            "dimension": 0
+          },
+          {
+            "name": "agentType",
+            "type": "String",
+            "dimension": 0
+          },
+          {
+            "name": "numberApps",
+            "type": "Double",
+            "dimension": 0
+          }
+           
+        ]
+      },
+      {
+        "createdDate": "Tue Dec 22 2015",
+        "name": "LockdownInitiated",
+        "attributes": [
+          {
+            "defaultValue": "1",
+            "name": "Certainty",
+            "description": "The certainty that this event happen (value between 0 to 1)",
+            "type": "Double",
+            "dimension": 0
+          },
+          {
+            "name": "OccurrenceTime",
+            "description": "No value means it equals the event detection time, other option is to use one of the defined distribution functions with parameters",
+            "type": "Date",
+            "dimension": 0
+          },
+          {
+            "name": "ExpirationTime",
+            "type": "Date",
+            "dimension": 0
+          },
+          {
+            "name": "Cost",
+            "description": "The cost of this event occurrence. Negative if this is an opportunity",
+            "type": "Double",
+            "dimension": 0
+          },
+          {
+            "defaultValue": "0",
+            "name": "Duration",
+            "description": "Used in case the this event occur within an interval",
+            "type": "Double",
+            "dimension": 0
+          }
+        
+           
+        ]
+      },
+       {
+        "createdDate": "Tue Dec 22 2015",
+        "name": "LockdownTerminated",
+        "attributes": [
+          {
+            "defaultValue": "1",
+            "name": "Certainty",
+            "description": "The certainty that this event happen (value between 0 to 1)",
+            "type": "Double",
+            "dimension": 0
+          },
+          {
+            "name": "OccurrenceTime",
+            "description": "No value means it equals the event detection time, other option is to use one of the defined distribution functions with parameters",
+            "type": "Date",
+            "dimension": 0
+          },
+          {
+            "name": "ExpirationTime",
+            "type": "Date",
+            "dimension": 0
+          },
+          {
+            "name": "Cost",
+            "description": "The cost of this event occurrence. Negative if this is an opportunity",
+            "type": "Double",
+            "dimension": 0
+          },
+          {
+            "defaultValue": "0",
+            "name": "Duration",
+            "description": "Used in case the this event occur within an interval",
+            "type": "Double",
+            "dimension": 0
+          }
+        
+           
+        ]
+      },
+       {
+        "createdDate": "Tue Dec 22 2015",
+        "name": "LockdownAndLargeAmount",
+        "attributes": [
+          {
+            "defaultValue": "1",
+            "name": "Certainty",
+            "description": "The certainty that this event happen (value between 0 to 1)",
+            "type": "Double",
+            "dimension": 0
+          },
+          {
+            "name": "OccurrenceTime",
+            "description": "No value means it equals the event detection time, other option is to use one of the defined distribution functions with parameters",
+            "type": "Date",
+            "dimension": 0
+          },
+          {
+            "name": "ExpirationTime",
+            "type": "Date",
+            "dimension": 0
+          },
+          {
+            "name": "Cost",
+            "description": "The cost of this event occurrence. Negative if this is an opportunity",
+            "type": "Double",
+            "dimension": 0
+          },
+          {
+            "defaultValue": "0",
+            "name": "Duration",
+            "description": "Used in case the this event occur within an interval",
+            "type": "Double",
+            "dimension": 0
+          },
+          {
+            "name": "applicationID",
+            "type": "String",
+            "dimension": 0
+          },
+            {
+            "name": "amount",
+            "type": "Double",
+            "dimension": 0
+          }
+        ]
+      },
+      {
+        "createdDate": "Tue Dec 22 2015",
+        "name": "SystemStartup",
+        "attributes": [
+          {
+            "defaultValue": "1",
+            "name": "Certainty",
+            "description": "The certainty that this event happen (value between 0 to 1)",
+            "type": "Double",
+            "dimension": 0
+          },
+          {
+            "name": "OccurrenceTime",
+            "description": "No value means it equals the event detection time, other option is to use one of the defined distribution functions with parameters",
+            "type": "Date",
+            "dimension": 0
+          },
+          {
+            "name": "ExpirationTime",
+            "type": "Date",
+            "dimension": 0
+          },
+          {
+            "name": "Cost",
+            "description": "The cost of this event occurrence. Negative if this is an opportunity",
+            "type": "Double",
+            "dimension": 0
+          },
+          {
+            "defaultValue": "0",
+            "name": "Duration",
+            "description": "Used in case the this event occur within an interval",
+            "type": "Double",
+            "dimension": 0
+          }
+        ]
+      }
+      
+    ],
+    "producers": [
+    {
+        "name": "ExternalConditionsFileProducer",
+        "description": "",
+        "createdDate": "",
+        "createdBy": "",
+        "type": "timed",
+        "properties": [
+          {
+            "name": "filename",
+            "value": ".\\sample\\externalConditions.txt"
+          },
+          {
+            "name": "pollingInterval",
+            "value": "0"
+          },
+          {
+            "name": "sendingDelay",
+            "value": "0"
+          },
+          {
+            "name": "formatter",
+            "value": "tag"
+          },
+          {
+            "name": "delimiter",
+            "value": ";"
+          },
+          {
+            "name": "tagDataSeparator",
+            "value": "="
+          }
+        ],
+        "events": []
+      },
+      {
+        "createdDate": "",
+        "createdBy": "",
+        "name": "LoanApplicationProducer",
+        "description": "",
+        "type": "Timed",
+        "properties": [
+          {
+            "name": "filename",
+            "value": ".\\sample\\TrancatedEventLogCSV.csv"
+          },
+          {
+            "name": "pollingInterval",
+            "value": "1000"
+          },
+          {
+            "name": "sendingDelay",
+            "value": "5000"
+          },
+          {
+            "name": "formatter",
+            "value": "multi_csv"
+          },
+          {
+            "name": "delimiter",
+            "value": ","
+          },
+         
+          {
+            "name": "csvAttributeNames",
+            "value": "Name,applicationID,amount,credit_score,risk,agentType,decision,originalOccurrenceTime,OccurrenceTime"
+          },
+          {
+            "name": "eventTypeNameIndex",
+            "value": "0"
+          },
+          
+          {
+            "name": "tagDataSeparator",
+            "value": "="
+          },
+          {
+            "name": "dateFormat",
+            "value": "dd/MM/yyyy-HH:mm:ss.SSS"                     
+          }
+      
+        ],
+        "events": []
+      }
+    ]
+  }
+}

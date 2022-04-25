@@ -1,0 +1,2 @@
+Name=LoanApplicationReceived;amount=1324.869073;Certainty=1;Duration=0;ExpirationTime=null;Cost=0.0;Annotation=;OccurrenceTime=20/03/2022-15:33:04;EventSource=;EventId=6f53cfdf-6233-498b-a372-a42883b89a86;DetectionTime=22/03/2022-11:51:26;applicationID=BBZM9464482055;Chronon=null;
+Name=LoanApplicationReceived;amount=877.6487173;Certainty=1;Duration=0;ExpirationTime=null;Cost=0.0;Annotation=;OccurrenceTime=20/03/2022-15:33:04;EventSource=;EventId=3bc12b5a-e915-4610-9fa0-385a40b4347b;DetectionTime=22/03/2022-11:52:19;applicationID=GPCG7225739325;Chronon=null;

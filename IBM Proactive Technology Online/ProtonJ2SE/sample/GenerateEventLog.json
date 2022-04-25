@@ -1,0 +1,1396 @@
+{
+  "epn": {
+    "events": [
+      {
+        "name": "LoanApplication",
+        "createdDate": "Tue Dec 22 2015",
+        "attributes": [
+          {
+            "name": "Certainty",
+            "type": "Double",
+            "defaultValue": "1",
+            "dimension": 0,
+            "description": "The certainty that this event happen (value between 0 to 1)"
+          },
+          {
+            "name": "OccurrenceTime",
+            "type": "Date",
+            "dimension": 0,
+            "description": "No value means it equals the event detection time, other option is to use one of the defined distribution functions with parameters"
+          },
+          {
+            "name": "ExpirationTime",
+            "type": "Date",
+            "dimension": 0
+          },
+          {
+            "name": "Cost",
+            "type": "Double",
+            "dimension": 0,
+            "description": "The cost of this event occurrence. Negative if this is an opportunity"
+          },
+          {
+            "name": "Duration",
+            "type": "Double",
+            "defaultValue": "0",
+            "dimension": 0,
+            "description": "Used in case the this event occur within an interval"
+          },                           
+           {
+            "name": "applicationID",
+            "type": "String",
+            "defaultValue": "0",
+            "dimension": 0            
+          },  
+          {
+            "name": "amount",
+            "type": "Double",
+            "defaultValue": "0",
+            "dimension": 0            
+          },
+           {
+            "name": "credit_score",
+            "type": "Double",
+            "defaultValue": "0",
+            "dimension": 0            
+          },
+           {
+            "name": "risk",
+            "type": "Double",
+            "defaultValue": "0",
+            "dimension": 0            
+          },
+           {
+            "name": "done_receive_loan",
+            "type": "Boolean",
+            "defaultValue": "0",
+            "dimension": 0            
+          },
+          {
+            "name": "done_verify_ammount",
+            "type": "Boolean",
+            "defaultValue": "0",
+            "dimension": 0            
+          },
+           {
+            "name": "done_credit_check",
+            "type": "Boolean",
+            "defaultValue": "0",
+            "dimension": 0            
+          },
+          {
+            "name": "done_risk_assessment",
+            "type": "Boolean",
+            "defaultValue": "0",
+            "dimension": 0            
+          },
+           {
+            "name": "done_skilled_agent",
+            "type": "Boolean",
+            "defaultValue": "0",
+            "dimension": 0            
+          },
+           {
+            "name": "done_novice_agent",
+            "type": "Boolean",
+            "defaultValue": "0",
+            "dimension": 0            
+          },
+          {
+            "name": "total_score",
+            "type": "Double",
+            "defaultValue": "0",
+            "dimension": 0            
+          },
+            {
+            "name": "done_accept",
+            "type": "Boolean",
+            "defaultValue": "0",
+            "dimension": 0            
+          },
+            {
+            "name": "arrival_times",
+            "type": "Integer",
+            "defaultValue": "0",
+            "dimension": 0            
+          },
+           {
+            "name": "post_received_time",
+            "type": "Integer",
+            "defaultValue": "0",
+            "dimension": 0            
+          },
+           {
+            "name": "post_verify_amount_time",
+            "type": "Integer",
+            "defaultValue": "0",
+            "dimension": 0            
+          },
+           {
+            "name": "post_credit_check_time",
+            "type": "Integer",
+            "defaultValue": "0",
+            "dimension": 0            
+          },
+          {
+            "name": "post_risk_assessment_time",
+            "type": "Integer",
+            "defaultValue": "0",
+            "dimension": 0            
+          },
+           {
+            "name": "post_skilled_agent_review_time",
+            "type": "Integer",
+            "defaultValue": "0",
+            "dimension": 0            
+          },
+           {
+            "name": "post_novice_agent_review_time",
+            "type": "Integer",
+            "defaultValue": "0",
+            "dimension": 0            
+          },
+          {
+            "name": "post_decision_time",
+            "type": "Integer",
+            "defaultValue": "0",
+            "dimension": 0            
+          }
+                    
+        ]
+      },
+       {
+        "name": "OutputEvent",
+        "createdDate": "Tue Dec 22 2015",
+        "attributes": [
+          {
+            "name": "Certainty",
+            "type": "Double",
+            "defaultValue": "1",
+            "dimension": 0,
+            "description": "The certainty that this event happen (value between 0 to 1)"
+          },
+          {
+            "name": "OccurrenceTime",
+            "type": "Date",
+            "dimension": 0,
+            "description": "No value means it equals the event detection time, other option is to use one of the defined distribution functions with parameters"
+          },
+          {
+            "name": "ExpirationTime",
+            "type": "Date",
+            "dimension": 0
+          },
+          {
+            "name": "Cost",
+            "type": "Double",
+            "dimension": 0,
+            "description": "The cost of this event occurrence. Negative if this is an opportunity"
+          },
+          {
+            "name": "Duration",
+            "type": "Double",
+            "defaultValue": "0",
+            "dimension": 0,
+            "description": "Used in case the this event occur within an interval"
+          },   
+          {
+            "name": "eventName",
+            "type": "String",
+            "defaultValue": "''",
+            "dimension": 0            
+          },                          
+           {
+            "name": "applicationID",
+            "type": "String",
+            "defaultValue": "''",
+            "dimension": 0            
+          },  
+          {
+            "name": "agentType",
+            "type": "String",
+            "defaultValue": "''",
+            "dimension": 0            
+          },  
+          {
+            "name": "amount",
+            "type": "Double",
+            "defaultValue": "0",
+            "dimension": 0            
+          },
+           {
+            "name": "credit_score",
+            "type": "Double",
+            "defaultValue": "0",
+            "dimension": 0            
+          },
+           {
+            "name": "risk",
+            "type": "Double",
+            "defaultValue": "0",
+            "dimension": 0            
+          },
+          {
+          "name": "decision",
+            "type": "String",
+            "defaultValue": "''",
+            "dimension": 0
+          }
+        ]
+      },
+      {
+        "name": "LoanApplicationReceived",
+        "createdDate": "Tue Dec 22 2015",
+        "attributes": [
+          {
+            "name": "Certainty",
+            "type": "Double",
+            "defaultValue": "1",
+            "dimension": 0,
+            "description": "The certainty that this event happen (value between 0 to 1)"
+          },
+          {
+            "name": "OccurrenceTime",
+            "type": "Date",
+            "dimension": 0,
+            "description": "No value means it equals the event detection time, other option is to use one of the defined distribution functions with parameters"
+          },
+          {
+            "name": "ExpirationTime",
+            "type": "Date",
+            "dimension": 0
+          },
+          {
+            "name": "Cost",
+            "type": "Double",
+            "dimension": 0,
+            "description": "The cost of this event occurrence. Negative if this is an opportunity"
+          },
+          {
+            "name": "Duration",
+            "type": "Double",
+            "defaultValue": "0",
+            "dimension": 0,
+            "description": "Used in case the this event occur within an interval"
+          },                           
+           {
+            "name": "applicationID",
+            "type": "String",
+            "defaultValue": "0",
+            "dimension": 0            
+          },  
+          {
+            "name": "amount",
+            "type": "Double",
+            "defaultValue": "0",
+            "dimension": 0            
+          }           
+          
+        ]
+      },
+      {
+        "name": "LoanApplicationSubmitted",
+        "createdDate": "Tue Dec 22 2015",
+        "attributes": [
+          {
+            "name": "Certainty",
+            "type": "Double",
+            "defaultValue": "1",
+            "dimension": 0,
+            "description": "The certainty that this event happen (value between 0 to 1)"
+          },
+          {
+            "name": "OccurrenceTime",
+            "type": "Date",
+            "dimension": 0,
+            "description": "No value means it equals the event detection time, other option is to use one of the defined distribution functions with parameters"
+          },
+          {
+            "name": "ExpirationTime",
+            "type": "Date",
+            "dimension": 0
+          },
+          {
+            "name": "Cost",
+            "type": "Double",
+            "dimension": 0,
+            "description": "The cost of this event occurrence. Negative if this is an opportunity"
+          },
+          {
+            "name": "Duration",
+            "type": "Double",
+            "defaultValue": "0",
+            "dimension": 0,
+            "description": "Used in case the this event occur within an interval"
+          },
+          
+          {
+            "name": "applicationID",
+            "type": "String",
+            "defaultValue": "0",
+            "dimension": 0            
+          },  
+          {
+            "name": "amount",
+            "type": "Double",
+            "defaultValue": "0",
+            "dimension": 0            
+          }    
+        ]
+      },
+      
+      
+{
+        "name": "VerifiedAmount",
+        "createdDate": "Tue Dec 22 2015",
+        "attributes": [
+          {
+            "name": "Certainty",
+            "type": "Double",
+            "defaultValue": "1",
+            "dimension": 0,
+            "description": "The certainty that this event happen (value between 0 to 1)"
+          },
+          {
+            "name": "OccurrenceTime",
+            "type": "Date",
+            "dimension": 0,
+            "description": "No value means it equals the event detection time, other option is to use one of the defined distribution functions with parameters"
+          },
+          {
+            "name": "ExpirationTime",
+            "type": "Date",
+            "dimension": 0
+          },
+          {
+            "name": "Cost",
+            "type": "Double",
+            "dimension": 0,
+            "description": "The cost of this event occurrence. Negative if this is an opportunity"
+          },
+          {
+            "name": "Duration",
+            "type": "Double",
+            "defaultValue": "0",
+            "dimension": 0,
+            "description": "Used in case the this event occur within an interval"
+          },
+          
+           {
+            "name": "applicationID",
+            "type": "String",
+            "defaultValue": "0",
+            "dimension": 0            
+          },  
+          {
+            "name": "amount",
+            "type": "Double",
+            "defaultValue": "0",
+            "dimension": 0            
+          }           
+        ]
+      },
+      
+      
+      {
+        "name": "CreditCheck",
+        "createdDate": "Tue Dec 22 2015",
+        "attributes": [
+          {
+            "name": "Certainty",
+            "type": "Double",
+            "defaultValue": "1",
+            "dimension": 0,
+            "description": "The certainty that this event happen (value between 0 to 1)"
+          },
+          {
+            "name": "OccurrenceTime",
+            "type": "Date",
+            "dimension": 0,
+            "description": "No value means it equals the event detection time, other option is to use one of the defined distribution functions with parameters"
+          },
+          {
+            "name": "ExpirationTime",
+            "type": "Date",
+            "dimension": 0
+          },
+          {
+            "name": "Cost",
+            "type": "Double",
+            "dimension": 0,
+            "description": "The cost of this event occurrence. Negative if this is an opportunity"
+          },
+          {
+            "name": "Duration",
+            "type": "Double",
+            "defaultValue": "0",
+            "dimension": 0,
+            "description": "Used in case the this event occur within an interval"
+          },
+           {
+            "name": "applicationID",
+            "type": "String",
+            "defaultValue": "0",
+            "dimension": 0            
+          },  
+          {
+            "name": "amount",
+            "type": "Double",
+            "defaultValue": "0",
+            "dimension": 0            
+          },
+           {
+            "name": "credit_score",
+            "type": "Double",
+            "defaultValue": "0",
+            "dimension": 0            
+          }          
+        ]
+      },
+      
+      {
+        "name": "RiskAssesment",
+        "createdDate": "Tue Dec 22 2015",
+        "attributes": [
+          {
+            "name": "Certainty",
+            "type": "Double",
+            "defaultValue": "1",
+            "dimension": 0,
+            "description": "The certainty that this event happen (value between 0 to 1)"
+          },
+          {
+            "name": "OccurrenceTime",
+            "type": "Date",
+            "dimension": 0,
+            "description": "No value means it equals the event detection time, other option is to use one of the defined distribution functions with parameters"
+          },
+          {
+            "name": "ExpirationTime",
+            "type": "Date",
+            "dimension": 0
+          },
+          {
+            "name": "Cost",
+            "type": "Double",
+            "dimension": 0,
+            "description": "The cost of this event occurrence. Negative if this is an opportunity"
+          },
+          {
+            "name": "Duration",
+            "type": "Double",
+            "defaultValue": "0",
+            "dimension": 0,
+            "description": "Used in case the this event occur within an interval"
+          },
+          
+           {
+            "name": "applicationID",
+            "type": "String",
+            "defaultValue": "0",
+            "dimension": 0            
+          },  
+          {
+            "name": "amount",
+            "type": "Double",
+            "defaultValue": "0",
+            "dimension": 0            
+          },
+           {
+            "name": "risk",
+            "type": "Double",
+            "defaultValue": "0",
+            "dimension": 0            
+          }          
+        ]
+      },
+      
+{
+        "name": "VerifiedCreditCheck",
+        "createdDate": "Tue Dec 22 2015",
+        "attributes": [
+          {
+            "name": "Certainty",
+            "type": "Double",
+            "defaultValue": "1",
+            "dimension": 0,
+            "description": "The certainty that this event happen (value between 0 to 1)"
+          },
+          {
+            "name": "OccurrenceTime",
+            "type": "Date",
+            "dimension": 0,
+            "description": "No value means it equals the event detection time, other option is to use one of the defined distribution functions with parameters"
+          },
+          {
+            "name": "ExpirationTime",
+            "type": "Date",
+            "dimension": 0
+          },
+          {
+            "name": "Cost",
+            "type": "Double",
+            "dimension": 0,
+            "description": "The cost of this event occurrence. Negative if this is an opportunity"
+          },
+          {
+            "name": "Duration",
+            "type": "Double",
+            "defaultValue": "0",
+            "dimension": 0,
+            "description": "Used in case the this event occur within an interval"
+          },
+          
+          {
+            "name": "applicationID",
+            "type": "String",
+            "defaultValue": "0",
+            "dimension": 0            
+          },  
+          {
+            "name": "amount",
+            "type": "Double",
+            "defaultValue": "0",
+            "dimension": 0            
+          },
+           {
+            "name": "credit_score",
+            "type": "Double",
+            "defaultValue": "0",
+            "dimension": 0            
+          },
+          {
+            "name": "agentType",
+            "type": "Double",
+            "defaultValue": "0",
+            "dimension": 0            
+          }          
+        ]
+      },
+
+
+
+      
+      {
+        "name": "VerifiedRiskAssesment",
+        "createdDate": "Tue Dec 22 2015",
+        "attributes": [
+          {
+            "name": "Certainty",
+            "type": "Double",
+            "defaultValue": "1",
+            "dimension": 0,
+            "description": "The certainty that this event happen (value between 0 to 1)"
+          },
+          {
+            "name": "OccurrenceTime",
+            "type": "Date",
+            "dimension": 0,
+            "description": "No value means it equals the event detection time, other option is to use one of the defined distribution functions with parameters"
+          },
+          {
+            "name": "ExpirationTime",
+            "type": "Date",
+            "dimension": 0
+          },
+          {
+            "name": "Cost",
+            "type": "Double",
+            "dimension": 0,
+            "description": "The cost of this event occurrence. Negative if this is an opportunity"
+          },
+          {
+            "name": "Duration",
+            "type": "Double",
+            "defaultValue": "0",
+            "dimension": 0,
+            "description": "Used in case the this event occur within an interval"
+          },
+          
+            {
+            "name": "applicationID",
+            "type": "String",
+            "defaultValue": "0",
+            "dimension": 0            
+          },  
+          {
+            "name": "amount",
+            "type": "Double",
+            "defaultValue": "0",
+            "dimension": 0            
+          },
+           {
+            "name": "risk",
+            "type": "Double",
+            "defaultValue": "0",
+            "dimension": 0            
+          } ,
+           {
+            "name": "agentType",
+            "type": "Double",
+            "defaultValue": "0",
+            "dimension": 0            
+          }               
+        ]
+      },
+      
+       {
+        "name": "SkilledAgentDecision",
+        "createdDate": "Tue Dec 22 2015",
+        "attributes": [
+          {
+            "name": "Certainty",
+            "type": "Double",
+            "defaultValue": "1",
+            "dimension": 0,
+            "description": "The certainty that this event happen (value between 0 to 1)"
+          },
+          {
+            "name": "OccurrenceTime",
+            "type": "Date",
+            "dimension": 0,
+            "description": "No value means it equals the event detection time, other option is to use one of the defined distribution functions with parameters"
+          },
+          {
+            "name": "ExpirationTime",
+            "type": "Date",
+            "dimension": 0
+          },
+          {
+            "name": "Cost",
+            "type": "Double",
+            "dimension": 0,
+            "description": "The cost of this event occurrence. Negative if this is an opportunity"
+          },
+          {
+            "name": "Duration",
+            "type": "Double",
+            "defaultValue": "0",
+            "dimension": 0,
+            "description": "Used in case the this event occur within an interval"
+          },
+          
+            {
+            "name": "applicationID",
+            "type": "String",
+            "defaultValue": "0",
+            "dimension": 0            
+          },  
+          {
+            "name": "amount",
+            "type": "Double",
+            "defaultValue": "0",
+            "dimension": 0            
+          },
+           {
+            "name": "decision",
+            "type": "String",
+            "defaultValue": "''",
+            "dimension": 0            
+          }       
+        ]
+      },
+       {
+        "name": "NoviceAgentDecision",
+        "createdDate": "Tue Dec 22 2015",
+        "attributes": [
+          {
+            "name": "Certainty",
+            "type": "Double",
+            "defaultValue": "1",
+            "dimension": 0,
+            "description": "The certainty that this event happen (value between 0 to 1)"
+          },
+          {
+            "name": "OccurrenceTime",
+            "type": "Date",
+            "dimension": 0,
+            "description": "No value means it equals the event detection time, other option is to use one of the defined distribution functions with parameters"
+          },
+          {
+            "name": "ExpirationTime",
+            "type": "Date",
+            "dimension": 0
+          },
+          {
+            "name": "Cost",
+            "type": "Double",
+            "dimension": 0,
+            "description": "The cost of this event occurrence. Negative if this is an opportunity"
+          },
+          {
+            "name": "Duration",
+            "type": "Double",
+            "defaultValue": "0",
+            "dimension": 0,
+            "description": "Used in case the this event occur within an interval"
+          },
+          
+            {
+            "name": "applicationID",
+            "type": "String",
+            "defaultValue": "0",
+            "dimension": 0            
+          },  
+          {
+            "name": "amount",
+            "type": "Double",
+            "defaultValue": "0",
+            "dimension": 0            
+          },
+           {
+            "name": "decision",
+            "type": "String",
+            "defaultValue": "''",
+            "dimension": 0            
+          }       
+        ]
+      },
+{
+        "name": "ApplicationDecision",
+        "createdDate": "Tue Dec 22 2015",
+        "attributes": [
+          {
+            "name": "Certainty",
+            "type": "Double",
+            "defaultValue": "1",
+            "dimension": 0,
+            "description": "The certainty that this event happen (value between 0 to 1)"
+          },
+          {
+            "name": "OccurrenceTime",
+            "type": "Date",
+            "dimension": 0,
+            "description": "No value means it equals the event detection time, other option is to use one of the defined distribution functions with parameters"
+          },
+          {
+            "name": "ExpirationTime",
+            "type": "Date",
+            "dimension": 0
+          },
+          {
+            "name": "Cost",
+            "type": "Double",
+            "dimension": 0,
+            "description": "The cost of this event occurrence. Negative if this is an opportunity"
+          },
+          {
+            "name": "Duration",
+            "type": "Double",
+            "defaultValue": "0",
+            "dimension": 0,
+            "description": "Used in case the this event occur within an interval"
+          },          
+         
+            {
+            "name": "applicationID",
+            "type": "String",
+            "defaultValue": "0",
+            "dimension": 0            
+          },  
+          {
+            "name": "amount",
+            "type": "Double",
+            "defaultValue": "0",
+            "dimension": 0            
+          },
+          {
+            "name": "decision",
+            "type": "String",
+            "defaultValue": "0",
+            "dimension": 0            
+          }
+          
+        ]
+      }
+      
+      
+    ],
+    "epas": [
+        {
+        "name": "emitSubmitApplicationEPA",
+        "createdDate": "Tue Dec 22 2015",
+        "epaType": "Basic",
+        "context": "Always",
+        "inputEvents": [
+          {
+            "name": "LoanApplication",                       
+            "consumptionPolicy": "Consume",
+            "instanceSelectionPolicy": "First"
+          }
+        ],
+       "internalSegmentation": [],			
+		"computedVariables": [],
+		"evaluationPolicy": "Immediate",
+		"derivedEvents": [{
+				"name": "LoanApplicationSubmitted",
+				"reportParticipants": false,
+				"expressions": {
+					"applicationID": "LoanApplication.applicationID",
+					"amount":"LoanApplication.amount",
+					"OccurrenceTime":"GetDateFromTimestamp(LoanApplication.DetectionTime + LoanApplication.arrival_times*1000*60)"
+				}
+			},
+			{
+				"name": "OutputEvent",
+				"reportParticipants": false,
+				"expressions": {
+					"applicationID": "LoanApplication.applicationID",
+					"amount":"LoanApplication.amount",
+					"OccurrenceTime":"GetDateFromTimestamp(LoanApplication.DetectionTime + LoanApplication.arrival_times*1000*60)",
+					"eventName":"'LoanApplicationSubmitted'"
+				}
+			}]
+      },
+      
+      {
+        "name": "emitApplicationReceivedEPA",
+        "createdDate": "Tue Dec 22 2015",
+        "epaType": "Basic",
+        "context": "Always",
+        "inputEvents": [
+          {
+            "name": "LoanApplication",                        
+            "consumptionPolicy": "Consume",
+            "instanceSelectionPolicy": "First"
+          }
+        ],
+       "internalSegmentation": [],			
+		"computedVariables": [],
+		"evaluationPolicy": "Immediate",
+		"derivedEvents": [{
+				"name": "LoanApplicationReceived",
+				"reportParticipants": false,
+				"expressions": {
+					"applicationID": "LoanApplication.applicationID",
+					"amount":"LoanApplication.amount",
+					"OccurrenceTime":"GetDateFromTimestamp(LoanApplication.DetectionTime + LoanApplication.post_received_time*1000*60)"							
+				}
+			},
+			
+			{
+				"name": "OutputEvent",
+				"reportParticipants": false,
+				"expressions": {
+					"applicationID": "LoanApplication.applicationID",
+					"amount":"LoanApplication.amount",
+					"OccurrenceTime":"GetDateFromTimestamp(LoanApplication.DetectionTime + LoanApplication.post_received_time*1000*60)",
+					"eventName":"'LoanApplicationReceived'"
+				}
+			}]
+      },
+       {
+        "name": "emitVerifiedAmountEPA",
+        "createdDate": "Tue Dec 22 2015",
+        "epaType": "Basic",
+        "context": "Always",
+        "inputEvents": [
+          {
+            "name": "LoanApplication",                        
+            "consumptionPolicy": "Consume",
+            "instanceSelectionPolicy": "First"
+          }
+        ],
+       "internalSegmentation": [],			
+		"computedVariables": [],
+		"evaluationPolicy": "Immediate",
+		"derivedEvents": [{
+				"name": "VerifiedAmount",
+				"reportParticipants": false,
+				"expressions": {
+					"applicationID": "LoanApplication.applicationID",
+					"amount":"LoanApplication.amount",
+					"OccurrenceTime":"GetDateFromTimestamp(LoanApplication.DetectionTime +  LoanApplication.post_verify_amount_time*1000*60)"							
+				}
+			},
+			{
+				"name": "OutputEvent",
+				"reportParticipants": false,
+				"expressions": {
+					"applicationID": "LoanApplication.applicationID",
+					"amount":"LoanApplication.amount",
+					"OccurrenceTime":"GetDateFromTimestamp(LoanApplication.DetectionTime +  LoanApplication.post_verify_amount_time*1000*60)",
+					"eventName":"'VerifiedAmount'"
+				}
+			}]
+      },
+      
+       {
+        "name": "emitCreditCheckEPA",
+        "createdDate": "Tue Dec 22 2015",
+        "epaType": "Basic",
+        "context": "Always",
+        "inputEvents": [
+          {
+            "name": "LoanApplication",
+             "filterExpression": "LoanApplication.done_credit_check == TRUE",                        
+            "consumptionPolicy": "Consume",
+            "instanceSelectionPolicy": "First"
+          }
+        ],
+       "internalSegmentation": [],			
+		"computedVariables": [],
+		"evaluationPolicy": "Immediate",
+		"derivedEvents": [{
+				"name": "CreditCheck",
+				"reportParticipants": false,
+				"expressions": {
+					"applicationID": "LoanApplication.applicationID",
+					"amount":"LoanApplication.amount",
+					"credit_score":"LoanApplication.credit_score",
+					"OccurrenceTime":"GetDateFromTimestamp(LoanApplication.DetectionTime + LoanApplication.post_credit_check_time*1000*60)"							
+				}
+			},	
+			{
+				"name": "OutputEvent",
+				"reportParticipants": false,
+				"expressions": {
+					"applicationID": "LoanApplication.applicationID",
+					"amount":"LoanApplication.amount",
+					"credit_score":"LoanApplication.credit_score",
+					"OccurrenceTime":"GetDateFromTimestamp(LoanApplication.DetectionTime + LoanApplication.post_credit_check_time*1000*60)",
+					"eventName":"'CreditCheck'"
+				
+				}
+			}]
+      },
+      
+        {
+        "name": "emitRiskAssesmentEPA",
+        "createdDate": "Tue Dec 22 2015",
+        "epaType": "Basic",
+        "context": "Always",
+        "inputEvents": [
+          {
+            "name": "LoanApplication",
+             "filterExpression": "LoanApplication.done_risk_assessment == TRUE",                        
+            "consumptionPolicy": "Consume",
+            "instanceSelectionPolicy": "First"
+          }
+        ],
+       "internalSegmentation": [],			
+		"computedVariables": [],
+		"evaluationPolicy": "Immediate",
+		"derivedEvents": [{
+				"name": "RiskAssesment",
+				"reportParticipants": false,
+				"expressions": {
+					"applicationID": "LoanApplication.applicationID",
+					"amount":"LoanApplication.amount",
+					"risk":"LoanApplication.risk",
+					"OccurrenceTime":"GetDateFromTimestamp(LoanApplication.DetectionTime + LoanApplication.post_risk_assessment_time*1000*60)"							
+				}
+			},
+			{
+				"name": "OutputEvent",
+				"reportParticipants": false,
+				"expressions": {
+					"applicationID": "LoanApplication.applicationID",
+					"amount":"LoanApplication.amount",
+					"risk":"LoanApplication.risk",
+					"OccurrenceTime":"GetDateFromTimestamp(LoanApplication.DetectionTime + LoanApplication.post_risk_assessment_time*1000*60)",
+					"eventName":"'RiskAssesment'"
+				}
+			}]
+      },
+      
+        {
+        "name": "emitVerifiedCreditCheckEPA",
+      "createdDate": "Tue Dec 22 2015",
+        "epaType": "Basic",
+        "context": "Always",
+        "inputEvents": [
+          {
+            "name": "LoanApplication",
+             "filterExpression": "LoanApplication.done_credit_check == TRUE",                        
+            "consumptionPolicy": "Consume",
+            "instanceSelectionPolicy": "First"
+          }
+        ],
+       "internalSegmentation": [],			
+		"computedVariables": [],
+		"evaluationPolicy": "Immediate",
+		"derivedEvents": [{
+				"name": "VerifiedCreditCheck",
+				"reportParticipants": false,
+				"expressions": {
+					"applicationID": "LoanApplication.applicationID",
+					"amount":"LoanApplication.amount",
+					"credit_score":"LoanApplication.credit_score",
+					"agentType":"if (LoanApplication.done_skilled_agent == TRUE) then ('skilled') else ('novice') endif",
+					"OccurrenceTime":"GetDateFromTimestamp(LoanApplication.DetectionTime + LoanApplication.post_credit_check_time*1000*60)"							
+				}
+			},
+			{
+				"name": "OutputEvent",
+				"reportParticipants": false,
+				"expressions": {
+					"applicationID": "LoanApplication.applicationID",
+					"amount":"LoanApplication.amount",
+					"credit_score":"LoanApplication.credit_score",
+					"OccurrenceTime":"GetDateFromTimestamp(LoanApplication.DetectionTime +LoanApplication.post_credit_check_time*1000*60)",
+					"eventName":"'VerifiedCreditCheck'",
+					"agentType":"if (LoanApplication.done_skilled_agent == TRUE) then ('skilled') else ('novice') endif"					
+				}
+			}]
+      },
+      
+       {
+        "name": "emitSkilledAgentDecisionEPA",
+      "createdDate": "Tue Dec 22 2015",
+        "epaType": "Basic",
+        "context": "Always",
+        "inputEvents": [
+          {
+            "name": "LoanApplication",
+             "filterExpression": "LoanApplication.done_skilled_agent == TRUE",                        
+            "consumptionPolicy": "Consume",
+            "instanceSelectionPolicy": "First"
+          }
+        ],
+       "internalSegmentation": [],			
+		"computedVariables": [],
+		"evaluationPolicy": "Immediate",
+		"derivedEvents": [{
+				"name": "SkilledAgentDecision",
+				"reportParticipants": false,
+				"expressions": {
+					"applicationID": "LoanApplication.applicationID",
+					"amount":"LoanApplication.amount",										
+					"OccurrenceTime":"GetDateFromTimestamp(LoanApplication.DetectionTime + LoanApplication.post_skilled_agent_review_time*1000*60)",
+					"decision":"if (LoanApplication.done_accept == TRUE) then ('ACCEPTED') else ('REJECTED') endif",
+					"agentType":"'skilled'"
+												
+				}
+			},
+			{
+				"name": "OutputEvent",
+				"reportParticipants": false,
+				"expressions": {
+					"applicationID": "LoanApplication.applicationID",
+					"amount":"LoanApplication.amount",					
+					"OccurrenceTime":"GetDateFromTimestamp(LoanApplication.DetectionTime +LoanApplication.post_skilled_agent_review_time*1000*60)",
+					"eventName":"'SkilledAgentDecision'",
+					"decision":"if (LoanApplication.done_accept == TRUE) then ('ACCEPTED') else ('REJECTED') endif",
+					"agentType":"'skilled'"
+					
+										
+				}
+			}]
+      },
+      
+       {
+        "name": "emitNoviceAgentDecisionEPA",
+      "createdDate": "Tue Dec 22 2015",
+        "epaType": "Basic",
+        "context": "Always",
+        "inputEvents": [
+          {
+            "name": "LoanApplication",
+             "filterExpression": "LoanApplication.done_novice_agent == TRUE",                        
+            "consumptionPolicy": "Consume",
+            "instanceSelectionPolicy": "First"
+          }
+        ],
+       "internalSegmentation": [],			
+		"computedVariables": [],
+		"evaluationPolicy": "Immediate",
+		"derivedEvents": [{
+				"name": "NoviceAgentDecision",
+				"reportParticipants": false,
+				"expressions": {
+					"applicationID": "LoanApplication.applicationID",
+					"amount":"LoanApplication.amount",										
+					"OccurrenceTime":"GetDateFromTimestamp(LoanApplication.DetectionTime + LoanApplication.post_novice_agent_review_time*1000*60)",
+					"decision":"if (LoanApplication.done_accept == TRUE) then ('ACCEPTED') else ('REJECTED') endif",
+					"agentType":"'novice'"							
+				}
+			},
+			{
+				"name": "OutputEvent",
+				"reportParticipants": false,
+				"expressions": {
+					"applicationID": "LoanApplication.applicationID",
+					"amount":"LoanApplication.amount",					
+					"OccurrenceTime":"GetDateFromTimestamp(LoanApplication.DetectionTime +LoanApplication.post_novice_agent_review_time*1000*60)",
+					"eventName":"'NoviceAgentDecision'",
+					"decision":"if (LoanApplication.done_accept == TRUE) then ('ACCEPTED') else ('REJECTED') endif",
+					"agentType":"'novice'"
+										
+				}
+			}]
+      },
+      {
+        "name": "emitVerifiedRiskAssesmentEPA",
+      "createdDate": "Tue Dec 22 2015",
+        "epaType": "Basic",
+        "context": "Always",
+        "inputEvents": [
+          {
+            "name": "LoanApplication",
+             "filterExpression": "LoanApplication.done_risk_assessment == TRUE",                        
+            "consumptionPolicy": "Consume",
+            "instanceSelectionPolicy": "First"
+          }
+        ],
+       "internalSegmentation": [],			
+		"computedVariables": [],
+		"evaluationPolicy": "Immediate",
+		"derivedEvents": [{
+				"name": "VerifiedRiskAssesment",
+				"reportParticipants": false,
+				"expressions": {
+					"applicationID": "LoanApplication.applicationID",
+					"amount":"LoanApplication.amount",
+					"risk":"LoanApplication.risk",
+					"agentType":"if (LoanApplication.done_skilled_agent == TRUE) then ('skilled') else ('novice') endif",
+					"OccurrenceTime":"GetDateFromTimestamp(LoanApplication.DetectionTime +  LoanApplication.post_risk_assessment_time*1000*60)"								
+				}
+			},
+			{
+				"name": "OutputEvent",
+				"reportParticipants": false,
+				"expressions": {
+					"applicationID": "LoanApplication.applicationID",
+					"amount":"LoanApplication.amount",
+					"risk":"LoanApplication.risk",
+					"OccurrenceTime":"GetDateFromTimestamp(LoanApplication.DetectionTime +  LoanApplication.post_risk_assessment_time*1000*60)",
+					"agentType":"if (LoanApplication.done_skilled_agent == TRUE) then ('skilled') else ('novice') endif",
+					"eventName":"'VerifiedRiskAssesment'"
+				}
+			}]
+      },
+      
+      {
+        "name": "emitApplicationDecisionEPA",
+      "createdDate": "Tue Dec 22 2015",
+        "epaType": "Basic",
+        "context": "Always",
+        "inputEvents": [
+          {
+            "name": "LoanApplication",                                   
+            "consumptionPolicy": "Consume",
+            "instanceSelectionPolicy": "First"
+          }
+        ],
+       "internalSegmentation": [],			
+		"computedVariables": [],
+		"evaluationPolicy": "Immediate",
+		"derivedEvents": [{
+				"name": "ApplicationDecision",
+				"reportParticipants": false,
+				"expressions": {
+					"applicationID": "LoanApplication.applicationID",
+					"amount":"LoanApplication.amount",					
+					"agentType":"if (LoanApplication.done_skilled_agent == TRUE) then ('skilled') else ('novice') endif",
+					"OccurrenceTime":"GetDateFromTimestamp(LoanApplication.DetectionTime + LoanApplication.post_decision_time*1000*60)",
+					"decision":"if (LoanApplication.done_accept == TRUE) then ('ACCEPTED') else ('REJECTED') endif"								
+				}
+			},
+			{
+				"name": "OutputEvent",
+				"reportParticipants": false,
+				"expressions": {
+					"applicationID": "LoanApplication.applicationID",
+					"amount":"LoanApplication.amount",
+					"decision":"if (LoanApplication.done_accept == TRUE) then ('ACCEPTED') else ('REJECTED') endif",	
+					"agentType":"if (LoanApplication.done_skilled_agent == TRUE) then ('skilled') else ('novice') endif",					
+					"OccurrenceTime":"GetDateFromTimestamp(LoanApplication.DetectionTime + LoanApplication.post_decision_time*1000*60)",
+					"eventName":"'ApplicationDecision'"
+				}
+			}]
+      }
+           
+    ],
+    "contexts": {
+      "temporal": [
+       {
+          "name": "Always",
+          "createdDate": "Tue Dec 22 2015",
+          "type": "TemporalInterval",
+          "atStartup": true,
+          "neverEnding": true,
+          "initiators": [            
+          ],
+          "terminators": [            
+          ]
+        }
+        
+      ],
+      "composite": [
+         
+      ],
+       "segmentation": [
+         
+      ]
+    },
+    "consumers": 
+    [
+    
+ {
+        "events": [
+        
+		   {
+            "name": "LoanApplicationReceived"
+          },
+          {
+          	"name":"LoanApplicationSubmitted"
+          },          
+		  {
+            "name": "VerifiedAmount"
+          },
+          {
+            "name": "CreditCheck"
+          },
+          {
+            "name": "RiskAssesment"
+          },
+          {
+            "name": "VerifiedCreditCheck"
+          },
+          {
+            "name": "SkilledAgentDecision"
+          },
+                    {
+            "name": "NoviceAgentDecision"
+          },
+          
+          {
+            "name": "VerifiedRiskAssesment"
+          },
+           {
+            "name": "ApplicationDecision"
+          }
+        ],
+        "name": "Consumer",
+        "properties": [
+          {
+            "name": "filename",
+            "value": ".\\sample\\GeneratedEventLog.txt"
+          },
+          {
+            "name": "formatter",
+            "value": "tag"
+          },
+          {
+            "name": "delimiter",
+            "value": ";"
+          },
+          {
+            "name": "tagDataSeparator",
+            "value": "="
+          },
+          {
+            "name": "SendingDelay",
+            "value": "1000"
+          },
+          {
+            "name": "dateFormat",
+            "value": "dd/MM/yyyy-HH:mm:ss.SSS"
+          }
+        ],
+        "type": "File",
+        "createdDate": "Tue Sep 23 2014"
+      },
+      {
+        "events": [
+        
+		   {
+            "name": "OutputEvent"
+          }
+          
+        ],
+        "name": "ConsumerCSV",
+        "properties": [
+          {
+            "name": "filename",
+            "value": ".\\sample\\GeneratedEventLogCSV.csv"
+          },
+          {
+            "name": "formatter",
+            "value": "csv"
+          },
+          {
+            "name": "delimiter",
+            "value": ","
+          },
+          {
+            "name": "tagDataSeparator",
+            "value": "="
+          },
+            {
+            "name": "csvEventType",
+            "value": "OutputEvent"
+          },
+          {
+            "name": "csvAttributeNames",
+            "value": "eventName,applicationID,amount,credit_score,risk,agentType,decision,OccurrenceTime"
+          },          
+          {
+            "name": "SendingDelay",
+            "value": "1000"
+          },
+          {
+            "name": "dateFormat",
+            "value": "dd/MM/yyyy-HH:mm:ss.SSS"
+          }
+        ],
+        "type": "File",
+        "createdDate": "Tue Sep 23 2014"
+      }
+   
+    
+   
+    
+   
+    ],
+    "producers": 
+    [
+   {
+        "events": [],
+        "name": "Producer",       
+        "properties": [
+          {
+            "name": "filename",
+            "value": ".\\sample\\loan_synthesized_data_source_with_time_manual.CSV"
+          },
+          {
+            "name": "pollingInterval",
+            "value": "0"
+          },
+          {
+            "name": "sendingDelay",
+            "value": "0"
+          },
+          {
+            "name": "formatter",
+            "value": "csv"
+          },
+          {
+            "name": "delimiter",
+            "value": ","
+          },
+          {
+            "name": "csvEventType",
+            "value": "LoanApplication"
+          },
+          {
+            "name": "csvAttributeNames",
+            "value": "applicationID,amount,credit_score,risk,done_receive_loan,done_verify_ammount,done_credit_check,done_risk_assessment,done_skilled_agent,done_novice_agent,total_score,done_accept,arrival_times,post_received_time,post_verify_amount_time,post_credit_check_time,post_risk_assessment_time,post_skilled_agent_review_time,post_novice_agent_review_time,post_decision_time"
+          },
+          {
+            "name": "tagDataSeparator",
+            "value": "="
+          },
+          {
+            "name": "dateFormat",
+            "value": "dd/MM/yyyy HH:mm"                     
+          }
+        ],
+        "type": "File",
+        "createdDate": "Tue Sep 23 2014"
+      }
+    ],
+    "name": "Psymbiosys"
+  }
+}
